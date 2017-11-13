@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<div style="padding: 10px;">
+  <md-card style="width: 100%;">
+    <md-card-content>
+      <form>
+
+        <fieldset>
+          <legend>Group</legend>
+          <md-input-container style="width: 100%">
+            <input mdInput placeholder="Name" [(ngModel)]="group.name" name="name"
+                   minlength="3" maxlength="100" required #name="ngModel" #input>
+          </md-input-container>
+        </fieldset>
+
+
+        <fieldset style="max-height: 400px;">
+          <legend>Roles</legend>
+          <meld-table name="roles" #grid [items]="roles" [multiSelect]="true" [menu]="false" [(ngModel)]="group.roles">
+            <meld-colgroup>
+              <meld-col [width]="100"></meld-col>
+            </meld-colgroup>
+            <meld-thead>
+              <meld-tr>
+                <meld-td>
+                  <ng-template>Name</ng-template>
+                </meld-td>
+              </meld-tr>
+            </meld-thead>
+            <meld-tbody>
+              <meld-tr>
+                <meld-td>
+                  <ng-template let-role>{{role.name}}</ng-template>
+                </meld-td>
+              </meld-tr>
+            </meld-tbody>
+          </meld-table>
+        </fieldset>
+      </form>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button (click)="onSave()" *ngIf="! group.id">Save</button>
+      <button md-button (click)="onUpdate()" *ngIf="group.id">Update</button>
+    </md-card-actions>
+  </md-card>
+</div>

@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <md-card style="margin: 12px;">
+
+        <md-menu #appMenu="mdMenu">
+          <button md-menu-item [routerLink]="[{ outlets: { profile: ['user'] } }]"> User </button>
+          <button md-menu-item [routerLink]="[{ outlets: { profile: ['education'] } }]"> Education </button>
+          <button md-menu-item [routerLink]="[{ outlets: { profile: ['places'] } }]"> Places </button>
+          <button md-menu-item [routerLink]="[{ outlets: { profile: ['work-history'] } }]"> Work History </button>
+          <button md-menu-item [routerLink]="[{ outlets: { profile: ['contact'] } }]"> Contact </button>
+        </md-menu>
+
+        <button md-icon-button [mdMenuTriggerFor]="appMenu">
+          <md-icon>more_vert</md-icon>
+        </button>
+
+        <router-outlet name="profile"></router-outlet>
+      </md-card>
+    </div>
+  </div>
+</div>

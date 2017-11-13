@@ -1,0 +1,79 @@
+<div style="padding: 10px;">
+  <md-card style="width: 100%;">
+    <md-card-content>
+      <form>
+        <md-tab-group>
+          <md-tab label="Profile">
+            <div class="container-fluid" style="margin-top: 12px;">
+              <div class="row">
+                <div class="col-md-4">
+                  <fieldset>
+                    <legend>User</legend>
+                    <md-form-field style="width: 100%;">
+                      <input placeholder="Name" [(ngModel)]="user.email" name="email"
+                             mdInput minlength="3" maxlength="100"
+                             required #email="ngModel">
+                    </md-form-field>
+                    <md-form-field style="width: 100%;">
+                      <input placeholder="First Name" [(ngModel)]="user.firstName"
+                             mdInput name="firstName" minlength="3" maxlength="100" required>
+                    </md-form-field>
+                    <md-form-field style="width: 100%;">
+                      <input placeholder="Last Name" [(ngModel)]="user.lastName"
+                             mdInput name="lastName" minlength="3" maxlength="100" required>
+                    </md-form-field>
+
+                    <md-form-field style="width: 100%">
+                      <input placeholder="Birthday" mdInput [mdDatepicker]="datepicker" [(ngModel)]="user.birthday" name="birthday">
+                      <md-datepicker-toggle mdSuffix [for]="datepicker"></md-datepicker-toggle>
+                      <md-datepicker #datepicker></md-datepicker>
+                    </md-form-field>
+
+                    <md-form-field style="width: 100%">
+                      <meld-date #testDatePicker placeholder="Test"></meld-date>
+                      <md-icon (click)="myDatepicker.open()" mdSuffix>today</md-icon>
+                    </md-form-field>
+
+                  </fieldset>
+                </div>
+                <div class="col-md-4">
+                  <fieldset>
+                    <legend>Roles</legend>
+                    <app-role-multiselect [name]="'roles'" [(ngModel)]="user.roles" placeholder="Roles"
+                                          style="max-height: 400px;"></app-role-multiselect>
+                  </fieldset>
+                </div>
+                <div class="col-md-4">
+                  <fieldset>
+                    <legend>Groups</legend>
+                    <app-group-multiselect [name]="'groups'" [(ngModel)]="user.groups" placeholder="Groups"
+                                           style="max-height: 400px;"></app-group-multiselect>
+                  </fieldset>
+
+                </div>
+              </div>
+            </div>
+
+          </md-tab>
+          <md-tab label="Image">
+            <div style="align-items: center; display: flex; justify-content: center; height: 100%;">
+
+              <img  src="{{user.image | meldBinaryImage}}" style="width: 300px;">
+
+              <meld-file-container>
+                <input type="file" name="image" [(ngModel)]="user.image">
+              </meld-file-container>
+            </div>
+          </md-tab>
+        </md-tab-group>
+
+      </form>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button (click)="onSave()" *ngIf="! user.id">Save</button>
+      <button md-button (click)="onUpdate()" *ngIf="user.id">Update</button>
+    </md-card-actions>
+  </md-card>
+</div>
+
+

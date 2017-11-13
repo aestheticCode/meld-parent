@@ -1,0 +1,8 @@
+<meld-list #list [items]="users" style="margin: 0; padding: 0; height: 100%;">
+  <ng-template let-user>
+    <p class="meld-post-link" style="width: 100%; margin: 0" (click)="select(user)">
+      <img [src]="user.links.thumbnail.url" class="meld-posts-avatar" style="margin: 10px;">
+      {{user.firstName}} {{user.lastName}}
+    </p>
+  </ng-template>
+</meld-list>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<div style="height: 100%; position: relative">
+  <div style="height: 100%">
+    <meld-list [items]="posts" height="100%">
+      <ng-template let-post>
+        <div style="width: 400px; margin: 20px auto;">
+          <app-meld-item [post]="post" (selectionChange)="onPostClick($event)"></app-meld-item>
+        </div>
+      </ng-template>
+    </meld-list>
+  </div>
+
+  <button md-raised-button (click)="onCreate()" style="position: absolute; bottom: 50px; right: 50px;">Post</button>
+</div>

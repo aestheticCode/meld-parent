@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+    <persistence-unit name="main" transaction-type="JTA">
+        <jta-data-source>java:jboss/datasources/meld</jta-data-source>
+
+        <class>net.portrix.generic.ddd.AbstractAggregate</class>
+        <class>net.portrix.generic.ddd.AbstractEntity</class>
+        <class>net.portrix.meld.usercontrol.Group</class>
+        <class>net.portrix.meld.usercontrol.Identity</class>
+        <class>net.portrix.meld.usercontrol.Permission</class>
+        <class>net.portrix.meld.usercontrol.Role</class>
+        <class>net.portrix.meld.usercontrol.User</class>
+        <class>net.portrix.meld.usercontrol.UserImage</class>
+
+        <class>net.portrix.meld.social.Address</class>
+        <class>net.portrix.meld.social.Chat</class>
+        <class>net.portrix.meld.social.ChatCategory</class>
+        <class>net.portrix.meld.social.Company</class>
+        <class>net.portrix.meld.social.Education</class>
+        <class>net.portrix.meld.social.PersonalContact</class>
+        <class>net.portrix.meld.social.Phone</class>
+        <class>net.portrix.meld.social.PhoneCategory</class>
+        <class>net.portrix.meld.social.Places</class>
+        <class>net.portrix.meld.social.School</class>
+        <class>net.portrix.meld.social.WorkHistory</class>
+
+        <class>net.portrix.meld.channel.MeldPost</class>
+        <class>net.portrix.meld.channel.MeldComment</class>
+        <class>net.portrix.meld.channel.MeldImage</class>
+
+        <class>org.picketlink.idm.jpa.model.sample.simple.AttributedTypeEntity</class>
+        <class>org.picketlink.idm.jpa.model.sample.simple.AccountTypeEntity</class>
+        <class>org.picketlink.idm.jpa.model.sample.simple.RoleTypeEntity</class>
+        <class>org.picketlink.idm.jpa.model.sample.simple.GroupTypeEntity</class>
+        <class>org.picketlink.idm.jpa.model.sample.simple.IdentityTypeEntity</class>
+        <class>org.picketlink.idm.jpa.model.sample.simple.RelationshipTypeEntity</class>
+        <class>org.picketlink.idm.jpa.model.sample.simple.RelationshipIdentityTypeEntity</class>
+        <class>org.picketlink.idm.jpa.model.sample.simple.PartitionTypeEntity</class>
+        <class>org.picketlink.idm.jpa.model.sample.simple.PasswordCredentialTypeEntity</class>
+        <class>org.picketlink.idm.jpa.model.sample.simple.AttributeTypeEntity</class>
+
+
+        <properties>
+            <!--<property name="hibernate.show_sql" value="true"/>-->
+            <!--<property name="hibernate.format_sql" value="true"/>-->
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.hbm2ddl.import_files" value="/META-INF/import.sql"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect" />
+            <property name="hibernate.connection.autocommit" value="false" />
+            <property name="hibernate.search.default.worker.backend" value="jgroups"/>
+            <property name="hibernate.search.default.directory_provider" value="infinispan"/>
+            <property name="hibernate.search.default.exclusive_index_use" value="false"/>
+            <property name="hibernate.search.infinispan.chunk_size" value="300000000"/>
+            <property name="hibernate.search.reader.strategy" value="shared"/>
+            <property name="hibernate.search.lucene_version" value="LUCENE_CURRENT"/>
+            <property name="hibernate.search.worker.execution" value="async"/>
+            <property name="hibernate.search.infinispan.cachemanager_jndiname" value="java:jboss/infinispan/container/hibernateSearch"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

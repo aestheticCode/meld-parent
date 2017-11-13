@@ -1,0 +1,19 @@
+app-root {
+  display: block;
+}
+
+.link {
+  margin-bottom: 12px;
+  display: block;
+  line-height: 32px;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: none;
+  background-color: #e7e7e7;
+}
+
+.link.active {
+  background-color: #e7e7e7;
+}

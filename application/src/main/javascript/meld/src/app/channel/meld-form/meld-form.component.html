@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<div style="align-items: center; display: flex; justify-content: center; height: 100vh">
+  <md-card style="margin: 10px; width: 400px;">
+    <md-card-header>
+      <img md-card-avatar style="width: 48px; height: 48px;" [src]="user.avatar.url">
+      <md-card-title>{{user.firstName}} {{user.lastName}}</md-card-title>
+      <md-card-subtitle>Subtitle</md-card-subtitle>
+    </md-card-header>
+
+    <md-card-content>
+      <form>
+        <div style="position:relative; margin-bottom: 12px;">
+          <img  src="{{post.file | meldBinaryImage}}" style="width: 100%;">
+          <button (click)="onImageRemove()" md-fab *ngIf="post.file"
+                  style="position:absolute;right:20px; top: 20px;color: white">
+            <md-icon>close</md-icon>
+          </button>
+        </div>
+        <app-meld-editor [(ngModel)]="post.text" name="text" style="min-height: 60px;" placeholder="Write something here..."></app-meld-editor>
+
+        <meld-file-container>
+          <input name="file" type="file" [(ngModel)]="post.file">
+        </meld-file-container>
+      </form>
+    </md-card-content>
+
+    <md-card-actions>
+      <button md-button (click)="onCancel()">Cancel</button>
+      <button md-button *ngIf="! post.id" (click)="onSave()">Post</button>
+      <button md-button *ngIf="post.id" (click)="onUpdate()">Update</button>
+    </md-card-actions>
+  </md-card>
+</div>

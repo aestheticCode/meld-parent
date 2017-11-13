@@ -1,0 +1,21 @@
+<fieldset>
+  <legend>Education</legend>
+
+  <div *ngFor="let school of education.schools | schoolSort" style="margin-bottom: 12px;">
+    <app-social-school-form [school]="school" [readonly]="readonly"
+                           (deleteClick)="onDeleteSchool($event)"
+                           (addClick)="onCreateSchool()"></app-social-school-form>
+    <hr/>
+  </div>
+  <div *ngIf="education.schools.length === 0" style="line-height: 48px; text-align: center;">
+    No Education.
+  </div>
+
+  <button md-button *ngIf="! readonly && ! education.id" (click)="onSave()">Save</button>
+  <button md-button *ngIf="! readonly && education.id" (click)="onUpdate()">Update</button>
+  <button md-button *ngIf="! readonly" (click)="onCancel()">Chancel</button>
+  <button md-button *ngIf="readonly" (click)="onEdit()">Edit</button>
+
+
+</fieldset>
+

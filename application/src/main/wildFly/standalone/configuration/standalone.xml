@@ -1,0 +1,41 @@
+<subsystem xmlns="urn:jboss:domain:datasources:4.0">
+    <datasources>
+        <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true">
+            <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
+            <driver>h2</driver>
+            <security>
+                <user-name>sa</user-name>
+                <password>sa</password>
+            </security>
+        </datasource>
+        <datasource jndi-name="java:jboss/datasources/meld" pool-name="Meld" enabled="true" use-java-context="true">
+            <connection-url>jdbc:postgresql://localhost:5432/meld</connection-url>
+            <driver>postgresql</driver>
+            <pool>
+                <min-pool-size>5</min-pool-size>
+                <initial-pool-size>5</initial-pool-size>
+                <max-pool-size>100</max-pool-size>
+                <prefill>true</prefill>
+            </pool>
+            <security>
+                <user-name>postgres</user-name>
+                <password>root</password>
+            </security>
+            <validation>
+                <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"/>
+                <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter"/>
+            </validation>
+        </datasource>
+        <drivers>
+            <driver name="h2" module="com.h2database.h2">
+                <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+            </driver>
+            <driver name="mysql" module="com.mysql.jdbc">
+                <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
+            </driver>
+            <driver name="postgresql" module="org.postgresql">
+                <driver-class>org.postgresql.Driver</driver-class>
+            </driver>
+        </drivers>
+    </datasources>
+</subsystem>

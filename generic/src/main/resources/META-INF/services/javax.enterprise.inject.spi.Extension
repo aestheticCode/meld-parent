@@ -1,0 +1,3 @@
+net.portrix.generic.model.type.cdi.ResolvedTypeExtension
+net.portrix.generic.ddd.eventbus.cdi.EventBusExtension
+net.portrix.generic.rest.jsr339.cdi.JaxRSExtension

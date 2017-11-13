@@ -1,0 +1,10 @@
+app-meld-comment-dialog p.link {
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 0;
+  width: 200px;
+}
+
+app-meld-comment-dialog p.link:hover {
+  background-color: lightgray;
+}

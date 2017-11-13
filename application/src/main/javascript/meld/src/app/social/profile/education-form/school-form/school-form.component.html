@@ -1,0 +1,36 @@
+<form>
+  <fieldset [disabled]="readonly">
+    <md-form-field style="width: 100%;">
+      <input placeholder="Name" [(ngModel)]="school.name" name="name" type="text"
+             mdInput>
+      <button *ngIf="! readonly" mdSuffix md-icon-button (click)="onDelete()">
+        <md-icon>delete</md-icon>
+      </button>
+      <button *ngIf="! readonly" mdSuffix md-icon-button (click)="onAdd()">
+        <md-icon>add</md-icon>
+      </button>
+    </md-form-field>
+
+    <md-form-field style="width: 100%;">
+      <input placeholder="Course" [(ngModel)]="school.course" name="course" type="text"
+             mdInput>
+    </md-form-field>
+
+
+    <div style="display: flex;">
+      <md-form-field style="flex: 0.5;">
+        <input placeholder="Start" mdInput [mdDatepicker]="start" [(ngModel)]="school.start" name="start">
+        <md-datepicker-toggle mdSuffix [for]="start"></md-datepicker-toggle>
+        <md-datepicker #start></md-datepicker>
+      </md-form-field>
+
+      <md-form-field style="flex: 0.5">
+        <input placeholder="End" mdInput [mdDatepicker]="end" [(ngModel)]="school.end" name="end">
+        <md-datepicker-toggle mdSuffix [for]="end"></md-datepicker-toggle>
+        <md-datepicker #end></md-datepicker>
+      </md-form-field>
+    </div>
+
+
+  </fieldset>
+</form>

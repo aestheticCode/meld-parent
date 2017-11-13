@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<md-card style="margin: 12px;">
+  <div style="display: flex; align-items: center;">
+    <md-input-container style="width: 100%;">
+      <input mdInput placeholder="Search" ngModel #searchBox="ngModel">
+    </md-input-container>
+    <button md-raised-button *ngIf="links | meldLink:'save'" style="width: 100px;" (click)="onCreate()">Create</button>
+  </div>
+  <meld-table [items]="roles" (selectItemChange)="onSelection($event)">
+    <meld-colgroup>
+      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100"></meld-col>
+    </meld-colgroup>
+    <meld-thead>
+      <meld-tr>
+        <meld-td>
+          <ng-template><strong>Name</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>Members</strong></ng-template>
+        </meld-td>
+      </meld-tr>
+    </meld-thead>
+    <meld-tbody>
+      <meld-tr>
+        <meld-td>
+          <ng-template let-role>{{role.name}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-role>{{role.members}}</ng-template>
+        </meld-td>
+      </meld-tr>
+    </meld-tbody>
+  </meld-table>
+</md-card>

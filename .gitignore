@@ -1,0 +1,12 @@
+*.iml
+.idea/
+.sass-cache/
+target/
+node_modules/
+package-lock.json
+bower_components/
+dist/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+release.properties

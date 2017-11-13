@@ -1,0 +1,38 @@
+<fieldset>
+  <legend>Contact</legend>
+
+  <div *ngFor="let phone of contact.phones">
+    <app-social-phone-form [phone]="phone" [readonly]="readonly"
+                           (deleteClick)="onDeletePhone($event)"
+                           (addClick)="onCreatePhone()"></app-social-phone-form>
+  </div>
+  <div *ngIf="contact.phones.length === 0" style="line-height: 48px; text-align: center;">
+    No Phone Numbers.
+  </div>
+
+  <div *ngFor="let email of contact.emails">
+    <app-social-email-form [email]="email" [readonly]="readonly"
+                           (deleteClick)="onDeleteEmail($event)"
+                           (addClick)="onCreateEmail()"></app-social-email-form>
+  </div>
+  <div *ngIf="contact.emails.length === 0" style="line-height: 48px; text-align: center;">
+    No Email Addresses.
+  </div>
+
+  <div *ngFor="let chat of contact.chats">
+    <app-social-chat-form [chat]="chat" [readonly]="readonly"
+                          (deleteClick)="onDeleteChat($event)"
+                          (addClick)="onCreateChat()"></app-social-chat-form>
+  </div>
+  <div *ngIf="contact.chats.length === 0" style="line-height: 48px; text-align: center;">
+    No Chat Clients.
+  </div>
+
+  <button md-button *ngIf="! readonly && ! contact.id" (click)="onSave()">Save</button>
+  <button md-button *ngIf="! readonly && contact.id" (click)="onUpdate()">Update</button>
+  <button md-button *ngIf="! readonly" (click)="onCancel()">Chancel</button>
+  <button md-button *ngIf="readonly" (click)="onEdit()">Edit</button>
+
+
+</fieldset>
+

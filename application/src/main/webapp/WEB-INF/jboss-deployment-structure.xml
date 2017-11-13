@@ -1,0 +1,24 @@
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
+
+    <deployment>
+        <module-alias name="deployment.net.portrix.meld.usercontrol"/>
+
+        <dependencies>
+            <module name="com.mysql.jdbc"/>
+            <module name="org.javassist"/>
+            <module name="com.google.guava"/>
+            <module name="com.fasterxml.jackson.core.jackson-annotations"/>
+            <module name="com.fasterxml.jackson.core.jackson-core"/>
+            <module name="com.fasterxml.jackson.core.jackson-databind"/>
+
+            <module name="org.picketlink.core" meta-inf="import" annotations="true"/>
+            <module name="org.picketlink.core.api" meta-inf="import"/>
+            <module name="org.picketlink.idm" meta-inf="import"/>
+            <module name="org.picketlink.idm.api" meta-inf="import"/>
+
+            <module name="org.hibernate.search.orm" services="export" />
+        </dependencies>
+
+    </deployment>
+
+</jboss-deployment-structure>

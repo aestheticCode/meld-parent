@@ -1,0 +1,21 @@
+<fieldset>
+  <legend>Places</legend>
+
+  <div *ngFor="let address of places.addresses | addressesSort" style="margin-bottom: 12px;">
+    <app-social-address-form [address]="address" [readonly]="readonly"
+                            (deleteClick)="onDeleteAddress($event)"
+                            (addClick)="onCreateAddress()"></app-social-address-form>
+    <hr/>
+  </div>
+  <div *ngIf="places.addresses.length === 0" style="line-height: 48px; text-align: center;">
+    No Addresses.
+  </div>
+
+  <button md-button *ngIf="! readonly && ! places.id" (click)="onSave()">Save</button>
+  <button md-button *ngIf="! readonly && places.id" (click)="onUpdate()">Update</button>
+  <button md-button *ngIf="! readonly" (click)="onCancel()">Chancel</button>
+  <button md-button *ngIf="readonly" (click)="onEdit()">Edit</button>
+
+
+</fieldset>
+

@@ -1,0 +1,72 @@
+<div style="display: flex; width: 100%">
+
+  <div style="position: absolute; right: 10px;">
+    <a (click)="openMenu()" *ngIf="menuSymbol"><md-icon>toc</md-icon></a>
+    <a (click)="openFilter()" *ngIf="filterSymbol"><md-icon>assessment</md-icon></a>
+  </div>
+
+  <div style="display: flex; width: 100%;">
+
+    <meld-window [rowsSize]="itemsSize" (windowScrollChange)="onWindowScroll($event)" [rowHeight]="rowHeight">
+      <meld-window-header *ngIf="head">
+        <ng-template>
+          <table class="table" style="table-layout: fixed;" [ngClass]="{'table-unbordered': unbordered}">
+            <colgroup *ngIf="colgroup">
+              <col *ngIf="multiSelect" style="width: 20px;">
+              <col *ngFor="let column of colgroup.columns  | meldTableSorter:columnConfiguration" [style.width.px]="column.width">
+            </colgroup>
+            <thead>
+            <tr *ngFor="let row of head.rows">
+              <td *ngIf="multiSelect" ><md-checkbox [checked]="allSelected" (change)="selectAll($event)" ></md-checkbox></td>
+              <td *ngFor="let column of row.columns | meldTableSorter:columnConfiguration">
+                <ng-template [ngTemplateOutlet]="column.content"></ng-template>
+              </td>
+            </tr>
+            </thead>
+          </table>
+        </ng-template>
+      </meld-window-header>
+
+      <meld-window-body *ngIf="body">
+        <ng-template>
+          <table class="table" style="table-layout: fixed;" [ngClass]="{'table-unbordered': unbordered}">
+            <colgroup *ngIf="colgroup">
+              <col *ngIf="multiSelect"  style="width: 20px;">
+              <col *ngFor="let column of colgroup.columns  | meldTableSorter:columnConfiguration" [style.width.px]="column.width">
+            </colgroup>
+            <tbody>
+            <tr *ngFor="let item of itemsWindow; let index = index;" [class.hover]="isHoveredIndex(index)" (mousemove)="hoveredIndex = index" (mouseleave)="hoveredIndex = undefined">
+              <td *ngIf="multiSelect"><md-checkbox [checked]="isItemSelected(item)" (change)="itemSelected(item, $event)"></md-checkbox></td>
+              <td *ngFor="let column of body.rows.first.columns | meldTableSorter:columnConfiguration"
+                  (click)="selectItemChange.emit(item)">
+                <ng-template [ngTemplateOutlet]="column.content" [ngOutletContext]="{$implicit: item}"></ng-template>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </meld-window-body>
+
+      <meld-window-footer *ngIf="footer">
+        <ng-template>
+          <table class="table" style="table-layout: fixed;" [ngClass]="{'table-unbordered': unbordered}">
+            <colgroup *ngIf="colgroup">
+              <col *ngIf="multiSelect" style="width: 20px;">
+              <col *ngFor="let column of colgroup.columns | meldTableSorter:columnConfiguration" [style.width.px]="column.width">
+            </colgroup>
+            <tfoot>
+            <tr *ngFor="let row of footer.rows">
+              <td *ngIf="multiSelect" ><md-checkbox [checked]="allSelected" (change)="selectAll($event)"></md-checkbox></td>
+              <td *ngFor="let column of row.columns | meldTableSorter:columnConfiguration">
+                <ng-template [ngTemplateOutlet]="column.content"></ng-template>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </ng-template>
+      </meld-window-footer>
+
+    </meld-window>
+
+  </div>
+</div>

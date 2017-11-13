@@ -1,0 +1,9 @@
+import {Component} from "@angular/core";
+
+@Component({
+  templateUrl: 'app.home.html',
+})
+export class AppHome {
+
+
+}

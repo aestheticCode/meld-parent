@@ -1,0 +1,24 @@
+<form>
+  <fieldset [disabled]="readonly">
+    <div style="display: flex; align-items: baseline;">
+      <div style="vertical-align: bottom">
+        <i class="material-icons">phone</i>
+      </div>
+
+      <md-select placeholder="Type" [(ngModel)]="phone.type" name="type">
+        <md-option *ngFor="let type of types" [value]="type.code">{{ type.name }}</md-option>
+      </md-select>
+
+      <md-form-field style="margin-left: 6px; flex: 1">
+        <input placeholder="Number" [(ngModel)]="phone.number" name="number" type="tel"
+               mdInput>
+        <button *ngIf="! readonly" mdSuffix md-icon-button (click)="onDelete()">
+          <md-icon>delete</md-icon>
+        </button>
+        <button *ngIf="! readonly" mdSuffix md-icon-button (click)="onAdd()">
+          <md-icon>add</md-icon>
+        </button>
+      </md-form-field>
+    </div>
+  </fieldset>
+</form>

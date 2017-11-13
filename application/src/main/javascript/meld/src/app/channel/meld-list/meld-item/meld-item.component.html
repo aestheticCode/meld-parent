@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card-content">
+    <div style="display: flex; align-items: center">
+      <img class="avatar" [src]="post.avatar.url">
+      <strong style="margin-left: 5px;">{{post.name}}</strong>
+      <span style="flex-grow: 1"><strong></strong></span>
+      <span style="text-align: right;">{{post.time}}</span>
+      <button md-icon-button *ngIf="post.links | meldLink:'read';" (click)="onPostClick()">
+        <md-icon>assignment</md-icon>
+      </button>
+    </div>
+  </div>
+
+  <img *ngIf="post.image" [src]="post.image.url" style="width: 100%">
+
+  <div class="card-content" >
+    <p style="word-break: break-all;" [innerHTML]="post.text | meldHtml"></p>
+
+    <div style="display: flex;">
+      <button md-icon-button [class.meld-posts-button-active]="plusOneButtonActive()"
+              style="margin-right: 10px;" class="meld-posts-button"
+              (click)="onPlusOneClick()">
+        <md-icon>plus_one</md-icon>
+      </button>
+      <span style="line-height: 40px;">{{post.likes.length}}</span>
+      <span style="line-height: 40px; margin-right: 10px; flex-grow: 1;text-align: right;">{{post.comments.length}}</span>
+      <button md-icon-button [class.meld-posts-button-active]="commentsVisible"
+              (click)="commentsVisible = ! commentsVisible">
+        <md-icon>comment</md-icon>
+      </button>
+    </div>
+    <div *ngIf="commentsVisible" style="width: 100%;">
+      <hr style="margin-bottom: 10px;"/>
+
+      <div *ngFor="let comment of post.comments">
+        <app-meld-comment [comment]="comment"></app-meld-comment>
+      </div>
+
+      <hr *ngIf="post.comments.length > 0" style="margin-top: 0"/>
+
+      <div style="display: flex">
+        <img class="avatar" [src]="user.avatar.url">
+        <app-meld-editor style="border-style: none; flex-grow: 1; line-height: 40px; margin-left: 10px;" [(ngModel)]="comment" name="text"
+                         [placeholder]="'Add Comment...'"></app-meld-editor>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card-buttons" style="display: flex">
+    <button md-icon-button style="color: dimgrey;">
+      <md-icon>photo_camera</md-icon>
+    </button>
+    <div style="flex-grow: 1"></div>
+    <button md-button style="color: dimgrey;" [disabled]="comment.length == 0" (click)="onCommentPost()">
+      Post
+    </button>
+  </div>
+</div>

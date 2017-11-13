@@ -1,0 +1,116 @@
+package net.portrix.meld.channel.meld.like;
+
+import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilderFactory;
+import net.portrix.generic.rest.api.Link;
+import net.portrix.generic.rest.jsr339.Name;
+import net.portrix.meld.channel.MeldComment;
+import net.portrix.meld.channel.MeldCommentService;
+import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.channel.MeldPostService;
+import net.portrix.meld.usercontrol.user.image.UserImageController;
+import net.portrix.meld.usercontrol.User;
+import net.portrix.meld.usercontrol.UserImageManager;
+import net.portrix.meld.usercontrol.UserManager;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * @author Patrick Bittner on 07/12/2016.
+ */
+@Path("channel")
+@ApplicationScoped
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@Name("Channel")
+public class MeldLikeController {
+
+    private final MeldLikeService service;
+
+    private final URLBuilderFactory builderFactory;
+
+    @Inject
+    public MeldLikeController(MeldLikeService service, URLBuilderFactory builderFactory) {
+        this.service = service;
+        this.builderFactory = builderFactory;
+    }
+
+    public MeldLikeController() {
+        this(null, null);
+    }
+
+    @Secured
+    @GET
+    @Path("meld/{id}/plus/one")
+    @Name("Meld Post Plus One")
+    @Transactional
+    public List<MeldLikeResponse> plusOnePost(@PathParam("id") UUID id) {
+
+        final User currentUser = service.currentUser();
+        final MeldPost post = service.findPost(id);
+
+        if (post.containsLike(currentUser)) {
+            post.removeLike(currentUser);
+        } else {
+            post.addLike(currentUser);
+        }
+
+        List<MeldLikeResponse> likes = new ArrayList<>();
+        for (User user : post.getLikes()) {
+            MeldLikeResponse response = new MeldLikeResponse();
+            response.setCurrent(currentUser.equals(user));
+
+            final Link avatarLink = builderFactory.from(UserImageController.class)
+                    .record(method -> method.thumbNail(post.getId()))
+                    .rel("avatar")
+                    .generate();
+
+            response.setAvatar(avatarLink);
+
+            likes.add(response);
+        }
+
+        return likes;
+    }
+
+    @Secured
+    @GET
+    @Path("meld/comment/{id}/plus/one")
+    @Name("Meld Post Plus One")
+    @Transactional
+    public List<MeldLikeResponse> plusOneComment(@PathParam("id") UUID id) {
+
+        final User currentUser = service.currentUser();
+        final MeldComment post = service.findComment(id);
+
+        if (post.containsLike(currentUser)) {
+            post.removeLike(currentUser);
+        } else {
+            post.addLike(currentUser);
+        }
+
+        List<MeldLikeResponse> likes = new ArrayList<>();
+        for (User user : post.getLikes()) {
+            MeldLikeResponse response = new MeldLikeResponse();
+            response.setCurrent(currentUser.equals(user));
+
+            final Link avatarLink = builderFactory.from(UserImageController.class)
+                    .record(method -> method.thumbNail(post.getId()))
+                    .rel("avatar")
+                    .generate();
+
+            response.setAvatar(avatarLink);
+
+            likes.add(response);
+        }
+
+        return likes;
+    }
+}

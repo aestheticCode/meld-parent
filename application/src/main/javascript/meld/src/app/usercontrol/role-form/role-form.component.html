@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<div style="padding: 10px;">
+  <md-card style="width: 100%;">
+    <md-card-content>
+      <form>
+        <fieldset>
+          <legend>Role</legend>
+          <md-input-container style="width: 100%">
+            <input mdInput placeholder="Name" [(ngModel)]="role.name" name="name"
+                   minlength="3" maxlength="100" required #name="ngModel" #input>
+          </md-input-container>
+        </fieldset>
+        <fieldset style="max-height: 400px;">
+          <legend>Permissions</legend>
+          <meld-table name="permissions" [items]="permissions" [(ngModel)]="role.permissions" [menu]="true"
+                      itemValuePath="id" style="height: 400px;" [multiSelect]="true">
+            <meld-colgroup>
+              <meld-col [width]="100"></meld-col>
+              <meld-col [width]="100"></meld-col>
+              <meld-col [width]="100"></meld-col>
+            </meld-colgroup>
+            <meld-thead>
+              <meld-tr>
+                <meld-td><ng-template>Name</ng-template></meld-td>
+                <meld-td><ng-template>Path</ng-template></meld-td>
+                <meld-td><ng-template>Method</ng-template></meld-td>
+              </meld-tr>
+            </meld-thead>
+            <meld-tbody>
+              <meld-tr>
+                <meld-td><ng-template let-permission>{{permission.name}}</ng-template></meld-td>
+                <meld-td><ng-template let-permission>{{permission.path}}</ng-template></meld-td>
+                <meld-td><ng-template let-permission>{{permission.method}}</ng-template></meld-td>
+              </meld-tr>
+            </meld-tbody>
+          </meld-table>
+        </fieldset>
+      </form>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button (click)="onSave()" *ngIf="! role.id">Save</button>
+      <button md-button (click)="onUpdate()" *ngIf="role.id">Update</button>
+    </md-card-actions>
+  </md-card>
+</div>

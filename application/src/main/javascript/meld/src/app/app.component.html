@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<div style="height: 100vh;">
+  <md-toolbar color="primary">
+    <button md-icon-button (click)="toggleSideNav()">
+      <md-icon>list</md-icon>
+    </button>
+    <span class="title" style="flex: 1 1 auto;">Meld</span>
+    <button md-icon-button *ngIf="links | meldLink:'login';" routerLink="usercontrol/login">
+      <md-icon>lock_open</md-icon>
+    </button>
+    <button md-icon-button *ngIf="links | meldLink:'logout';" routerLink="usercontrol/logout">
+      <md-icon>lock</md-icon>
+    </button>
+  </md-toolbar>
+
+  <md-sidenav-container style="height: calc(100% - 64px);">
+    <md-sidenav mode="side" [opened]="sideNavShow" style="width: 200px;">
+
+      <div style="padding: 12px 0 12px 24px;">
+
+        <a class="link" routerLink="/">
+          <i style="vertical-align: middle; color: #515658" class="material-icons">home</i>
+          <span style="color: black; margin-left: 12px;"><strong>Home</strong></span>
+        </a>
+
+        <a class="link" *ngIf="links | meldLink:'profile';" routerLink="social/profile" routerLinkActive="active">
+          <i style="vertical-align: middle; color: #515658" class="material-icons">account_circle</i>
+          <span style="color: black; margin-left: 12px;"><strong>Profile</strong></span>
+        </a>
+
+        <a class="link" *ngIf="links | meldLink:'meld';" routerLink="channel/meld/posts" routerLinkActive="active">
+          <i style="vertical-align: middle; color: #515658" class="material-icons">android</i>
+          <span style="color: black; margin-left: 12px;"><strong>Meld</strong></span>
+        </a>
+
+        <a class="link" *ngIf="links | meldLink:'users';" routerLink="usercontrol/users" routerLinkActive="active">
+          <i style="vertical-align: middle; color: #515658" class="material-icons">face</i>
+          <span style="color: black; margin-left: 12px;"><strong>Users</strong></span>
+        </a>
+
+        <a class="link" *ngIf="links | meldLink:'groups';" routerLink="usercontrol/groups" routerLinkActive="active">
+          <i style="vertical-align: middle; color: #515658" class="material-icons">group_work</i>
+          <span style="color: black; margin-left: 12px;"><strong>Groups</strong></span>
+        </a>
+
+        <a class="link" *ngIf="links | meldLink:'roles';" routerLink="usercontrol/roles" routerLinkActive="active">
+          <i style="vertical-align: middle; color: #515658" class="material-icons">perm_identity</i>
+          <span style="color: black; margin-left: 12px;"><strong>Roles</strong></span>
+        </a>
+
+      </div>
+
+    </md-sidenav>
+
+    <router-outlet></router-outlet>
+
+  </md-sidenav-container>
+</div>
+

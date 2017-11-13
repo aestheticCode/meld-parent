@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<md-card style="margin: 12px;">
+  <div style="display: flex; align-items: center;">
+    <md-input-container style="width: 100%;">
+      <input mdInput placeholder="Search" ngModel #searchBox="ngModel">
+    </md-input-container>
+    <button md-raised-button *ngIf="links | meldLink:'save'" (click)="onCreate()">Create</button>
+  </div>
+  <meld-table #table [items]="users" (selectItemChange)="onSelectionChange($event)" [menu]="true" [filter]="true">
+    <meld-filter>
+      <ng-template>
+        <form>
+          <md-form-field style="width: 100%;">
+            <input mdInput type="text" placeholder="eMail" name="name" [(ngModel)]="filterTemplate.name">
+          </md-form-field>
+          <md-form-field style="width: 100%;">
+            <input mdInput type="text" placeholder="First Name" name="firstName" [(ngModel)]="filterTemplate.firstName">
+          </md-form-field>
+          <md-form-field style="width: 100%;">
+            <input mdInput type="text" placeholder="Last Name" name="lastName" [(ngModel)]="filterTemplate.lastName">
+          </md-form-field>
+          <md-form-field>
+            <input mdInput [mdDatepicker]="datepicker" [(ngModel)]="filterTemplate.birthdate">
+            <md-datepicker-toggle mdSuffix [for]="datepicker"></md-datepicker-toggle>
+            <md-datepicker #datepicker></md-datepicker>
+          </md-form-field>
+          <button md-button (click)="onSearchClick()">Search</button>
+          <button md-button (click)="onCancelClick()">Reset</button>
+        </form>
+      </ng-template>
+    </meld-filter>
+    <meld-colgroup>
+      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100"></meld-col>
+    </meld-colgroup>
+    <meld-thead>
+      <meld-tr>
+        <meld-td>
+          <ng-template><strong>eMail</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>Gender</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>First Name</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>Last Name</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>Birthday</strong></ng-template>
+        </meld-td>
+      </meld-tr>
+    </meld-thead>
+    <meld-tbody>
+      <meld-tr>
+        <meld-td>
+          <ng-template let-user>{{user.email}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.gender}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.firstName}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.lastName}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.birthday}}</ng-template>
+        </meld-td>
+      </meld-tr>
+    </meld-tbody>
+  </meld-table>
+</md-card>

@@ -1,0 +1,9 @@
+<meld-window style="height: 193px;" [async]="false" [rowHeight]="209" [rowsSize]="12" (windowScrollChange)="onWindowScroll($event)">
+  <meld-window-body>
+    <ng-template>
+     <div>
+       <meld-month-view [date]="month" *ngFor="let month of calendar"></meld-month-view>
+     </div>
+    </ng-template>
+  </meld-window-body>
+</meld-window>

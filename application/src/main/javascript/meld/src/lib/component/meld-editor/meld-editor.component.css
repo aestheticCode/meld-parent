@@ -1,0 +1,11 @@
+meld-editor {
+  display: flex;
+  width: 100%;
+}
+
+meld-editor [contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+  color: darkgray;
+}
+
