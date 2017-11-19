@@ -12,7 +12,7 @@ import {MeldTdDirective} from "./meld-td/meld-td.directive";
 import {MeldTfooterDirective} from "./meld-tfooter/meld-tfooter.directive";
 import {MeldTheadDirective} from "./meld-thead/meld-thead.directive";
 import {MeldTrDirective} from "./meld-tr/meld-tr.directive";
-import {MdButtonModule, MdCheckboxModule, MdDialogModule, MdIconModule} from "@angular/material";
+import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule} from "@angular/material";
 import {MeldWindowModule} from "../meld-window/meld-window.module";
 import {MeldTableSorterPipe} from "./meld-table-sorter.pipe";
 
@@ -20,10 +20,10 @@ import {MeldTableSorterPipe} from "./meld-table-sorter.pipe";
   imports: [
     CommonModule,
     FormsModule,
-    MdDialogModule,
-    MdIconModule,
-    MdButtonModule,
-    MdCheckboxModule,
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCheckboxModule,
     MeldWindowModule
   ],
   declarations: [

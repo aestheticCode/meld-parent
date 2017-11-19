@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <div style="align-items: center; display: flex; justify-content: center; height: 100%">
-  <md-card style="margin: 10px; text-align: left">
-    <md-card-content>
+  <mat-card style="margin: 10px; text-align: left">
+    <mat-card-content>
       <form>
         <fieldset>
           <legend>Please Sign In</legend>
-          <md-form-field style="width: 100%;">
-            <input mdInput placeholder="Name" [(ngModel)]="login.email" name="name">
-          </md-form-field>
+          <mat-form-field style="width: 100%;">
+            <input matInput placeholder="Name" [(ngModel)]="login.email" name="name">
+          </mat-form-field>
 
-          <md-form-field style="width: 100%;">
-            <input mdInput placeholder="Password" type="password" [(ngModel)]="login.password" name="password">
-          </md-form-field>
+          <mat-form-field style="width: 100%;">
+            <input matInput placeholder="Password" type="password" [(ngModel)]="login.password" name="password">
+          </mat-form-field>
         </fieldset>
       </form>
-    </md-card-content>
-    <md-card-actions>
-      <button md-button (click)="onSubmit()">Sign In</button>
-    </md-card-actions>
-  </md-card>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="onSubmit()">Sign In</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
 

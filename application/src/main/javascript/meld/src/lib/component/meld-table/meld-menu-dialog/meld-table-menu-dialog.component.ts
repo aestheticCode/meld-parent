@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {MD_DIALOG_DATA} from "@angular/material";
+import {MAT_DIALOG_DATA} from "@angular/material";
 
 @Component({
   selector: 'meld-table-menu-dialog',
@@ -8,7 +8,7 @@ import {MD_DIALOG_DATA} from "@angular/material";
 })
 export class MeldTableMenuDialogComponent {
 
-  constructor(@Inject(MD_DIALOG_DATA) public parent: any) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public parent: any) {}
 
   colGroupWithIndex(index: number) {
     return this.parent.colgroup.columns.toArray()[this.parent.columnConfiguration[index].index];

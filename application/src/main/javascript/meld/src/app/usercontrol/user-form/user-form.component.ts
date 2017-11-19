@@ -4,6 +4,8 @@ import {Http, Response} from "@angular/http";
 import {UserForm} from "./UserForm";
 import {ActivatedRoute} from "@angular/router";
 import {UserFormModel} from "./UserFormModel";
+import {MatDialog} from "@angular/material";
+import {MeldDatePickerComponent} from "../../../lib/component/meld-datepicker/meld-datepicker.component";
 
 @Component({
   selector: 'app-user-form',
@@ -18,7 +20,8 @@ export class UserFormComponent implements OnInit {
   private email: NgModel;
 
   constructor(private http: Http,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -53,6 +56,10 @@ export class UserFormComponent implements OnInit {
       .subscribe((res: Response) => {
         this.user = res.json();
       });
+  }
+
+  datePickerOpen() {
+    this.dialog.open(MeldDatePickerComponent);
   }
 
 }

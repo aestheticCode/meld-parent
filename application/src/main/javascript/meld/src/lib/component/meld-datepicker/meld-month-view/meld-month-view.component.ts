@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -8,41 +8,41 @@ import * as moment from 'moment';
 })
 export class MeldMonthViewComponent implements OnInit {
 
-  @Input("date")
-  public date = moment({year : 2013, month : 3, day:1});
+  public months : string[][] = [];
 
-  public weekDays : string[] = moment.weekdays();
-
-  public calendar : number[][] = [];
+  @Output("monthChange")
+  private monthChange : EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
-    let beginDay = this.date.day();
-    let endDay = this.date.daysInMonth();
-    let day = 0;
-    for (let weekIndex = 0; weekIndex < 5; weekIndex++) {
-      let days = [];
-      this.calendar.push(days);
-      for (let daysIndex = 0; daysIndex < 7; daysIndex++) {
-        if (weekIndex === 0 && daysIndex < beginDay) {
-          days.push(undefined);
-        } else {
-          if (day < endDay) {
-            days.push(++day)
-          }
 
-        }
+    this.months = [];
+
+    let months = moment.months();
+    let index = 0;
+
+    for (let i = 0; i < 3; i++) {
+
+      const td : string[] = [];
+
+      for (let j = 0; j < 4; j++) {
+
+        td.push(months[index++])
+
+
       }
+      this.months.push(td);
     }
+
   }
 
-  public monthAndYear() : string {
-    return moment.months(this.date.month()) + " " + this.date.year();
+  public monthShort(month : string) : string {
+    return month.slice(0, 3);
   }
 
-  public weekDayShort(day : string) : string {
-    return day.slice(0, 3);
+  onClick(month : number) {
+    this.monthChange.emit(month);
   }
 
 }

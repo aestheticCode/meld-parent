@@ -1,0 +1,33 @@
+meld-day-view {
+  display: block;
+}
+
+meld-day-view .month {
+  text-align: center;
+}
+
+meld-day-view .day {
+
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+
+}
+
+meld-day-view .day:hover  {
+
+  background-color: lightgrey;
+  border-radius: 50%;
+
+}
+
+meld-day-view .active  {
+
+  background-color: #3f51b5;
+  border-radius: 50%;
+  color: white;
+
+}

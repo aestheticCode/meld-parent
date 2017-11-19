@@ -5,16 +5,16 @@
         <i class="material-icons">email</i>
       </div>
 
-      <md-form-field style="margin-left: 6px; flex: 1">
+      <mat-form-field style="margin-left: 6px; flex: 1">
         <input placeholder="Email" [(ngModel)]="email.email" name="email" type="email"
-               mdInput>
-        <button *ngIf="! readonly" mdSuffix md-icon-button (click)="onDelete()">
-          <md-icon>delete</md-icon>
+               matInput>
+        <button *ngIf="! readonly" matSuffix mat-icon-button (click)="onDelete()">
+          <mat-icon>delete</mat-icon>
         </button>
-        <button *ngIf="! readonly" mdSuffix md-icon-button (click)="onAdd()">
-          <md-icon>add</md-icon>
+        <button *ngIf="! readonly" matSuffix mat-icon-button (click)="onAdd()">
+          <mat-icon>add</mat-icon>
         </button>
-      </md-form-field>
+      </mat-form-field>
     </div>
   </fieldset>
 </form>

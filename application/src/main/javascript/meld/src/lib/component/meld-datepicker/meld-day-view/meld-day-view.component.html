@@ -1,0 +1,18 @@
+<div style="margin-bottom: 16px;">
+  <table class="table table-unbordered" style="margin-bottom: 0;">
+    <thead>
+      <tr style="color: darkgray">
+        <td align="center" *ngFor="let day of weekDays">
+          {{weekDayShort(day)}}
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let week of calendar">
+        <td align="center" *ngFor="let day of week">
+          <div class="day" [ngClass]="{active : isActive(day)}" (click)="onClick(day)">{{day}}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {MdDialogRef} from "@angular/material";
+import {MatDialogRef} from "@angular/material";
 import {Http, Response} from "@angular/http";
 import {QueryBuilder} from "../../../../lib/common/query/QueryBuilder";
 import {UserRow} from "../../../usercontrol/user-table/UserRow";
@@ -19,7 +19,7 @@ export class MeldEditorNameDialogComponent {
   private list: MeldListComponent;
 
   constructor(private http: Http,
-              private dialogRef: MdDialogRef<MeldEditorNameDialogComponent>) {
+              private dialogRef: MatDialogRef<MeldEditorNameDialogComponent>) {
   }
 
   users: Items = (params, callback) => {

@@ -9,7 +9,7 @@ import {
   Output
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {MdDialog} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {MeldTableMenuDialogComponent} from "./meld-menu-dialog/meld-table-menu-dialog.component";
 import {MeldFilterDirective} from "./meld-filter/meld-filter.directive";
 import {MeldColgroupDirective} from "./meld-colgroup/meld-colgroup.directive";
@@ -98,7 +98,7 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
   };
 
 
-  constructor(public dialog: MdDialog) {
+  constructor(public dialog: MatDialog) {
   }
 
   ngOnInit(): void {

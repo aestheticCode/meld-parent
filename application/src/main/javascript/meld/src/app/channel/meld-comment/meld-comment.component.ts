@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MdDialog} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {Http, Response} from "@angular/http";
 import {MeldCommentDialogComponent} from "./meld-comment-dialog/meld-comment-dialog.component";
 
@@ -16,7 +16,7 @@ export class MeldCommentComponent implements OnInit {
   public comment : any;
 
   constructor(private http : Http,
-              private dialog: MdDialog) { }
+              private dialog: MatDialog) { }
 
   ngOnInit() {
   }

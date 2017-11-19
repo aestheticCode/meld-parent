@@ -2,7 +2,7 @@
   <tr *ngFor="let column of parent.head.rows.first.columns | meldTableSorter:parent.columnConfiguration:true; let index = index;"
       draggable="true" (dragstart)="drag($event, index)" (dragover)="allowDrop($event)" (drop)="drop($event, index)">
     <td>
-      <md-checkbox [(ngModel)]="colConfigurationWithIndex(index).visible" [ngModelOptions]="{standalone : true}"></md-checkbox>
+      <mat-checkbox [(ngModel)]="colConfigurationWithIndex(index).visible" [ngModelOptions]="{standalone : true}"></mat-checkbox>
     </td>
     <td>
       <ng-template [ngTemplateOutlet]="column.content"></ng-template>

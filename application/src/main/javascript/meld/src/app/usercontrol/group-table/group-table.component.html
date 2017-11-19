@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<md-card style="margin: 12px; height: calc(100% - 24px);">
+<mat-card style="margin: 12px; height: calc(100% - 24px);">
   <div style="display: flex; align-items: center;">
-    <md-input-container style="width: 100%">
-      <input mdInput placeholder="Search" ngModel #searchBox="ngModel">
-    </md-input-container>
-    <button md-raised-button *ngIf="links | meldLink:'save'" style="width: 100px;" raised (click)="onCreate()">Create
+    <mat-input-container style="width: 100%">
+      <input matInput placeholder="Search" ngModel #searchBox="ngModel">
+    </mat-input-container>
+    <button mat-raised-button *ngIf="links | meldLink:'save'" style="width: 100px;" raised (click)="onCreate()">Create
     </button>
   </div>
   <meld-table #grid [items]="groups" (selectItemChange)="onSelection($event)" style="height: calc(100% - 48px)">
@@ -33,4 +33,4 @@
       </meld-tr>
     </meld-tbody>
   </meld-table>
-</md-card>
+</mat-card>

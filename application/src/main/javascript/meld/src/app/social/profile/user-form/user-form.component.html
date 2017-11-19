@@ -1,28 +1,28 @@
 <fieldset [disabled]="readonly">
   <legend>User</legend>
 
-  <md-form-field style="width: 100%;">
+  <mat-form-field style="width: 100%;">
     <input placeholder="Name" [(ngModel)]="user.email" name="email"
-           mdInput minlength="3" maxlength="100"
+           matInput minlength="3" maxlength="100"
            required #email="ngModel">
-  </md-form-field>
-  <md-form-field style="width: 100%;">
+  </mat-form-field>
+  <mat-form-field style="width: 100%;">
     <input placeholder="First Name" [(ngModel)]="user.firstName"
-           mdInput name="firstName" minlength="3" maxlength="100" required>
-  </md-form-field>
-  <md-form-field style="width: 100%;">
+           matInput name="firstName" minlength="3" maxlength="100" required>
+  </mat-form-field>
+  <mat-form-field style="width: 100%;">
     <input placeholder="Last Name" [(ngModel)]="user.lastName"
-           mdInput name="lastName" minlength="3" maxlength="100" required>
-  </md-form-field>
+           matInput name="lastName" minlength="3" maxlength="100" required>
+  </mat-form-field>
 
-  <md-form-field style="width: 100%">
-    <input placeholder="Birthday" mdInput [mdDatepicker]="datepicker" [(ngModel)]="user.birthday" name="birthday">
-    <md-datepicker-toggle mdSuffix [for]="datepicker"></md-datepicker-toggle>
-    <md-datepicker #datepicker></md-datepicker>
-  </md-form-field>
+  <mat-form-field style="width: 100%">
+    <input placeholder="Birthday" matInput [matDatepicker]="datepicker" [(ngModel)]="user.birthday" name="birthday">
+    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker></mat-datepicker>
+  </mat-form-field>
 
 </fieldset>
 
-<button md-button (click)="onSave()" *ngIf="! readonly && ! user.id">Save</button>
-<button md-button (click)="onUpdate()" *ngIf="! readonly && user.id">Update</button>
-<button md-button (click)="onEdit()" *ngIf="readonly">Edit</button>
+<button mat-button (click)="onSave()" *ngIf="! readonly && ! user.id">Save</button>
+<button mat-button (click)="onUpdate()" *ngIf="! readonly && user.id">Update</button>
+<button mat-button (click)="onEdit()" *ngIf="readonly">Edit</button>

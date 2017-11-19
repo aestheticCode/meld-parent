@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import * as moment from "moment";
-import {LoadWindow} from "../meld-window/LoadWindow";
 
 @Component({
   selector: 'meld-datepicker',
@@ -9,37 +8,85 @@ import {LoadWindow} from "../meld-window/LoadWindow";
 })
 export class MeldDatePickerComponent implements OnInit {
 
-  public calendar = [];
+  public day : number = moment(new Date()).day();
 
-  constructor() { }
+  public year : number = moment(new Date()).year();
+
+  public month : number = moment(new Date()).month();
+
+  public dayView : boolean = true;
+
+  public monthView : boolean = false;
+
+  public yearView : boolean = false;
+
+  public date = moment({year: this.year, month: this.month, day: this.day});
+
+  private dateChange : EventEmitter<Date> = new EventEmitter();
+
+  constructor() {
+  }
+
+  previous() {
+    if (this.dayView) {
+      if (this.month > 0) {
+        this.month --;
+      } else {
+        this.year--;
+        this.month = 11;
+      }
+    } else {
+        this.year -= 24
+    }
+
+
+    this.date = moment({year: this.year, month: this.month, day: 1});
+  };
+
+  next() {
+    if (this.dayView) {
+      if (this.month < 11) {
+        this.month ++;
+      } else {
+        this.year++;
+        this.month = 0;
+      }
+    } else {
+      this.year += 24
+    }
+
+    this.date = moment({year: this.year, month: this.month, day: 1});
+  }
+
+  public monthAndYear() : string {
+    return moment.months(this.date.month()) + " " + this.date.year();
+  }
+
+  onYearChange(year : number) {
+    this.year = year;
+    this.dayView = false;
+    this.monthView = true;
+    this.yearView = false;
+    this.date = moment({year: this.year, month: this.month, day: this.day});
+  }
+
+  onMonthChange(month : string) {
+    this.month = moment.months().indexOf(month);
+    this.dayView = true;
+    this.yearView = false;
+    this.monthView =false;
+    this.date = moment({year: this.year, month: this.month, day: this.day});
+  }
+
+  onDayChange(day : number) {
+    this.day = day;
+    this.date = moment({year: this.year, month: this.month, day: this.day});
+    this.dateChange.emit(this.date.toDate());
+  }
 
   ngOnInit() {
 
-    for (let i = 0; i < 5; i++) {
-
-      this.calendar.push(moment({year : 2013, month : i, day : 1}))
-
-    }
-
   }
 
-  public onWindowScroll(event : LoadWindow) {
-
-    this.calendar = [];
-
-    let loadIndex = event.loadIndex;
-    let endIndex = event.loadIndex + event.loadLimit * 5;
-
-    //console.log("startindex : " + loadIndex + " endindex : " + endIndex);
-
-    for (let i = loadIndex; i < endIndex; i++) {
-
-      this.calendar.push(moment({year : 2013, month : i, day : 1}))
-
-    }
-
-    //event.callback();
-
-  }
 
 }

@@ -2,7 +2,7 @@ import {
   Component, ComponentFactoryResolver, forwardRef, HostListener, Injector, Input, OnInit, Optional,
   Self, ViewChild, ViewContainerRef
 } from '@angular/core';
-import {MdFormFieldControl} from "@angular/material";
+import {MatFormFieldControl} from "@angular/material";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
 import {Strings} from "../../common/utils/Strings";
 import {Subject} from "rxjs/Subject";
@@ -25,10 +25,13 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   styleUrls: ['meld-date.component.css'],
   providers: [
     CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR,
-    {provide: MdFormFieldControl, useExisting: MeldDateComponent}
+    {provide: MatFormFieldControl, useExisting: MeldDateComponent}
   ]
 })
-export class MeldDateComponent implements MdFormFieldControl<string>, ControlValueAccessor, OnInit {
+export class MeldDateComponent implements MatFormFieldControl<string>, ControlValueAccessor, OnInit {
+
+  shouldPlaceholderFloat: boolean;
+  controlType: string;
 
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (value: any) => void = noop;
@@ -51,6 +54,9 @@ export class MeldDateComponent implements MdFormFieldControl<string>, ControlVal
   container : ViewContainerRef;
 
   setDescribedByIds(ids: string[]): void {
+  }
+
+  onContainerClick(event: MouseEvent): void {
   }
 
   readFormat() : string[] {

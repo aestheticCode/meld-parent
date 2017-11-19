@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<md-card style="margin: 12px;">
+<mat-card style="margin: 12px;">
   <div style="display: flex; align-items: center;">
-    <md-input-container style="width: 100%;">
-      <input mdInput placeholder="Search" ngModel #searchBox="ngModel">
-    </md-input-container>
-    <button md-raised-button *ngIf="links | meldLink:'save'" (click)="onCreate()">Create</button>
+    <mat-input-container style="width: 100%;">
+      <input matInput placeholder="Search" ngModel #searchBox="ngModel">
+    </mat-input-container>
+    <button mat-raised-button *ngIf="links | meldLink:'save'" (click)="onCreate()">Create</button>
   </div>
   <meld-table #table [items]="users" (selectItemChange)="onSelectionChange($event)" [menu]="true" [filter]="true">
     <meld-filter>
       <ng-template>
         <form>
-          <md-form-field style="width: 100%;">
-            <input mdInput type="text" placeholder="eMail" name="name" [(ngModel)]="filterTemplate.name">
-          </md-form-field>
-          <md-form-field style="width: 100%;">
-            <input mdInput type="text" placeholder="First Name" name="firstName" [(ngModel)]="filterTemplate.firstName">
-          </md-form-field>
-          <md-form-field style="width: 100%;">
-            <input mdInput type="text" placeholder="Last Name" name="lastName" [(ngModel)]="filterTemplate.lastName">
-          </md-form-field>
-          <md-form-field>
-            <input mdInput [mdDatepicker]="datepicker" [(ngModel)]="filterTemplate.birthdate">
-            <md-datepicker-toggle mdSuffix [for]="datepicker"></md-datepicker-toggle>
-            <md-datepicker #datepicker></md-datepicker>
-          </md-form-field>
-          <button md-button (click)="onSearchClick()">Search</button>
-          <button md-button (click)="onCancelClick()">Reset</button>
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="eMail" name="name" [(ngModel)]="filterTemplate.name">
+          </mat-form-field>
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="First Name" name="firstName" [(ngModel)]="filterTemplate.firstName">
+          </mat-form-field>
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Last Name" name="lastName" [(ngModel)]="filterTemplate.lastName">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="datepicker" [(ngModel)]="filterTemplate.birthdate">
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker></mat-datepicker>
+          </mat-form-field>
+          <button mat-button (click)="onSearchClick()">Search</button>
+          <button mat-button (click)="onCancelClick()">Reset</button>
         </form>
       </ng-template>
     </meld-filter>
@@ -75,4 +75,4 @@
       </meld-tr>
     </meld-tbody>
   </meld-table>
-</md-card>
+</mat-card>

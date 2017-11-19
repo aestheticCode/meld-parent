@@ -1,3 +1,7 @@
-<p>
-  meld-year-view works!
-</p>
+<table class="table table-unbordered">
+  <tr *ngFor="let tr of years">
+    <td *ngFor="let td of tr" (click)="onClick(td)">
+      <div class="year">{{td}}</div>
+    </td>
+  </tr>
+</table>

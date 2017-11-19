@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Http, Response} from "@angular/http";
-import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-meld-comment-dialog',
@@ -12,8 +12,8 @@ export class MeldCommentDialogComponent implements OnInit {
   public comment : any;
 
   constructor(private http : Http,
-              private dialogRef: MdDialogRef<MeldCommentDialogComponent>,
-              @Inject(MD_DIALOG_DATA) private data: any) {
+              private dialogRef: MatDialogRef<MeldCommentDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) private data: any) {
     this.comment = data;
   }
 

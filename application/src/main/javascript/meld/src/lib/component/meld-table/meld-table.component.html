@@ -1,8 +1,8 @@
 <div style="display: flex; width: 100%">
 
   <div style="position: absolute; right: 10px;">
-    <a (click)="openMenu()" *ngIf="menuSymbol"><md-icon>toc</md-icon></a>
-    <a (click)="openFilter()" *ngIf="filterSymbol"><md-icon>assessment</md-icon></a>
+    <a (click)="openMenu()" *ngIf="menuSymbol"><mat-icon>toc</mat-icon></a>
+    <a (click)="openFilter()" *ngIf="filterSymbol"><mat-icon>assessment</mat-icon></a>
   </div>
 
   <div style="display: flex; width: 100%;">
@@ -17,9 +17,9 @@
             </colgroup>
             <thead>
             <tr *ngFor="let row of head.rows">
-              <td *ngIf="multiSelect" ><md-checkbox [checked]="allSelected" (change)="selectAll($event)" ></md-checkbox></td>
+              <td *ngIf="multiSelect" ><mat-checkbox [checked]="allSelected" (change)="selectAll($event)" ></mat-checkbox></td>
               <td *ngFor="let column of row.columns | meldTableSorter:columnConfiguration">
-                <ng-template [ngTemplateOutlet]="column.content"></ng-template>
+                <ng-container *ngTemplateOutlet="column.content"></ng-container>
               </td>
             </tr>
             </thead>
@@ -36,10 +36,10 @@
             </colgroup>
             <tbody>
             <tr *ngFor="let item of itemsWindow; let index = index;" [class.hover]="isHoveredIndex(index)" (mousemove)="hoveredIndex = index" (mouseleave)="hoveredIndex = undefined">
-              <td *ngIf="multiSelect"><md-checkbox [checked]="isItemSelected(item)" (change)="itemSelected(item, $event)"></md-checkbox></td>
+              <td *ngIf="multiSelect"><mat-checkbox [checked]="isItemSelected(item)" (change)="itemSelected(item, $event)"></mat-checkbox></td>
               <td *ngFor="let column of body.rows.first.columns | meldTableSorter:columnConfiguration"
                   (click)="selectItemChange.emit(item)">
-                <ng-template [ngTemplateOutlet]="column.content" [ngOutletContext]="{$implicit: item}"></ng-template>
+                <ng-container *ngTemplateOutlet="column.content; context: {$implicit: item}"></ng-container>
               </td>
             </tr>
             </tbody>
@@ -56,9 +56,9 @@
             </colgroup>
             <tfoot>
             <tr *ngFor="let row of footer.rows">
-              <td *ngIf="multiSelect" ><md-checkbox [checked]="allSelected" (change)="selectAll($event)"></md-checkbox></td>
+              <td *ngIf="multiSelect" ><mat-checkbox [checked]="allSelected" (change)="selectAll($event)"></mat-checkbox></td>
               <td *ngFor="let column of row.columns | meldTableSorter:columnConfiguration">
-                <ng-template [ngTemplateOutlet]="column.content"></ng-template>
+                <ng-container *ngTemplateOutlet="column.content"></ng-container>
               </td>
             </tr>
             </tfoot>

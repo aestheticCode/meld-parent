@@ -1,6 +1,6 @@
 import {Component, forwardRef, HostListener, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {MdDialog, MdDialogConfig, MdDialogRef} from "@angular/material";
+import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material";
 import {DOCUMENT} from "@angular/common";
 import {MeldEditorAvatarDialogComponent} from "./meld-editor-avatar-dialog/meld-editor-avatar-dialog.component";
 import {MeldEditorNameDialogComponent} from "./meld-editor-name-dialog/meld-editor-name-dialog.component";
@@ -39,14 +39,14 @@ export class MeldEditorComponent implements OnInit, ControlValueAccessor {
 
   constructor(@Inject(DOCUMENT) private document: HTMLDocument,
               @Inject('Window') private window: Window,
-              private dialog: MdDialog) {
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     const editor = this.editor;
     const dialog = this.dialog;
-    let nameDialogRef: MdDialogRef<MeldEditorNameDialogComponent>;
-    let avatarDialogRef : MdDialogRef<MeldEditorAvatarDialogComponent>;
+    let nameDialogRef: MatDialogRef<MeldEditorNameDialogComponent>;
+    let avatarDialogRef : MatDialogRef<MeldEditorAvatarDialogComponent>;
 
     this.editor.commands.push(
       new class extends EditorCommand {
@@ -61,7 +61,7 @@ export class MeldEditorComponent implements OnInit, ControlValueAccessor {
               let clientRect = editor.getBoundingSelectionRect();
               let top = clientRect.top + 40 + "px";
               let left = clientRect.left + "px";
-              let config: MdDialogConfig = {
+              let config: MatDialogConfig = {
                 disableClose: false,
                 hasBackdrop: false,
                 width: 300 + "px",
@@ -81,7 +81,7 @@ export class MeldEditorComponent implements OnInit, ControlValueAccessor {
                       let clientRect = editor.getBoundingSelectionRect();
                       let top = clientRect.top + 40 + "px";
                       let left = clientRect.left + "px";
-                      let config: MdDialogConfig = {
+                      let config: MatDialogConfig = {
                         disableClose: false,
                         hasBackdrop: false,
                         width: 300 + "px",

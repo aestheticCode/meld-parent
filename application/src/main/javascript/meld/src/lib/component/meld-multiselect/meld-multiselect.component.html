@@ -1,7 +1,7 @@
 <div style="width: 100%;">
   <meld-combobox #comboBox [items]="parentItems" (selectItemChange)="onSelectItemChange($event)" [placeholder]="placeholder">
     <ng-template let-item>
-      <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{$implicit: item}"></ng-template>
+      <ng-template *ngTemplateOutlet="template; context: {$implicit: item}"></ng-template>
     </ng-template>
   </meld-combobox>
   <div class="box" (mouseenter)="showInfo = true" (mouseleave)="showInfo = false">
@@ -10,14 +10,14 @@
         <meld-tr>
           <meld-td>
             <ng-template let-item>
-              <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{$implicit: item}"></ng-template>
+              <ng-template *ngTemplateOutlet="template; context: {$implicit: item}"></ng-template>
             </ng-template>
           </meld-td>
           <meld-td>
             <ng-template let-item>
               <div style="text-align: right; padding-right: 5px;">
                 <a style="cursor: pointer;" (click)="onRemoveSelectedItem(item)">
-                  <md-icon>delete</md-icon>
+                  <mat-icon>delete</mat-icon>
                 </a>
               </div>
             </ng-template>

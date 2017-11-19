@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Configuration} from "./Configuration";
 
 @Injectable()
@@ -11,14 +11,13 @@ export class AppService {
 
   configuration: Configuration;
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   load(): Promise<any> {
     return new Promise((resolve: any) => {
       this.http.get('service')
-        .map(res => res.json() as Configuration)
-        .subscribe(configuration => {
-          this.configuration = configuration;
+        .subscribe(data => {
+          this.configuration = data as Configuration;
           this.event.emit(this.configuration);
           resolve(true);
         });

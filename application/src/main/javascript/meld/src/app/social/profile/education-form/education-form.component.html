@@ -11,10 +11,10 @@
     No Education.
   </div>
 
-  <button md-button *ngIf="! readonly && ! education.id" (click)="onSave()">Save</button>
-  <button md-button *ngIf="! readonly && education.id" (click)="onUpdate()">Update</button>
-  <button md-button *ngIf="! readonly" (click)="onCancel()">Chancel</button>
-  <button md-button *ngIf="readonly" (click)="onEdit()">Edit</button>
+  <button mat-button *ngIf="! readonly && ! education.id" (click)="onSave()">Save</button>
+  <button mat-button *ngIf="! readonly && education.id" (click)="onUpdate()">Update</button>
+  <button mat-button *ngIf="! readonly" (click)="onCancel()">Chancel</button>
+  <button mat-button *ngIf="readonly" (click)="onEdit()">Edit</button>
 
 
 </fieldset>

@@ -1,18 +1,18 @@
 <div style="position: relative; width: 100%;" (click)="onOverlayClick($event)">
-  <md-form-field style="width: 100%;">
-    <input mdInput [ngModel]="filter" (ngModelChange)="onFilterChange($event)" [placeholder]="placeholder" (keyup)="onKeyUp($event)"
+  <mat-form-field style="width: 100%;">
+    <input matInput [ngModel]="filter" (ngModelChange)="onFilterChange($event)" [placeholder]="placeholder" (keyup)="onKeyUp($event)"
            (focus)="showOverlay = true" [ngModelOptions]="{standalone : true}" style="width: 100%;">
-    <button md-icon-button mdSuffix *ngIf="filter != ''" (click)="clearValue()" ><md-icon>backspace</md-icon></button>
-    <button md-icon-button mdSuffix *ngIf="! showOverlay" (click)="showOverlay = true"><md-icon>arrow_drop_down</md-icon></button>
-    <button md-icon-button mdSuffix *ngIf="showOverlay" (click)="showOverlay = false"><md-icon>arrow_drop_up</md-icon></button>
-  </md-form-field>
+    <button mat-icon-button matSuffix *ngIf="filter != ''" (click)="clearValue()" ><mat-icon>backspace</mat-icon></button>
+    <button mat-icon-button matSuffix *ngIf="! showOverlay" (click)="showOverlay = true"><mat-icon>arrow_drop_down</mat-icon></button>
+    <button mat-icon-button matSuffix *ngIf="showOverlay" (click)="showOverlay = false"><mat-icon>arrow_drop_up</mat-icon></button>
+  </mat-form-field>
   <div *ngIf="showOverlay" class="overlay" (mouseenter)="showInfo = true" (mouseleave)="showInfo = false">
     <meld-table #table [items]="parentItems" [unbordered]="true" (selectItemChange)="onSelectItemChange($event)" [rowHeight]="28">
       <meld-tbody>
         <meld-tr>
           <meld-td>
             <ng-template let-item>
-              <ng-template [ngTemplateOutlet]="template" [ngOutletContext]="{$implicit: item}"></ng-template>
+              <ng-container *ngTemplateOutlet="template; context: {$implicit: item}"></ng-container>
             </ng-template>
           </meld-td>
         </meld-tr>
