@@ -11,27 +11,22 @@
                     <legend>User</legend>
                     <mat-form-field style="width: 100%;">
                       <input placeholder="Name" [(ngModel)]="user.email" name="email"
-                             matInput minlength="3" maxlength="100"
+                             matInput minlength="3" maxlength="100" [readonly]="readonly"
                              required #email="ngModel">
                     </mat-form-field>
                     <mat-form-field style="width: 100%;">
-                      <input placeholder="First Name" [(ngModel)]="user.firstName"
+                      <input placeholder="First Name" [(ngModel)]="user.firstName" [readonly]="readonly"
                              matInput name="firstName" minlength="3" maxlength="100" required>
                     </mat-form-field>
                     <mat-form-field style="width: 100%;">
-                      <input placeholder="Last Name" [(ngModel)]="user.lastName"
+                      <input placeholder="Last Name" [(ngModel)]="user.lastName" [readonly]="readonly"
                              matInput name="lastName" minlength="3" maxlength="100" required>
                     </mat-form-field>
 
                     <mat-form-field style="width: 100%">
-                      <input placeholder="Birthday" matInput [matDatepicker]="datepicker" [(ngModel)]="user.birthday" name="birthday">
-                      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-                      <mat-datepicker #datepicker></mat-datepicker>
-                    </mat-form-field>
-
-                    <mat-form-field style="width: 100%">
-                      <meld-date #testDatePicker placeholder="Test"></meld-date>
-                      <mat-icon (click)="datePickerOpen()" matSuffix>today</mat-icon>
+                      <meld-date [readonly]="readonly" #datePicker placeholder="Birthday" [(ngModel)]="user.birthday" name="birthday"></meld-date>
+                      <button [disabled]="readonly" matSuffix mat-icon-button (click)="datePicker.clear()"><mat-icon>delete</mat-icon></button>
+                      <button [disabled]="readonly" matSuffix mat-icon-button (click)="datePicker.open()"><mat-icon >today</mat-icon></button>
                     </mat-form-field>
 
 
@@ -41,14 +36,14 @@
                   <fieldset>
                     <legend>Roles</legend>
                     <app-role-multiselect [name]="'roles'" [(ngModel)]="user.roles" placeholder="Roles"
-                                          style="max-height: 400px;"></app-role-multiselect>
+                                          [readonly]="readonly" style="max-height: 400px;"></app-role-multiselect>
                   </fieldset>
                 </div>
                 <div class="col-md-4">
                   <fieldset>
                     <legend>Groups</legend>
                     <app-group-multiselect [name]="'groups'" [(ngModel)]="user.groups" placeholder="Groups"
-                                           style="max-height: 400px;"></app-group-multiselect>
+                                           [readonly]="readonly" style="max-height: 400px;"></app-group-multiselect>
                   </fieldset>
 
                 </div>
@@ -71,8 +66,9 @@
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button (click)="onSave()" *ngIf="! user.id">Save</button>
-      <button mat-button (click)="onUpdate()" *ngIf="user.id">Update</button>
+      <button mat-button (click)="readonly = false" *ngIf="readonly">Edit</button>
+      <button mat-button (click)="onSave()" *ngIf="! user.id && ! readonly">Save</button>
+      <button mat-button (click)="onUpdate()" *ngIf="user.id && ! readonly">Update</button>
     </mat-card-actions>
   </mat-card>
 </div>

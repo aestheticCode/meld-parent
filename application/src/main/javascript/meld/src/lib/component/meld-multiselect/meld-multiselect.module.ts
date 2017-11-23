@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {MeldMultiSelectComponent} from "./meld-multiselect.component";
-import {MatIconModule} from "@angular/material";
+import {MatButtonModule, MatIconModule} from "@angular/material";
 import {MeldComboBoxModule} from "../meld-combobox/meld-combobox.module";
 import {MeldTableModule} from "../meld-table/meld-table.module";
 
@@ -11,6 +11,7 @@ import {MeldTableModule} from "../meld-table/meld-table.module";
     CommonModule,
     FormsModule,
     MatIconModule,
+    MatButtonModule,
     MeldComboBoxModule,
     MeldTableModule
   ],

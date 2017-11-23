@@ -41,6 +41,12 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
   @Input("items")
   public items: Items<any>;
 
+  @Input("readonly")
+  public readonly : boolean = false;
+
+  @Input("disabled")
+  public disabled : boolean = false;
+
   @Output('selectItemChange')
   private selectItemChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -112,16 +118,16 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
     return false;
   }
 
-  onShowOverlay(event: MouseEvent) {
-    event.stopPropagation();
-    this.showOverlay = true;
-    return false;
+  onShowOverlay() {
+    if (this.disabled || this.readonly) {
+      this.showOverlay = false;
+    } else {
+      this.showOverlay = true;
+    }
   }
 
-  onHideOverlay(event: MouseEvent) {
-    event.stopPropagation();
+  onHideOverlay() {
     this.showOverlay = false;
-    return false;
   }
 
   @HostListener("document:click")

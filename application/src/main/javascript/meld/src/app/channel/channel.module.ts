@@ -9,6 +9,8 @@ import {MeldListComponent} from './meld-list/meld-list.component';
 import {MeldEditorComponent} from "./meld-editor/meld-editor.component";
 import {MeldCommentComponent} from "./meld-comment/meld-comment.component";
 import {MeldItemComponent} from "./meld-list/meld-item/meld-item.component";
+import {MeldEditorNameDialogComponent} from "./meld-editor/meld-editor-name-dialog/meld-editor-name-dialog.component";
+import {MeldEditorAvatarDialogComponent} from "./meld-editor/meld-editor-avatar-dialog/meld-editor-avatar-dialog.component";
 
 
 @NgModule({
@@ -21,10 +23,16 @@ import {MeldItemComponent} from "./meld-list/meld-item/meld-item.component";
     MeldListComponent,
     MeldEditorComponent,
     MeldCommentComponent,
-    MeldItemComponent
+    MeldItemComponent,
+    MeldEditorNameDialogComponent,
+    MeldEditorAvatarDialogComponent
   ],
   providers: [
     appRoutingProviders
+  ],
+  entryComponents : [
+    MeldEditorNameDialogComponent,
+    MeldEditorAvatarDialogComponent
   ]
 })
 export class ChannelModule {

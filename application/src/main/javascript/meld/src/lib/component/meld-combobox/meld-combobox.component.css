@@ -23,3 +23,7 @@ meld-combobox .info {
   font-size: xx-small;
   color: gray;
 }
+
+meld-combobox .table th, .table td {
+  vertical-align: middle;
+}

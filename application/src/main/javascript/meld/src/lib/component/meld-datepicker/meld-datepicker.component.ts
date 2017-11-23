@@ -1,5 +1,7 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Optional} from '@angular/core';
 import * as moment from "moment";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {Moment} from "moment";
 
 @Component({
   selector: 'meld-datepicker',
@@ -8,7 +10,7 @@ import * as moment from "moment";
 })
 export class MeldDatePickerComponent implements OnInit {
 
-  public day : number = moment(new Date()).day();
+  public day : number = moment(new Date()).date();
 
   public year : number = moment(new Date()).year();
 
@@ -24,7 +26,14 @@ export class MeldDatePickerComponent implements OnInit {
 
   private dateChange : EventEmitter<Date> = new EventEmitter();
 
-  constructor() {
+  constructor(@Optional() private dialogRef: MatDialogRef<MeldDatePickerComponent>,
+              @Inject(MAT_DIALOG_DATA) @Optional() public data: any) {
+    if (data) {
+      this.date = moment(data.date);
+      this.day = this.date.day();
+      this.month = this.date.month();
+      this.year = this.date.year();
+    }
   }
 
   previous() {
@@ -82,6 +91,9 @@ export class MeldDatePickerComponent implements OnInit {
     this.day = day;
     this.date = moment({year: this.year, month: this.month, day: this.day});
     this.dateChange.emit(this.date.toDate());
+    if (this.dialogRef) {
+      this.dialogRef.close(this.date.toDate())
+    }
   }
 
   ngOnInit() {

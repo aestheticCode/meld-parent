@@ -1,10 +1,10 @@
 <div style="position: relative; width: 100%;" (click)="onOverlayClick($event)">
   <mat-form-field style="width: 100%;">
-    <input matInput [ngModel]="filter" (ngModelChange)="onFilterChange($event)" [placeholder]="placeholder" (keyup)="onKeyUp($event)"
-           (focus)="showOverlay = true" [ngModelOptions]="{standalone : true}" style="width: 100%;">
-    <button mat-icon-button matSuffix *ngIf="filter != ''" (click)="clearValue()" ><mat-icon>backspace</mat-icon></button>
-    <button mat-icon-button matSuffix *ngIf="! showOverlay" (click)="showOverlay = true"><mat-icon>arrow_drop_down</mat-icon></button>
-    <button mat-icon-button matSuffix *ngIf="showOverlay" (click)="showOverlay = false"><mat-icon>arrow_drop_up</mat-icon></button>
+    <input matInput [disabled]="disabled" [readonly]="readonly" [ngModel]="filter" (ngModelChange)="onFilterChange($event)" [placeholder]="placeholder" (keyup)="onKeyUp($event)"
+           (focus)="onShowOverlay()" [ngModelOptions]="{standalone : true}" style="width: 100%;">
+    <button mat-icon-button matSuffix *ngIf="filter != ''" [disabled]="disabled || readonly" (click)="clearValue()" ><mat-icon>backspace</mat-icon></button>
+    <button mat-icon-button matSuffix *ngIf="! showOverlay" [disabled]="disabled || readonly" (click)="onShowOverlay()"><mat-icon>arrow_drop_down</mat-icon></button>
+    <button mat-icon-button matSuffix *ngIf="showOverlay" [disabled]="disabled || readonly" (click)="onHideOverlay()"><mat-icon>arrow_drop_up</mat-icon></button>
   </mat-form-field>
   <div *ngIf="showOverlay" class="overlay" (mouseenter)="showInfo = true" (mouseleave)="showInfo = false">
     <meld-table #table [items]="parentItems" [unbordered]="true" (selectItemChange)="onSelectItemChange($event)" [rowHeight]="28">

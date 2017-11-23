@@ -26,6 +26,12 @@ export class RoleMultiselectComponent implements ControlValueAccessor, OnChanges
   @Input("placeholder")
   public placeholder: string;
 
+  @Input("readonly")
+  public readonly : boolean = false;
+
+  @Input("disabled")
+  public disabled : boolean = false;
+
   private onTouchedCallback: () => void = noop;
 
   private onChangeCallback: (value: any) => void = noop;

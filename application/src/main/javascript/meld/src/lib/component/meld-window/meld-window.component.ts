@@ -47,9 +47,6 @@ export class MeldWindowComponent {
 
   public marginBottom : number = 0;
 
-  @Input("async")
-  public async : boolean = true;
-
   @Output()
   private windowScrollChange: EventEmitter<LoadWindow> = new EventEmitter<LoadWindow>();
 
@@ -158,27 +155,15 @@ export class MeldWindowComponent {
     let higherRowIndex = this.computeHigherRowIndex(this.rowIndex, this.rowsToLoad());
     let lowerRowIndex = this.computeLowerRowIndex(this.rowIndex, this.rowsToLoad());
     if (this.marginTop > 0) {
-      if (this.async) {
-        this.debouncer.next(new LoadWindow(higherRowIndex, this.rowsToLoad(), this.startIndex() , this.endIndex(), () => {
-          this.rowIndex = higherRowIndex;
-          this.onvPositionChange();
-        }));
-      } else {
-        this.windowScrollChange.emit(new LoadWindow(higherRowIndex, this.rowsToLoad(), this.startIndex() , this.endIndex(), () => {}))
+      this.debouncer.next(new LoadWindow(higherRowIndex, this.rowsToLoad(), this.startIndex() , this.endIndex(), () => {
         this.rowIndex = higherRowIndex;
         this.onvPositionChange();
-      }
+      }));
     } else if (this.marginBottom < windowElement.offsetHeight) {
-      if (this.async) {
-        this.debouncer.next(new LoadWindow(lowerRowIndex, this.rowsToLoad(), this.startIndex() , this.endIndex(), () => {
-          this.rowIndex = lowerRowIndex;
-          this.onvPositionChange();
-        }));
-      } else {
-        this.windowScrollChange.emit(new LoadWindow(lowerRowIndex, this.rowsToLoad(), this.startIndex() , this.endIndex(), () => {}))
+      this.debouncer.next(new LoadWindow(lowerRowIndex, this.rowsToLoad(), this.startIndex() , this.endIndex(), () => {
         this.rowIndex = lowerRowIndex;
         this.onvPositionChange();
-      }
+      }));
     }
   };
 

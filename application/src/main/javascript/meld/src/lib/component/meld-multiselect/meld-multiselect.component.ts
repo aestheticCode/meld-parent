@@ -49,6 +49,12 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
   @Input("items")
   public items: Items<any>;
 
+  @Input("disabled")
+  public disabled : boolean = false;
+
+  @Input("readonly")
+  public readonly : boolean = false;
+
   @ViewChild("comboBox")
   public comboBox: MeldComboBoxComponent;
 

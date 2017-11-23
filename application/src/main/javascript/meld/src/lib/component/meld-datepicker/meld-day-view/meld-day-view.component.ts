@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import * as moment from 'moment';
-import {months} from "moment";
+import {Moment} from "moment";
 
 @Component({
   selector: 'meld-day-view',
@@ -12,8 +12,9 @@ export class MeldDayViewComponent implements OnInit, OnChanges {
   public day : number;
 
   @Input("date")
-  public date;
+  public date : Moment;
 
+  @Output("dayChange")
   private dayChange : EventEmitter<number> = new EventEmitter();
 
   public weekDays : string[] = moment.weekdays();
@@ -24,8 +25,11 @@ export class MeldDayViewComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.calendar = [];
-    let beginDay = this.date.day();
-    let endDay = this.date.daysInMonth();
+    const date = this.date.clone();
+    date.date(1);
+
+    let beginDay = date.day();
+    let endDay = date.daysInMonth();
     let day = 0;
     for (let weekIndex = 0; weekIndex < 5; weekIndex++) {
       let days = [];
@@ -45,6 +49,10 @@ export class MeldDayViewComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.ngOnInit();
+    if (this.date) {
+      this.day =  this.date.date();
+    }
+
   }
 
   public weekDayShort(day : string) : string {

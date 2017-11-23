@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {AbstractControl, NgModel} from "@angular/forms";
 import {Http, Response} from "@angular/http";
 import {UserForm} from "./UserForm";
@@ -6,6 +6,8 @@ import {ActivatedRoute} from "@angular/router";
 import {UserFormModel} from "./UserFormModel";
 import {MatDialog} from "@angular/material";
 import {MeldDatePickerComponent} from "../../../lib/component/meld-datepicker/meld-datepicker.component";
+import {MeldDateComponent} from "../../../lib/component/meld-date/meld-date.component";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-user-form',
@@ -19,9 +21,10 @@ export class UserFormComponent implements OnInit {
   @ViewChild('email')
   private email: NgModel;
 
+  public readonly : boolean = true;
+
   constructor(private http: Http,
-              private route: ActivatedRoute,
-              public dialog: MatDialog) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -48,6 +51,7 @@ export class UserFormComponent implements OnInit {
     this.http.post(`service/usercontrol/user/form`, this.user)
       .subscribe((res: Response) => {
         this.user = res.json();
+        this.readonly = true;
       });
   }
 
@@ -55,11 +59,8 @@ export class UserFormComponent implements OnInit {
     this.http.put(`service/usercontrol/user/${this.user.id}/form`, this.user)
       .subscribe((res: Response) => {
         this.user = res.json();
+        this.readonly = true;
       });
-  }
-
-  datePickerOpen() {
-    this.dialog.open(MeldDatePickerComponent);
   }
 
 }

@@ -1,4 +1,4 @@
-import {Component, HostListener} from '@angular/core';
+import {Component, EventEmitter, HostListener} from '@angular/core';
 
 @Component({
   selector: 'meld-digit',
@@ -9,7 +9,11 @@ export class MeldDigitComponent {
 
   public _value : number = 0;
 
+  public readonly : boolean = false;
+
   public limit : number = 30;
+
+  public valueChange : EventEmitter<number> = new EventEmitter();
 
   private format : Intl.NumberFormat = new Intl.NumberFormat("de-DE", {useGrouping : false, minimumIntegerDigits : 2});
 
@@ -22,10 +26,10 @@ export class MeldDigitComponent {
   }
 
   set value(value : number) {
-    if (value < 1) {
+    if (value <= 1) {
       this._value = 1;
     }
-    if (value > this.limit) {
+    if (value >= this.limit) {
       this._value = this.limit;
     }
     if (value > 1 && value < this.limit) {
@@ -39,15 +43,17 @@ export class MeldDigitComponent {
 
   @HostListener("wheel", ["$event"])
   onWheel(event : WheelEvent) {
+    if (! this.readonly) {
+      event.stopPropagation();
 
-    event.stopPropagation();
+      let wheelY = this.normalizeWheelY(event);
 
-    let wheelY = this.normalizeWheelY(event);
+      this.value -= Math.round(wheelY * 10);
 
-    this.value -= Math.round(wheelY * 10);
+      this.valueChange.emit(this.value);
 
-    return false;
-
+      return false;
+    }
   }
 
   normalizeWheelY(event : WheelEvent) {
