@@ -1,4 +1,4 @@
-import {FilterTemplate} from "./FilterTemplate";
+import {FilterTemplate} from "./user-table.interfaces";
 
 export class FilterTemplateModel implements FilterTemplate {
   name: string;

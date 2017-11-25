@@ -2,7 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {MatDialogRef} from "@angular/material";
 import {Http, Response} from "@angular/http";
 import {QueryBuilder} from "../../../../lib/common/query/QueryBuilder";
-import {UserRow} from "../../../usercontrol/user-table/UserRow";
+import {UserRow} from "../../../usercontrol/user-table/user-table.interfaces";
 import {MeldListComponent} from "../../../../lib/component/meld-list/meld-list.component";
 import {Items} from "../../../../lib/component/meld-list/Items";
 

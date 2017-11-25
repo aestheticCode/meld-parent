@@ -82,7 +82,9 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['placeholder']) {
-      this.comboBox.placeholder = this.placeholder;
+      if (this.comboBox) {
+        this.comboBox.placeholder = this.placeholder;
+      }
     }
   }
 

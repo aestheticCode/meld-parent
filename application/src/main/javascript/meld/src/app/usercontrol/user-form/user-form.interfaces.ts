@@ -13,7 +13,7 @@ export interface UserForm extends LinksContainer {
 
   birthday: string;
 
-  image : BinaryFile;
+  image: BinaryFile;
 
   roles: string[];
 

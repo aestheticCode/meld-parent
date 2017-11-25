@@ -1,6 +1,6 @@
 import {BinaryFile} from "../../../lib/common/rest/BinaryFile";
 import {Link} from "../../../lib/common/rest/Link";
-import {UserForm} from "./UserForm";
+import {UserForm} from "./user-form.interfaces";
 
 export class UserFormModel implements UserForm {
   image: BinaryFile;

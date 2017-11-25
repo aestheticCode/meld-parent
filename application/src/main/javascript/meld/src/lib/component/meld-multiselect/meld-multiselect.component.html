@@ -5,17 +5,19 @@
     </ng-template>
   </meld-combobox>
   <div class="box" (mouseenter)="showInfo = true" (mouseleave)="showInfo = false">
-    <meld-table #table [items]="selectedItems" [unbordered]="true">
+    <meld-table #table [items]="selectedItems" [unbordered]="true" [rowHeight]="47">
       <meld-tbody>
         <meld-tr>
           <meld-td>
             <ng-template let-item>
-              <ng-template *ngTemplateOutlet="template; context: {$implicit: item}"></ng-template>
+              <div style="margin-left: 12px;">
+                <ng-template *ngTemplateOutlet="template; context: {$implicit: item}"></ng-template>
+              </div>
             </ng-template>
           </meld-td>
           <meld-td>
             <ng-template let-item>
-              <div style="text-align: right; padding-right: 5px;">
+              <div style="text-align: right;">
                 <button mat-icon-button [disabled]="disabled || readonly" (click)="onRemoveSelectedItem(item)">
                   <mat-icon>delete</mat-icon>
                 </button>

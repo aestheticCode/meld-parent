@@ -4,7 +4,7 @@ import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@a
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {UserForm} from "./UserForm";
+import {UserForm} from "./user-form.interfaces";
 import {AppService} from "../../app.service";
 
 @Injectable()

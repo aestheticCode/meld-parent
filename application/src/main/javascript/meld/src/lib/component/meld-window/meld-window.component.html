@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <div style="display: flex; flex-direction: column; width: 100%;" (mouseover)="scrollBarsVisible($event)" >
 
-  <div #headerWrapper style="overflow: hidden; width: 100%; margin-bottom: 5px;">
+  <div #headerWrapper style="overflow: hidden; width: 100%;">
     <ng-template *ngIf="header" [ngTemplateOutlet]="header.template"></ng-template>
   </div>
 

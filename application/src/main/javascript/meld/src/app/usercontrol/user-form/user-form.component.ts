@@ -1,13 +1,9 @@
-import {Component, ElementRef, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, NgModel} from "@angular/forms";
 import {Http, Response} from "@angular/http";
-import {UserForm} from "./UserForm";
+import {UserForm} from "./user-form.interfaces";
 import {ActivatedRoute} from "@angular/router";
-import {UserFormModel} from "./UserFormModel";
-import {MatDialog} from "@angular/material";
-import {MeldDatePickerComponent} from "../../../lib/component/meld-datepicker/meld-datepicker.component";
-import {MeldDateComponent} from "../../../lib/component/meld-date/meld-date.component";
-import * as moment from 'moment';
+import {UserFormModel} from "./user-form.classes";
 
 @Component({
   selector: 'app-user-form',
@@ -21,7 +17,7 @@ export class UserFormComponent implements OnInit {
   @ViewChild('email')
   private email: NgModel;
 
-  public readonly : boolean = true;
+  public readonly: boolean = true;
 
   constructor(private http: Http,
               private route: ActivatedRoute) {

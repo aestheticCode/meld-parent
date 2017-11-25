@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Container} from "../../../lib/common/rest/Container";
-import {UserRow} from "./UserRow";
+import {UserRow} from "./user-table.interfaces";
 import {AppService} from "../../app.service";
 
 @Injectable()

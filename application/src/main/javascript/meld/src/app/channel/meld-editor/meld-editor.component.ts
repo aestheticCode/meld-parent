@@ -8,7 +8,7 @@ import {MeldEditorComponent as MeldEditor} from "../../../lib/component/meld-edi
 import {EditorCommand} from "../../../lib/component/meld-editor/EditorCommand";
 import {EditorAction} from "../../../lib/component/meld-editor/EditorAction";
 import {EditorCallback} from "../../../lib/component/meld-editor/EditorCallback";
-import {UserRow} from "../../usercontrol/user-table/UserRow";
+import {UserRow} from "../../usercontrol/user-table/user-table.interfaces";
 
 const noop = () => {};
 
