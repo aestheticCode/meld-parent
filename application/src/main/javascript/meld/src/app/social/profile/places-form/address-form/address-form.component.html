@@ -1,13 +1,10 @@
 <form>
-  <fieldset [disabled]="readonly">
+  <fieldset>
     <mat-form-field style="width: 100%;">
       <input placeholder="Street" [(ngModel)]="address.street" name="street" type="text"
              matInput>
-      <button *ngIf="! readonly" matSuffix mat-icon-button (click)="onDelete()">
+      <button matSuffix mat-icon-button (click)="onDelete()">
         <mat-icon>delete</mat-icon>
-      </button>
-      <button *ngIf="! readonly" matSuffix mat-icon-button (click)="onAdd()">
-        <mat-icon>add</mat-icon>
       </button>
     </mat-form-field>
 
@@ -32,18 +29,22 @@
     </mat-form-field>
 
 
-    <div style="display: flex;">
-      <mat-form-field style="flex: 0.5;">
-        <input placeholder="Start" matInput [matDatepicker]="start" [(ngModel)]="address.start" name="start">
-        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-        <mat-datepicker #start></mat-datepicker>
-      </mat-form-field>
+    <div style="display: flex; width: 100%">
+      <div style="width: 50%">
+        <mat-form-field style="width: 100%">
+          <meld-date #datePickerStart placeholder="Start" [(ngModel)]="address.start" name="start"></meld-date>
+          <button matSuffix mat-icon-button (click)="datePickerStart.clear()"><mat-icon>delete</mat-icon></button>
+          <button matSuffix mat-icon-button (click)="datePickerStart.open()"><mat-icon >today</mat-icon></button>
+        </mat-form-field>
+      </div>
 
-      <mat-form-field style="flex: 0.5">
-        <input placeholder="End" matInput [matDatepicker]="end" [(ngModel)]="address.end" name="end">
-        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-        <mat-datepicker #end></mat-datepicker>
-      </mat-form-field>
+      <div style="width: 50%">
+        <mat-form-field style="width: 100%">
+          <meld-date #datePickerEnd placeholder="End" [(ngModel)]="address.end" name="end"></meld-date>
+          <button matSuffix mat-icon-button (click)="datePickerEnd.clear()"><mat-icon>delete</mat-icon></button>
+          <button matSuffix mat-icon-button (click)="datePickerEnd.open()"><mat-icon >today</mat-icon></button>
+        </mat-form-field>
+      </div>
     </div>
 
 

@@ -52,6 +52,8 @@ public class Application implements LinksContainer {
 
         private Link avatar;
 
+        private Link image;
+
         public UUID getId() {
             return id;
         }
@@ -98,6 +100,14 @@ public class Application implements LinksContainer {
 
         public void setAvatar(Link avatar) {
             this.avatar = avatar;
+        }
+
+        public Link getImage() {
+            return image;
+        }
+
+        public void setImage(Link image) {
+            this.image = image;
         }
     }
 }

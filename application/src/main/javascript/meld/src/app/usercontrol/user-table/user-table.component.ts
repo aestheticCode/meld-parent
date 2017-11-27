@@ -109,7 +109,7 @@ export class UserTableComponent implements OnInit {
 
   onSelectionChange(user: UserRow) {
     if (user.links.find((link) => link.rel === "read")) {
-      this.router.navigate(['usercontrol/user', user.id]);
+      this.router.navigate(['usercontrol/user', user.id, 'view']);
     }
   }
 

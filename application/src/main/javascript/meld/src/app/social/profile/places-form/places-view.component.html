@@ -1,0 +1,35 @@
+<div style="padding: 10px;">
+  <div class="container-fluid" style="margin-top: 12px;">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <mat-card>
+          <mat-card-content>
+            <fieldset>
+              <legend>Places</legend>
+
+              <div *ngFor="let address of places.addresses | addressesSort" style="margin-bottom: 12px;">
+                <app-social-address-view [address]="address"></app-social-address-view>
+                <hr/>
+              </div>
+              <div *ngIf="places.addresses.length === 0" style="line-height: 48px; text-align: center;">
+                No Addresses.
+              </div>
+
+            </fieldset>
+
+
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="onEdit()">Edit</button>
+            <button mat-button (click)="onCancel()">Chancel</button>
+          </mat-card-actions>
+        </mat-card>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

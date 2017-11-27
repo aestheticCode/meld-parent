@@ -1,22 +1,18 @@
-<div class="container-fluid">
-  <div class="row justify-content-center">
-    <div class="col-mat-6">
-      <mat-card style="margin: 12px;">
-
-        <mat-menu #appMenu="matMenu">
-          <button mat-menu-item [routerLink]="[{ outlets: { profile: ['user'] } }]"> User </button>
-          <button mat-menu-item [routerLink]="[{ outlets: { profile: ['education'] } }]"> Education </button>
-          <button mat-menu-item [routerLink]="[{ outlets: { profile: ['places'] } }]"> Places </button>
-          <button mat-menu-item [routerLink]="[{ outlets: { profile: ['work-history'] } }]"> Work History </button>
-          <button mat-menu-item [routerLink]="[{ outlets: { profile: ['contact'] } }]"> Contact </button>
-        </mat-menu>
-
-        <button mat-icon-button [matMenuTriggerFor]="appMenu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-
-        <router-outlet name="profile"></router-outlet>
-      </mat-card>
-    </div>
-  </div>
+<div class="jumbotron"
+     style="margin: 10px;
+     background-image: url('./assets/way-427984.jpg');
+     background-size: cover;
+     background-position: center;">
 </div>
+
+<div style="display: flex">
+  <div style="flex: 0.5"></div>
+  <button mat-button [routerLink]="[{ outlets: { profile: ['user', 'view'] } }]">User</button>
+  <button mat-button [routerLink]="[{ outlets: { profile: ['education', 'view'] } }]">Education</button>
+  <button mat-button [routerLink]="[{ outlets: { profile: ['places', 'view'] } }]">Places</button>
+  <button mat-button [routerLink]="[{ outlets: { profile: ['work', 'history', 'view'] } }]">Work</button>
+  <button mat-button [routerLink]="[{ outlets: { profile: ['contact', 'view'] } }]">Contact</button>
+  <div style="flex: 0.5"></div>
+</div>
+
+<router-outlet name="profile"></router-outlet>

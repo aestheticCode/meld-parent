@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Chat} from "./chat-form/chat-form.interfaces";
 import {Contact} from "./contact-form.interfaces";
 import {ContactModel} from "./contact-form.classes";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Http, Response} from "@angular/http";
 import {PhoneModel} from "./phone-form/phone-form.classes";
 import {Phone} from "./phone-form/phone-form.interfaces";
@@ -18,12 +18,11 @@ import {ChatModel} from "./chat-form/chat-form.classes";
 })
 export class ContactFormComponent implements OnInit {
 
-  readonly : boolean = true;
-
   contact: Contact;
 
   constructor(private http: Http,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router : Router) {
   }
 
   ngOnInit() {
@@ -78,7 +77,6 @@ export class ContactFormComponent implements OnInit {
     if (this.contact.chats.length === 0) {
       this.contact.chats.push(new ChatModel())
     }
-    this.readonly = false;
   }
 
   onSave() {
@@ -88,7 +86,7 @@ export class ContactFormComponent implements OnInit {
     this.http.post("service/social/user/current/contact", this.contact)
       .subscribe((res: Response) => {
         this.contact = res.json();
-        this.readonly = true;
+        this.router.navigate(['social', 'profile', {outlets: {profile: ['contact', 'view']}}]);
       })
   }
 
@@ -99,15 +97,15 @@ export class ContactFormComponent implements OnInit {
     this.http.put("service/social/user/current/contact", this.contact)
       .subscribe((res: Response) => {
         this.contact = res.json();
-        this.readonly = true;
+        this.router.navigate(['social', 'profile', {outlets: {profile: ['contact', 'view']}}]);
       })
   }
 
   onCancel() {
-    this.readonly = true;
     this.filterEmptyPhones();
     this.filterEmptyEmails();
     this.filterEmptyChats();
+    this.router.navigate(['social', 'profile', {outlets: {profile: ['contact', 'view']}}]);
   }
 
   private filterEmptyPhones() {

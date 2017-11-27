@@ -28,6 +28,11 @@
           <span style="color: black; margin-left: 12px;"><strong>Profile</strong></span>
         </a>
 
+        <a class="link" *ngIf="links | meldLink:'people';" routerLink="social/people" routerLinkActive="active">
+          <i style="vertical-align: middle; color: #515658" class="material-icons">accessibility</i>
+          <span style="color: black; margin-left: 12px;"><strong>People</strong></span>
+        </a>
+
         <a class="link" *ngIf="links | meldLink:'meld';" routerLink="channel/meld/posts" routerLinkActive="active">
           <i style="vertical-align: middle; color: #515658" class="material-icons">android</i>
           <span style="color: black; margin-left: 12px;"><strong>Meld</strong></span>

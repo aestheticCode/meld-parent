@@ -40,6 +40,9 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
 
   public showInfo: boolean = false;
 
+  @Input("hideComboBox")
+  public hideComboBox : boolean = false;
+
   @Output('selectItemChange')
   private selectItemChange: EventEmitter<any> = new EventEmitter<any>();
 

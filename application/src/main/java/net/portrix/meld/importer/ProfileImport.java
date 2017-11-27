@@ -1,7 +1,7 @@
 package net.portrix.meld.importer;
 
-import net.portrix.meld.social.Education;
-import net.portrix.meld.social.School;
+import net.portrix.meld.social.profile.Education;
+import net.portrix.meld.social.profile.School;
 import net.portrix.meld.usercontrol.User;
 
 import javax.enterprise.context.ApplicationScoped;

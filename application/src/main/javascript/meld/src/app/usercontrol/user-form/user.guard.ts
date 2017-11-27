@@ -4,11 +4,11 @@ import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@a
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {UserForm} from "./user-form.interfaces";
+import {UserForm} from "./user.interfaces";
 import {AppService} from "../../app.service";
 
 @Injectable()
-export class UserGuard implements Resolve<UserForm> {
+export class UserEditGuard implements Resolve<UserForm> {
 
     constructor(private http: Http,
                 private router: Router,

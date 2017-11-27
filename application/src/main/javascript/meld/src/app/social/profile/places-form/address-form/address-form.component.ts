@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Address} from "./address-form.interfaces";
+import {Address} from "./address.interfaces";
 
 @Component({
   selector: 'app-social-address-form',
@@ -17,9 +17,6 @@ export class AddressFormComponent {
   @Output("deleteClick")
   private deleteClick: EventEmitter<Address> = new EventEmitter();
 
-  @Output("addClick")
-  private addClick: EventEmitter<any> = new EventEmitter();
-
   onDelete() {
     this.address.city = undefined;
     this.address.country = undefined;
@@ -29,10 +26,5 @@ export class AddressFormComponent {
 
     this.deleteClick.emit(this.address);
   }
-
-  onAdd() {
-    this.addClick.emit();
-  }
-
 
 }

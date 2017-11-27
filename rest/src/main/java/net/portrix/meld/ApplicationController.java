@@ -3,7 +3,9 @@ package net.portrix.meld;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.meld.channel.meld.list.MeldListController;
-import net.portrix.meld.social.ProfileController;
+import net.portrix.meld.social.people.CategoryController;
+import net.portrix.meld.social.profile.ProfileController;
+import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.group.table.GroupTableController;
 import net.portrix.meld.usercontrol.login.form.LoginFormController;
 import net.portrix.meld.usercontrol.logout.form.LogoutFormController;
@@ -51,13 +53,13 @@ public class ApplicationController {
         RoleTableController.linkRoles(application, builderFactory);
         MeldListController.linkMeld(application, builderFactory);
         ProfileController.linkProfile(application, builderFactory);
+        CategoryController.linkProfile(application, builderFactory);
 
         Application.User user = new Application.User();
         application.setUser(user);
 
         if (service.isLoggedIn()) {
-            final net.portrix.meld.usercontrol.User current = service.current();
-
+            final User current = service.current();
 
             user.setId(current.getId());
             user.setEmail(current.getName());
@@ -70,7 +72,13 @@ public class ApplicationController {
                     .rel("avatar")
                     .generate();
 
+            final Link imageLink = builderFactory.from(UserImageController.class)
+                    .record(method -> method.image(current.getId()))
+                    .rel("avatar")
+                    .generate();
+
             user.setAvatar(avatarLink);
+            user.setImage(imageLink);
 
             LogoutFormController.linkLogout(application, builderFactory);
         } else {

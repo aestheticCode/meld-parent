@@ -1,0 +1,35 @@
+<div style="padding: 10px;">
+  <div class="container-fluid" style="margin-top: 12px;">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <mat-card>
+          <mat-card-content>
+            <fieldset>
+              <legend>Work History</legend>
+
+              <div *ngFor="let company of workHistory.companies | companySort" style="margin-bottom: 12px;">
+                <app-social-company-view [company]="company"></app-social-company-view>
+                <hr/>
+              </div>
+              <div *ngIf="workHistory.companies.length === 0" style="line-height: 48px; text-align: center;">
+                No Work History.
+              </div>
+
+            </fieldset>
+
+
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="onEdit()">Edit</button>
+            <button mat-button (click)="onCancel()">Chancel</button>
+          </mat-card-actions>
+        </mat-card>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

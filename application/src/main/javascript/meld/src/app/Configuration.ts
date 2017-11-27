@@ -22,5 +22,7 @@ export module Configuration {
 
     avatar : Link
 
+    image : Link
+
   }
 }

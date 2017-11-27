@@ -1,0 +1,41 @@
+<form>
+  <fieldset>
+    <mat-form-field style="width: 100%;">
+      <input placeholder="Name" [(ngModel)]="company.name" name="name" type="text"
+             matInput>
+      <button matSuffix mat-icon-button (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <input placeholder="Title" [(ngModel)]="company.title" name="title" type="text"
+             matInput>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <input placeholder="Description" [(ngModel)]="company.description" name="description" type="text"
+             matInput>
+    </mat-form-field>
+
+    <div style="display: flex; width: 100%">
+      <div style="width: 50%">
+        <mat-form-field style="width: 100%">
+          <meld-date #datePickerStart placeholder="Start" [(ngModel)]="company.start" name="start"></meld-date>
+          <button matSuffix mat-icon-button (click)="datePickerStart.clear()"><mat-icon>delete</mat-icon></button>
+          <button matSuffix mat-icon-button (click)="datePickerStart.open()"><mat-icon >today</mat-icon></button>
+        </mat-form-field>
+      </div>
+
+      <div style="width: 50%">
+        <mat-form-field style="width: 100%">
+          <meld-date #datePickerEnd placeholder="End" [(ngModel)]="company.end" name="end"></meld-date>
+          <button matSuffix mat-icon-button (click)="datePickerEnd.clear()"><mat-icon>delete</mat-icon></button>
+          <button matSuffix mat-icon-button (click)="datePickerEnd.open()"><mat-icon >today</mat-icon></button>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+  </fieldset>
+</form>

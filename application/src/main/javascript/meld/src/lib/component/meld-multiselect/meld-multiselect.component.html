@@ -1,5 +1,5 @@
 <div style="width: 100%;">
-  <meld-combobox [readonly]="readonly" [disabled]="disabled" #comboBox [items]="parentItems" (selectItemChange)="onSelectItemChange($event)" [placeholder]="placeholder">
+  <meld-combobox *ngIf="! hideComboBox" [readonly]="readonly" [disabled]="disabled" #comboBox [items]="parentItems" (selectItemChange)="onSelectItemChange($event)" [placeholder]="placeholder">
     <ng-template let-item>
       <ng-template *ngTemplateOutlet="template; context: {$implicit: item}"></ng-template>
     </ng-template>

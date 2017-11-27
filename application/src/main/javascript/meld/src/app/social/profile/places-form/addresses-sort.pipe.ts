@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Address} from "./address-form/address-form.interfaces";
+import {Address} from "./address-form/address.interfaces";
 
 @Pipe({
   name: 'addressesSort'

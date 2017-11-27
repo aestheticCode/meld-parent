@@ -7,7 +7,7 @@
     <button mat-raised-button *ngIf="links | meldLink:'save'" style="width: 100px;" raised (click)="onCreate()">Create
     </button>
   </div>
-  <meld-table #grid [items]="groups" (selectItemChange)="onSelection($event)" style="height: calc(100% - 48px)">
+  <meld-table #grid [rowHeight]="29" [items]="groups" (selectItemChange)="onSelection($event)" style="height: calc(100% - 48px)">
     <meld-colgroup>
       <meld-col [width]="100"></meld-col>
       <meld-col [width]="100"></meld-col>

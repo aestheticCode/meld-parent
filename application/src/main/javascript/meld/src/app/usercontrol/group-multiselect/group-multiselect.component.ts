@@ -33,6 +33,9 @@ export class GroupMultiselectComponent implements ControlValueAccessor, OnChange
   @Input("disabled")
   public disabled : boolean = false;
 
+  @Input("hideComboBox")
+  public hideComboBox : boolean = false;
+
   private onTouchedCallback: () => void = noop;
 
   private onChangeCallback: (value: any) => void = noop;

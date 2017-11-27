@@ -32,6 +32,9 @@ export class RoleMultiselectComponent implements ControlValueAccessor, OnChanges
   @Input("disabled")
   public disabled : boolean = false;
 
+  @Input("hideComboBox")
+  public hideComboBox : boolean = false;
+
   private onTouchedCallback: () => void = noop;
 
   private onChangeCallback: (value: any) => void = noop;

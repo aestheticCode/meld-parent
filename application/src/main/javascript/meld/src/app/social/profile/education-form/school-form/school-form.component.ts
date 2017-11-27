@@ -17,19 +17,12 @@ export class SchoolFormComponent {
   @Output("deleteClick")
   private deleteClick : EventEmitter<School> = new EventEmitter();
 
-  @Output("addClick")
-  private addClick : EventEmitter<any> = new EventEmitter();
-
   onDelete() {
     this.school.name = undefined;
     this.school.course = undefined;
     this.school.start = undefined;
     this.school.end = undefined;
     this.deleteClick.emit(this.school);
-  }
-
-  onAdd() {
-    this.addClick.emit();
   }
 
 }

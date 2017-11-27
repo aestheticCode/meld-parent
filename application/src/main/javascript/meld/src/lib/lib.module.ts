@@ -39,6 +39,8 @@ import {MeldInitModule} from "./directive/meld-init/meld-init.module";
 import {MeldEditorModule} from "./component/meld-editor/meld-editor.module";
 import {MeldDateModule} from "./component/meld-date/meld-date.module";
 import {MeldDatepickerModule} from "./component/meld-datepicker/meld-datepicker.module";
+import {MeldFormGroupModule} from "./component/meld-form-group/meld-form-group.module";
+import {MeldTabBarModule} from "./component/meld-tabbar/meld-tabbar.module";
 
 
 @NgModule({
@@ -71,11 +73,13 @@ import {MeldDatepickerModule} from "./component/meld-datepicker/meld-datepicker.
     MeldDatepickerModule,
     MeldEditorModule,
     MeldFileContainerModule,
+    MeldFormGroupModule,
     MeldImageModule,
     MeldListModule,
     MeldMultiSelectModule,
     MeldScrollbarVerticalModule,
     MeldScrollbarHorizontalModule,
+    MeldTableModule,
     MeldTableModule,
     MeldWindowModule,
 
@@ -115,11 +119,13 @@ import {MeldDatepickerModule} from "./component/meld-datepicker/meld-datepicker.
     MeldDatepickerModule,
     MeldEditorModule,
     MeldFileContainerModule,
+    MeldFormGroupModule,
     MeldImageModule,
     MeldListModule,
     MeldMultiSelectModule,
     MeldScrollbarVerticalModule,
     MeldScrollbarHorizontalModule,
+    MeldTabBarModule,
     MeldTableModule,
     MeldWindowModule,
 

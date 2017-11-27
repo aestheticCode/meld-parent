@@ -15,6 +15,18 @@ import { SchoolFormComponent } from './profile/education-form/school-form/school
 import { SchoolSortPipe } from './profile/education-form/school-sort.pipe';
 import { AddressFormComponent } from './profile/places-form/address-form/address-form.component';
 import { AddressesSortPipe } from './profile/places-form/addresses-sort.pipe';
+import {EducationViewComponent} from "./profile/education-form/education-view.component";
+import {UserViewComponent} from "./profile/user-form/user-view.component";
+import {SchoolViewComponent} from "./profile/education-form/school-form/school-view.component";
+import { PlacesViewComponent } from './profile/places-form/places-view.component';
+import { AddressViewComponent } from './profile/places-form/address-form/address-view.component';
+import { WorkHistoryViewComponent } from './profile/work-history-form/work-history-view.component';
+import { CompanyFormComponent } from './profile/work-history-form/company-form/company-form.component';
+import { CompanyViewComponent } from './profile/work-history-form/company-form/company-view.component';
+import { CompanySortPipe } from './profile/work-history-form/company-sort.pipe';
+import { ContactViewComponent } from './profile/contact-form/contact-view.component';
+import { ImageFormComponent } from './profile/image-form/image-form.component';
+import { PeopleComponent } from './people/people.component';
 
 @NgModule({
   imports: [
@@ -29,13 +41,25 @@ import { AddressesSortPipe } from './profile/places-form/addresses-sort.pipe';
     PhoneFormComponent,
     ProfileComponent,
     UserFormComponent,
+    UserViewComponent,
     EducationFormComponent,
     PlacesFormComponent,
     WorkHistoryFormComponent,
     SchoolFormComponent,
     SchoolSortPipe,
     AddressFormComponent,
-    AddressesSortPipe
+    AddressesSortPipe,
+    EducationViewComponent,
+    SchoolViewComponent,
+    PlacesViewComponent,
+    AddressViewComponent,
+    WorkHistoryViewComponent,
+    CompanyFormComponent,
+    CompanyViewComponent,
+    CompanySortPipe,
+    ContactViewComponent,
+    ImageFormComponent,
+    PeopleComponent
   ],
   providers : [
     appRoutingProviders

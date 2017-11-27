@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Strings} from "../../../../lib/common/utils/Strings";
-import {Places} from "./places-form.interfaces";
+import {Places} from "./places.interfaces";
 import {Http, Response} from "@angular/http";
-import {ActivatedRoute} from "@angular/router";
-import {PlacesModel} from "./places-form.classes";
-import {AddressModel} from "./address-form/address-form.classes";
-import {Address} from "./address-form/address-form.interfaces";
+import {ActivatedRoute, Router} from "@angular/router";
+import {PlacesModel} from "./places.classes";
+import {AddressModel} from "./address-form/address.classes";
+import {Address} from "./address-form/address.interfaces";
 
 @Component({
   selector: 'app-social-places-form',
@@ -14,12 +14,11 @@ import {Address} from "./address-form/address-form.interfaces";
 })
 export class PlacesFormComponent implements OnInit {
 
-  public readonly : boolean = true;
-
   public places: Places;
 
   constructor(private http: Http,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router : Router) {
   }
 
   ngOnInit() {
@@ -33,7 +32,7 @@ export class PlacesFormComponent implements OnInit {
   }
 
   onDeleteAddress(address: Address) {
-    if (this.places.addresses.length > 1) {
+    if (this.places.addresses.length > 0) {
       let indexOf = this.places.addresses.indexOf(address);
       this.places.addresses.splice(indexOf, 1);
     }
@@ -43,7 +42,6 @@ export class PlacesFormComponent implements OnInit {
     if (this.places.addresses.length === 0) {
       this.places.addresses.push(new AddressModel());
     }
-    this.readonly = false;
   }
 
   onSave() {
@@ -51,7 +49,7 @@ export class PlacesFormComponent implements OnInit {
     this.http.post("service/social/user/current/places", this.places)
       .subscribe((res: Response) => {
         this.places = res.json();
-        this.readonly = true;
+        this.router.navigate(['social', 'profile', {outlets: {profile: ['places', 'view']}}]);
       })
   }
 
@@ -60,14 +58,13 @@ export class PlacesFormComponent implements OnInit {
     this.http.put("service/social/user/current/places", this.places)
       .subscribe((res: Response) => {
         this.places = res.json();
-        this.readonly = true;
+        this.router.navigate(['social', 'profile', {outlets: {profile: ['places', 'view']}}]);
       })
   }
 
   onCancel() {
-    this.readonly = true;
     this.filterEmptyAddress();
-
+    this.router.navigate(['social', 'profile', {outlets: {profile: ['places', 'view']}}]);
   }
 
   private filterEmptyAddress() {

@@ -34,8 +34,10 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (value: any) => void = noop;
 
-  private _value: string = moment(new Date()).format("YYYY-MM-DD");
+  private _value: string;
+
   stateChanges: Subject<void> = new Subject<void>();
+
   id: string;
 
   @Input("placeholder")
@@ -69,7 +71,9 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
   constructor(private elementRef : ElementRef,
               private resolver : ComponentFactoryResolver,
               private injector : Injector,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog) {
+    this.empty = Strings.isEmpty(this.value);
+  }
 
 
 

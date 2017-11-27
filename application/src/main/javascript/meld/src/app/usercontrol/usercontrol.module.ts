@@ -12,6 +12,7 @@ import {GroupTableComponent} from './group-table/group-table.component';
 import {GroupFormComponent} from './group-form/group-form.component';
 import {RoleFormComponent} from './role-form/role-form.component';
 import {RoleTableComponent} from './role-table/role-table.component';
+import { UserViewComponent } from './user-form/user-view.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,11 @@ import {RoleTableComponent} from './role-table/role-table.component';
     GroupTableComponent,
     GroupFormComponent,
     RoleFormComponent,
-    RoleTableComponent
+    RoleTableComponent,
+    UserViewComponent
+  ],
+  entryComponents : [
+    UserFormComponent
   ],
   providers: [
     appRoutingProviders

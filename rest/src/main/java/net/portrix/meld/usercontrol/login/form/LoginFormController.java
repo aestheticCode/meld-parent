@@ -1,14 +1,13 @@
 package net.portrix.meld.usercontrol.login.form;
 
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.Links;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.meld.channel.meld.list.MeldListController;
-import net.portrix.meld.social.ProfileController;
+import net.portrix.meld.social.people.CategoryController;
+import net.portrix.meld.social.profile.ProfileController;
 import net.portrix.meld.usercontrol.logout.form.LogoutFormController;
 import net.portrix.meld.usercontrol.role.table.RoleTableController;
 import net.portrix.meld.usercontrol.group.table.GroupTableController;
-import net.portrix.meld.usercontrol.user.form.UserFormController;
 import net.portrix.meld.usercontrol.user.table.UserTableController;
 import org.picketlink.Identity;
 import org.picketlink.authentication.UserAlreadyLoggedInException;
@@ -62,6 +61,7 @@ public class LoginFormController {
             MeldListController.linkMeld(loginForm, builderFactory);
             ProfileController.linkProfile(loginForm, builderFactory);
             LogoutFormController.linkLogout(loginForm, builderFactory);
+            CategoryController.linkProfile(loginForm, builderFactory);
 
             return Response
                     .ok()
@@ -82,6 +82,7 @@ public class LoginFormController {
         MeldListController.linkMeld(loginForm, builderFactory);
         ProfileController.linkProfile(loginForm, builderFactory);
         LogoutFormController.linkLogout(loginForm, builderFactory);
+        CategoryController.linkProfile(loginForm, builderFactory);
 
         return Response
                 .ok()

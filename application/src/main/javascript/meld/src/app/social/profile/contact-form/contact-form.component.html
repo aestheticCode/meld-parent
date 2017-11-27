@@ -1,38 +1,56 @@
-<fieldset>
-  <legend>Contact</legend>
-
-  <div *ngFor="let phone of contact.phones">
-    <app-social-phone-form [phone]="phone" [readonly]="readonly"
-                           (deleteClick)="onDeletePhone($event)"
-                           (addClick)="onCreatePhone()"></app-social-phone-form>
-  </div>
-  <div *ngIf="contact.phones.length === 0" style="line-height: 48px; text-align: center;">
-    No Phone Numbers.
-  </div>
-
-  <div *ngFor="let email of contact.emails">
-    <app-social-email-form [email]="email" [readonly]="readonly"
-                           (deleteClick)="onDeleteEmail($event)"
-                           (addClick)="onCreateEmail()"></app-social-email-form>
-  </div>
-  <div *ngIf="contact.emails.length === 0" style="line-height: 48px; text-align: center;">
-    No Email Addresses.
-  </div>
-
-  <div *ngFor="let chat of contact.chats">
-    <app-social-chat-form [chat]="chat" [readonly]="readonly"
-                          (deleteClick)="onDeleteChat($event)"
-                          (addClick)="onCreateChat()"></app-social-chat-form>
-  </div>
-  <div *ngIf="contact.chats.length === 0" style="line-height: 48px; text-align: center;">
-    No Chat Clients.
-  </div>
-
-  <button mat-button *ngIf="! readonly && ! contact.id" (click)="onSave()">Save</button>
-  <button mat-button *ngIf="! readonly && contact.id" (click)="onUpdate()">Update</button>
-  <button mat-button *ngIf="! readonly" (click)="onCancel()">Chancel</button>
-  <button mat-button *ngIf="readonly" (click)="onEdit()">Edit</button>
+<div style="padding: 10px;">
+  <div class="container-fluid" style="margin-top: 12px;">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <mat-card>
+          <mat-card-content>
+            <fieldset>
+              <legend>
+                Contact
+              </legend>
 
 
-</fieldset>
+              <div *ngFor="let phone of contact.phones">
+                <app-social-phone-form [phone]="phone"
+                                       (deleteClick)="onDeletePhone($event)"
+                                       (addClick)="onCreatePhone()"></app-social-phone-form>
+              </div>
+              <div *ngIf="contact.phones.length === 0" style="line-height: 48px; text-align: center;">
+                No Phone Numbers. <a (click)="onCreatePhone()">Add</a>
+              </div>
+
+              <div *ngFor="let email of contact.emails">
+                <app-social-email-form [email]="email"
+                                       (deleteClick)="onDeleteEmail($event)"
+                                       (addClick)="onCreateEmail()"></app-social-email-form>
+              </div>
+              <div *ngIf="contact.emails.length === 0" style="line-height: 48px; text-align: center;">
+                No Email Addresses. <a (click)="onCreateEmail()">Add</a>
+              </div>
+
+              <div *ngFor="let chat of contact.chats">
+                <app-social-chat-form [chat]="chat"
+                                      (deleteClick)="onDeleteChat($event)"
+                                      (addClick)="onCreateChat()"></app-social-chat-form>
+              </div>
+              <div *ngIf="contact.chats.length === 0" style="line-height: 48px; text-align: center;">
+                No Chat Clients. <a (click)="onCreateChat()">Add</a>
+              </div>
+
+
+            </fieldset>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button *ngIf="! contact.id" (click)="onSave()">Save</button>
+            <button mat-button *ngIf="contact.id" (click)="onUpdate()">Update</button>
+            <button mat-button (click)="onCancel()">Chancel</button>
+          </mat-card-actions>
+        </mat-card>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
 

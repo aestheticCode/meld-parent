@@ -5,7 +5,7 @@
         <i class="material-icons">chat</i>
       </div>
 
-      <mat-select placeholder="Type" [(ngModel)]="chat.type" name="type">
+      <mat-select style="width: 64px;"  placeholder="Type" [(ngModel)]="chat.type" name="type">
         <mat-option *ngFor="let type of types" [value]="type.code">{{ type.name }}</mat-option>
       </mat-select>
 

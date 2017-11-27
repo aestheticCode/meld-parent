@@ -12,17 +12,17 @@
         <class>net.portrix.meld.usercontrol.User</class>
         <class>net.portrix.meld.usercontrol.UserImage</class>
 
-        <class>net.portrix.meld.social.Address</class>
-        <class>net.portrix.meld.social.Chat</class>
-        <class>net.portrix.meld.social.ChatCategory</class>
-        <class>net.portrix.meld.social.Company</class>
-        <class>net.portrix.meld.social.Education</class>
-        <class>net.portrix.meld.social.PersonalContact</class>
-        <class>net.portrix.meld.social.Phone</class>
-        <class>net.portrix.meld.social.PhoneCategory</class>
-        <class>net.portrix.meld.social.Places</class>
-        <class>net.portrix.meld.social.School</class>
-        <class>net.portrix.meld.social.WorkHistory</class>
+        <class>net.portrix.meld.social.profile.Address</class>
+        <class>net.portrix.meld.social.profile.Chat</class>
+        <class>net.portrix.meld.social.profile.ChatCategory</class>
+        <class>net.portrix.meld.social.profile.Company</class>
+        <class>net.portrix.meld.social.profile.Education</class>
+        <class>net.portrix.meld.social.profile.PersonalContact</class>
+        <class>net.portrix.meld.social.profile.Phone</class>
+        <class>net.portrix.meld.social.profile.PhoneCategory</class>
+        <class>net.portrix.meld.social.profile.Places</class>
+        <class>net.portrix.meld.social.profile.School</class>
+        <class>net.portrix.meld.social.profile.WorkHistory</class>
 
         <class>net.portrix.meld.channel.MeldPost</class>
         <class>net.portrix.meld.channel.MeldComment</class>
