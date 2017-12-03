@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Patrick Bittner on 20/03/15.
@@ -115,4 +116,7 @@ public class UserManager implements Serializable {
         identityManager.updateCredential(resultList.get(0), new Password(password));
     }
 
+    public User find(UUID id) {
+        return entityManager.find(User.class, id);
+    }
 }

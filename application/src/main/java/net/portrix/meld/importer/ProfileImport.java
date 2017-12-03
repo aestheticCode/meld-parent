@@ -20,7 +20,7 @@ public class ProfileImport {
     public void execute() {
 
         User patrick = entityManager.createNamedQuery("findUser", User.class)
-                .setParameter("name", "patrick")
+                .setParameter("name", "PatrickBittner1Apr1980")
                 .getSingleResult();
 
         Education education = new Education();

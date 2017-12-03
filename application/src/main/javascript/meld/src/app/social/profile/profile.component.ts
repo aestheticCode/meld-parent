@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {MatDialog} from "@angular/material";
+import {ImageDialogComponent} from "./image-dialog/image-dialog.component";
 
 @Component({
   selector: 'app-profile',
@@ -7,5 +9,10 @@ import {Component} from '@angular/core';
 })
 export class ProfileComponent {
 
+  constructor(private dialog : MatDialog) {
+  }
 
+  onDialogClick() {
+    this.dialog.open(ImageDialogComponent)
+  }
 }

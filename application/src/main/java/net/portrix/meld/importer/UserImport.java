@@ -22,7 +22,7 @@ public class UserImport {
     public void execute() {
 
         final User patrick = new User();
-        patrick.setName("patrick");
+        patrick.setName("PatrickBittner1Apr1980");
         patrick.setFirstName("Patrick");
         patrick.setLastName("Bittner");
         patrick.setGender(Gender.MALE);
@@ -31,7 +31,7 @@ public class UserImport {
         userManager.updatePassword(patrick, "patrick");
 
         final User martin = new User();
-        martin.setName("martin");
+        martin.setName("MartinDutkiewicz21Dec1979");
         martin.setFirstName("Martin");
         martin.setLastName("Dutkiewicz");
         martin.setGender(Gender.MALE);

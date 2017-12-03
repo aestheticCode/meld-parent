@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {Router} from "@angular/router";
 import {AppService} from "../../app.service";
-import {LoginForm} from "./LoginForm";
-import {LoginFormModel} from "./LoginFormModel";
+import {LoginForm} from "./login-form.interfaces";
+import {LoginFormModel} from "./login-form.classes";
 
 @Component({
   selector: 'app-login-form',

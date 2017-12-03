@@ -1,4 +1,4 @@
-package net.portrix.meld.social.people;
+package net.portrix.meld.social.people.find.form;
 
 import java.util.UUID;
 

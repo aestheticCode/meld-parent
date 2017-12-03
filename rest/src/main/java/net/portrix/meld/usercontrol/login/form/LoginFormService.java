@@ -6,6 +6,10 @@ import org.picketlink.credential.DefaultLoginCredentials;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
 
 @ApplicationScoped
 public class LoginFormService {
@@ -26,7 +30,11 @@ public class LoginFormService {
 
     public Identity.AuthenticationResult login(LoginForm loginForm) throws AuthenticationException  {
 
-        credentials.setUserId(loginForm.getEmail());
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .appendPattern("dMMMuuuu")
+                .toFormatter();
+        String birthday = loginForm.getBirthday().format(formatter);
+        credentials.setUserId(loginForm.getFirstName() + loginForm.getLastName() + birthday);
         credentials.setPassword(loginForm.getPassword());
 
         return identity.login();

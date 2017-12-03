@@ -1,0 +1,58 @@
+<div style="padding: 10px;">
+  <div class="container-fluid" style="margin-top: 12px;">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <mat-card>
+          <mat-card-content>
+            <div>
+              <meld-table [items]="users" [rowHeight]="48">
+                <meld-colgroup>
+                  <meld-col [width]="50"></meld-col>
+                  <meld-col [width]="90"></meld-col>
+                  <meld-col [width]="90"></meld-col>
+                  <meld-col [width]="80"></meld-col>
+                </meld-colgroup>
+                <meld-thead>
+                  <meld-tr>
+                    <meld-td>
+                      <ng-template><strong>Image</strong></ng-template>
+                    </meld-td>
+                    <meld-td>
+                      <ng-template><strong>First Name</strong></ng-template>
+                    </meld-td>
+                    <meld-td>
+                      <ng-template><strong>Last Name</strong></ng-template>
+                    </meld-td>
+                    <meld-td>
+                      <ng-template><strong>Category</strong></ng-template>
+                    </meld-td>
+                  </meld-tr>
+                </meld-thead>
+                <meld-tbody>
+                  <meld-tr>
+                    <meld-td>
+                      <ng-template let-user><img [src]="user.image | meldBinaryImage"></ng-template>
+                    </meld-td>
+                    <meld-td>
+                      <ng-template let-user>{{user.firstName}}</ng-template>
+                    </meld-td>
+                    <meld-td>
+                      <ng-template let-user>{{user.lastName}}</ng-template>
+                    </meld-td>
+                    <meld-td>
+                      <ng-template let-user>
+                        <meld-combobox [items]="categories" [(ngModel)]="user.category" (selectItemChange)="onUpdate(user.id, $event)">
+                          <ng-template let-item>{{item.name}}</ng-template>
+                        </meld-combobox>
+                      </ng-template>
+                    </meld-td>
+                  </meld-tr>
+                </meld-tbody>
+              </meld-table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

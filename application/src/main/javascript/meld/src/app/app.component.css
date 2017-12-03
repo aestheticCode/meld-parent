@@ -7,13 +7,16 @@ app-root {
   display: block;
   line-height: 32px;
   text-decoration: none;
+  color: white;
 }
 
 .link:hover {
   text-decoration: none;
+  color: #4e5664;
   background-color: #e7e7e7;
 }
 
 .link.active {
+  color: #4e5664;
   background-color: #e7e7e7;
 }

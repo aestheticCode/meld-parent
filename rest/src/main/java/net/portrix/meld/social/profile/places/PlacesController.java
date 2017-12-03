@@ -1,6 +1,8 @@
 package net.portrix.meld.social.profile.places;
 
+import com.googlecode.placesapiclient.client.entity.PlacePrediction;
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Address;
 import net.portrix.meld.social.profile.Places;
@@ -11,6 +13,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -139,6 +142,15 @@ public class PlacesController {
         }
 
         return read(user.getId());
+    }
+
+    @POST
+    @Path("place")
+    @Name("Places Geo coding")
+    @Secured
+    public Container<PlacePrediction> geoCoding(LocationForm address) {
+        List<PlacePrediction> placePredictions = service.find(address.getValue());
+        return new Container<>(placePredictions, placePredictions.size());
     }
 
 }

@@ -43,7 +43,7 @@ public class UserImageManager {
     public void save(final UserImage image) {
         try {
             final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(image.getImage()));
-            BufferedImage scaledImg = Scalr.resize(bufferedImage, 36, 100);
+            BufferedImage scaledImg = Scalr.resize(bufferedImage, 480, 640);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write( scaledImg, FilenameUtils.getExtension(image.getFileName()), baos ); // if your image is a jpg
             baos.flush();

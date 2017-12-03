@@ -1,18 +1,27 @@
-<div class="jumbotron"
-     style="margin: 10px;
+<div>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-12" style="padding: 0">
+        <mat-card style="height: 300px; position: relative;
      background-image: url('./assets/way-427984.jpg');
      background-size: cover;
      background-position: center;">
+          <div style="width: 100%; position: absolute; bottom: 12px; display: flex">
+            <h1 style="color: white; flex: 1;">Patrick Bittner</h1>
+            <button mat-button (click)="onDialogClick()"><mat-icon>more_vert</mat-icon></button>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div style="display: flex">
-  <div style="flex: 0.5"></div>
-  <button mat-button [routerLink]="[{ outlets: { profile: ['user', 'view'] } }]">User</button>
-  <button mat-button [routerLink]="[{ outlets: { profile: ['education', 'view'] } }]">Education</button>
-  <button mat-button [routerLink]="[{ outlets: { profile: ['places', 'view'] } }]">Places</button>
-  <button mat-button [routerLink]="[{ outlets: { profile: ['work', 'history', 'view'] } }]">Work</button>
-  <button mat-button [routerLink]="[{ outlets: { profile: ['contact', 'view'] } }]">Contact</button>
-  <div style="flex: 0.5"></div>
-</div>
+<meld-tabbar>
+  <meld-tab [routerLink]="[{ outlets: { profile: ['user', 'view'] } }]" label="User"></meld-tab>
+  <meld-tab [routerLink]="[{ outlets: { profile: ['education', 'view'] } }]" label="Education"></meld-tab>
+  <meld-tab [routerLink]="[{ outlets: { profile: ['places', 'view'] } }]" label="Places"></meld-tab>
+  <meld-tab [routerLink]="[{ outlets: { profile: ['work', 'history', 'view'] } }]" label="Work"></meld-tab>
+  <meld-tab [routerLink]="[{ outlets: { profile: ['contact', 'view'] } }]" label="Contact"></meld-tab>
+</meld-tabbar>
 
 <router-outlet name="profile"></router-outlet>

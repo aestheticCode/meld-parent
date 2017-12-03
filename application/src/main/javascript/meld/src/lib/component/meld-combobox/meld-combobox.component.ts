@@ -67,23 +67,38 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
           this.filter = this.itemName(data[0]);
         }
       };
+      query.predicate = this.predicate(this.filter);
       this.items(query, response);
     } else {
       const response = (data: [any], size: number) => {
         callback(data, size);
         this.size = size;
       };
+      query.predicate = this.predicate(this.filter);
       this.items(query, response);
     }
   };
 
+  public predicate = (value) => {
+    if (value == null) {
+      return null;
+    }
+    return QueryBuilder.like(value, "name");
+  };
+
   @Input("itemValue")
   public itemValue = (item) => {
+    if (item == null) {
+      return null;
+    }
     return item['id'];
   };
 
   @Input("itemName")
   public itemName = (item) => {
+    if (item == null) {
+      return null;
+    }
     return item['name'];
   };
 
@@ -111,6 +126,8 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
   clearValue() {
     this.filter = '';
     this.value = null;
+    this.onChangeCallback(null);
+    this.onSelectItemChange(null);
   }
 
   public onOverlayClick(event: MouseEvent) {

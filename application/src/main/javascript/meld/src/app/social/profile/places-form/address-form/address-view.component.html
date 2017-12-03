@@ -1,8 +1,20 @@
-<address>
-  {{address.street}}<br>
-  {{address.zipCode}}<br>
-  {{address.state}}<br>
-  {{address.city}}<br>
-  {{address.country}}<br>
-  {{address.start}} - {{address.end}}
-</address>
+<mat-card>
+  <mat-card-content>
+    <fieldset style="height: 300px;">
+      <legend>{{address.state}}</legend>
+
+      <div style="margin-bottom: 12px;">
+        <h6>{{address.start}} - {{address.end}}</h6>
+        <address>
+          {{address.street}}<br>
+          {{address.zipCode}}<br>
+          {{address.state}}<br>
+          {{address.country}}<br>
+        </address>
+      </div>
+
+    </fieldset>
+
+
+  </mat-card-content>
+</mat-card>

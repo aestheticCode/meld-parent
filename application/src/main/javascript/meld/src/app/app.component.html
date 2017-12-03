@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div style="height: 100vh;">
-  <mat-toolbar color="primary">
+  <mat-toolbar>
     <button mat-icon-button (click)="toggleSideNav()">
       <mat-icon>list</mat-icon>
     </button>
@@ -14,43 +14,43 @@
   </mat-toolbar>
 
   <mat-sidenav-container style="height: calc(100% - 64px);">
-    <mat-sidenav mode="side" [opened]="sideNavShow" style="width: 200px;">
+    <mat-sidenav mode="side" [opened]="sideNavShow" style="width: 200px; background-color: #4e5664">
 
-      <div style="padding: 12px 0 12px 24px;">
+      <div style="padding: 12px 0 12px 0;">
 
         <a class="link" routerLink="/">
-          <i style="vertical-align: middle; color: #515658" class="material-icons">home</i>
-          <span style="color: black; margin-left: 12px;"><strong>Home</strong></span>
+          <i style="margin-left :24px; vertical-align: middle;" class="material-icons">home</i>
+          <span style="margin-left: 12px;"><strong>Home</strong></span>
         </a>
 
         <a class="link" *ngIf="links | meldLink:'profile';" routerLink="social/profile" routerLinkActive="active">
-          <i style="vertical-align: middle; color: #515658" class="material-icons">account_circle</i>
-          <span style="color: black; margin-left: 12px;"><strong>Profile</strong></span>
+          <i style="margin-left :24px; vertical-align: middle;" class="material-icons">account_circle</i>
+          <span style="margin-left: 12px;"><strong>Profile</strong></span>
         </a>
 
         <a class="link" *ngIf="links | meldLink:'people';" routerLink="social/people" routerLinkActive="active">
-          <i style="vertical-align: middle; color: #515658" class="material-icons">accessibility</i>
-          <span style="color: black; margin-left: 12px;"><strong>People</strong></span>
+          <i style="margin-left :24px; vertical-align: middle;" class="material-icons">accessibility</i>
+          <span style="margin-left: 12px;"><strong>People</strong></span>
         </a>
 
         <a class="link" *ngIf="links | meldLink:'meld';" routerLink="channel/meld/posts" routerLinkActive="active">
-          <i style="vertical-align: middle; color: #515658" class="material-icons">android</i>
-          <span style="color: black; margin-left: 12px;"><strong>Meld</strong></span>
+          <i style="margin-left :24px; vertical-align: middle;" class="material-icons">android</i>
+          <span style="margin-left: 12px;"><strong>Meld</strong></span>
         </a>
 
         <a class="link" *ngIf="links | meldLink:'users';" routerLink="usercontrol/users" routerLinkActive="active">
-          <i style="vertical-align: middle; color: #515658" class="material-icons">face</i>
-          <span style="color: black; margin-left: 12px;"><strong>Users</strong></span>
+          <i style="margin-left :24px; vertical-align: middle;" class="material-icons">face</i>
+          <span style="margin-left: 12px;"><strong>Users</strong></span>
         </a>
 
         <a class="link" *ngIf="links | meldLink:'groups';" routerLink="usercontrol/groups" routerLinkActive="active">
-          <i style="vertical-align: middle; color: #515658" class="material-icons">group_work</i>
-          <span style="color: black; margin-left: 12px;"><strong>Groups</strong></span>
+          <i style="margin-left :24px; vertical-align: middle;" class="material-icons">group_work</i>
+          <span style="margin-left: 12px;"><strong>Groups</strong></span>
         </a>
 
         <a class="link" *ngIf="links | meldLink:'roles';" routerLink="usercontrol/roles" routerLinkActive="active">
-          <i style="vertical-align: middle; color: #515658" class="material-icons">perm_identity</i>
-          <span style="color: black; margin-left: 12px;"><strong>Roles</strong></span>
+          <i style="margin-left :24px; vertical-align: middle;" class="material-icons">perm_identity</i>
+          <span style="margin-left: 12px;"><strong>Roles</strong></span>
         </a>
 
       </div>

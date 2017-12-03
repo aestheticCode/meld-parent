@@ -12,6 +12,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 
 @Directive({
   selector: 'meld-file-container input[type=file]',
+  exportAs : "InputDirective",
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class InputDirective extends AbstractFileInput {
@@ -28,6 +29,15 @@ export class InputDirective extends AbstractFileInput {
 
   set value(value: BinaryFile) {
     this._value = value;
+  }
+
+  clear() {
+    this.value = null;
+    this.onChangeCallback(this.value);
+  }
+
+  click() {
+    this.elementRef.nativeElement.click();
   }
 
 }

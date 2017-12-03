@@ -3,7 +3,7 @@ package net.portrix.meld;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.meld.channel.meld.list.MeldListController;
-import net.portrix.meld.social.people.CategoryController;
+import net.portrix.meld.social.people.category.list.CategoryController;
 import net.portrix.meld.social.profile.ProfileController;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.group.table.GroupTableController;

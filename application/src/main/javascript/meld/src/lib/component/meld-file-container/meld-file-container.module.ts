@@ -4,14 +4,15 @@ import {FormsModule} from "@angular/forms";
 import {MeldFileContainerComponent} from "./meld-file-container.component";
 import {InputDirective} from "./input/input.directive";
 import {InputMultiplyDirective} from "./input[multiply]/input[multiple].directive";
-import {MatButtonModule, MatIconModule} from "@angular/material";
+import {MatButtonModule, MatFormFieldModule, MatIconModule} from "@angular/material";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule
   ],
   declarations: [
     MeldFileContainerComponent,

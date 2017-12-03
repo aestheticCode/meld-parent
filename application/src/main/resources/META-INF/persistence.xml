@@ -24,6 +24,9 @@
         <class>net.portrix.meld.social.profile.School</class>
         <class>net.portrix.meld.social.profile.WorkHistory</class>
 
+        <class>net.portrix.meld.social.people.Category</class>
+        <class>net.portrix.meld.social.people.RelationShip</class>
+
         <class>net.portrix.meld.channel.MeldPost</class>
         <class>net.portrix.meld.channel.MeldComment</class>
         <class>net.portrix.meld.channel.MeldImage</class>
@@ -41,8 +44,8 @@
 
 
         <properties>
-            <!--<property name="hibernate.show_sql" value="true"/>-->
-            <!--<property name="hibernate.format_sql" value="true"/>-->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.hbm2ddl.import_files" value="/META-INF/import.sql"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect" />

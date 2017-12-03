@@ -27,6 +27,15 @@ import { CompanySortPipe } from './profile/work-history-form/company-sort.pipe';
 import { ContactViewComponent } from './profile/contact-form/contact-view.component';
 import { ImageFormComponent } from './profile/image-form/image-form.component';
 import { PeopleComponent } from './people/people.component';
+import { FindViewComponent } from './people/find-view/find-view.component';
+import { CategoriesFormComponent } from './people/categories-form/categories-form.component';
+import { FollowingViewComponent } from './people/following-view/following-view.component';
+import { CategoryComponent } from './people/categories-form/category-view/category.component';
+import { CategoryCreateDialogComponent } from './people/categories-form/category-create-dialog/category-dialog.component';
+import { CategoryDeleteDialogComponent } from './people/categories-form/category-delete-dialog/category-delete-dialog.component';
+import { CategoryRenameDialogComponent } from './people/categories-form/category-rename-dialog/category-rename-dialog.component';
+import { ImageDialogComponent } from './profile/image-dialog/image-dialog.component';
+import { AddressMapComponent } from './profile/places-form/address-map/address-map.component';
 
 @NgModule({
   imports: [
@@ -59,7 +68,22 @@ import { PeopleComponent } from './people/people.component';
     CompanySortPipe,
     ContactViewComponent,
     ImageFormComponent,
-    PeopleComponent
+    PeopleComponent,
+    FindViewComponent,
+    CategoriesFormComponent,
+    FollowingViewComponent,
+    CategoryComponent,
+    CategoryCreateDialogComponent,
+    CategoryDeleteDialogComponent,
+    CategoryRenameDialogComponent,
+    ImageDialogComponent,
+    AddressMapComponent
+  ],
+  entryComponents: [
+    CategoryCreateDialogComponent,
+    CategoryDeleteDialogComponent,
+    CategoryRenameDialogComponent,
+    ImageDialogComponent
   ],
   providers : [
     appRoutingProviders

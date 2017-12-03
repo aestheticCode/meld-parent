@@ -4,6 +4,7 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.Links;
 import net.portrix.generic.rest.api.LinksContainer;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,18 +13,38 @@ import java.util.Set;
  */
 public class LoginForm implements LinksContainer {
 
-    private String email;
+    private String firstName;
+
+    private String lastName;
+
+    private LocalDate birthday;
 
     private String password;
 
     private Set<Link> links = new HashSet<>();
 
-    public String getEmail() {
-        return email;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public String getPassword() {

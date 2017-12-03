@@ -7,7 +7,7 @@ import {Address} from "./address-form/address.interfaces";
 export class AddressesSortPipe implements PipeTransform {
 
   transform(value: Address[], args?: any): any {
-    return value.sort((lhf, rhf) => Date.parse(lhf.start) - Date.parse(rhf.start) )
+    return value.sort((lhf, rhf) => Date.parse(rhf.start) - Date.parse(lhf.start))
   }
 
 }

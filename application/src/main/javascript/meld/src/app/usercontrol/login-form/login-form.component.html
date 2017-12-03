@@ -2,11 +2,21 @@
 <div style="align-items: center; display: flex; justify-content: center; height: 100%">
   <mat-card style="margin: 10px; text-align: left">
     <mat-card-content>
-      <form>
-        <fieldset>
+      <form autocomplete="on">
+        <fieldset style="width: 400px;">
           <legend>Please Sign In</legend>
           <mat-form-field style="width: 100%;">
-            <input matInput placeholder="Name" [(ngModel)]="login.email" name="name">
+            <input matInput placeholder="First Name" [(ngModel)]="login.firstName" name="fname">
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <input matInput placeholder="Last Name" [(ngModel)]="login.lastName" name="lname">
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%">
+            <meld-date  #datePicker placeholder="Birthday" [(ngModel)]="login.birthday" name="birthday"></meld-date>
+            <button matSuffix mat-icon-button (click)="datePicker.clear()"><mat-icon>delete</mat-icon></button>
+            <button matSuffix mat-icon-button (click)="datePicker.open()"><mat-icon >today</mat-icon></button>
           </mat-form-field>
 
           <mat-form-field style="width: 100%;">

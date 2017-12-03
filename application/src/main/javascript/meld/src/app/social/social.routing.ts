@@ -18,11 +18,38 @@ import {WorkHistoryViewComponent} from "./profile/work-history-form/work-history
 import {ContactViewComponent} from "./profile/contact-form/contact-view.component";
 import {ImageFormComponent} from "./profile/image-form/image-form.component";
 import {PeopleComponent} from "./people/people.component";
+import {CategoriesFormComponent} from "./people/categories-form/categories-form.component";
+import {FindViewComponent} from "./people/find-view/find-view.component";
+import {FollowingViewComponent} from "./people/following-view/following-view.component";
+import {CategoriesFormGuard} from "./people/categories-form/categories-form.guard";
 
 const appRoutes: Routes = [
   {
     path : 'people',
-    component : PeopleComponent
+    component : PeopleComponent,
+    children: [
+      {
+        path: 'categories',
+        component: CategoriesFormComponent,
+        outlet: 'people',
+        resolve: {container: CategoriesFormGuard}
+      },
+      {
+        path: 'find',
+        component: FindViewComponent,
+        outlet: 'people'
+      },
+      {
+        path: 'following',
+        component: FollowingViewComponent,
+        outlet: 'people'
+      },
+      {
+        path: '',
+        outlet: 'people',
+        redirectTo : 'find'
+      }
+    ]
   },
   {
     path: 'profile',
@@ -101,6 +128,7 @@ export const appRoutingProviders: any[] = [
   ContactFormGuard,
   EducationFormGuard,
   PlacesFormGuard,
-  WorkHistoryFormGuard
+  WorkHistoryFormGuard,
+  CategoriesFormGuard
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(appRoutes);

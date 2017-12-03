@@ -22,7 +22,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatSelectModule,
-  MatMenuModule
+  MatMenuModule, MatExpansionModule, MatAutocompleteModule
 } from "@angular/material";
 import {MeldBinaryImageModule} from "./pipe/meld-binary-image/meld-binary-image.module";
 import {MeldHtmlModule} from "./pipe/meld-html/meld-html.module";
@@ -67,6 +67,8 @@ import {MeldTabBarModule} from "./component/meld-tabbar/meld-tabbar.module";
     MatToolbarModule,
     MatSelectModule,
     MatMenuModule,
+    MatExpansionModule,
+    MatAutocompleteModule,
 
     MeldComboBoxModule,
     MeldDateModule,
@@ -113,6 +115,8 @@ import {MeldTabBarModule} from "./component/meld-tabbar/meld-tabbar.module";
     MatToolbarModule,
     MatSelectModule,
     MatMenuModule,
+    MatExpansionModule,
+    MatAutocompleteModule,
 
     MeldComboBoxModule,
     MeldDateModule,

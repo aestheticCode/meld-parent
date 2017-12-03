@@ -4,12 +4,17 @@ import {AndPredicate} from "../predicates/AndPredicate";
 import {OrPredicate} from "../predicates/OrPedicate";
 import {LikePredicate, LikeType} from "../predicates/LikePredicate";
 import {InPredicate} from "../predicates/InPredicate";
+import {EqualPredicate} from "../predicates/EqualPredicate";
 import {DatePredicate, DateType} from "../predicates/DatePredicate";
 
 export class QueryBuilder {
 
   public static query() {
     return new Query();
+  }
+
+  public static equal(id : string, path : string) {
+    return new EqualPredicate(id, path);
   }
 
   public static and(predicates: Predicate<any>[]) {

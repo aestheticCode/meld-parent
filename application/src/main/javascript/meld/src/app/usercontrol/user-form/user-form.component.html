@@ -52,13 +52,26 @@
 
           </mat-tab>
           <mat-tab label="Image">
-            <div style="align-items: center; display: flex; justify-content: center; height: 100%;">
 
-              <img  src="{{user.image | meldBinaryImage}}" style="width: 300px;">
+            <div class="container-fluid" style="margin-top: 12px;">
+              <div class="row justify-content-center">
+                <div class="col-md-5">
+                  <img  src="{{user.image | meldBinaryImage}}" style="width: 100%">
+                </div>
+              </div>
 
-              <meld-file-container>
-                <input type="file" name="image" [(ngModel)]="user.image">
-              </meld-file-container>
+              <div class="row justify-content-center">
+                <div class="col-md-5">
+                  <mat-form-field style="width: 100%;">
+                    <meld-file-container [placeholder]="'Image'">
+                      <input #image="InputDirective" type="file" name="image" [(ngModel)]="user.image">
+                    </meld-file-container>
+                    <button matSuffix mat-icon-button (click)="image.clear()"><mat-icon>backspace</mat-icon></button>
+                    <button matSuffix mat-icon-button (click)="image.click()"><mat-icon>present_to_all</mat-icon></button>
+                  </mat-form-field>
+                </div>
+              </div>
+
             </div>
           </mat-tab>
         </mat-tab-group>

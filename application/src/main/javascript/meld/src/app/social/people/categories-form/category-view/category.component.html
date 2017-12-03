@@ -1,0 +1,44 @@
+<div>
+  <meld-table [items]="users">
+    <meld-colgroup>
+      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100"></meld-col>
+    </meld-colgroup>
+    <meld-thead>
+      <meld-tr>
+        <meld-td>
+          <ng-template><strong>Image</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>eMail</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>First Name</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>Last Name</strong></ng-template>
+        </meld-td>
+        <meld-td>
+        </meld-td>
+      </meld-tr>
+    </meld-thead>
+    <meld-tbody>
+      <meld-tr>
+        <meld-td>
+          <ng-template let-user><img [src]="user.image | meldBinaryImage"></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.name}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.firstName}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.lastName}}</ng-template>
+        </meld-td>
+      </meld-tr>
+    </meld-tbody>
+  </meld-table>
+</div>

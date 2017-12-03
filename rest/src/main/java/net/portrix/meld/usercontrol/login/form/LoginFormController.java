@@ -3,7 +3,7 @@ package net.portrix.meld.usercontrol.login.form;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.meld.channel.meld.list.MeldListController;
-import net.portrix.meld.social.people.CategoryController;
+import net.portrix.meld.social.people.category.list.CategoryController;
 import net.portrix.meld.social.profile.ProfileController;
 import net.portrix.meld.usercontrol.logout.form.LogoutFormController;
 import net.portrix.meld.usercontrol.role.table.RoleTableController;
