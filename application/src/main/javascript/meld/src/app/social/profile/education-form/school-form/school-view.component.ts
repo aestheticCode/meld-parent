@@ -8,8 +8,8 @@ import {School} from "./school-form.interfaces";
 })
 export class SchoolViewComponent implements OnInit {
 
-  @Input("school")
-  public school : School;
+  @Input('school')
+  public school: School;
 
   constructor() { }
 

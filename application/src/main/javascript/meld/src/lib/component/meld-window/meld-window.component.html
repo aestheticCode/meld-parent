@@ -15,7 +15,7 @@
       </meld-scrollbar-vertical>
     </div>
 
-    <div *ngIf="async && (marginTop > 0 || marginBottom < 0)" style="position: absolute; top: 50%; left: 50%; text-align: center; width: 300px; margin-left: -150px;">
+    <div *ngIf="marginTop > 0 || marginBottom < 0" style="position: absolute; top: 50%; left: 50%; text-align: center; width: 300px; margin-left: -150px;">
       <p>Loading {{calculateWindow()}}</p>
     </div>
 

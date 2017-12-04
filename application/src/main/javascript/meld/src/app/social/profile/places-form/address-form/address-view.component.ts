@@ -8,7 +8,7 @@ import {Address} from "./address.interfaces";
 })
 export class AddressViewComponent implements OnInit {
 
-  @Input("address")
+  @Input('address')
   public address: Address;
 
   constructor() { }

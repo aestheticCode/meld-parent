@@ -1,20 +1,17 @@
-<mat-card>
-  <mat-card-content>
-    <fieldset style="height: 300px;">
-      <legend>{{address.state}}</legend>
+<div style="width: 100%; display: flex; margin-top: 12px;">
+  <div style="flex: 0.33;" >
+    <strong>{{address.start | date:'ddMMMyyyy'}} - {{address.end | date:'ddMMMyyyy'}}</strong>
+  </div>
+  <div style="flex: 0.33">
+    <address>
+      {{address.street}}<br>
+      {{address.zipCode}}<br>
+      {{address.state}}<br>
+      {{address.country}}<br>
+    </address>
+  </div>
+  <div style="flex: 0.33;">
+    <app-social-address-map [address]="address" style="height: 200px;"></app-social-address-map>
+  </div>
+</div>
 
-      <div style="margin-bottom: 12px;">
-        <h6>{{address.start}} - {{address.end}}</h6>
-        <address>
-          {{address.street}}<br>
-          {{address.zipCode}}<br>
-          {{address.state}}<br>
-          {{address.country}}<br>
-        </address>
-      </div>
-
-    </fieldset>
-
-
-  </mat-card-content>
-</mat-card>

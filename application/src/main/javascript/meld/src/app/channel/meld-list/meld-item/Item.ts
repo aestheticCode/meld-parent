@@ -1,4 +1,5 @@
 import {LinksContainer} from "../../../../lib/common/rest/LinksContainer";
+import {Link} from "../../../../lib/common/rest/Link";
 
 export interface Item extends LinksContainer {
 
@@ -11,6 +12,8 @@ export interface Item extends LinksContainer {
   text : string;
 
   image : string;
+
+  avatar : Link;
 
   likes : any[]
 

@@ -23,7 +23,7 @@ export class AddressFormComponent implements OnInit {
   @ViewChild("street")
   private street: NgModel;
 
-  private streets = [];
+  public streets = [];
 
 
   constructor(private http: HttpClient) {

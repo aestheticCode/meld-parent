@@ -1,6 +1,9 @@
-<div>
-  <div>{{school.name}}</div>
-  <div>
-    <div>{{school.course}} {{school.start}} - {{school.end}}</div>
+<div style="display: flex">
+  <div style="flex: 0.5"><strong>{{school.start | date:'ddMMMyyyy'}} - {{school.end | date:'ddMMMyyyy'}}</strong></div>
+  <div style="flex: 0.5">
+    <div><strong>{{school.name}}</strong></div>
+    <div>
+      <div>{{school.course}}</div>
+    </div>
   </div>
 </div>

@@ -28,6 +28,7 @@
           <mat-card-actions>
             <button mat-button (click)="onSave()" *ngIf="! education.id">Save</button>
             <button mat-button (click)="onUpdate()" *ngIf="education.id">Update</button>
+            <button mat-button (click)="onCancel()">Cancel</button>
           </mat-card-actions>
         </mat-card>
 

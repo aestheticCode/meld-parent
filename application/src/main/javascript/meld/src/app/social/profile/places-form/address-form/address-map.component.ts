@@ -1,4 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Address} from "./address.interfaces";
 
 @Component({
   selector: 'app-social-address-map',
@@ -8,7 +9,7 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 export class AddressMapComponent implements OnInit {
 
   @Input()
-  address : any;
+  address : Address;
 
   @ViewChild("map")
   map : ElementRef;

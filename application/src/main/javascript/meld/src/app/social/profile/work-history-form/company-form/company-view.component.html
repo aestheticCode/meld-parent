@@ -1,5 +1,8 @@
-<div>
-  <div>{{company.name}} {{company.title}}</div>
-  <div>{{company.start}} - {{company.end}}</div>
-  <div>{{company.description}}</div>
+<div style="display: flex">
+  <div style="flex: 0.5"><strong>{{company.start | date:'ddMMMyyyy'}} - {{company.end | date:'ddMMMyyyy'}}</strong></div>
+  <div style="flex: 0.5">
+    <div><strong>{{company.name}}</strong></div>
+    <div>{{company.title}}</div>
+    <div>{{company.description}}</div>
+  </div>
 </div>

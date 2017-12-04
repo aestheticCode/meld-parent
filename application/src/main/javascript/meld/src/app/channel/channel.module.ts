@@ -11,6 +11,7 @@ import {MeldCommentComponent} from "./meld-comment/meld-comment.component";
 import {MeldItemComponent} from "./meld-list/meld-item/meld-item.component";
 import {MeldEditorNameDialogComponent} from "./meld-editor/meld-editor-name-dialog/meld-editor-name-dialog.component";
 import {MeldEditorAvatarDialogComponent} from "./meld-editor/meld-editor-avatar-dialog/meld-editor-avatar-dialog.component";
+import {MeldCommentDialogComponent} from "./meld-comment/meld-comment-dialog/meld-comment-dialog.component";
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {MeldEditorAvatarDialogComponent} from "./meld-editor/meld-editor-avatar-
     MeldEditorComponent,
     MeldCommentComponent,
     MeldItemComponent,
+    MeldCommentDialogComponent,
     MeldEditorNameDialogComponent,
     MeldEditorAvatarDialogComponent
   ],
@@ -32,7 +34,8 @@ import {MeldEditorAvatarDialogComponent} from "./meld-editor/meld-editor-avatar-
   ],
   entryComponents : [
     MeldEditorNameDialogComponent,
-    MeldEditorAvatarDialogComponent
+    MeldEditorAvatarDialogComponent,
+    MeldCommentDialogComponent
   ]
 })
 export class ChannelModule {

@@ -1,4 +1,5 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ContentChildren, ElementRef, EventEmitter, Input, Output, QueryList} from '@angular/core';
+import {Router, RouterLink, RouterLinkWithHref} from '@angular/router';
 
 @Component({
   selector: 'meld-tab',
@@ -7,29 +8,37 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angul
 })
 export class MeldTabComponent {
 
-  @Input("label")
-  label : string;
+  @Input('label')
+  label: string;
 
-  @Input("active")
-  active : boolean;
+  @ContentChildren(RouterLink, {descendants: true})
+  links: QueryList<RouterLink>;
 
   @Output("activeChange")
   activeChange : EventEmitter<boolean> = new EventEmitter();
 
+  @Input()
+  routerLinkActiveOptions: {exact: boolean} = {exact: false};
 
-  constructor(private elementRef : ElementRef) {
+  constructor(private elementRef: ElementRef,
+              private router : Router) {
+    router.events.subscribe(() => this.activeChange.emit(this.active))
   }
 
-  set width(value : number) {
+  set width(value: number) {
     this.elementRef.nativeElement.style.width = value + 'px';
   }
 
-  disable() {
-    this.active = false;
+  get active() : boolean {
+    if (this.links) {
+      return this.isLinkActive(this.router)(this.links.first);
+    }
+    return false;
   }
 
-  enable() {
-    this.active = true;
-    this.activeChange.emit(true);
+  private isLinkActive(router: Router): (link: (RouterLink|RouterLinkWithHref)) => boolean {
+    return (link: RouterLink | RouterLinkWithHref) =>
+      router.isActive(link.urlTree, this.routerLinkActiveOptions.exact);
   }
+
 }

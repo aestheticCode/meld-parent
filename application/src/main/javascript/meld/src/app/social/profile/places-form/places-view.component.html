@@ -1,11 +1,18 @@
 <div style="padding: 10px;">
   <div class="container-fluid">
-    <div *ngFor="let address of places.addresses | addressesSort"  class="row justify-content-center" style="margin: 12px;">
-      <div class="col-md-5">
-          <app-social-address-view [address]="address"></app-social-address-view>
-      </div>
-      <div class="col-md-5">
-        <app-social-address-map [address]="address"></app-social-address-map>
+    <div class="row justify-content-center" style="margin: 12px;">
+      <div class="col-md-10">
+        <mat-card>
+          <mat-card-content>
+            <fieldset>
+              <legend>Places</legend>
+
+              <div style="margin-bottom: 12px;">
+                <app-social-address-view *ngFor="let address of places.addresses | addressesSort" [address]="address"></app-social-address-view>
+              </div>
+            </fieldset>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
 
