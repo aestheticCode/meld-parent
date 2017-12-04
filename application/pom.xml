@@ -172,21 +172,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>src/main/javascript/meld-app</workingDirectory>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>bower install</id>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <phase>initialize</phase>
-                                <configuration>
-                                    <executable>bower</executable>
-                                    <arguments>
-                                        <argument>install</argument>
-                                    </arguments>
-                                    <workingDirectory>src/main/javascript/meld-app</workingDirectory>
+                                    <workingDirectory>src/main/javascript/meld</workingDirectory>
                                 </configuration>
                             </execution>
                             <execution>
@@ -201,7 +187,7 @@
                                         <argument>build</argument>
                                         <argument>--prod</argument>
                                     </arguments>
-                                    <workingDirectory>src/main/javascript/meld-app</workingDirectory>
+                                    <workingDirectory>src/main/javascript/meld</workingDirectory>
                                 </configuration>
                             </execution>
                         </executions>
