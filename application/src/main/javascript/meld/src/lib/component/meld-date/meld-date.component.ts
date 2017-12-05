@@ -233,11 +233,7 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
     let element : HTMLElement = this.nativeElement;
     let clientRect = element.getBoundingClientRect();
     let config = {
-      hasBackdrop : false,
-      position : {
-        top: clientRect.top - 400 + 'px',
-        left : clientRect.left + "px"
-      },
+      hasBackdrop : true,
       data : {date : this.value}
     };
     let dialogRef = this.dialog.open(MeldDatePickerComponent, config);

@@ -186,6 +186,7 @@
                                     <arguments>
                                         <argument>build</argument>
                                         <argument>--prod</argument>
+                                        <argument>--aot=false</argument>
                                     </arguments>
                                     <workingDirectory>src/main/javascript/meld</workingDirectory>
                                 </configuration>
@@ -227,22 +228,6 @@
                         <version>1.5.0</version>
                         <executions>
                             <execution>
-                                <id>npm install meld-ui</id>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <phase>initialize</phase>
-                                <configuration>
-                                    <executable>cmd</executable>
-                                    <arguments>
-                                        <argument>/C</argument>
-                                        <argument>npm</argument>
-                                        <argument>install</argument>
-                                    </arguments>
-                                    <workingDirectory>src/main/javascript/meld-ui</workingDirectory>
-                                </configuration>
-                            </execution>
-                            <execution>
                                 <id>npm install meld-app</id>
                                 <goals>
                                     <goal>exec</goal>
@@ -255,23 +240,7 @@
                                         <argument>npm</argument>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>src/main/javascript/meld-app</workingDirectory>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>bower install</id>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <phase>initialize</phase>
-                                <configuration>
-                                    <executable>cmd</executable>
-                                    <arguments>
-                                        <argument>/C</argument>
-                                        <argument>bower</argument>
-                                        <argument>install</argument>
-                                    </arguments>
-                                    <workingDirectory>src/main/javascript/meld-app</workingDirectory>
+                                    <workingDirectory>src/main/javascript/meld</workingDirectory>
                                 </configuration>
                             </execution>
                             <execution>
@@ -287,8 +256,9 @@
                                         <argument>ng</argument>
                                         <argument>build</argument>
                                         <argument>--prod</argument>
+                                        <argument>--aot=false</argument>
                                     </arguments>
-                                    <workingDirectory>src/main/javascript/meld-app</workingDirectory>
+                                    <workingDirectory>src/main/javascript/meld</workingDirectory>
                                 </configuration>
                             </execution>
                         </executions>

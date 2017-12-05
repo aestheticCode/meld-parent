@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {AppService} from "./app.service";
 import {Link} from "../lib/common/rest/Link";
 
@@ -11,6 +11,8 @@ export class AppComponent {
 
   public sideNavShow: boolean = true;
 
+  public sideNavOption : string = "side";
+
   public links : Link[];
 
   constructor(service : AppService) {
@@ -18,6 +20,18 @@ export class AppComponent {
     service.event.subscribe((linksContainer) => {
       this.links = linksContainer.links;
     })
+
+
+    window.matchMedia( "(min-width: 500px)" ).addListener((listener) => {
+      this.sideNavShow = false;
+      this.sideNavOption = "over";
+    });
+
+
+    window.matchMedia( "(min-width: 700px)" ).addListener((listener) => {
+      this.sideNavShow = true;
+      this.sideNavOption = "side";
+    });
   }
 
   toggleSideNav() {
