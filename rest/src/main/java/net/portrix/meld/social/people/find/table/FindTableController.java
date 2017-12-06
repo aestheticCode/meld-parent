@@ -1,6 +1,8 @@
 package net.portrix.meld.social.people.find.table;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
+import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.jsr339.Name;
@@ -75,5 +77,13 @@ public class FindTableController {
 
         return new Container<>(categoryFormList, (int)countUsers);
     }
+
+    public static URLBuilder<FindTableController> linkList(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(FindTableController.class)
+                .record((method) -> method.list(null))
+                .rel("list");
+    }
+
 
 }

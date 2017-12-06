@@ -2,16 +2,13 @@ package net.portrix.meld.channel.meld.form;
 
 import net.portrix.generic.image.ImageUtils;
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.channel.MeldImage;
 import net.portrix.meld.channel.MeldPost;
-import net.portrix.meld.channel.MeldPostService;
-import net.portrix.meld.channel.meld.image.MeldImageSession;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.UserManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +65,8 @@ public class MeldPostFormController {
             response.setFile(file);
         }
 
-        linkUpdate(post, response, builderFactory);
+        linkUpdate(post, builderFactory)
+                .buildSecured(response::addLink);
 
         return response;
     }
@@ -98,7 +96,6 @@ public class MeldPostFormController {
         }
 
 
-
         return read(post.getId());
     }
 
@@ -107,7 +104,7 @@ public class MeldPostFormController {
     @Path("meld")
     @Name("Meld Post Save")
     @Transactional
-    public MeldPostResponse save(MeldPostForm edit)  {
+    public MeldPostResponse save(MeldPostForm edit) {
         final MeldPost post = new MeldPost();
         final User user = service.currentUser();
 
@@ -127,33 +124,29 @@ public class MeldPostFormController {
         service.savePost(post);
 
 
-
         return read(post.getId());
     }
 
 
-    public static void linkRead(MeldPost post, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<MeldPostFormController> linkRead(MeldPost post, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(MeldPostFormController.class)
                 .record(method -> method.read(post.getId()))
-                .rel("read")
-                .buildSecured(container::addLink);
+                .rel("read");
     }
 
-    private static void linkUpdate(MeldPost post, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    private static URLBuilder<MeldPostFormController> linkUpdate(MeldPost post, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(MeldPostFormController.class)
                 .record(method -> method.update(post.getId(), null))
-                .rel("update")
-                .buildSecured(container::addLink);
+                .rel("update");
     }
 
-    private static void linkSave(MeldPost post, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    private static URLBuilder<MeldPostFormController> linkSave(MeldPost post, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(MeldPostFormController.class)
                 .record(method -> method.save(null))
-                .rel("save")
-                .buildSecured(container::addLink);
+                .rel("save");
     }
 
 

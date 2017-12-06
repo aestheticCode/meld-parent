@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="main">
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/meld</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
+
+        <mapping class="net.portrix.generic.ddd.AbstractAggregate"/>
+        <mapping class="net.portrix.generic.ddd.AbstractAggregate"/>
+        <mapping class="net.portrix.generic.ddd.AbstractEntity"/>
+        <mapping class="net.portrix.meld.usercontrol.Group"/>
+        <mapping class="net.portrix.meld.usercontrol.Identity"/>
+        <mapping class="net.portrix.meld.usercontrol.Permission"/>
+        <mapping class="net.portrix.meld.usercontrol.Role"/>
+        <mapping class="net.portrix.meld.usercontrol.User"/>
+        <mapping class="net.portrix.meld.usercontrol.UserImage"/>
+
+        <mapping class="net.portrix.meld.social.profile.Address"/>
+        <mapping class="net.portrix.meld.social.profile.Chat"/>
+        <mapping class="net.portrix.meld.social.profile.ChatCategory"/>
+        <mapping class="net.portrix.meld.social.profile.Company"/>
+        <mapping class="net.portrix.meld.social.profile.Education"/>
+        <mapping class="net.portrix.meld.social.profile.PersonalContact"/>
+        <mapping class="net.portrix.meld.social.profile.Phone"/>
+        <mapping class="net.portrix.meld.social.profile.PhoneCategory"/>
+        <mapping class="net.portrix.meld.social.profile.Places"/>
+        <mapping class="net.portrix.meld.social.profile.School"/>
+        <mapping class="net.portrix.meld.social.profile.WorkHistory"/>
+
+        <mapping class="net.portrix.meld.social.people.Category"/>
+        <mapping class="net.portrix.meld.social.people.RelationShip"/>
+
+        <mapping class="net.portrix.meld.channel.MeldPost"/>
+        <mapping class="net.portrix.meld.channel.MeldComment"/>
+        <mapping class="net.portrix.meld.channel.MeldImage"/>
+
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.AttributedTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.AccountTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.RoleTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.GroupTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.IdentityTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.RelationshipTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.RelationshipIdentityTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.PartitionTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.PasswordCredentialTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.AttributeTypeEntity"/>
+
+
+    </session-factory>
+</hibernate-configuration>

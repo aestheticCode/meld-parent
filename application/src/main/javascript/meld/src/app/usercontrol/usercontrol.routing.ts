@@ -15,6 +15,7 @@ import {RoleFormComponent} from "./role-form/role-form.component";
 import {RoleFormGuard} from "./role-form/role-form.guard";
 import {UserViewComponent} from "./user-form/user-view.component";
 import {UserCreateGuard, UserEditGuard} from "./user-form/user.guard";
+import {UserRegistrationComponent} from './user-registration/user-registration.component';
 
 const appRoutes: Routes = [
   {path: 'users', component: UserTableComponent, resolve: {users: UserTableGuard}},
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
   {path: 'user/:id/edit', component: UserFormComponent, resolve: {user: UserEditGuard}},
   {path: 'user', component: UserFormComponent, resolve: {user: UserCreateGuard}},
   {path: 'login', component: LoginFormComponent},
+  {path: 'registration', component: UserRegistrationComponent},
   {path: 'logout', component: LogoutFormComponent},
   {path: 'roles', component: RoleTableComponent, resolve: {roles: RoleTableGuard}},
   {path: 'role/:id', component: RoleFormComponent, resolve: {role: RoleFormGuard}},

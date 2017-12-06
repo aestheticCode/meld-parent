@@ -1,10 +1,13 @@
 package net.portrix.meld.usercontrol.permission.table;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
+import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.*;
+import net.portrix.meld.usercontrol.role.multiselect.RoleMultiSelectController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -67,6 +70,13 @@ public class PermissionTableController {
 
         return new Container<>(selects, (int) count);
 
+    }
+
+    public static URLBuilder<PermissionTableController> linkRoles(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PermissionTableController.class)
+                .record(method -> method.list(new Query()))
+                .rel("permissions");
     }
 
 }

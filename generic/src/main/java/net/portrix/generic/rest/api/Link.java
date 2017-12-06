@@ -10,14 +10,14 @@ import java.net.URI;
  */
 public class Link {
 
-    private final URI url;
+    private final String url;
 
     private final String method;
 
     private final String rel;
 
     @JsonCreator
-    public Link(@JsonProperty("url") URI url,
+    public Link(@JsonProperty("url") String url,
                 @JsonProperty("method") String method,
                 @JsonProperty("rel") String rel) {
         this.url = url;
@@ -25,7 +25,7 @@ public class Link {
         this.rel = rel;
     }
 
-    public URI getUrl() {
+    public String getUrl() {
         return url;
     }
 

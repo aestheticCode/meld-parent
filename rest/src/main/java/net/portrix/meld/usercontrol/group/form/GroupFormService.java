@@ -31,9 +31,16 @@ public class GroupFormService {
         this(null);
     }
 
+    public List<Role> findRoles(Group group) {
+        return entityManager
+                .createQuery("select r from Role r join r.scopes s where s = :identity", Role.class)
+                .setParameter("identity", group)
+                .getResultList();
+    }
+
     public List<Role> findRoles() {
         return entityManager
-                .createNamedQuery("findAllRoles", Role.class)
+                .createQuery("select r from Role r", Role.class)
                 .getResultList();
     }
 

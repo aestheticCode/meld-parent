@@ -2,52 +2,11 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="main" transaction-type="JTA">
         <jta-data-source>java:jboss/datasources/meld</jta-data-source>
-
-        <class>net.portrix.generic.ddd.AbstractAggregate</class>
-        <class>net.portrix.generic.ddd.AbstractEntity</class>
-        <class>net.portrix.meld.usercontrol.Group</class>
-        <class>net.portrix.meld.usercontrol.Identity</class>
-        <class>net.portrix.meld.usercontrol.Permission</class>
-        <class>net.portrix.meld.usercontrol.Role</class>
-        <class>net.portrix.meld.usercontrol.User</class>
-        <class>net.portrix.meld.usercontrol.UserImage</class>
-
-        <class>net.portrix.meld.social.profile.Address</class>
-        <class>net.portrix.meld.social.profile.Chat</class>
-        <class>net.portrix.meld.social.profile.ChatCategory</class>
-        <class>net.portrix.meld.social.profile.Company</class>
-        <class>net.portrix.meld.social.profile.Education</class>
-        <class>net.portrix.meld.social.profile.PersonalContact</class>
-        <class>net.portrix.meld.social.profile.Phone</class>
-        <class>net.portrix.meld.social.profile.PhoneCategory</class>
-        <class>net.portrix.meld.social.profile.Places</class>
-        <class>net.portrix.meld.social.profile.School</class>
-        <class>net.portrix.meld.social.profile.WorkHistory</class>
-
-        <class>net.portrix.meld.social.people.Category</class>
-        <class>net.portrix.meld.social.people.RelationShip</class>
-
-        <class>net.portrix.meld.channel.MeldPost</class>
-        <class>net.portrix.meld.channel.MeldComment</class>
-        <class>net.portrix.meld.channel.MeldImage</class>
-
-        <class>org.picketlink.idm.jpa.model.sample.simple.AttributedTypeEntity</class>
-        <class>org.picketlink.idm.jpa.model.sample.simple.AccountTypeEntity</class>
-        <class>org.picketlink.idm.jpa.model.sample.simple.RoleTypeEntity</class>
-        <class>org.picketlink.idm.jpa.model.sample.simple.GroupTypeEntity</class>
-        <class>org.picketlink.idm.jpa.model.sample.simple.IdentityTypeEntity</class>
-        <class>org.picketlink.idm.jpa.model.sample.simple.RelationshipTypeEntity</class>
-        <class>org.picketlink.idm.jpa.model.sample.simple.RelationshipIdentityTypeEntity</class>
-        <class>org.picketlink.idm.jpa.model.sample.simple.PartitionTypeEntity</class>
-        <class>org.picketlink.idm.jpa.model.sample.simple.PasswordCredentialTypeEntity</class>
-        <class>org.picketlink.idm.jpa.model.sample.simple.AttributeTypeEntity</class>
-
-
         <properties>
-<!--            <property name="hibernate.show_sql" value="true"/>
+<!--        <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-            <property name="hibernate.hbm2ddl.import_files" value="/META-INF/import.sql"/>
+            <property name="hibernate.ejb.cfgfile" value="META-INF/hibernate.cfg.xml"/>
+            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect" />
             <property name="hibernate.connection.autocommit" value="false" />
             <property name="hibernate.search.default.worker.backend" value="jgroups"/>

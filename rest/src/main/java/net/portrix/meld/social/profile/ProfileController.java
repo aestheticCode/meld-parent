@@ -1,6 +1,7 @@
 package net.portrix.meld.social.profile;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
@@ -42,12 +43,11 @@ public class ProfileController {
         };
     }
 
-    public static void linkProfile(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<ProfileController> linkProfile(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(ProfileController.class)
                 .record(ProfileController::read)
-                .rel("profile")
-                .buildSecured(container::addLink);
+                .rel("profile");
     }
 
 

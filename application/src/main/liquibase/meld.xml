@@ -1,0 +1,32 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS" id="diff" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/diff.sql"/>
+    </changeSet>
+
+
+    <changeSet id="uc_identity" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/uc_identity.sql"/>
+    </changeSet>
+
+    <changeSet id="uc_permissions" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/uc_permission.sql"/>
+    </changeSet>
+
+    <changeSet id="uc_role" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/uc_role.sql"/>
+    </changeSet>
+
+    <changeSet id="uc_role_uc_identity" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/uc_role_uc_identity.sql"/>
+    </changeSet>
+
+    <changeSet id="uc_role_uc_permission" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/uc_role_uc_permission.sql"/>
+    </changeSet>
+
+</databaseChangeLog>

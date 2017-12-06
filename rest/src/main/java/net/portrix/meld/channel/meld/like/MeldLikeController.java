@@ -1,17 +1,14 @@
 package net.portrix.meld.channel.meld.like;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.channel.MeldComment;
-import net.portrix.meld.channel.MeldCommentService;
 import net.portrix.meld.channel.MeldPost;
-import net.portrix.meld.channel.MeldPostService;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.UserImageManager;
-import net.portrix.meld.usercontrol.UserManager;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -112,5 +109,19 @@ public class MeldLikeController {
         }
 
         return likes;
+    }
+
+    public static URLBuilder<MeldLikeController> linkPlusOneComment(MeldComment comment, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(MeldLikeController.class)
+                .record(method -> method.plusOneComment(comment.getId()))
+                .rel("plusOneComment");
+    }
+
+    public static URLBuilder<MeldLikeController> linkPlusOnePost(MeldPost post, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(MeldLikeController.class)
+                .record(method -> method.plusOnePost(post.getId()))
+                .rel("plusOnePost");
     }
 }

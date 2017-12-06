@@ -1,10 +1,12 @@
 package net.portrix.meld.usercontrol.role.form;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.usercontrol.*;
+import net.portrix.meld.usercontrol.Identity;
+import net.portrix.meld.usercontrol.Permission;
+import net.portrix.meld.usercontrol.Role;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -12,7 +14,10 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Patrick Bittner on 04/10/16.
@@ -50,7 +55,7 @@ public class RoleFormController {
         roleForm.setId(role.getId());
         roleForm.setName(role.getName());
 
-        List<Permission> permissions = service.findAllPermissions();
+        Set<Permission> permissions = role.getPermissions();
 
         Set<UUID> permissionIds = new HashSet<>();
         for (Permission permission : permissions) {
@@ -64,9 +69,12 @@ public class RoleFormController {
         }
         roleForm.setMembers(members);
 
-        linkRead(role, roleForm, builderFactory);
-        linkUpdate(role, roleForm, builderFactory);
-        linkDelete(role, roleForm, builderFactory);
+        linkRead(role, builderFactory)
+                .buildSecured(roleForm::addLink);
+        linkUpdate(role, builderFactory)
+                .buildSecured(roleForm::addLink);
+        linkDelete(role, builderFactory)
+                .buildSecured(roleForm::addLink);
 
         return roleForm;
     }
@@ -137,36 +145,32 @@ public class RoleFormController {
     }
 
 
-    public static void linkRead(Role role, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<RoleFormController> linkRead(Role role, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(RoleFormController.class)
                 .record(method -> method.read(role.getId()))
-                .rel("read")
-                .buildSecured(container::addLink);
+                .rel("read");
     }
 
-    public static void linkUpdate(Role role, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<RoleFormController> linkUpdate(Role role, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(RoleFormController.class)
                 .record(method -> method.update(role.getId(), null))
-                .rel("update")
-                .buildSecured(container::addLink);
+                .rel("update");
     }
 
-    public static void linkSave(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<RoleFormController> linkSave(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(RoleFormController.class)
                 .record(method -> method.save(null))
-                .rel("save")
-                .buildSecured(container::addLink);
+                .rel("save");
     }
 
-    public static void linkDelete(Role role, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<RoleFormController> linkDelete(Role role, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(RoleFormController.class)
                 .record(method -> method.delete(role.getId()))
-                .rel("delete")
-                .buildSecured(container::addLink);
+                .rel("delete");
     }
 
 

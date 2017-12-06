@@ -2,10 +2,12 @@ package net.portrix.meld.usercontrol.group.form;
 
 import com.google.common.collect.Sets;
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.usercontrol.*;
+import net.portrix.meld.usercontrol.Group;
+import net.portrix.meld.usercontrol.Identity;
+import net.portrix.meld.usercontrol.Role;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -53,7 +55,7 @@ public class GroupFormController {
         groupType.setName(group.getName());
 
         List<UUID> roleIds = new ArrayList<>();
-        final List<Role> roles = service.findRoles();
+        final List<Role> roles = service.findRoles(group);
 
         for (Role role : roles) {
             roleIds.add(role.getId());
@@ -68,9 +70,12 @@ public class GroupFormController {
 
         groupType.setMembers(Sets.newHashSet(memberIds));
 
-        linkRead(group, groupType, builderFactory);
-        linkUpdate(group, groupType, builderFactory);
-        linkDelete(group, groupType, builderFactory);
+        linkRead(group, builderFactory)
+                .buildSecured(groupType::addLink);
+        linkUpdate(group, builderFactory)
+                .buildSecured(groupType::addLink);
+        linkDelete(group, builderFactory)
+                .buildSecured(groupType::addLink);
 
         return groupType;
     }
@@ -107,7 +112,7 @@ public class GroupFormController {
         group.setName(groupForm.getName());
         service.save(group);
 
-        final List<Role> roles = service.findRoles();
+        final List<Role> roles = service.findRoles(group);
 
         for (Role role : roles) {
             if (groupForm.getRoles().contains(role.getId())) {
@@ -142,37 +147,33 @@ public class GroupFormController {
     }
 
 
-    public static void linkUpdate(Group group, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<GroupFormController> linkUpdate(Group group, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(GroupFormController.class)
                 .record(method -> method.update(group.getId(), new GroupForm()))
-                .rel("update")
-                .buildSecured(container::addLink);
+                .rel("update");
     }
 
-    public static void linkRead(Group group, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<GroupFormController> linkRead(Group group, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(GroupFormController.class)
                 .record(method -> method.read(group.getId()))
-                .rel("read")
-                .buildSecured(container::addLink);
+                .rel("read");
     }
 
-    public static void linkDelete(Group group, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<GroupFormController> linkDelete(Group group, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(GroupFormController.class)
                 .record(method -> method.delete(group.getId()))
-                .rel("delete")
-                .buildSecured(container::addLink);
+                .rel("delete");
     }
 
 
-    public static void linkSave(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<GroupFormController> linkSave(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(GroupFormController.class)
                 .record(method -> method.save(null))
-                .rel("save")
-                .buildSecured(container::addLink);
+                .rel("save");
 
     }
 }

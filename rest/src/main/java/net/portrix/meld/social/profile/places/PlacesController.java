@@ -2,6 +2,8 @@ package net.portrix.meld.social.profile.places;
 
 import com.googlecode.placesapiclient.client.entity.PlacePrediction;
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
+import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Address;
@@ -151,6 +153,41 @@ public class PlacesController {
     public Container<PlacePrediction> geoCoding(LocationForm address) {
         List<PlacePrediction> placePredictions = service.find(address.getValue());
         return new Container<>(placePredictions, placePredictions.size());
+    }
+
+    public static URLBuilder<PlacesController> linkCurrent(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PlacesController.class)
+                .record(PlacesController::current)
+                .rel("current");
+    }
+
+    public static URLBuilder<PlacesController> linkRead(UUID id, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PlacesController.class)
+                .record((method) -> method.read(id))
+                .rel("read");
+    }
+
+    public static URLBuilder<PlacesController> linkSave(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PlacesController.class)
+                .record((method) -> method.save(null))
+                .rel("save");
+    }
+
+    public static URLBuilder<PlacesController> linkUpdate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PlacesController.class)
+                .record((method) -> method.update(null))
+                .rel("update");
+    }
+
+    public static URLBuilder<PlacesController> linkGeoCoding(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PlacesController.class)
+                .record((method) -> method.geoCoding(null))
+                .rel("geoCoding");
     }
 
 }

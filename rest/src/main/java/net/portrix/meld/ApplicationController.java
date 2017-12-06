@@ -48,12 +48,18 @@ public class ApplicationController {
 
         final Application application = new Application();
 
-        UserTableController.linkUsers(application, builderFactory);
-        GroupTableController.linkGroups(application, builderFactory);
-        RoleTableController.linkRoles(application, builderFactory);
-        MeldListController.linkMeld(application, builderFactory);
-        ProfileController.linkProfile(application, builderFactory);
-        CategoryController.linkProfile(application, builderFactory);
+        UserTableController.linkUsers(builderFactory)
+                .buildSecured(application::addLink);
+        GroupTableController.linkGroups(builderFactory)
+                .buildSecured(application::addLink);
+        RoleTableController.linkRoles(builderFactory)
+                .buildSecured(application::addLink);
+        MeldListController.linkMeld(builderFactory)
+                .buildSecured(application::addLink);
+        ProfileController.linkProfile(builderFactory)
+                .buildSecured(application::addLink);
+        CategoryController.linkProfile(builderFactory)
+                .buildSecured(application::addLink);
 
         Application.User user = new Application.User();
         application.setUser(user);
@@ -80,11 +86,13 @@ public class ApplicationController {
             user.setAvatar(avatarLink);
             user.setImage(imageLink);
 
-            LogoutFormController.linkLogout(application, builderFactory);
+            LogoutFormController.linkLogout(builderFactory)
+                    .build(application::addLink);
         } else {
 
             user.setEmail("guest");
-            LoginFormController.linkLogin(application, builderFactory);
+            LoginFormController.linkLogin(builderFactory)
+                    .build(application::addLink);
 
         }
 

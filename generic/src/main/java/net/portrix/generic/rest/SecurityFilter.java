@@ -16,7 +16,6 @@ import java.util.Map;
  * @author Patrick Bittner on 08.06.2015.
  */
 @Provider
-//@PreMatching
 @Secured
 public class SecurityFilter implements ContainerRequestFilter {
 

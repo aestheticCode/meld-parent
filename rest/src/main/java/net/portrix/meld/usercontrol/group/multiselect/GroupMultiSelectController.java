@@ -1,12 +1,13 @@
 package net.portrix.meld.usercontrol.group.multiselect;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.usercontrol.group.form.GroupFormController;
 import net.portrix.meld.usercontrol.Group;
+import net.portrix.meld.usercontrol.group.form.GroupFormController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -40,7 +41,7 @@ public class GroupMultiSelectController {
     }
 
     public GroupMultiSelectController() {
-        this(null,  null);
+        this(null, null);
     }
 
     @POST
@@ -51,7 +52,7 @@ public class GroupMultiSelectController {
     public Container<GroupSelectResponse> list(Query search) {
         List<Group> groups;
         long count = 0;
-        if(search.getLimit() == 0) {
+        if (search.getLimit() == 0) {
             groups = new ArrayList<>();
         } else {
             groups = service.find(search);
@@ -66,16 +67,25 @@ public class GroupMultiSelectController {
             response.setId(group.getId());
             response.setName(group.getName());
 
-            GroupFormController.linkRead(group, response, builderFactory);
+            GroupFormController.linkRead(group, builderFactory)
+                    .buildSecured(response::addLink);
 
             selects.add(response);
         }
 
         final Container<GroupSelectResponse> container = new Container<>(selects, (int) count);
 
-        GroupFormController.linkSave(container, builderFactory);
+        GroupFormController.linkSave(builderFactory)
+                .buildSecured(container::addLink);
 
         return container;
+    }
+
+    public static URLBuilder<GroupMultiSelectController> linkGroups(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(GroupMultiSelectController.class)
+                .record(method -> method.list(new Query()))
+                .rel("roles");
     }
 
 }

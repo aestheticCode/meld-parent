@@ -1,9 +1,9 @@
 package net.portrix.meld.social.people.category.list;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
@@ -117,12 +117,33 @@ public class CategoryController {
 
     }
 
-    public static void linkProfile(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<CategoryController> linkProfile(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(CategoryController.class)
                 .record(CategoryController::list)
-                .rel("people")
-                .buildSecured(container::addLink);
+                .rel("people");
     }
+
+    public static URLBuilder<CategoryController> linkDelete(UUID id, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(CategoryController.class)
+                .record((method) -> method.delete(id))
+                .rel("delete");
+    }
+
+    public static URLBuilder<CategoryController> linkSave(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(CategoryController.class)
+                .record((method) -> method.save(null))
+                .rel("save");
+    }
+
+    public static URLBuilder<CategoryController> linkUpdate(UUID id, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(CategoryController.class)
+                .record((method) -> method.update(id, null))
+                .rel("update");
+    }
+
 
 }

@@ -1,8 +1,8 @@
 package net.portrix.meld.usercontrol.user.table;
 
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.api.meta.MetaResponseType;
 import net.portrix.generic.rest.api.meta.Property;
 import net.portrix.generic.rest.jsr339.Name;
@@ -83,15 +83,18 @@ public class UserTableController {
             response.setLastName(user.getLastName());
             response.setBirthday(user.getBirthdate());
 
-            UserFormController.linkRead(user, response, builderFactory);
-            UserImageController.linkThumbnail(user, response, builderFactory);
+            UserFormController.linkRead(user, builderFactory)
+                    .buildSecured(response::addLink);
+            UserImageController.linkThumbnail(user, builderFactory)
+                    .buildSecured(response::addLink);
 
             selects.add(response);
         }
 
         final Container<UserRowResponse> container = new Container<>(selects, (int) count);
 
-        UserFormController.linkSave(container, builderFactory);
+        UserFormController.linkSave(builderFactory)
+                .buildSecured(container::addLink);
 
         return container;
     }
@@ -111,12 +114,11 @@ public class UserTableController {
         return responseType;
     }
 
-    public static void linkUsers(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<UserTableController> linkUsers(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(UserTableController.class)
                 .record(method -> method.list(null))
-                .rel("users")
-                .buildSecured(container::addLink);
+                .rel("users");
     }
 
 }

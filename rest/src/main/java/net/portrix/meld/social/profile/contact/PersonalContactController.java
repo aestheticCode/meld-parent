@@ -1,6 +1,8 @@
 package net.portrix.meld.social.profile.contact;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
+import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Chat;
 import net.portrix.meld.social.profile.PersonalContact;
@@ -40,7 +42,7 @@ public class PersonalContactController {
     @Name("Personal Contact Save")
     @Secured
     @Transactional
-    public PersonalContactForm read() {
+    public PersonalContactForm current() {
         User user = service.currentUser();
         return read(user.getId());
     }
@@ -161,5 +163,32 @@ public class PersonalContactController {
 
     }
 
+    public static URLBuilder<PersonalContactController> linkCurrent(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PersonalContactController.class)
+                .record(PersonalContactController::current)
+                .rel("current");
+    }
+
+    public static URLBuilder<PersonalContactController> linkRead(UUID id, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PersonalContactController.class)
+                .record((method) -> method.read(id))
+                .rel("read");
+    }
+
+    public static URLBuilder<PersonalContactController> linkSave(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PersonalContactController.class)
+                .record((method) -> method.save(null))
+                .rel("save");
+    }
+
+    public static URLBuilder<PersonalContactController> linkUpdate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PersonalContactController.class)
+                .record((method) -> method.update(null))
+                .rel("update");
+    }
 
 }

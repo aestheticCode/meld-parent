@@ -1,15 +1,16 @@
 package net.portrix.meld.channel.meld.comment;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
-import net.portrix.meld.channel.*;
+import net.portrix.meld.channel.MeldComment;
+import net.portrix.meld.channel.MeldPost;
 import net.portrix.meld.channel.meld.like.MeldLikeResponse;
-import net.portrix.meld.usercontrol.user.image.UserImageController;
 import net.portrix.meld.usercontrol.User;
+import net.portrix.meld.usercontrol.user.image.UserImageController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -39,7 +40,7 @@ public class MeldCommentController {
         this.builderFactory = builderFactory;
     }
 
-    public MeldCommentController(){
+    public MeldCommentController() {
         this(null, null);
     }
 
@@ -70,7 +71,8 @@ public class MeldCommentController {
         response.setTime(TimeUtils.format(meldComment.getCreated()));
         response.setText(meldComment.getText());
 
-        MeldCommentController.linkUpdate(meldComment, response, builderFactory);
+        MeldCommentController.linkUpdate(meldComment, builderFactory)
+                .buildSecured(response::addLink);
 
         for (User user : meldComment.getLikes()) {
             MeldLikeResponse likeResponse = new MeldLikeResponse();
@@ -116,7 +118,8 @@ public class MeldCommentController {
         response.setTime(TimeUtils.format(meldComment.getCreated()));
         response.setText(meldComment.getText());
 
-        MeldCommentController.linkUpdate(meldComment, response, builderFactory);
+        MeldCommentController.linkUpdate(meldComment, builderFactory)
+                .buildSecured(response::addLink);
 
         for (User user : meldComment.getLikes()) {
             final Link avatarLink = builderFactory.from(UserImageController.class)
@@ -143,14 +146,12 @@ public class MeldCommentController {
 
     }
 
-    public static void linkUpdate(MeldComment comment, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<MeldCommentController> linkUpdate(MeldComment comment, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(MeldCommentController.class)
                 .record(method -> method.update(comment.getId(), null))
-                .rel("update")
-                .buildSecured(container::addLink);
+                .rel("update");
     }
-
 
 
 }

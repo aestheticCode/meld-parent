@@ -1,8 +1,8 @@
 package net.portrix.meld.usercontrol.user.image;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserImage;
@@ -20,11 +20,7 @@ import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Patrick Bittner on 07/10/16.
@@ -92,20 +88,18 @@ public class UserImageController implements Serializable {
         return response.build();
     }
 
-    public static void linkThumbnail(User user, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<UserImageController> linkThumbnail(User user, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(UserImageController.class)
                 .record(method -> method.thumbNail(user.getId()))
-                .rel("thumbnail")
-                .buildSecured(container::addLink);
+                .rel("thumbnail");
     }
 
-    public static void linkImage(User user, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<UserImageController> linkImage(User user, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(UserImageController.class)
                 .record(method -> method.image(user.getId()))
-                .rel("image")
-                .buildSecured(container::addLink);
+                .rel("image");
     }
 
 }

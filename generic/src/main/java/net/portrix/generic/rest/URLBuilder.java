@@ -12,6 +12,7 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.jsr339.ResourceUtil;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
+import org.jboss.resteasy.specimpl.ResteasyUriBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -158,11 +159,7 @@ public class URLBuilder<B> {
         securityActionEvent.fire(securityAction);
 
         if (securityAction.isValid()) {
-            try {
-                consumer.accept(new Link(new URI("service" + url.toASCIIString()), buildMethod(), rel));
-            } catch (URISyntaxException e) {
-                LOG.error(e.getMessage(), e);
-            }
+            consumer.accept(new Link("service" + url.toASCIIString(), buildMethod(), rel));
         }
     }
 
@@ -170,22 +167,21 @@ public class URLBuilder<B> {
 
         URI url = uriBuilder.buildFromMap(params);
 
-        try {
-            consumer.accept(new Link(new URI("service" + url.toASCIIString()), buildMethod(), rel));
-        } catch (URISyntaxException e) {
-            LOG.error(e.getMessage(), e);
-        }
+        consumer.accept(new Link("service" + url.toASCIIString(), buildMethod(), rel));
+
+    }
+
+    public Link build() {
+
+        String s = ((ResteasyUriBuilder) uriBuilder).getPath();
+
+        return new Link(s, buildMethod(), rel);
 
     }
 
     public Link generate() {
         URI url = uriBuilder.buildFromMap(params);
-        try {
-            return new Link(new URI("service" + url.toASCIIString()), buildMethod(), rel);
-        } catch (URISyntaxException e) {
-            LOG.error(e.getMessage(), e);
-        }
-        return null;
+        return new Link("service" + url.toASCIIString(), buildMethod(), rel);
     }
 
 

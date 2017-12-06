@@ -1,13 +1,13 @@
 package net.portrix.meld.usercontrol.group.table;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.usercontrol.group.form.GroupFormController;
 import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.Identity;
+import net.portrix.meld.usercontrol.group.form.GroupFormController;
 import net.portrix.meld.usercontrol.group.table.query.Query;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -53,7 +53,7 @@ public class GroupTableController {
     public Container<GroupRowResponse> list(Query search) {
         List<Group> groups;
         long count = 0;
-        if(search.getLimit() == 0) {
+        if (search.getLimit() == 0) {
             groups = new ArrayList<>();
         } else {
             groups = service.find(search);
@@ -73,24 +73,25 @@ public class GroupTableController {
                 response.getRoles().add(identity.getName());
             }
 
-            GroupFormController.linkRead(group, response, builderFactory);
+            GroupFormController.linkRead(group, builderFactory)
+                    .buildSecured(response::addLink);
 
             selects.add(response);
         }
 
         final Container<GroupRowResponse> container = new Container<>(selects, (int) count);
 
-        GroupFormController.linkSave(container, builderFactory);
+        GroupFormController.linkSave(builderFactory)
+                .buildSecured(container::addLink);
 
         return container;
     }
 
 
-    public static void linkGroups(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<GroupTableController> linkGroups(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(GroupTableController.class)
                 .record(method -> method.list(new Query()))
-                .rel("groups")
-                .buildSecured(container::addLink);
+                .rel("groups");
     }
 }

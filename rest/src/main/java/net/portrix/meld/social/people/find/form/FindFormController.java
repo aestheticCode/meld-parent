@@ -1,6 +1,8 @@
 package net.portrix.meld.social.people.find.form;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
+import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
@@ -66,6 +68,13 @@ public class FindFormController {
 
         return categoryForm;
 
+    }
+
+    public static URLBuilder<FindFormController> linkProfile(UUID id, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(FindFormController.class)
+                .record((method) -> method.update(id, null))
+                .rel("find");
     }
 
 }

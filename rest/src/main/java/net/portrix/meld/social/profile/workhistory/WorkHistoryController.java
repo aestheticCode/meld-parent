@@ -1,6 +1,8 @@
 package net.portrix.meld.social.profile.workhistory;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
+import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Company;
 import net.portrix.meld.social.profile.WorkHistory;
@@ -132,5 +134,33 @@ public class WorkHistoryController {
         }
 
         return read(workHistory.getId());
+    }
+
+    public static URLBuilder<WorkHistoryController> linkCurrent(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(WorkHistoryController.class)
+                .record(WorkHistoryController::current)
+                .rel("current");
+    }
+
+    public static URLBuilder<WorkHistoryController> linkRead(UUID id, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(WorkHistoryController.class)
+                .record((method) -> method.read(id))
+                .rel("read");
+    }
+
+    public static URLBuilder<WorkHistoryController> linkSave(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(WorkHistoryController.class)
+                .record((method) -> method.save(null))
+                .rel("save");
+    }
+
+    public static URLBuilder<WorkHistoryController> linkUpdate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(WorkHistoryController.class)
+                .record((method) -> method.update(null))
+                .rel("update");
     }
 }

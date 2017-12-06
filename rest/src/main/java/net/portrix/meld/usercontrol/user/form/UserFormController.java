@@ -3,11 +3,14 @@ package net.portrix.meld.usercontrol.user.form;
 import com.google.common.collect.Sets;
 import net.portrix.generic.image.ImageUtils;
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.usercontrol.*;
+import net.portrix.meld.usercontrol.Group;
+import net.portrix.meld.usercontrol.Role;
+import net.portrix.meld.usercontrol.User;
+import net.portrix.meld.usercontrol.UserImage;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +23,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Patrick Bittner on 21.06.2015.
@@ -47,7 +52,6 @@ public class UserFormController {
     public UserFormController() {
         this(null, null);
     }
-
 
 
     @Secured
@@ -121,9 +125,12 @@ public class UserFormController {
         }
         response.setRoles(Sets.newHashSet(roleIds));
 
-        linkRead(user, response, builderFactory);
-        linkUpdate(user, response, builderFactory);
-        linkDelete(user, response, builderFactory);
+        linkRead(user, builderFactory)
+                .buildSecured(response::addLink);
+        linkUpdate(user, builderFactory)
+                .buildSecured(response::addLink);
+        linkDelete(user, builderFactory)
+                .buildSecured(response::addLink);
 
         return response;
 
@@ -222,36 +229,32 @@ public class UserFormController {
         return service.validateUserName(validation);
     }
 
-    public static void linkRead(User user, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<UserFormController> linkRead(User user, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(UserFormController.class)
                 .record(method -> method.read(user.getId()))
-                .rel("read")
-                .buildSecured(container::addLink);
+                .rel("read");
     }
 
-    public static void linkUpdate(User user, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<UserFormController> linkUpdate(User user, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(UserFormController.class)
-                .record(method -> method.update(user.getId(),null))
-                .rel("update")
-                .buildSecured(container::addLink);
+                .record(method -> method.update(user.getId(), null))
+                .rel("update");
     }
 
-    public static void linkSave(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<UserFormController> linkSave(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(UserFormController.class)
                 .record(method -> method.save(null))
-                .rel("save")
-                .buildSecured(container::addLink);
+                .rel("save");
     }
 
-    public static void linkDelete(User user, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<UserFormController> linkDelete(User user, URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(UserFormController.class)
                 .record(method -> method.delete(user.getId()))
-                .rel("delete")
-                .buildSecured(container::addLink);
+                .rel("delete");
     }
 
 }

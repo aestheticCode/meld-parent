@@ -9,7 +9,7 @@ import {
   Output
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {MatDialog} from "@angular/material";
+import {MatCheckboxChange, MatDialog} from '@angular/material';
 import {MeldTableMenuDialogComponent} from "./meld-menu-dialog/meld-table-menu-dialog.component";
 import {MeldFilterDirective} from "./meld-filter/meld-filter.directive";
 import {MeldColgroupDirective} from "./meld-colgroup/meld-colgroup.directive";
@@ -173,10 +173,9 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
     this.onChangeCallback(this.value);
   }
 
-  itemSelected(item: any, event: any) {
-    let checked = event.srcElement.checked;
+  itemSelected(item: any, checked: MatCheckboxChange) {
 
-    if (checked) {
+    if (checked.checked) {
       this.selectItem(item);
     } else {
       this.deSelectItem(item);
@@ -187,12 +186,11 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
     return this.hoveredIndex === index;
   }
 
-  selectAll(event: any) {
-    let checked = event.srcElement.checked;
-    this.allSelected = checked;
+  selectAll(checked: MatCheckboxChange) {
+    this.allSelected = checked.checked;
     this.value = [];
 
-    if (checked) {
+    if (checked.checked) {
       let query = QueryBuilder.query();
       query.index = 0;
       query.limit = 0x7fffffff;

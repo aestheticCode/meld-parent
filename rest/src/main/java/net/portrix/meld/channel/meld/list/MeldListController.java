@@ -1,10 +1,10 @@
 package net.portrix.meld.channel.meld.list;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.Link;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
 import net.portrix.meld.channel.MeldComment;
@@ -89,7 +89,8 @@ public class MeldListController {
                 item.addLike(likeResponse);
             }
             if (post.getUser().equals(currentUser)) {
-                MeldPostFormController.linkRead(post, item, builderFactory);
+                MeldPostFormController.linkRead(post, builderFactory)
+                        .buildSecured(item::addLink);
             }
             createComments(currentUser, post.getComments(), item.getComments());
             items.add(item);
@@ -124,7 +125,8 @@ public class MeldListController {
             commentResponse.setTime(TimeUtils.format(comment.getCreated()));
 
             if (comment.getUser().equals(currentUser)) {
-                MeldCommentController.linkUpdate(comment, commentResponse, builderFactory);
+                MeldCommentController.linkUpdate(comment, builderFactory)
+                        .buildSecured(commentResponse::addLink);
             }
 
 
@@ -156,12 +158,11 @@ public class MeldListController {
     }
 
 
-    public static void linkMeld(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<MeldListController> linkMeld(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(MeldListController.class)
                 .record(method -> method.list(new MeldListSearchType()))
-                .rel("meld")
-                .buildSecured(container::addLink);
+                .rel("meld");
     }
 
 

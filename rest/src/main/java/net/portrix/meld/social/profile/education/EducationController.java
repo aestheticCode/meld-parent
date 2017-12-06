@@ -1,6 +1,8 @@
 package net.portrix.meld.social.profile.education;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
+import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Education;
 import net.portrix.meld.social.profile.School;
@@ -122,5 +124,33 @@ public class EducationController {
         }
 
         return current();
+    }
+
+    public static URLBuilder<EducationController> linkCurrent(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(EducationController.class)
+                .record(EducationController::current)
+                .rel("current");
+    }
+
+    public static URLBuilder<EducationController> linkRead(UUID id, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(EducationController.class)
+                .record((method) -> method.read(id))
+                .rel("read");
+    }
+
+    public static URLBuilder<EducationController> linkSave(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(EducationController.class)
+                .record((method) -> method.save(null))
+                .rel("save");
+    }
+
+    public static URLBuilder<EducationController> linkUpdate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(EducationController.class)
+                .record((method) -> method.update(null))
+                .rel("update");
     }
 }

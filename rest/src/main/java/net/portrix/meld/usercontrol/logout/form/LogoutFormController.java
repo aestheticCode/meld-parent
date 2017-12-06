@@ -1,11 +1,10 @@
 package net.portrix.meld.usercontrol.logout.form;
 
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
-import net.portrix.generic.rest.api.Links;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.meld.usercontrol.login.form.LoginFormController;
-import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -61,17 +60,17 @@ public class LogoutFormController {
             }
         };
 
-        LoginFormController.linkLogin(container, builderFactory);
+        LoginFormController.linkLogin(builderFactory)
+                .build(container::addLink);
 
         return container;
     }
 
-    public static void linkLogout(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<LogoutFormController> linkLogout(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(LogoutFormController.class)
                 .record(LogoutFormController::logout)
-                .rel("logout")
-                .build(container::addLink);
+                .rel("logout");
     }
 
 }

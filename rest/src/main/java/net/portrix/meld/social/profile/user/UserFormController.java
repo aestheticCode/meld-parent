@@ -2,9 +2,9 @@ package net.portrix.meld.social.profile.user;
 
 import net.portrix.generic.image.ImageUtils;
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.User;
@@ -88,8 +88,10 @@ public class UserFormController {
         image.setName(userImage.getFileName());
         response.setImage(image);
 
-        linkRead(user, response, builderFactory);
-        linkUpdate(response, builderFactory);
+        linkRead(user, builderFactory)
+                .buildSecured(response::addLink);
+        linkUpdate(builderFactory)
+                .buildSecured(response::addLink);
 
         return response;
 
@@ -146,35 +148,32 @@ public class UserFormController {
         return service.validateUserName(validation);
     }
 
-    public static void linkRead(User user, LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
-                .from(UserFormController.class)
-                .record(method -> method.read(user.getId()))
-                .rel("read")
-                .buildSecured(container::addLink);
-    }
-
-    public static void linkUpdate(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
-                .from(UserFormController.class)
-                .record(method -> method.update(null))
-                .rel("update")
-                .buildSecured(container::addLink);
-    }
-
-    public static void linkSave(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
-                .from(UserFormController.class)
-                .record(method -> method.save(null))
-                .rel("save")
-                .buildSecured(container::addLink);
-    }
-
-    public static void linkCurrent(LinksContainer linksContainer, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<UserFormController> linkCurrent(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(UserFormController.class)
                 .record(UserFormController::current)
-                .rel("current")
-                .buildSecured(linksContainer::addLink);
+                .rel("current");
     }
+
+    public static URLBuilder<UserFormController> linkRead(User user, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(UserFormController.class)
+                .record(method -> method.read(user.getId()))
+                .rel("read");
+    }
+
+    public static URLBuilder<UserFormController> linkUpdate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(UserFormController.class)
+                .record(method -> method.update(null))
+                .rel("update");
+    }
+
+    public static URLBuilder<UserFormController> linkSave(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(UserFormController.class)
+                .record(method -> method.save(null))
+                .rel("save");
+    }
+
 }

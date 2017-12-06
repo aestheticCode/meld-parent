@@ -13,6 +13,7 @@ import {GroupFormComponent} from './group-form/group-form.component';
 import {RoleFormComponent} from './role-form/role-form.component';
 import {RoleTableComponent} from './role-table/role-table.component';
 import { UserViewComponent } from './user-form/user-view.component';
+import { UserRegistrationComponent } from './user-registration/user-registration.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { UserViewComponent } from './user-form/user-view.component';
     GroupFormComponent,
     RoleFormComponent,
     RoleTableComponent,
-    UserViewComponent
+    UserViewComponent,
+    UserRegistrationComponent
   ],
   entryComponents : [
     UserFormComponent

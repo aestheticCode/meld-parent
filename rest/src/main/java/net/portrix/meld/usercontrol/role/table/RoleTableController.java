@@ -1,12 +1,13 @@
 package net.portrix.meld.usercontrol.role.table;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.jsr339.Name;
+import net.portrix.meld.usercontrol.Identity;
+import net.portrix.meld.usercontrol.Role;
 import net.portrix.meld.usercontrol.role.form.RoleFormController;
-import net.portrix.meld.usercontrol.*;
 import net.portrix.meld.usercontrol.role.table.query.Query;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -52,7 +53,7 @@ public class RoleTableController {
     public Container<RoleRowResponse> list(Query search) {
         List<Role> Roles;
         long count = 0;
-        if(search.getLimit() == 0) {
+        if (search.getLimit() == 0) {
             Roles = new ArrayList<>();
         } else {
             Roles = service.findRoles(search);
@@ -71,25 +72,26 @@ public class RoleTableController {
                 response.getMembers().add(identity.getName());
             }
 
-            RoleFormController.linkRead(role, response, builderFactory);
+            RoleFormController.linkRead(role, builderFactory)
+                    .buildSecured(response::addLink);
 
             selects.add(response);
         }
 
         final Container<RoleRowResponse> container = new Container<>(selects, (int) count);
 
-        RoleFormController.linkSave(container, builderFactory);
+        RoleFormController.linkSave(builderFactory)
+                .buildSecured(container::addLink);
 
         return container;
 
     }
 
-    public static void linkRoles(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<RoleTableController> linkRoles(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(RoleTableController.class)
                 .record(method -> method.list(new Query()))
-                .rel("roles")
-                .buildSecured(container::addLink);
+                .rel("roles");
     }
 
 

@@ -1,13 +1,13 @@
 package net.portrix.meld.usercontrol.login.form;
 
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.meld.channel.meld.list.MeldListController;
 import net.portrix.meld.social.people.category.list.CategoryController;
 import net.portrix.meld.social.profile.ProfileController;
+import net.portrix.meld.usercontrol.group.table.GroupTableController;
 import net.portrix.meld.usercontrol.logout.form.LogoutFormController;
 import net.portrix.meld.usercontrol.role.table.RoleTableController;
-import net.portrix.meld.usercontrol.group.table.GroupTableController;
 import net.portrix.meld.usercontrol.user.table.UserTableController;
 import org.picketlink.Identity;
 import org.picketlink.authentication.UserAlreadyLoggedInException;
@@ -55,13 +55,21 @@ public class LoginFormController {
 
         } catch (UserAlreadyLoggedInException e) {
 
-            UserTableController.linkUsers(loginForm, builderFactory);
-            GroupTableController.linkGroups(loginForm, builderFactory);
-            RoleTableController.linkRoles(loginForm, builderFactory);
-            MeldListController.linkMeld(loginForm, builderFactory);
-            ProfileController.linkProfile(loginForm, builderFactory);
-            LogoutFormController.linkLogout(loginForm, builderFactory);
-            CategoryController.linkProfile(loginForm, builderFactory);
+            UserTableController.linkUsers(builderFactory)
+                    .buildSecured(loginForm::addLink);
+            GroupTableController.linkGroups(builderFactory)
+                    .buildSecured(loginForm::addLink);
+            RoleTableController.linkRoles(builderFactory)
+                    .buildSecured(loginForm::addLink);
+            MeldListController.linkMeld(builderFactory)
+                    .buildSecured(loginForm::addLink);
+            ProfileController.linkProfile(builderFactory)
+                    .buildSecured(loginForm::addLink);
+            CategoryController.linkProfile(builderFactory)
+                    .buildSecured(loginForm::addLink);
+
+            LogoutFormController.linkLogout(builderFactory)
+                    .build(loginForm::addLink);
 
             return Response
                     .ok()
@@ -76,13 +84,21 @@ public class LoginFormController {
                     .build();
         }
 
-        UserTableController.linkUsers(loginForm, builderFactory);
-        GroupTableController.linkGroups(loginForm, builderFactory);
-        RoleTableController.linkRoles(loginForm, builderFactory);
-        MeldListController.linkMeld(loginForm, builderFactory);
-        ProfileController.linkProfile(loginForm, builderFactory);
-        LogoutFormController.linkLogout(loginForm, builderFactory);
-        CategoryController.linkProfile(loginForm, builderFactory);
+        UserTableController.linkUsers(builderFactory)
+                .buildSecured(loginForm::addLink);
+        GroupTableController.linkGroups(builderFactory)
+                .buildSecured(loginForm::addLink);
+        RoleTableController.linkRoles(builderFactory)
+                .buildSecured(loginForm::addLink);
+        MeldListController.linkMeld(builderFactory)
+                .buildSecured(loginForm::addLink);
+        ProfileController.linkProfile(builderFactory)
+                .buildSecured(loginForm::addLink);
+        CategoryController.linkProfile(builderFactory)
+                .buildSecured(loginForm::addLink);
+
+        LogoutFormController.linkLogout(builderFactory)
+                .build(loginForm::addLink);
 
         return Response
                 .ok()
@@ -90,12 +106,11 @@ public class LoginFormController {
                 .build();
     }
 
-    public static void linkLogin(LinksContainer container, URLBuilderFactory builderFactory) {
-        builderFactory
+    public static URLBuilder<LoginFormController> linkLogin(URLBuilderFactory builderFactory) {
+        return builderFactory
                 .from(LoginFormController.class)
-                .record(controller -> controller.login(new LoginForm()))
-                .rel("login")
-                .build(container::addLink);
+                .record(controller -> controller.login(null))
+                .rel("login");
     }
 
 
