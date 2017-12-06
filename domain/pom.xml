@@ -12,15 +12,7 @@
     <artifactId>domain</artifactId>
     <name>Meld Domain</name>
     <dependencies>
-        <dependency>
-            <groupId>org.facebook4j</groupId>
-            <artifactId>facebook4j-core</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.twitter4j</groupId>
-            <artifactId>twitter4j-core</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.google.apis</groupId>
@@ -41,6 +33,12 @@
         <dependency>
             <groupId>com.googlecode.places-api-client</groupId>
             <artifactId>places-api-client</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-youtube</artifactId>
         </dependency>
 
         <dependency>

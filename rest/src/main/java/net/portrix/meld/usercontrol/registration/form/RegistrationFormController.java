@@ -1,16 +1,7 @@
 package net.portrix.meld.usercontrol.registration.form;
 
+import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.LinksContainer;
-import net.portrix.meld.channel.meld.list.MeldListController;
-import net.portrix.meld.social.people.category.list.CategoryController;
-import net.portrix.meld.social.profile.ProfileController;
-import net.portrix.meld.usercontrol.group.table.GroupTableController;
-import net.portrix.meld.usercontrol.logout.form.LogoutFormController;
-import net.portrix.meld.usercontrol.role.table.RoleTableController;
-import net.portrix.meld.usercontrol.user.table.UserTableController;
-import org.picketlink.Identity;
-import org.picketlink.authentication.UserAlreadyLoggedInException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -20,7 +11,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  * @author by Patrick Bittner on 12.06.15.
@@ -53,4 +43,11 @@ public class RegistrationFormController {
         return registrationForm;
     }
 
-   }
+    public static URLBuilder<RegistrationFormController> linkLogin(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(RegistrationFormController.class)
+                .record(controller -> controller.register(null))
+                .rel("register");
+    }
+
+}

@@ -9,6 +9,7 @@ import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.group.table.GroupTableController;
 import net.portrix.meld.usercontrol.login.form.LoginFormController;
 import net.portrix.meld.usercontrol.logout.form.LogoutFormController;
+import net.portrix.meld.usercontrol.registration.form.RegistrationFormController;
 import net.portrix.meld.usercontrol.role.table.RoleTableController;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 import net.portrix.meld.usercontrol.user.table.UserTableController;
@@ -92,6 +93,9 @@ public class ApplicationController {
 
             user.setEmail("guest");
             LoginFormController.linkLogin(builderFactory)
+                    .build(application::addLink);
+
+            RegistrationFormController.linkLogin(builderFactory)
                     .build(application::addLink);
 
         }

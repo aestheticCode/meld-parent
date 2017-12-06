@@ -5,6 +5,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.meld.usercontrol.login.form.LoginFormController;
+import net.portrix.meld.usercontrol.registration.form.RegistrationFormController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -61,6 +62,9 @@ public class LogoutFormController {
         };
 
         LoginFormController.linkLogin(builderFactory)
+                .build(container::addLink);
+
+        RegistrationFormController.linkLogin(builderFactory)
                 .build(container::addLink);
 
         return container;

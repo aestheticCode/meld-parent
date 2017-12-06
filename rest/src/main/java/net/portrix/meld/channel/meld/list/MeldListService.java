@@ -1,15 +1,10 @@
 package net.portrix.meld.channel.meld.list;
 
-import facebook4j.Facebook;
-import facebook4j.FacebookFactory;
-import facebook4j.auth.AccessToken;
-import facebook4j.conf.ConfigurationBuilder;
 import net.portrix.meld.channel.MeldPost;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserImage;
 import net.portrix.meld.usercontrol.UserManager;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

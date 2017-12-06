@@ -178,17 +178,7 @@
 
             <!--=========================================== 3rd Party Libraries =====================================-->
 
-            <dependency>
-                <groupId>org.facebook4j</groupId>
-                <artifactId>facebook4j-core</artifactId>
-                <version>LATEST</version>
-            </dependency>
 
-            <dependency>
-                <groupId>org.twitter4j</groupId>
-                <artifactId>twitter4j-core</artifactId>
-                <version>LATEST</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.google.apis</groupId>
@@ -196,11 +186,6 @@
                 <version>LATEST</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.google.http-client</groupId>
-                <artifactId>google-http-client-jackson2</artifactId>
-                <version>LATEST</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.google.oauth-client</groupId>
@@ -217,6 +202,12 @@
             <dependency>
                 <groupId>com.googlecode.places-api-client</groupId>
                 <artifactId>places-api-client</artifactId>
+                <version>LATEST</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.apis</groupId>
+                <artifactId>google-api-services-youtube</artifactId>
                 <version>LATEST</version>
             </dependency>
 

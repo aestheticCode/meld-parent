@@ -18,9 +18,13 @@
         </div>
         <app-meld-editor [(ngModel)]="post.text" name="text" style="min-height: 60px;" placeholder="Write something here..."></app-meld-editor>
 
-        <meld-file-container>
-          <input name="file" type="file" [(ngModel)]="post.file">
-        </meld-file-container>
+        <mat-form-field style="width: 100%;">
+          <meld-file-container [placeholder]="'Image'">
+            <input #image="InputDirective" type="file" name="image" [(ngModel)]="post.file">
+          </meld-file-container>
+          <button matSuffix mat-icon-button (click)="image.clear()"><mat-icon>backspace</mat-icon></button>
+          <button matSuffix mat-icon-button (click)="image.click()"><mat-icon>present_to_all</mat-icon></button>
+        </mat-form-field>
       </form>
     </mat-card-content>
 

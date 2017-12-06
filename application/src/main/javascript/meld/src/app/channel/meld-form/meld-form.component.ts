@@ -5,6 +5,7 @@ import {AppService} from "../../app.service";
 import {Configuration} from "../../Configuration";
 import {Post} from "./Post";
 import {PostModel} from "./PostModel";
+import {HttpClient, HttpEventType, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-meld-form',
@@ -17,7 +18,7 @@ export class MeldFormComponent implements OnInit {
 
   user: Configuration.User;
 
-  constructor(private http: Http,
+  constructor(private http : HttpClient,
               private route: ActivatedRoute,
               private service: AppService,
               private router: Router) {
@@ -31,11 +32,23 @@ export class MeldFormComponent implements OnInit {
   }
 
   onSave() {
-    this.http.post('service/channel/meld', this.post)
-      .subscribe((res: Response) => {
-        this.post = res.json();
+
+    const request : HttpRequest<Post> = new HttpRequest('POST', 'service/channel/meld', this.post, {
+      reportProgress: true
+    });
+
+    this.http.request(request).subscribe(event => {
+      // Via this API, you get access to the raw event stream.
+      // Look for upload progress events.
+      if (event.type === HttpEventType.UploadProgress) {
+        // This is an upload progress event. Compute and show the % done:
+        const percentDone = Math.round(100 * event.loaded / event.total);
+        console.log(`File is ${percentDone}% uploaded.`);
+      } else if (event instanceof HttpResponse) {
         this.router.navigate(['channel/meld/posts']);
-      });
+      }
+    });
+
   }
 
   onUpdate() {
