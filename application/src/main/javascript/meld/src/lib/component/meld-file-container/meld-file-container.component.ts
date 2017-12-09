@@ -4,6 +4,7 @@ import {MatFormFieldControl} from '@angular/material';
 import {BinaryFile} from '../../common/rest/BinaryFile';
 import {Subject} from 'rxjs/Subject';
 import {NgControl} from '@angular/forms';
+import {Objects} from '../../common/utils/Objects';
 
 @Component({
   selector: 'meld-file-container',
@@ -42,7 +43,7 @@ export class MeldFileContainerComponent implements MatFormFieldControl<BinaryFil
   }
 
   get empty() {
-    return this.value === null;
+    return Objects.isNull(this.value);
   }
 
   get value() {

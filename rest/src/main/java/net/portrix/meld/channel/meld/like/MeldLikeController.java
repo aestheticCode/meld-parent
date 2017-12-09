@@ -6,7 +6,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.channel.MeldComment;
-import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.channel.MeldImagePost;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 import net.portrix.meld.usercontrol.User;
 
@@ -51,7 +51,7 @@ public class MeldLikeController {
     public List<MeldLikeResponse> plusOnePost(@PathParam("id") UUID id) {
 
         final User currentUser = service.currentUser();
-        final MeldPost post = service.findPost(id);
+        final MeldImagePost post = service.findPost(id);
 
         if (post.containsLike(currentUser)) {
             post.removeLike(currentUser);
@@ -118,7 +118,7 @@ public class MeldLikeController {
                 .rel("plusOneComment");
     }
 
-    public static URLBuilder<MeldLikeController> linkPlusOnePost(MeldPost post, URLBuilderFactory builderFactory) {
+    public static URLBuilder<MeldLikeController> linkPlusOnePost(MeldImagePost post, URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(MeldLikeController.class)
                 .record(method -> method.plusOnePost(post.getId()))

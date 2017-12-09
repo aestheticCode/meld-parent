@@ -1,37 +1,38 @@
 <!DOCTYPE html>
-<div style="align-items: center; display: flex; justify-content: center; height: 100vh">
-  <mat-card style="margin: 10px; width: 400px;">
-    <mat-card-header>
-      <img mat-card-avatar style="width: 48px; height: 48px;" [src]="user.avatar.url">
-      <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
-      <mat-card-subtitle>Subtitle</mat-card-subtitle>
-    </mat-card-header>
+<div class="container-fluid" style="margin-top: 12px;">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <mat-card>
+        <mat-card-header>
+          <img mat-card-avatar style="width: 48px; height: 48px;" [src]="user.avatar.url">
+          <mat-card-title style="white-space: nowrap;">{{user.firstName}} {{user.lastName}}</mat-card-title>
+          <mat-card-subtitle>
 
-    <mat-card-content>
-      <form>
-        <div style="position:relative; margin-bottom: 12px;">
-          <img  src="{{post.file | meldBinaryImage}}" style="width: 100%;">
-          <button (click)="onImageRemove()" mat-fab *ngIf="post.file"
-                  style="position:absolute;right:20px; top: 20px;color: white">
-            <mat-icon>close</mat-icon>
+          </mat-card-subtitle>
+          <div style="width: 100%"></div>
+          <mat-menu #appMenu="matMenu">
+            <button mat-menu-item (click)="category = 'text'"> Text </button>
+            <button mat-menu-item (click)="category = 'image'"> Image </button>
+            <button mat-menu-item (click)="category = 'youtube'"> YouTube </button>
+          </mat-menu>
+
+          <button *ngIf="! form?.post.id" mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
           </button>
-        </div>
-        <app-meld-editor [(ngModel)]="post.text" name="text" style="min-height: 60px;" placeholder="Write something here..."></app-meld-editor>
+        </mat-card-header>
 
-        <mat-form-field style="width: 100%;">
-          <meld-file-container [placeholder]="'Image'">
-            <input #image="InputDirective" type="file" name="image" [(ngModel)]="post.file">
-          </meld-file-container>
-          <button matSuffix mat-icon-button (click)="image.clear()"><mat-icon>backspace</mat-icon></button>
-          <button matSuffix mat-icon-button (click)="image.click()"><mat-icon>present_to_all</mat-icon></button>
-        </mat-form-field>
-      </form>
-    </mat-card-content>
+        <mat-card-content [ngSwitch]="category">
+          <app-meld-image-form #form *ngSwitchCase="'image'"></app-meld-image-form>
+          <app-meld-text-form #form *ngSwitchCase="'text'"></app-meld-text-form>
+          <app-meld-youtube-form #form *ngSwitchCase="'youtube'"></app-meld-youtube-form>
+        </mat-card-content>
 
-    <mat-card-actions>
-      <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-button *ngIf="! post.id" (click)="onSave()">Post</button>
-      <button mat-button *ngIf="post.id" (click)="onUpdate()">Update</button>
-    </mat-card-actions>
-  </mat-card>
+        <mat-card-actions>
+          <button mat-button (click)="onCancel()">Cancel</button>
+          <button mat-button *ngIf="! form?.post.id" (click)="onSave()">Post</button>
+          <button mat-button *ngIf="form?.post.id" (click)="onUpdate()">Update</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
 </div>

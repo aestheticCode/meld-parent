@@ -1,3 +1,7 @@
+app-meld-comment-dialog p {
+  color: black;
+}
+
 app-meld-comment-dialog p.link {
   text-decoration: none;
   padding: 10px 20px;

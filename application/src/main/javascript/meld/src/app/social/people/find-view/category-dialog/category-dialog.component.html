@@ -1,0 +1,6 @@
+<meld-combobox [items]="categories" [(ngModel)]="user.category">
+  <ng-template let-item>{{item.name}}</ng-template>
+</meld-combobox>
+
+<button mat-button (click)="onSave()">Save</button>
+<button mat-button (click)="onCancel()">Cancel</button>

@@ -1,13 +1,20 @@
 package net.portrix.meld.social.people.category.list;
 
 import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.people.Category_;
 import net.portrix.meld.social.people.RelationShip;
+import net.portrix.meld.social.people.category.list.query.Query;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,15 +35,34 @@ public class CategoryService {
         this(null, null);
     }
 
-    public List<Category> findAll() {
-        User user = userManager.current();
-
-        return entityManager.createQuery("select c from Category c where c.user = :user", Category.class)
-                .setParameter("user", user)
-                .getResultList();
+    public List<Category> findAll(Query search) {
+        List<Category> Categorys;
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Category> query = builder.createQuery(Category.class);
+        Root<Category> root = query.from(Category.class);
+        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root));
+        query.select(root).where(predicate).orderBy(builder.asc(root.get(Category_.name)));
+        TypedQuery<Category> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(search.getIndex());
+        typedQuery.setMaxResults(search.getLimit());
+        Categorys = typedQuery.getResultList();
+        return Categorys;
     }
 
-    public User currentUser() {
+    public long count(Query search) {
+        long count;
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<Category> root = query.from(Category.class);
+        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root));
+        query.select(builder.count(root)).where(predicate);
+        TypedQuery<Long> typedQuery = entityManager.createQuery(query);
+        count = typedQuery.getSingleResult();
+        return count;
+    }
+
+
+    public User currentCategory() {
         return userManager.current();
     }
 
@@ -61,4 +87,5 @@ public class CategoryService {
     public void remove(RelationShip relationShip) {
         entityManager.remove(relationShip);
     }
+
 }

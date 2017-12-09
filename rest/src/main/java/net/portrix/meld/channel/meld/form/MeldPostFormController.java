@@ -6,8 +6,7 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.channel.MeldImage;
-import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.channel.*;
 import net.portrix.meld.usercontrol.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,24 +50,55 @@ public class MeldPostFormController {
     @Path("meld/{id}")
     @Name("Meld Post Read")
     @Transactional
-    public MeldPostResponse read(@PathParam("id") UUID id) {
+    public AbstractPostForm read(@PathParam("id") UUID id) {
         final MeldPost post = service.findPost(id);
-        MeldPostResponse response = new MeldPostResponse();
-        response.setId(post.getId());
-        response.setText(post.getText());
-        final Blob file = new Blob();
-        final MeldImage image = post.getImage();
 
-        if (post.hasImage()) {
-            file.setName(image.getFileName());
-            file.setData(image.getImage());
-            response.setFile(file);
-        }
+        return (AbstractPostForm) post.accept(new MeldPost.Visitor() {
+            @Override
+            public Object visit(MeldImagePost post) {
+                MeldImagePostForm response = new MeldImagePostForm();
+                response.setId(post.getId());
+                response.setText(post.getText());
+                final Blob file = new Blob();
+                final MeldImage image = post.getImage();
 
-        linkUpdate(post, builderFactory)
-                .buildSecured(response::addLink);
+                if (post.hasImage()) {
+                    file.setName(image.getFileName());
+                    file.setData(image.getImage());
+                    response.setFile(file);
+                }
 
-        return response;
+                linkUpdate(post, builderFactory)
+                        .buildSecured(response::addLink);
+
+                return response;
+            }
+
+            @Override
+            public Object visit(MeldTextPost post) {
+                MeldTextPostForm response = new MeldTextPostForm();
+                response.setId(post.getId());
+                response.setText(post.getText());
+                linkUpdate(post, builderFactory)
+                        .buildSecured(response::addLink);
+
+                return response;
+
+            }
+
+            @Override
+            public Object visit(MeldYouTubePost post) {
+                MeldYouTubePostForm form = new MeldYouTubePostForm();
+                form.setId(post.getId());
+                form.setVideoId(post.getVideoId());
+                form.setText(post.getText());
+                linkUpdate(post, builderFactory)
+                        .buildSecured(form::addLink);
+
+                return form;
+            }
+        });
+
     }
 
     @Secured
@@ -76,27 +106,45 @@ public class MeldPostFormController {
     @Path("meld/{id}")
     @Name("Meld Post Update")
     @Transactional
-    public MeldPostResponse update(@PathParam("id") UUID id, MeldPostForm edit) {
-        final MeldPost post = service.findPost(id);
-        final User user = service.currentUser();
-        post.setUser(user);
-        post.setText(edit.getText());
+    public AbstractPostForm update(@PathParam("id") UUID id, AbstractPostForm edit) {
+        return edit.visit(new AbstractPostForm.Visitor() {
+            @Override
+            public AbstractPostForm visit(MeldImagePostForm form) {
+                final MeldImagePost post = (MeldImagePost) service.findPost(id);
+                final User user = service.currentUser();
+                post.setUser(user);
+                post.setText(form.getText());
 
-        if (post.hasImage()) {
-            final MeldImage image = post.getImage();
+                final MeldImage image = post.getImage();
 
-            final Blob file = edit.getFile();
-            if (file != null) {
+                final Blob file = form.getFile();
                 image.setFileName(file.getName());
                 image.setImage(file.getData());
                 image.setThumbnail(ImageUtils.thumnail(file.getName(), file.getData()));
-            } else {
 
+                return read(post.getId());
             }
-        }
 
+            @Override
+            public AbstractPostForm visit(MeldTextPostForm form) {
+                final MeldImagePost post = (MeldImagePost) service.findPost(id);
+                final User user = service.currentUser();
+                post.setUser(user);
+                post.setText(form.getText());
+                return read(post.getId());
+            }
 
-        return read(post.getId());
+            @Override
+            public AbstractPostForm visit(MeldYouTubePostForm form) {
+                final MeldYouTubePost post = (MeldYouTubePost) service.findPost(id);
+                final User user = service.currentUser();
+                post.setUser(user);
+                post.setVideoId(form.getVideoId());
+                post.setText(form.getText());
+                return read(id);
+            }
+        });
+
     }
 
     @Secured
@@ -104,27 +152,53 @@ public class MeldPostFormController {
     @Path("meld")
     @Name("Meld Post Save")
     @Transactional
-    public MeldPostResponse save(MeldPostForm edit) {
-        final MeldPost post = new MeldPost();
-        final User user = service.currentUser();
+    public AbstractPostForm save(AbstractPostForm edit) {
+        return edit.visit(new AbstractPostForm.Visitor() {
+            @Override
+            public AbstractPostForm visit(MeldImagePostForm form) {
+                final MeldImagePost post = new MeldImagePost();
+                final User user = service.currentUser();
 
-        post.setUser(user);
-        post.setCreated(Instant.now());
-        post.setText(edit.getText());
+                post.setUser(user);
+                post.setCreated(Instant.now());
+                post.setText(edit.getText());
 
-        final MeldImage image = new MeldImage();
-        final Blob file = edit.getFile();
-        if (file != null) {
-            image.setFileName(file.getName());
-            image.setImage(file.getData());
-            image.setThumbnail(ImageUtils.thumnail(file.getName(), file.getData()));
-        }
+                final MeldImage image = new MeldImage();
+                final Blob file = form.getFile();
+                if (file != null) {
+                    image.setFileName(file.getName());
+                    image.setImage(file.getData());
+                    image.setThumbnail(ImageUtils.thumnail(file.getName(), file.getData()));
+                }
 
-        post.setImage(image);
-        service.savePost(post);
+                post.setImage(image);
+                service.savePost(post);
+                return read(post.getId());
+            }
 
+            @Override
+            public AbstractPostForm visit(MeldTextPostForm form) {
+                final MeldTextPost post = new MeldTextPost();
+                final User user = service.currentUser();
+                post.setUser(user);
+                post.setCreated(Instant.now());
+                post.setText(edit.getText());
+                service.savePost(post);
+                return read(post.getId());
 
-        return read(post.getId());
+            }
+
+            @Override
+            public AbstractPostForm visit(MeldYouTubePostForm form) {
+                final MeldYouTubePost post = new MeldYouTubePost();
+                final User user = service.currentUser();
+                post.setUser(user);
+                post.setCreated(Instant.now());
+                post.setVideoId(form.getVideoId());
+                service.savePost(post);
+                return read(post.getId());
+            }
+        });
     }
 
 

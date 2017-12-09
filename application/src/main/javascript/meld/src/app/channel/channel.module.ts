@@ -12,6 +12,12 @@ import {MeldItemComponent} from "./meld-list/meld-item/meld-item.component";
 import {MeldEditorNameDialogComponent} from "./meld-editor/meld-editor-name-dialog/meld-editor-name-dialog.component";
 import {MeldEditorAvatarDialogComponent} from "./meld-editor/meld-editor-avatar-dialog/meld-editor-avatar-dialog.component";
 import {MeldCommentDialogComponent} from "./meld-comment/meld-comment-dialog/meld-comment-dialog.component";
+import { MeldImageFormComponent } from './meld-form/meld-image-form/meld-image-form.component';
+import { MeldTextFormComponent } from './meld-form/meld-text-form/meld-text-form.component';
+import { MeldYoutubeFormComponent } from './meld-form/meld-youtube-form/meld-youtube-form.component';
+import { MeldTextItemComponent } from './meld-list/meld-item/meld-text-item/meld-text-item.component';
+import { MeldYoutubeItemComponent } from './meld-list/meld-item/meld-youtube-item/meld-youtube-item.component';
+import { MeldImageItemComponent } from './meld-list/meld-item/meld-image-item/meld-image-item.component';
 
 
 @NgModule({
@@ -27,7 +33,13 @@ import {MeldCommentDialogComponent} from "./meld-comment/meld-comment-dialog/mel
     MeldItemComponent,
     MeldCommentDialogComponent,
     MeldEditorNameDialogComponent,
-    MeldEditorAvatarDialogComponent
+    MeldEditorAvatarDialogComponent,
+    MeldImageFormComponent,
+    MeldTextFormComponent,
+    MeldYoutubeFormComponent,
+    MeldTextItemComponent,
+    MeldYoutubeItemComponent,
+    MeldImageItemComponent
   ],
   providers: [
     appRoutingProviders

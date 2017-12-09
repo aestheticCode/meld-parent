@@ -36,6 +36,8 @@ import { CategoryRenameDialogComponent } from './people/categories-form/category
 import { ImageDialogComponent } from './profile/image-dialog/image-dialog.component';
 import { AddressMapComponent } from './profile/places-form/address-form/address-map.component';
 import {AddressViewComponent} from './profile/places-form/address-form/address-view.component';
+import { CategoriesSelectComponent } from './people/categories-select/categories-select.component';
+import { CategoryDialogComponent } from './people/find-view/category-dialog/category-dialog.component';
 
 @NgModule({
   imports: [
@@ -77,13 +79,16 @@ import {AddressViewComponent} from './profile/places-form/address-form/address-v
     CategoryRenameDialogComponent,
     ImageDialogComponent,
     AddressMapComponent,
-    AddressViewComponent
+    AddressViewComponent,
+    CategoriesSelectComponent,
+    CategoryDialogComponent
   ],
   entryComponents: [
     CategoryCreateDialogComponent,
     CategoryDeleteDialogComponent,
     CategoryRenameDialogComponent,
-    ImageDialogComponent
+    ImageDialogComponent,
+    CategoryDialogComponent
   ],
   providers : [
     appRoutingProviders

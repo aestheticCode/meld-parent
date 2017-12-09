@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {AppService} from "../../../app.service";
-import {Item} from "./Item";
+import {Item} from './meld-item.interfaces';
 
 @Component({
   selector: 'app-meld-item',

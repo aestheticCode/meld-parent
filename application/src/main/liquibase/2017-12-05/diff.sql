@@ -1,5 +1,6 @@
 --liquibase formatted sql
 
+
     create table AccountTypeEntity (
        email varchar(255),
         firstName varchar(255),
@@ -55,14 +56,15 @@
     );
 
     create table cn_post (
-       id uuid not null,
+       DTYPE varchar(31) not null,
+        id uuid not null,
         version int4 not null,
         created timestamp,
-        fileName varchar(255),
         header varchar(255),
         text text,
-        image_id uuid,
+        videoId varchar(255),
         user_id uuid,
+        image_id uuid,
         primary key (id)
     );
 
@@ -409,14 +411,14 @@ create sequence hibernate_sequence start 1 increment 1;
        references cn_comment;
 
     alter table cn_post
-       add constraint FKowu29qk4cifb66sp3ffpox8o1
-       foreign key (image_id)
-       references cn_image;
-
-    alter table cn_post
        add constraint FKi9wbf17qftmf62ncobcjn2crv
        foreign key (user_id)
        references uc_identity;
+
+    alter table cn_post
+       add constraint FKowu29qk4cifb66sp3ffpox8o1
+       foreign key (image_id)
+       references cn_image;
 
     alter table cn_post_cn_comment
        add constraint FKd3g50hx3gh4jk8kuxxjk2djlq

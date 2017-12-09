@@ -7,6 +7,7 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
 import net.portrix.meld.channel.MeldComment;
+import net.portrix.meld.channel.MeldImagePost;
 import net.portrix.meld.channel.MeldPost;
 import net.portrix.meld.channel.meld.like.MeldLikeResponse;
 import net.portrix.meld.usercontrol.User;

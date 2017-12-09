@@ -1,16 +1,10 @@
-import {Component, ElementRef, forwardRef, HostListener, Inject, Input, ViewChild} from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {DOCUMENT} from "@angular/common";
-import {EditorCommand} from "./EditorCommand";
-import {EditorAction} from "./EditorAction";
-import {EditorCallback} from "./EditorCallback";
+import {Component, ElementRef, forwardRef, HostListener, Inject, Input, ViewChild} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {DOCUMENT} from '@angular/common';
+import {EditorCommand} from './meld-editor.interfaces';
 
-const noop = () => {};
-
-function dispatch(command :EditorCommand, action : EditorAction, context?: string, callback?: EditorCallback) {
-  command.dispatch(action, context, callback);
-  command.action = action;
-}
+const noop = () => {
+};
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -32,7 +26,7 @@ export class MeldEditorComponent implements ControlValueAccessor {
   @Input()
   public placeholder: string;
 
-  @ViewChild("editor")
+  @ViewChild('editor')
   private editor: ElementRef;
 
   public commands: EditorCommand[] = [];
@@ -43,8 +37,8 @@ export class MeldEditorComponent implements ControlValueAccessor {
 
   onPaste(event) {
     event.preventDefault();
-    let text = event.clipboardData.getData("text/plain");
-    document.execCommand("insertHTML", false, text);
+    let text = event.clipboardData.getData('text/plain');
+    document.execCommand('insertHTML', false, text);
     this.onChangeCallback(this.editor.nativeElement.innerHTML);
     return false;
   }
@@ -69,17 +63,49 @@ export class MeldEditorComponent implements ControlValueAccessor {
     return element.getBoundingClientRect();
   }
 
-  onKeyUp(event: KeyboardEvent) {
+  onKeyDown(event: KeyboardEvent) {
     const selection = this.document.getSelection();
     const rangeAt = selection.getRangeAt(0);
 
     const startContainer = rangeAt.startContainer;
+    const parentElement = startContainer.parentElement;
+
+
+    if (parentElement.className == "atom") {
+      if (event.key.length === 1) {
+        event.stopPropagation();
+        return false;
+      }
+
+      if (event.keyCode === 8) {
+        event.stopPropagation();
+
+        if (rangeAt.startOffset === startContainer.textContent.length) {
+          const textNode = this.document.createTextNode('\u00A0');
+          parentElement.parentElement.appendChild(textNode);
+
+          if (event.keyCode === 8) {
+            parentElement.remove();
+          }
+        }
+        return false;
+
+      }
+
+    }
+
+    return true;
+  }
+
+  onKeyUp(event: KeyboardEvent) {
+    const selection = this.document.getSelection();
+    const rangeAt = selection.getRangeAt(0);
+
+    const startContainer = rangeAt.startContainer as HTMLElement;
 
     const startOffset = rangeAt.startOffset;
     const textContent = startContainer.textContent;
-    const endOffset = textContent.length;
 
-    const parentElement = startContainer.parentElement;
     const text = textContent.substr(0, startOffset);
 
     this.commands.forEach((command) => {
@@ -87,41 +113,7 @@ export class MeldEditorComponent implements ControlValueAccessor {
 
         let regexResult = command.trigger.exec(text);
 
-        if (command.action === EditorAction.DEACTIVATE) {
-          dispatch(command, EditorAction.ACTIVATE, regexResult[1], (resultElement) => {
-
-            const textNode = this.document.createTextNode("\u00A0");
-
-            const prefix = textContent.substr(0, startOffset - 1);
-            const suffix = textContent.substr(startOffset, endOffset);
-            const prefixText = this.document.createTextNode(prefix);
-            const suffixText = this.document.createTextNode(suffix);
-
-            parentElement.insertBefore(prefixText, startContainer);
-            parentElement.insertBefore(resultElement, startContainer);
-            parentElement.insertBefore(textNode, startContainer);
-            parentElement.insertBefore(suffixText, startContainer);
-            parentElement.removeChild(startContainer);
-
-            const range = this.document.createRange();
-            range.setStart(textNode, 1);
-            range.setEnd(textNode, 1);
-            range.collapse(true)
-            const selection = this.window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-
-            this.onChangeCallback(this.editor.nativeElement.innerHTML);
-
-          });
-        } else {
-          dispatch(command, EditorAction.UPDATE, regexResult[1])
-        }
-
-      } else {
-
-        dispatch(command, EditorAction.DEACTIVATE);
+        command.execute(startContainer, regexResult[1]);
 
       }
     });

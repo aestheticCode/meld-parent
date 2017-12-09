@@ -41,6 +41,8 @@ import {MeldDateModule} from "./component/meld-date/meld-date.module";
 import {MeldDatepickerModule} from "./component/meld-datepicker/meld-datepicker.module";
 import {MeldFormGroupModule} from "./component/meld-form-group/meld-form-group.module";
 import {MeldTabBarModule} from "./component/meld-tabbar/meld-tabbar.module";
+import {MeldSelectViewModule} from './component/meld-select-view/meld-select-view.module';
+import {MeldPlaceholderModule} from './pipe/meld-placeholder/meld-placeholder.module';
 
 
 @NgModule({
@@ -81,6 +83,8 @@ import {MeldTabBarModule} from "./component/meld-tabbar/meld-tabbar.module";
     MeldMultiSelectModule,
     MeldScrollbarVerticalModule,
     MeldScrollbarHorizontalModule,
+    MeldSelectViewModule,
+    MeldMultiSelectModule,
     MeldTableModule,
     MeldTableModule,
     MeldWindowModule,
@@ -90,7 +94,8 @@ import {MeldTabBarModule} from "./component/meld-tabbar/meld-tabbar.module";
 
     MeldBinaryImageModule,
     MeldHtmlModule,
-    MeldLinkModule
+    MeldLinkModule,
+    MeldPlaceholderModule
   ],
   exports: [
     CommonModule,
@@ -129,6 +134,8 @@ import {MeldTabBarModule} from "./component/meld-tabbar/meld-tabbar.module";
     MeldMultiSelectModule,
     MeldScrollbarVerticalModule,
     MeldScrollbarHorizontalModule,
+    MeldSelectViewModule,
+    MeldMultiSelectModule,
     MeldTabBarModule,
     MeldTableModule,
     MeldWindowModule,
@@ -138,7 +145,8 @@ import {MeldTabBarModule} from "./component/meld-tabbar/meld-tabbar.module";
 
     MeldBinaryImageModule,
     MeldHtmlModule,
-    MeldLinkModule
+    MeldLinkModule,
+    MeldPlaceholderModule
   ]
 })
 export class LibModule {

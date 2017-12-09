@@ -10,11 +10,6 @@ public class And implements Predicate<Set<Predicate<?>>> {
     private Set<Predicate<?>> value;
 
     @Override
-    public String getType() {
-        return "and";
-    }
-
-    @Override
     public Set<Predicate<?>> getValue() {
         return value;
     }

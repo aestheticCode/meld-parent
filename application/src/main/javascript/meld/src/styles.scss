@@ -70,3 +70,7 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 .mat-drawer-container {
   background-color: #e7e7e7;
 }
+
+.mat-dialog-container {
+  overflow: inherit !important;
+}

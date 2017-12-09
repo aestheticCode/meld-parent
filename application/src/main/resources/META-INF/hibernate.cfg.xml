@@ -36,6 +36,9 @@
         <mapping class="net.portrix.meld.social.people.RelationShip"/>
 
         <mapping class="net.portrix.meld.channel.MeldPost"/>
+        <mapping class="net.portrix.meld.channel.MeldImagePost"/>
+        <mapping class="net.portrix.meld.channel.MeldTextPost"/>
+        <mapping class="net.portrix.meld.channel.MeldYouTubePost"/>
         <mapping class="net.portrix.meld.channel.MeldComment"/>
         <mapping class="net.portrix.meld.channel.MeldImage"/>
 

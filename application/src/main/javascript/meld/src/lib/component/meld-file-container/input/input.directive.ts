@@ -33,6 +33,7 @@ export class InputDirective extends AbstractFileInput {
 
   clear() {
     this.value = null;
+    this.elementRef.nativeElement.value = "";
     this.onChangeCallback(this.value);
   }
 

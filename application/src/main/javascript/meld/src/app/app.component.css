@@ -2,7 +2,7 @@ app-root {
   display: block;
 }
 
-.link {
+app-root .link {
   margin-bottom: 12px;
   display: block;
   line-height: 32px;
@@ -10,13 +10,13 @@ app-root {
   color: white;
 }
 
-.link:hover {
+app-root .link:hover {
   text-decoration: none;
   color: #4e5664;
   background-color: #e7e7e7;
 }
 
-.link.active {
+app-root .link.active {
   color: #4e5664;
   background-color: #e7e7e7;
 }

@@ -41,9 +41,7 @@
                     </meld-td>
                     <meld-td>
                       <ng-template let-user>
-                        <meld-combobox [items]="categories" [(ngModel)]="user.category" (selectItemChange)="onUpdate(user.id, $event)">
-                          <ng-template let-item>{{item.name}}</ng-template>
-                        </meld-combobox>
+                        <app-categories-select (onClickChange)="open(user)" [(ngModel)]="user.category"></app-categories-select>
                       </ng-template>
                     </meld-td>
                   </meld-tr>

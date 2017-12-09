@@ -12,12 +12,6 @@ export interface UserRow {
 
   lastName : string
 
-}
-
-export interface Category {
-
-  id : string
-
-  name : string
+  category : string
 
 }

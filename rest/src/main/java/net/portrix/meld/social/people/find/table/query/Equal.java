@@ -12,11 +12,6 @@ public class Equal implements Predicate<UUID> {
     private String path;
 
     @Override
-    public String getType() {
-        return "equal";
-    }
-
-    @Override
     public UUID getValue() {
         return value;
     }

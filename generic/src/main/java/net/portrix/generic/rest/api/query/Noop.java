@@ -4,10 +4,6 @@ package net.portrix.generic.rest.api.query;
  * Created by Patrick on 18.07.2017.
  */
 public class Noop implements Predicate<Object> {
-    @Override
-    public String getType() {
-        return "noop";
-    }
 
     @Override
     public Object getValue() {

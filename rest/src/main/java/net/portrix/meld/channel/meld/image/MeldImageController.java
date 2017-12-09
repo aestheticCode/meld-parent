@@ -6,7 +6,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.api.UploadMeta;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.channel.MeldImagePost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +56,7 @@ public class MeldImageController {
     @Produces("img/jpeg")
     @Transactional
     public byte[] image(@PathParam("id") UUID id) {
-        final MeldPost post = imageService.find(id);
+        final MeldImagePost post = imageService.find(id);
         return post.getImage().getImage();
     }
 
@@ -67,7 +67,7 @@ public class MeldImageController {
     @Produces("img/jpeg")
     @Transactional
     public byte[] thumbNail(@PathParam("id") UUID id) {
-        final MeldPost post = imageService.find(id);
+        final MeldImagePost post = imageService.find(id);
         return post.getImage().getThumbnail();
     }
 
@@ -146,7 +146,7 @@ public class MeldImageController {
     }
 
 
-    public static void linkImage(MeldPost post, LinksContainer container, URLBuilderFactory builderFactory) {
+    public static void linkImage(MeldImagePost post, LinksContainer container, URLBuilderFactory builderFactory) {
         builderFactory
                 .from(MeldImageController.class)
                 .record(method -> method.image(post.getId()))
@@ -154,7 +154,7 @@ public class MeldImageController {
                 .buildSecured(container::addLink);
     }
 
-    public static void linkThumbnail(MeldPost post, LinksContainer container, URLBuilderFactory builderFactory) {
+    public static void linkThumbnail(MeldImagePost post, LinksContainer container, URLBuilderFactory builderFactory) {
         builderFactory
                 .from(MeldImageController.class)
                 .record(method -> method.thumbNail(post.getId()))

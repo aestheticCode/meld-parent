@@ -28,8 +28,8 @@ public class FindFormService {
         return entityManager.find(Category.class, id);
     }
 
-    public void update(RelationShip relationShip) {
-        entityManager.merge(relationShip);
+    public void save(RelationShip relationShip) {
+        entityManager.persist(relationShip);
     }
 
     public RelationShip findRelationShip(User current, User user) {

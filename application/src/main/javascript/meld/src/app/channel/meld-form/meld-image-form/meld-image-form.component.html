@@ -1,0 +1,16 @@
+<form>
+  <fieldset>
+    <div style="position:relative; margin-bottom: 12px;">
+      <img  src="{{post.file | meldBinaryImage}}" style="width: 100%;">
+    </div>
+    <app-meld-editor [(ngModel)]="post.text" name="text" placeholder="Write something here..."></app-meld-editor>
+
+    <mat-form-field style="width: 100%;">
+      <meld-file-container [placeholder]="'Image'">
+        <input #image="InputDirective" type="file" name="image" [(ngModel)]="post.file">
+      </meld-file-container>
+      <button matSuffix mat-icon-button (click)="image.clear()"><mat-icon>backspace</mat-icon></button>
+      <button matSuffix mat-icon-button (click)="image.click()"><mat-icon>present_to_all</mat-icon></button>
+    </mat-form-field>
+  </fieldset>
+</form>

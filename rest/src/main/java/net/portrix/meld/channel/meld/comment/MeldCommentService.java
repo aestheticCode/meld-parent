@@ -1,7 +1,7 @@
 package net.portrix.meld.channel.meld.comment;
 
-import net.portrix.meld.channel.MeldComment;
 import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.channel.MeldComment;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 

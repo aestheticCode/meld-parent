@@ -1,5 +1,7 @@
 package net.portrix.meld.channel.meld.list;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.Links;
@@ -12,7 +14,13 @@ import java.util.*;
 /**
  * @author Patrick Bittner on 27.07.17.
  */
-public class MeldItemResponse implements LinksContainer {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(MeldImageItem.class),
+        @JsonSubTypes.Type(MeldTextItem.class),
+        @JsonSubTypes.Type(MeldYouTubeItem.class)
+})
+public class MeldItem implements LinksContainer {
 
     private UUID id;
 
@@ -21,8 +29,6 @@ public class MeldItemResponse implements LinksContainer {
     private String time;
 
     private String text;
-
-    private Link image;
 
     private Link avatar;
 
@@ -64,15 +70,6 @@ public class MeldItemResponse implements LinksContainer {
         this.text = text;
     }
 
-
-    public Link getImage() {
-        return image;
-    }
-
-    public void setImage(Link image) {
-        this.image = image;
-    }
-
     public Link getAvatar() {
         return avatar;
     }
@@ -110,12 +107,9 @@ public class MeldItemResponse implements LinksContainer {
         likes.add(like);
     }
 
-    public boolean hasImage() {
-        return image != null;
-    }
-
     @Override
     public boolean addLink(Link link) {
         return links.add(link);
     }
+
 }

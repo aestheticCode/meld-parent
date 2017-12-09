@@ -21,11 +21,6 @@ public class In implements Predicate<Set<UUID>> {
     }
 
     @Override
-    public String getType() {
-        return "in";
-    }
-
-    @Override
     public Set<UUID> getValue() {
         return value;
     }

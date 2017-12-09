@@ -1,0 +1,4 @@
+--liquibase formatted sql
+
+INSERT INTO public.passwordcredentialtypeentity (id, effectivedate, expirydate, typename, passwordencodedhash, owner_id, passwordsalt) VALUES (1, '2017-12-09 16:10:06.992000', null, 'org.picketlink.idm.credential.storage.EncodedPasswordStorage', '$2a$12$m8X5J3.cpHOe7uu4z9bdtOx9ztcovGMHV.mz4htjPNqwro2FNyV3y', 'a54f522f-fd1c-4330-af25-303212eefa87', '5824143678160461421');
+INSERT INTO public.passwordcredentialtypeentity (id, effectivedate, expirydate, typename, passwordencodedhash, owner_id, passwordsalt) VALUES (2, '2017-12-09 16:10:07.414000', null, 'org.picketlink.idm.credential.storage.EncodedPasswordStorage', '$2a$12$vHQRtP0Ypyijykiqt0t6DeClzqu5GWWEDh5xPSQ52xf9yODSJKpUC', '11992e18-8ede-49f8-aa9b-50a780084f63', '176013283202288211');

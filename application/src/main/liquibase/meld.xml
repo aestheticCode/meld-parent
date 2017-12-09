@@ -4,13 +4,39 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
                    http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
     <changeSet objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS" id="diff" author="patrick">
         <sqlFile path="src/main/liquibase/2017-12-05/diff.sql"/>
     </changeSet>
 
+    <changeSet id="pi_attributed" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/pi_attributed.sql"/>
+    </changeSet>
 
+    <changeSet id="pi_partition" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/pi_partition.sql"/>
+    </changeSet>
+
+    <changeSet id="pi_identity" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/pi_identity.sql"/>
+    </changeSet>
+
+    <changeSet id="pi_account" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/pi_account.sql"/>
+    </changeSet>
+
+    <changeSet id="pi_password" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/pi_password.sql"/>
+    </changeSet>
+
+    
+    
     <changeSet id="uc_identity" author="patrick">
         <sqlFile path="src/main/liquibase/2017-12-05/uc_identity.sql"/>
+    </changeSet>
+
+    <changeSet id="uc_identity_uc_identity" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/uc_identity_uc_identity.sql"/>
     </changeSet>
 
     <changeSet id="uc_permissions" author="patrick">
@@ -19,6 +45,10 @@
 
     <changeSet id="uc_role" author="patrick">
         <sqlFile path="src/main/liquibase/2017-12-05/uc_role.sql"/>
+    </changeSet>
+
+    <changeSet id="uc_image" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-05/uc_image.sql"/>
     </changeSet>
 
     <changeSet id="uc_role_uc_identity" author="patrick">

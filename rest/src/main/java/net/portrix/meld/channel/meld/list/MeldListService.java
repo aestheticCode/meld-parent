@@ -1,5 +1,6 @@
 package net.portrix.meld.channel.meld.list;
 
+import net.portrix.meld.channel.MeldImagePost;
 import net.portrix.meld.channel.MeldPost;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserImage;
@@ -49,7 +50,7 @@ public class MeldListService {
     }
 
     public long countAll() {
-        return entityManager.createQuery("select count(p) from MeldPost p ", Long.class)
+        return entityManager.createQuery("select count(p) from MeldImagePost p ", Long.class)
                 .getSingleResult();
     }
 

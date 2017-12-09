@@ -11,10 +11,10 @@ import net.portrix.meld.usercontrol.UserManager;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.UUID;
 
 @Path("social/people")
 @ApplicationScoped
@@ -38,42 +38,49 @@ public class FindFormController {
     }
 
     @PUT
-    @Path("find/user/{id}")
+    @Path("find")
     @Name("Find User Read")
     @Secured
     @Transactional
-    public CategoryForm update(@PathParam("id") UUID id, CategoryForm categoryForm) {
+    public FindForm update(FindForm form) {
 
         User current = userManager.current();
-        User user = userManager.find(id);
+        User user = userManager.find(form.getId());
 
         RelationShip relationShip = service.findRelationShip(current, user);
 
-        if (categoryForm.getId() == null) {
+        if (form.getCategory() == null) {
             service.remove(relationShip);
-            return categoryForm;
+            return form;
+        }
+
+        Category category = service.findCategory(form.getCategory());
+
+        if (category == null) {
+            throw new NoResultException();
         }
 
         if (relationShip == null) {
             relationShip = new RelationShip();
+            relationShip.setFrom(current);
+            relationShip.setTo(user);
+            relationShip.setCategory(category);
+
+            service.save(relationShip);
+        } else {
+            relationShip.setFrom(current);
+            relationShip.setTo(user);
+            relationShip.setCategory(category);
         }
 
-        Category category = service.findCategory(categoryForm.getId());
-
-        relationShip.setFrom(current);
-        relationShip.setTo(user);
-        relationShip.setCategory(category);
-
-        service.update(relationShip);
-
-        return categoryForm;
+        return form;
 
     }
 
-    public static URLBuilder<FindFormController> linkProfile(UUID id, URLBuilderFactory builderFactory) {
+    public static URLBuilder<FindFormController> linkUpdate(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(FindFormController.class)
-                .record((method) -> method.update(id, null))
+                .record((method) -> method.update(null))
                 .rel("find");
     }
 

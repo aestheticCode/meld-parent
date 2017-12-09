@@ -79,6 +79,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
     }
   };
 
+  @Input("predicate")
   public predicate = (value) => {
     if (value == null) {
       return null;

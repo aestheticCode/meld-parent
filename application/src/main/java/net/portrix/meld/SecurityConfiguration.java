@@ -2,6 +2,8 @@ package net.portrix.meld;
 
 import org.picketlink.idm.config.IdentityConfiguration;
 import org.picketlink.idm.config.IdentityConfigurationBuilder;
+import org.picketlink.idm.credential.encoder.BCryptPasswordEncoder;
+import org.picketlink.idm.credential.handler.PasswordCredentialHandler;
 import org.picketlink.idm.jpa.internal.JPAIdentityStore;
 import org.picketlink.idm.jpa.model.sample.simple.*;
 import org.picketlink.idm.spi.ContextInitializer;
@@ -11,6 +13,8 @@ import org.picketlink.idm.spi.IdentityStore;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import static org.picketlink.idm.credential.handler.PasswordCredentialHandler.PASSWORD_ENCODER;
 
 /**
  * @author Patrick Bittner on 28/01/15.
@@ -36,6 +40,7 @@ public class SecurityConfiguration {
                         }
                     }
                 })
+                .setCredentialHandlerProperty(PASSWORD_ENCODER, new BCryptPasswordEncoder(12))
                 .mappedEntity(
                         AccountTypeEntity.class,
                         RoleTypeEntity.class,

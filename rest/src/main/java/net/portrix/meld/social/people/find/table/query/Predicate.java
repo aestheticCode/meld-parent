@@ -14,8 +14,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 public interface Predicate<V> {
 
-    String getType();
-
     V getValue();
 
     javax.persistence.criteria.Predicate accept(Visitor visitor);

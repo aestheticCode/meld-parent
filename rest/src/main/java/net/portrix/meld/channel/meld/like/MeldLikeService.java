@@ -1,7 +1,7 @@
 package net.portrix.meld.channel.meld.like;
 
 import net.portrix.meld.channel.MeldComment;
-import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.channel.MeldImagePost;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 
@@ -34,8 +34,8 @@ public class MeldLikeService {
         return userManager.current();
     }
 
-    public MeldPost findPost(UUID id) {
-        return entityManager.find(MeldPost.class, id);
+    public MeldImagePost findPost(UUID id) {
+        return entityManager.find(MeldImagePost.class, id);
     }
 
     public MeldComment findComment(UUID id) {

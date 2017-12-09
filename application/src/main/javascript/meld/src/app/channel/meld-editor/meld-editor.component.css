@@ -1,3 +1,4 @@
 app-meld-editor {
   display: flex;
+  min-height: 120px;
 }

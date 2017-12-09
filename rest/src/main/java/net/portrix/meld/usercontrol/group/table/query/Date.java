@@ -12,11 +12,6 @@ public class Date implements Predicate<Date.Value> {
     private String path;
 
     @Override
-    public String getType() {
-        return "date";
-    }
-
-    @Override
     public Date.Value getValue() {
         return value;
     }

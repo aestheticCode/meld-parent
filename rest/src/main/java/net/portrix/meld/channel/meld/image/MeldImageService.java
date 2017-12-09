@@ -1,7 +1,7 @@
 package net.portrix.meld.channel.meld.image;
 
 import net.portrix.meld.channel.MeldImage;
-import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.channel.MeldImagePost;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -29,7 +29,7 @@ public class MeldImageService {
         entityManager.persist(image);
     }
 
-    public MeldPost find(UUID id) {
-        return entityManager.find(MeldPost.class, id);
+    public MeldImagePost find(UUID id) {
+        return entityManager.find(MeldImagePost.class, id);
     }
 }

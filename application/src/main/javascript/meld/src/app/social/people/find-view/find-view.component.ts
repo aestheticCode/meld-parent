@@ -1,8 +1,10 @@
 import {Component} from '@angular/core';
-import {Category, UserRow} from "./find-view.interfaces";
+import {UserRow} from "./find-view.interfaces";
 import {Items} from "../../../../lib/common/query/Items";
 import {Container} from "../../../../lib/common/rest/Container";
 import {HttpClient} from "@angular/common/http";
+import {MatDialog} from '@angular/material';
+import {CategoryDialogComponent} from './category-dialog/category-dialog.component';
 
 @Component({
   selector: 'app-social-find-view',
@@ -11,7 +13,8 @@ import {HttpClient} from "@angular/common/http";
 })
 export class FindViewComponent {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private dialog : MatDialog) {}
 
   users: Items<UserRow> = (query, response) => {
     this.http.post<Container<UserRow>>('service/social/people/find', query)
@@ -20,16 +23,13 @@ export class FindViewComponent {
       });
   };
 
-  categories: Items<Category> = (query, response) => {
-    this.http.post<Container<Category>>('service/social/people/categories', query)
-      .subscribe((res: Container<Category>) => {
-        response(res.rows, res.size);
-      });
-  };
+  open(user : UserRow) {
+    let matDialogRef = this.dialog.open(CategoryDialogComponent, {data : user});
 
-  onUpdate(id : string, category : Category) {
-    this.http.put<Category>(`service/social/people/find/user/${id}`, category || {})
-      .subscribe((res : Category) => {})
+    matDialogRef.afterClosed().subscribe((result) => {
+      this.http.put<UserRow>('service/social/people/find', result)
+        .subscribe((res: UserRow) => {});
+    })
   }
 
 

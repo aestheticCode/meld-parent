@@ -8,12 +8,17 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Patrick Bittner on 06/10/16.
- */
 @Entity
 @Table(name = "cn_post")
-public class MeldPost extends AbstractAggregate {
+public abstract class MeldPost extends AbstractAggregate {
+
+    @ManyToMany
+    @OrderColumn
+    private final List<User> likes = new ArrayList<>();
+
+    @ManyToMany
+    @OrderColumn
+    private final List<MeldComment> comments = new ArrayList<>();
 
     @ManyToOne
     private User user;
@@ -24,19 +29,6 @@ public class MeldPost extends AbstractAggregate {
     private String text;
 
     private Instant created;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private MeldImage image;
-
-    private String fileName;
-
-    @ManyToMany
-    @OrderColumn
-    private final List<User> likes = new ArrayList<>();
-
-    @ManyToMany
-    @OrderColumn
-    private final List<MeldComment> comments = new ArrayList<>();
 
     public User getUser() {
         return user;
@@ -70,22 +62,6 @@ public class MeldPost extends AbstractAggregate {
         this.created = created;
     }
 
-    public MeldImage getImage() {
-        return image;
-    }
-
-    public void setImage(MeldImage image) {
-        this.image = image;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     public List<MeldComment> getComments() {
         return comments;
     }
@@ -110,7 +86,15 @@ public class MeldPost extends AbstractAggregate {
         return likes.contains(user);
     }
 
-    public boolean hasImage() {
-        return image != null;
+    public abstract Object accept(Visitor visitor);
+
+    public interface Visitor {
+
+        Object visit(MeldImagePost post);
+
+        Object visit(MeldTextPost post);
+
+        Object visit(MeldYouTubePost post);
+
     }
 }

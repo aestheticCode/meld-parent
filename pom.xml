@@ -56,7 +56,7 @@
             <dependency>
                 <groupId>org.wildfly.bom</groupId>
                 <artifactId>wildfly-javaee7</artifactId>
-                <version>10.1.0.Final</version>
+                <version>11.0.0.Final</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>

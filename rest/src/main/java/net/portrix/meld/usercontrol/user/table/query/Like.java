@@ -18,11 +18,6 @@ public class Like implements Predicate<String> {
     }
 
     @Override
-    public String getType() {
-        return "like";
-    }
-
-    @Override
     public String getValue() {
         return value;
     }

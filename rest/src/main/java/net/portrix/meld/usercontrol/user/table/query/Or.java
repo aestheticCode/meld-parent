@@ -10,11 +10,6 @@ public class Or implements Predicate<Set<Predicate<?>>> {
     private Set<Predicate<?>> value;
 
     @Override
-    public String getType() {
-        return "or";
-    }
-
-    @Override
     public Set<Predicate<?>> getValue() {
         return value;
     }
