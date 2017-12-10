@@ -21,6 +21,8 @@ public abstract class AbstractPostForm implements LinksContainer {
 
     private String text;
 
+    private UUID category;
+
     private Set<Link> links = Sets.newHashSet();
 
     public UUID getId() {
@@ -37,6 +39,14 @@ public abstract class AbstractPostForm implements LinksContainer {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public UUID getCategory() {
+        return category;
+    }
+
+    public void setCategory(UUID category) {
+        this.category = category;
     }
 
     @Override

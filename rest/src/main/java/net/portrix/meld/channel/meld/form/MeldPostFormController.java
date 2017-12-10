@@ -7,6 +7,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.channel.*;
+import net.portrix.meld.social.people.Category;
 import net.portrix.meld.usercontrol.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +113,8 @@ public class MeldPostFormController {
             public AbstractPostForm visit(MeldImagePostForm form) {
                 final MeldImagePost post = (MeldImagePost) service.findPost(id);
                 final User user = service.currentUser();
+                Category category = service.findCategory(edit.getCategory());
+                post.setCategory(category);
                 post.setUser(user);
                 post.setText(form.getText());
 
@@ -129,6 +132,8 @@ public class MeldPostFormController {
             public AbstractPostForm visit(MeldTextPostForm form) {
                 final MeldImagePost post = (MeldImagePost) service.findPost(id);
                 final User user = service.currentUser();
+                Category category = service.findCategory(edit.getCategory());
+                post.setCategory(category);
                 post.setUser(user);
                 post.setText(form.getText());
                 return read(post.getId());
@@ -138,6 +143,8 @@ public class MeldPostFormController {
             public AbstractPostForm visit(MeldYouTubePostForm form) {
                 final MeldYouTubePost post = (MeldYouTubePost) service.findPost(id);
                 final User user = service.currentUser();
+                Category category = service.findCategory(edit.getCategory());
+                post.setCategory(category);
                 post.setUser(user);
                 post.setVideoId(form.getVideoId());
                 post.setText(form.getText());

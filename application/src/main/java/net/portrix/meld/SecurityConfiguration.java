@@ -3,12 +3,8 @@ package net.portrix.meld;
 import org.picketlink.idm.config.IdentityConfiguration;
 import org.picketlink.idm.config.IdentityConfigurationBuilder;
 import org.picketlink.idm.credential.encoder.BCryptPasswordEncoder;
-import org.picketlink.idm.credential.handler.PasswordCredentialHandler;
 import org.picketlink.idm.jpa.internal.JPAIdentityStore;
 import org.picketlink.idm.jpa.model.sample.simple.*;
-import org.picketlink.idm.spi.ContextInitializer;
-import org.picketlink.idm.spi.IdentityContext;
-import org.picketlink.idm.spi.IdentityStore;
 
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
@@ -26,18 +22,15 @@ public class SecurityConfiguration {
     private EntityManager entityManager;
 
     @Produces
-    private IdentityConfiguration produceConfiguration() {
+    private IdentityConfiguration produceJPAConfiguration() {
         IdentityConfigurationBuilder builder = new IdentityConfigurationBuilder();
         builder
                 .named("default")
                 .stores()
                 .jpa()
-                .addContextInitializer(new ContextInitializer() {
-                    @Override
-                    public void initContextForStore(IdentityContext context, IdentityStore<?> store) {
-                        if (store instanceof JPAIdentityStore) {
-                            context.setParameter(JPAIdentityStore.INVOCATION_CTX_ENTITY_MANAGER, entityManager);
-                        }
+                .addContextInitializer((context, store) -> {
+                    if (store instanceof JPAIdentityStore) {
+                        context.setParameter(JPAIdentityStore.INVOCATION_CTX_ENTITY_MANAGER, entityManager);
                     }
                 })
                 .setCredentialHandlerProperty(PASSWORD_ENCODER, new BCryptPasswordEncoder(12))
@@ -50,10 +43,9 @@ public class SecurityConfiguration {
                         RelationshipIdentityTypeEntity.class,
                         PartitionTypeEntity.class,
                         PasswordCredentialTypeEntity.class,
+                        TokenCredentialTypeEntity.class,
                         AttributeTypeEntity.class
                 )
-
-                        // Specify that this identity store configuration supports all features
                 .supportAllFeatures();
         return builder.build();
     }

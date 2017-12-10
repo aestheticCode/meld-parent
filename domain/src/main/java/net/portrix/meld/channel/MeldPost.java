@@ -1,6 +1,7 @@
 package net.portrix.meld.channel;
 
 import net.portrix.generic.ddd.AbstractAggregate;
+import net.portrix.meld.social.people.Category;
 import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.*;
@@ -29,6 +30,9 @@ public abstract class MeldPost extends AbstractAggregate {
     private String text;
 
     private Instant created;
+
+    @ManyToOne
+    private Category category;
 
     public User getUser() {
         return user;
@@ -87,6 +91,14 @@ public abstract class MeldPost extends AbstractAggregate {
     }
 
     public abstract Object accept(Visitor visitor);
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
 
     public interface Visitor {
 

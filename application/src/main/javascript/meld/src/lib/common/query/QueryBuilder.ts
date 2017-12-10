@@ -6,6 +6,8 @@ import {LikePredicate, LikeType} from "../predicates/LikePredicate";
 import {InPredicate} from "../predicates/InPredicate";
 import {EqualPredicate} from "../predicates/EqualPredicate";
 import {DatePredicate, DateType} from "../predicates/DatePredicate";
+import {JoinPredicate} from '../predicates/JoinPredicate';
+import {SubQueryPredicate} from '../predicates/SubQueryPredicate';
 
 export class QueryBuilder {
 
@@ -35,5 +37,13 @@ export class QueryBuilder {
 
   static date(value: DateType, id: string) {
     return new DatePredicate(value, id);
+  }
+
+  static join(value : Predicate<any>, path : string) {
+    return new JoinPredicate(path, value)
+  }
+
+  static subQuery(value : Predicate<any>, from : string, path : string) {
+    return new SubQueryPredicate(from, value, path);
   }
 }

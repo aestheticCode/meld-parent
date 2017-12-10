@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(Or.class),
         @JsonSubTypes.Type(Like.class),
         @JsonSubTypes.Type(Date.class),
-        @JsonSubTypes.Type(Equal.class)
+        @JsonSubTypes.Type(Join.class),
+        @JsonSubTypes.Type(Equal.class),
+        @JsonSubTypes.Type(SubQuery.class)
 })
 public interface Predicate<V> {
 
@@ -31,6 +33,10 @@ public interface Predicate<V> {
         javax.persistence.criteria.Predicate visit(Noop noop);
 
         javax.persistence.criteria.Predicate visit(Date restDate);
+
+        javax.persistence.criteria.Predicate visit(Join join);
+
+        javax.persistence.criteria.Predicate visit(SubQuery subQuery);
 
         javax.persistence.criteria.Predicate visit(Equal equal);
     }

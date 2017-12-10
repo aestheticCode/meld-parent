@@ -7,6 +7,9 @@ import {MeldPost} from './meld-form.interfaces';
 import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
 import {MeldFormPostComponent} from './meld-form.classes';
 import {Items} from '../../../lib/common/query/Items';
+import {UserRow} from '../../social/people/find-view/find-view.interfaces';
+import {CategoryDialogComponent} from '../../social/people/category-dialog/category-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-meld-form',
@@ -25,6 +28,7 @@ export class MeldFormComponent implements OnInit {
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
               private service: AppService,
+              private dialog : MatDialog,
               private router: Router) {
   }
 
@@ -67,6 +71,10 @@ export class MeldFormComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['channel/meld/posts']);
+  }
+
+  open(post : MeldPost) {
+    this.dialog.open(CategoryDialogComponent, {data : post});
   }
 
 }

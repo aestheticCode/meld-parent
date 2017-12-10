@@ -1,10 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UserRow} from '../find-view.interfaces';
-import {Items} from '../../../../../lib/common/query/Items';
-import {Category} from '../../categories-select/categories-select.interfaces';
-import {Container} from '../../../../../lib/common/rest/Container';
 import {HttpClient} from '@angular/common/http';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Items} from '../../../../lib/common/query/Items';
+import {Category} from '../categories-select/categories-select.interfaces';
+import {Container} from '../../../../lib/common/rest/Container';
 
 @Component({
   selector: 'app-category-dialog',
@@ -13,10 +12,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 })
 export class CategoryDialogComponent {
 
-  user : UserRow;
+  user : any;
 
   constructor(private http : HttpClient,
-              @Inject(MAT_DIALOG_DATA) data: UserRow,
+              @Inject(MAT_DIALOG_DATA) data: any,
               public dialogRef: MatDialogRef<CategoryDialogComponent>) {
     this.user = data;
   }

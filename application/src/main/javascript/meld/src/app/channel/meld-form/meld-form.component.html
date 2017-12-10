@@ -7,7 +7,7 @@
           <img mat-card-avatar style="width: 48px; height: 48px;" [src]="user.avatar.url">
           <mat-card-title style="white-space: nowrap;">{{user.firstName}} {{user.lastName}}</mat-card-title>
           <mat-card-subtitle>
-
+            <app-categories-select (onClickChange)="open(form?.post)" [(ngModel)]="form?.post.category"></app-categories-select>
           </mat-card-subtitle>
           <div style="width: 100%"></div>
           <mat-menu #appMenu="matMenu">

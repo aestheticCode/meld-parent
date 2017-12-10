@@ -19,16 +19,22 @@ export class AppComponent {
     this.links = service.configuration.links;
     service.event.subscribe((linksContainer) => {
       this.links = linksContainer.links;
-    })
+    });
 
+    let matchMedia = window.matchMedia( "(max-width: 500px)" );
 
-    window.matchMedia( "(min-width: 500px)" ).addListener((listener) => {
+    if (matchMedia.matches) {
+      this.sideNavShow = false;
+      this.sideNavOption = "over";
+    }
+
+    matchMedia.addListener((listener) => {
       this.sideNavShow = false;
       this.sideNavOption = "over";
     });
 
 
-    window.matchMedia( "(min-width: 700px)" ).addListener((listener) => {
+    window.matchMedia( "(max-width: 700px)" ).addListener((listener) => {
       this.sideNavShow = true;
       this.sideNavOption = "side";
     });

@@ -36,29 +36,29 @@ public class CategoryService {
     }
 
     public List<Category> findAll(Query search) {
-        List<Category> Categorys;
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Category> query = builder.createQuery(Category.class);
         Root<Category> root = query.from(Category.class);
         Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root));
-        query.select(root).where(predicate).orderBy(builder.asc(root.get(Category_.name)));
+        Predicate userEqual = builder.equal(root.get(Category_.user), userManager.current());
+        Predicate and = builder.and(predicate, userEqual);
+        query.select(root).where(and).orderBy(builder.asc(root.get(Category_.name)));
         TypedQuery<Category> typedQuery = entityManager.createQuery(query);
         typedQuery.setFirstResult(search.getIndex());
         typedQuery.setMaxResults(search.getLimit());
-        Categorys = typedQuery.getResultList();
-        return Categorys;
+        return typedQuery.getResultList();
     }
 
     public long count(Query search) {
-        long count;
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<Category> root = query.from(Category.class);
         Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root));
-        query.select(builder.count(root)).where(predicate);
+        Predicate userEqual = builder.equal(root.get(Category_.user), userManager.current());
+        Predicate and = builder.and(predicate, userEqual);
+        query.select(builder.count(root)).where(and);
         TypedQuery<Long> typedQuery = entityManager.createQuery(query);
-        count = typedQuery.getSingleResult();
-        return count;
+        return typedQuery.getSingleResult();
     }
 
 

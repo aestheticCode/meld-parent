@@ -22,7 +22,7 @@ export class CategoryComponent {
               private dialog : MatDialog) {}
 
   users: Items<UserRow> = (query, response) => {
-    query.predicate = QueryBuilder.equal(this.category.id, "category");
+    query.predicate = QueryBuilder.subQuery(QueryBuilder.equal(this.category.id, "category.id"), "relationShip", "to")
     this.http.post<Container<UserRow>>('service/social/people/find', query)
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);

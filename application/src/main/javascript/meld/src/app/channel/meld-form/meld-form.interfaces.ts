@@ -4,4 +4,5 @@ export interface MeldPost extends LinksContainer {
   id: string
   text: string
   type: string
+  category : string
 }

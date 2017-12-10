@@ -1,6 +1,7 @@
 package net.portrix.meld.channel.meld.form;
 
 import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.social.people.Category;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 
@@ -39,5 +40,9 @@ public class MeldPostFormService {
 
     public void savePost(MeldPost post) {
         entityManager.persist(post);
+    }
+
+    public Category findCategory(UUID category) {
+        return entityManager.find(Category.class, category);
     }
 }

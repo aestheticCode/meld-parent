@@ -15,7 +15,10 @@ import net.portrix.meld.usercontrol.UserManager;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,11 +57,11 @@ public class FindTableController {
         List<FindTableRow> categoryFormList = users
                 .stream()
                 .map((user) -> {
-                   FindTableRow row = new FindTableRow();
-                   row.setId(user.getId());
-                   row.setName(user.getName());
-                   row.setFirstName(user.getFirstName());
-                   row.setLastName(user.getLastName());
+                    FindTableRow row = new FindTableRow();
+                    row.setId(user.getId());
+                    row.setName(user.getName());
+                    row.setFirstName(user.getFirstName());
+                    row.setLastName(user.getLastName());
                     UserImage image = service.findImage(user);
                     Blob blob = new Blob();
                     blob.setName(image.getFileName());
@@ -71,11 +74,11 @@ public class FindTableController {
                     if (relationShip != null) {
                         row.setCategory(relationShip.getCategory().getId());
                     }
-                   return row;
+                    return row;
                 })
                 .collect(Collectors.toList());
 
-        return new Container<>(categoryFormList, (int)countUsers);
+        return new Container<>(categoryFormList, (int) countUsers);
     }
 
     public static URLBuilder<FindTableController> linkList(URLBuilderFactory builderFactory) {

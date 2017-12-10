@@ -51,6 +51,7 @@
         <mapping class="org.picketlink.idm.jpa.model.sample.simple.RelationshipIdentityTypeEntity"/>
         <mapping class="org.picketlink.idm.jpa.model.sample.simple.PartitionTypeEntity"/>
         <mapping class="org.picketlink.idm.jpa.model.sample.simple.PasswordCredentialTypeEntity"/>
+        <mapping class="org.picketlink.idm.jpa.model.sample.simple.TokenCredentialTypeEntity"/>
         <mapping class="org.picketlink.idm.jpa.model.sample.simple.AttributeTypeEntity"/>
 
 

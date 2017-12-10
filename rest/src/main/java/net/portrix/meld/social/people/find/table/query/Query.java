@@ -1,6 +1,7 @@
 package net.portrix.meld.social.people.find.table.query;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.Category_;
 import net.portrix.meld.social.people.RelationShip;
@@ -8,12 +9,10 @@ import net.portrix.meld.social.people.RelationShip_;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.User_;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Patrick on 18.07.2017.
@@ -50,7 +49,12 @@ public class Query {
         this.predicate = predicate;
     }
 
-    public static Predicate.Visitor visitorVisit(CriteriaQuery<?> query, CriteriaBuilder builder, Root<?> root) {
+    public static Predicate.Visitor visitorVisit(AbstractQuery<?> query, CriteriaBuilder builder, Path<?> root) {
+
+        final Map<String, Class<?>> tables = Maps.newHashMap();
+
+        tables.put("relationShip", RelationShip.class);
+
         return new Predicate.Visitor() {
             @Override
             public javax.persistence.criteria.Predicate visit(And and) {
@@ -118,12 +122,27 @@ public class Query {
             }
 
             @Override
-            public javax.persistence.criteria.Predicate visit(Equal equal) {
+            public javax.persistence.criteria.Predicate visit(Join join) {
+                return join.accept(visitorVisit(query, builder, ((Root<?>)root).join(join.getPath())));
+            }
+
+            @Override
+            public javax.persistence.criteria.Predicate visit(SubQuery subQueryPredicate) {
                 Subquery<User> subquery = query.subquery(User.class);
-                Root<RelationShip> from = subquery.from(RelationShip.class);
-                javax.persistence.criteria.Predicate predicate = builder.equal(from.get(RelationShip_.category).get(Category_.id), equal.getValue());
-                subquery.select(from.get(RelationShip_.to)).where(predicate);
+                Class<?> formClass = tables.get(subQueryPredicate.getFrom());
+                Root from = subquery.from(formClass);
+                subquery.select(from.get(subQueryPredicate.getPath())).where(subQueryPredicate.getValue().accept(visitorVisit(subquery, builder, from)));
                 return root.in(subquery);
+            }
+
+            @Override
+            public javax.persistence.criteria.Predicate visit(Equal equal) {
+                String[] path = equal.getPath().split("\\.");
+                Path<?> cursor = root;
+                for (String segment : path) {
+                    cursor = cursor.get(segment);
+                }
+                return builder.equal(cursor, equal.getValue());
             }
         };
 

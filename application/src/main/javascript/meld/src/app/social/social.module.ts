@@ -37,7 +37,7 @@ import { ImageDialogComponent } from './profile/image-dialog/image-dialog.compon
 import { AddressMapComponent } from './profile/places-form/address-form/address-map.component';
 import {AddressViewComponent} from './profile/places-form/address-form/address-view.component';
 import { CategoriesSelectComponent } from './people/categories-select/categories-select.component';
-import { CategoryDialogComponent } from './people/find-view/category-dialog/category-dialog.component';
+import { CategoryDialogComponent } from './people/category-dialog/category-dialog.component';
 
 @NgModule({
   imports: [
@@ -46,6 +46,44 @@ import { CategoryDialogComponent } from './people/find-view/category-dialog/cate
     routing
   ],
   declarations: [
+    ContactFormComponent,
+    ChatFormComponent,
+    EmailFormComponent,
+    PhoneFormComponent,
+    ProfileComponent,
+    UserFormComponent,
+    UserViewComponent,
+    EducationFormComponent,
+    PlacesFormComponent,
+    WorkHistoryFormComponent,
+    SchoolFormComponent,
+    SchoolSortPipe,
+    AddressFormComponent,
+    AddressesSortPipe,
+    EducationViewComponent,
+    SchoolViewComponent,
+    PlacesViewComponent,
+    WorkHistoryViewComponent,
+    CompanyFormComponent,
+    CompanyViewComponent,
+    CompanySortPipe,
+    ContactViewComponent,
+    ImageFormComponent,
+    PeopleComponent,
+    FindViewComponent,
+    CategoriesFormComponent,
+    FollowingViewComponent,
+    CategoryComponent,
+    CategoryCreateDialogComponent,
+    CategoryDeleteDialogComponent,
+    CategoryRenameDialogComponent,
+    ImageDialogComponent,
+    AddressMapComponent,
+    AddressViewComponent,
+    CategoriesSelectComponent,
+    CategoryDialogComponent
+  ],
+  exports: [
     ContactFormComponent,
     ChatFormComponent,
     EmailFormComponent,

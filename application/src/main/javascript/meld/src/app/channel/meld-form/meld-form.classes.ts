@@ -6,6 +6,7 @@ export class MeldFormPostComponent {
 }
 
 export abstract class MeldPostModel implements MeldPost {
+  category: string = null;
   type: string;
   id: string = null;
   text: string = null;

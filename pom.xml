@@ -176,6 +176,31 @@
                 <version>1.7.2</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.picketlink</groupId>
+                <artifactId>picketlink-api</artifactId>
+                <version>2.5.5.SP8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.picketlink</groupId>
+                <artifactId>picketlink-impl</artifactId>
+                <version>2.5.5.SP8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.picketlink</groupId>
+                <artifactId>picketlink-idm-api</artifactId>
+                <version>2.5.5.SP8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.picketlink</groupId>
+                <artifactId>picketlink-idm-simple-schema</artifactId>
+                <version>2.5.5.SP8</version>
+            </dependency>
+
+
             <!--=========================================== 3rd Party Libraries =====================================-->
 
 
@@ -252,12 +277,6 @@
                 <groupId>com.lmax</groupId>
                 <artifactId>disruptor</artifactId>
                 <version>3.2.1</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.picketlink</groupId>
-                <artifactId>picketlink-idm-simple-schema</artifactId>
-                <version>2.6.0.Final</version>
             </dependency>
 
         </dependencies>

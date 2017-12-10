@@ -37,17 +37,17 @@ public class DataImport {
 
     @PostConstruct
     public void execute() {
-/*
 
-        User patrick = entityManager.createQuery("select u from User u where u.name = :name", User.class)
+
+     /*   User patrick = entityManager.createQuery("select u from User u where u.name = :name", User.class)
                 .setParameter("name", "PatrickBittner1Apr1980")
                 .getSingleResult();
-        userManager.updatePassword(patrick, "patrick");
+        userManager.updateToken(patrick, "patrick");
 
         User martin = entityManager.createQuery("select u from User u where u.name = :name", User.class)
                 .setParameter("name", "MartinDutkiewicz21Dec1979")
                 .getSingleResult();
-        userManager.updatePassword(martin, "martin");
+        userManager.updateToken(martin, "martin");
 */
 
 

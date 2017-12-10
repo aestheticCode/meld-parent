@@ -61,6 +61,7 @@
         header varchar(255),
         text text,
         videoId varchar(255),
+        category_id uuid,
         user_id uuid,
         image_id uuid,
         primary key (id)
@@ -274,6 +275,17 @@
         primary key (WorkHistory_id, companies_ORDER)
     );
 
+    create table TokenCredentialTypeEntity (
+       id int8 not null,
+        effectiveDate timestamp,
+        expiryDate timestamp,
+        typeName varchar(255),
+        token TEXT,
+        type varchar(255),
+        owner_id varchar(255),
+        primary key (id)
+    );
+
     create table uc_identity (
        DTYPE varchar(31) not null,
         id uuid not null,
@@ -407,6 +419,11 @@ create sequence hibernate_sequence start 1 increment 1;
        add constraint FK9303ajueevv0pi2jqe0oswp3l 
        foreign key (MeldComment_id) 
        references cn_comment;
+
+    alter table cn_post 
+       add constraint FKbhydicgnrb7bam7vqcjtwjmx0 
+       foreign key (category_id) 
+       references so_category;
 
     alter table cn_post 
        add constraint FKi9wbf17qftmf62ncobcjn2crv 
@@ -592,6 +609,11 @@ create sequence hibernate_sequence start 1 increment 1;
        add constraint FKr8ltx3o7etn53dl474flnpntx 
        foreign key (WorkHistory_id) 
        references so_workHistory;
+
+    alter table TokenCredentialTypeEntity 
+       add constraint FKax6xg86mlowbydnyg645ekvik 
+       foreign key (owner_id) 
+       references AttributedTypeEntity;
 
     alter table uc_identity_uc_identity 
        add constraint FKq4o8bxngdiv3mjg9059fysi85 

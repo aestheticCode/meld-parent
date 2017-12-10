@@ -1,5 +1,6 @@
 package net.portrix.meld;
 
+import net.portrix.generic.rest.LoginToken;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.meld.channel.meld.list.MeldListController;
@@ -13,10 +14,15 @@ import net.portrix.meld.usercontrol.registration.form.RegistrationFormController
 import net.portrix.meld.usercontrol.role.table.RoleTableController;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 import net.portrix.meld.usercontrol.user.table.UserTableController;
+import org.apache.commons.lang3.StringUtils;
+import org.picketlink.Identity;
+import org.picketlink.credential.DefaultLoginCredentials;
+import org.picketlink.idm.credential.TokenCredential;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -32,20 +38,26 @@ public class ApplicationController {
 
     private final ApplicationService service;
 
+    private final DefaultLoginCredentials credentials;
+
+    private final Identity identity;
+
     @Inject
-    public ApplicationController(final URLBuilderFactory builderFactory, ApplicationService service) {
+    public ApplicationController(final URLBuilderFactory builderFactory, ApplicationService service, DefaultLoginCredentials credentials, Identity identity) {
         this.builderFactory = builderFactory;
         this.service = service;
+        this.credentials = credentials;
+        this.identity = identity;
     }
 
     public ApplicationController() {
-        this(null, null);
+        this(null, null, null, null);
     }
 
     @GET
     @Produces("application/json")
     @Transactional
-    public Application application() {
+    public Application application(@CookieParam("rememberMe") String token) {
 
         final Application application = new Application();
 
@@ -66,41 +78,65 @@ public class ApplicationController {
         application.setUser(user);
 
         if (service.isLoggedIn()) {
-            final User current = service.current();
-
-            user.setId(current.getId());
-            user.setEmail(current.getName());
-            user.setFirstName(current.getFirstName());
-            user.setLastName(current.getLastName());
-            user.setBirthday(current.getBirthdate());
-
-            final Link avatarLink = builderFactory.from(UserImageController.class)
-                    .record(method -> method.thumbNail(current.getId()))
-                    .rel("avatar")
-                    .generate();
-
-            final Link imageLink = builderFactory.from(UserImageController.class)
-                    .record(method -> method.image(current.getId()))
-                    .rel("avatar")
-                    .generate();
-
-            user.setAvatar(avatarLink);
-            user.setImage(imageLink);
-
-            LogoutFormController.linkLogout(builderFactory)
-                    .build(application::addLink);
+            generateResponse(application, user);
         } else {
 
-            user.setEmail("guest");
-            LoginFormController.linkLogin(builderFactory)
-                    .build(application::addLink);
+            if (StringUtils.isNotEmpty(token)) {
+                String[] split = token.split("\\.");
+                credentials.setCredential(new TokenCredential(new LoginToken(split[0], split[1])));
+                Identity.AuthenticationResult result = identity.login();
 
-            RegistrationFormController.linkLogin(builderFactory)
-                    .build(application::addLink);
+                if (result.equals(Identity.AuthenticationResult.SUCCESS)) {
+                    generateResponse(application, user);
+                } else {
+                    user.setEmail("guest");
+                    LoginFormController.linkLogin(builderFactory)
+                            .build(application::addLink);
 
+                    RegistrationFormController.linkLogin(builderFactory)
+                            .build(application::addLink);
+                }
+            } else {
+                user.setEmail("guest");
+                LoginFormController.linkLogin(builderFactory)
+                        .build(application::addLink);
+
+                RegistrationFormController.linkLogin(builderFactory)
+                        .build(application::addLink);
+            }
         }
 
+
+
+
+
         return application;
+    }
+
+    private void generateResponse(Application application, Application.User user) {
+        final User current = service.current();
+
+        user.setId(current.getId());
+        user.setEmail(current.getName());
+        user.setFirstName(current.getFirstName());
+        user.setLastName(current.getLastName());
+        user.setBirthday(current.getBirthdate());
+
+        final Link avatarLink = builderFactory.from(UserImageController.class)
+                .record(method -> method.thumbNail(current.getId()))
+                .rel("avatar")
+                .generate();
+
+        final Link imageLink = builderFactory.from(UserImageController.class)
+                .record(method -> method.image(current.getId()))
+                .rel("avatar")
+                .generate();
+
+        user.setAvatar(avatarLink);
+        user.setImage(imageLink);
+
+        LogoutFormController.linkLogout(builderFactory)
+                .build(application::addLink);
     }
 
 

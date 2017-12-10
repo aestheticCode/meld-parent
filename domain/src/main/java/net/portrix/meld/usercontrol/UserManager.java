@@ -1,6 +1,7 @@
 package net.portrix.meld.usercontrol;
 
 import net.portrix.generic.image.ImageUtils;
+import net.portrix.generic.rest.LoginToken;
 import org.apache.commons.io.IOUtils;
 import org.picketlink.Identity;
 import org.picketlink.idm.IdentityManager;
@@ -114,6 +115,22 @@ public class UserManager implements Serializable {
         }
 
         identityManager.updateCredential(resultList.get(0), new Password(password));
+    }
+
+    public void updateToken(User user, String token) {
+        final List<org.picketlink.idm.model.basic.User> resultList = identityManager.createIdentityQuery(org.picketlink.idm.model.basic.User.class)
+                .setParameter(org.picketlink.idm.model.basic.User.LOGIN_NAME, user.getName())
+                .getResultList();
+
+        if (resultList.isEmpty()) {
+            throw new IllegalStateException("No User found for name " + user.getName());
+        }
+
+        if (resultList.size() > 1) {
+            throw new IllegalStateException("Multiple User found for name " + user.getName());
+        }
+
+        identityManager.updateCredential(resultList.get(0), new LoginToken(user.getName(), token));
     }
 
     public User find(UUID id) {

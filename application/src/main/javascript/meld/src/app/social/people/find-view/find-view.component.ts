@@ -4,7 +4,7 @@ import {Items} from "../../../../lib/common/query/Items";
 import {Container} from "../../../../lib/common/rest/Container";
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from '@angular/material';
-import {CategoryDialogComponent} from './category-dialog/category-dialog.component';
+import {CategoryDialogComponent} from '../category-dialog/category-dialog.component';
 
 @Component({
   selector: 'app-social-find-view',

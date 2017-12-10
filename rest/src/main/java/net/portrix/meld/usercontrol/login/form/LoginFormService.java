@@ -1,15 +1,18 @@
 package net.portrix.meld.usercontrol.login.form;
 
+import net.portrix.generic.rest.LoginToken;
+import net.portrix.meld.usercontrol.User;
+import net.portrix.meld.usercontrol.UserManager;
 import org.picketlink.Identity;
 import org.picketlink.authentication.AuthenticationException;
 import org.picketlink.credential.DefaultLoginCredentials;
+import org.picketlink.idm.credential.TokenCredential;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.FormatStyle;
+import java.util.UUID;
 
 @ApplicationScoped
 public class LoginFormService {
@@ -18,26 +21,37 @@ public class LoginFormService {
 
     private final DefaultLoginCredentials credentials;
 
+    private final UserManager userManager;
+
     @Inject
-    public LoginFormService(Identity identity, DefaultLoginCredentials credentials) {
+    public LoginFormService(Identity identity, DefaultLoginCredentials credentials, UserManager userManager) {
         this.identity = identity;
         this.credentials = credentials;
+        this.userManager = userManager;
     }
 
     public LoginFormService() {
-        this(null, null);
+        this(null, null, null);
     }
 
-    public Identity.AuthenticationResult login(LoginForm loginForm) throws AuthenticationException  {
+    public Identity.AuthenticationResult login(UUID uuid, LoginForm loginForm) throws AuthenticationException  {
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("dMMMuuuu")
                 .toFormatter();
         String birthday = loginForm.getBirthday().format(formatter);
-        credentials.setUserId(loginForm.getFirstName() + loginForm.getLastName() + birthday);
+        String userId = loginForm.getFirstName() + loginForm.getLastName() + birthday;
+        credentials.setUserId(userId);
         credentials.setPassword(loginForm.getPassword());
 
-        return identity.login();
+        Identity.AuthenticationResult authenticationResult = identity.login();
+        User current = userManager.current();
+
+        userManager.updateToken(current, uuid.toString());
+
+        return authenticationResult;
 
     }
+
+
 }

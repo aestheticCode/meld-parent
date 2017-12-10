@@ -18,11 +18,13 @@ import { MeldYoutubeFormComponent } from './meld-form/meld-youtube-form/meld-you
 import { MeldTextItemComponent } from './meld-list/meld-item/meld-text-item/meld-text-item.component';
 import { MeldYoutubeItemComponent } from './meld-list/meld-item/meld-youtube-item/meld-youtube-item.component';
 import { MeldImageItemComponent } from './meld-list/meld-item/meld-image-item/meld-image-item.component';
+import {SocialModule} from '../social/social.module';
 
 
 @NgModule({
   imports: [
     LibModule,
+    SocialModule,
     routing
   ],
   declarations: [
