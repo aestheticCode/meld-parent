@@ -6,6 +6,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.Link;
+import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
 import net.portrix.meld.channel.*;
@@ -56,13 +57,12 @@ public class MeldListController {
     @Path("meld/posts")
     @Name("Meld Posts")
     @Transactional
-    public Container<MeldItem> list(MeldListSearchType search) {
+    public Container<MeldItem> list(Query search) {
 
         final User currentUser = service.currentUser();
 
-        final List<MeldPost> posts = service.findAll(search.getStart(), search.getLimit());
-
-        final long countAll = service.countAll();
+        final List<MeldPost> posts = service.find(search);
+        final long countAll = service.count(search);
 
         final List<MeldItem> items = new ArrayList<>();
 
@@ -243,7 +243,7 @@ public class MeldListController {
     public static URLBuilder<MeldListController> linkMeld(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(MeldListController.class)
-                .record(method -> method.list(new MeldListSearchType()))
+                .record(method -> method.list(null))
                 .rel("meld");
     }
 

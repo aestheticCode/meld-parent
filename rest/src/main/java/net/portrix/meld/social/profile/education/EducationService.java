@@ -7,6 +7,7 @@ import net.portrix.meld.usercontrol.UserManager;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -27,9 +28,13 @@ public class EducationService {
     }
 
     public Education findEducation(User user) {
-        return entityManager.createNamedQuery("findEducation", Education.class)
-                .setParameter("user", user)
-                .getSingleResult();
+        try {
+            return entityManager.createNamedQuery("findEducation", Education.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public void saveEducation(final Education education) {

@@ -1,6 +1,7 @@
 package net.portrix.generic.rest.api.query;
 
 import com.google.common.collect.Iterables;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class Query {
                 if (like.getValue() == null) {
                     return builder.conjunction();
                 } else {
-                    return builder.like(builder.lower(cursor(root, like)), like.getValue().toLowerCase() + "%");
+                    return builder.like(builder.lower(cursor(root, like.getPath())), like.getValue().toLowerCase() + "%");
 
                 }
             }
@@ -78,7 +79,7 @@ public class Query {
                 if (in.getValue() == null || in.getValue().isEmpty()) {
                     return builder.disjunction();
                 } else {
-                    return cursor(root, in).in(in.getValue());
+                    return cursor(root, in.getPath()).in(in.getValue());
                 }
 
             }
@@ -93,11 +94,11 @@ public class Query {
                 List<Predicate> predicates = new ArrayList<>();
 
                 if (restDate.getValue().getLt() != null) {
-                    predicates.add(builder.lessThanOrEqualTo(cursor(root, restDate), restDate.getValue().getLt()));
+                    predicates.add(builder.lessThanOrEqualTo(cursor(root, restDate.getPath()), restDate.getValue().getLt()));
                 }
 
                 if (restDate.getValue().getGt() != null) {
-                    predicates.add(builder.greaterThanOrEqualTo(cursor(root, restDate), restDate.getValue().getGt()));
+                    predicates.add(builder.greaterThanOrEqualTo(cursor(root, restDate.getPath()), restDate.getValue().getGt()));
                 }
 
                 switch (predicates.size()) {
@@ -121,21 +122,24 @@ public class Query {
                 Subquery subquery = query.subquery(selectClass);
                 Class<?> formClass = tables.get(subQueryPredicate.getFrom());
                 Root from = subquery.from(formClass);
-                subquery.select(cursor(from, subQueryPredicate)).where(subQueryPredicate.getValue().accept(visitorVisit(subquery, builder, from, tables)));
-                return root.in(subquery);
+                subquery.select(cursor(from, subQueryPredicate.getFromPath())).where(subQueryPredicate.getValue().accept(visitorVisit(subquery, builder, from, tables)));
+                return cursor(root, subQueryPredicate.getSelectPath()).in(subquery);
             }
 
             @Override
             public Predicate visit(Equal equal) {
-                return builder.equal(cursor(root, equal), equal.getValue());
+                return builder.equal(cursor(root, equal.getPath()), equal.getValue());
             }
 
         };
 
     }
 
-    private static Path cursor(Path<?> path, RestPath equal) {
-        String[] paths = equal.getPath().split("\\.");
+    private static Path cursor(Path<?> path, String pathString) {
+        if (StringUtils.isEmpty(pathString)) {
+            return path;
+        }
+        String[] paths = pathString.split("\\.");
         Path<?> cursor = path;
         for (String segment : paths) {
             cursor = cursor.get(segment);

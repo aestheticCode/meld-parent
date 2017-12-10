@@ -55,7 +55,10 @@ public class EducationController {
 
         User user = service.findUser(id);
 
-        final Education education = service.findEducation(user);
+        Education education = service.findEducation(user);
+        if (education == null) {
+            education = new Education();
+        }
 
         final EducationForm form = new EducationForm();
         form.setId(education.getId());

@@ -3,12 +3,13 @@ package net.portrix.generic.rest.api.query;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("subQuery")
-public class SubQuery implements RestPredicate<RestPredicate<?>>, RestPath {
+public class SubQuery implements RestPredicate<RestPredicate<?>> {
 
     private RestPredicate<?> value;
     private Object from;
-    private String path;
+    private String fromPath;
     private String select;
+    private String selectPath;
 
     @Override
     public RestPredicate<?> getValue() {
@@ -32,12 +33,12 @@ public class SubQuery implements RestPredicate<RestPredicate<?>>, RestPath {
         this.from = from;
     }
 
-    public String getPath() {
-        return path;
+    public String getFromPath() {
+        return fromPath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setFromPath(String fromPath) {
+        this.fromPath = fromPath;
     }
 
     public String getSelect() {
@@ -46,5 +47,13 @@ public class SubQuery implements RestPredicate<RestPredicate<?>>, RestPath {
 
     public void setSelect(String select) {
         this.select = select;
+    }
+
+    public String getSelectPath() {
+        return selectPath;
+    }
+
+    public void setSelectPath(String selectPath) {
+        this.selectPath = selectPath;
     }
 }

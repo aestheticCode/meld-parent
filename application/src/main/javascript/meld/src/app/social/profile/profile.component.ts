@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {MatDialog} from "@angular/material";
 import {ImageDialogComponent} from "./image-dialog/image-dialog.component";
+import {AppService} from '../../app.service';
+import {Configuration} from '../../Configuration';
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +11,11 @@ import {ImageDialogComponent} from "./image-dialog/image-dialog.component";
 })
 export class ProfileComponent {
 
-  constructor(private dialog : MatDialog) {
+  user : Configuration.User;
+
+  constructor(private dialog : MatDialog,
+              service : AppService) {
+    this.user = service.configuration.user;
   }
 
   onDialogClick() {

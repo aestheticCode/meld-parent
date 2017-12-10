@@ -1,15 +1,23 @@
 package net.portrix.meld.channel.meld.list;
 
+import com.google.common.collect.Maps;
+import net.portrix.generic.rest.api.query.Query;
 import net.portrix.meld.channel.MeldImagePost;
 import net.portrix.meld.channel.MeldPost;
-import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.UserImage;
-import net.portrix.meld.usercontrol.UserManager;
+import net.portrix.meld.channel.MeldPost_;
+import net.portrix.meld.social.people.RelationShip;
+import net.portrix.meld.usercontrol.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Patrick Bittner on 09.08.17.
@@ -20,6 +28,13 @@ public class MeldListService {
     private final UserManager userManager;
 
     private final EntityManager entityManager;
+
+    private final Map<String, Class<?>> tables = Maps.newHashMap();
+
+    {
+        tables.put("relationShip", RelationShip.class);
+        tables.put("user", User.class);
+    }
 
     @Inject
     public MeldListService(UserManager userManager, EntityManager entityManager) {
@@ -42,16 +57,26 @@ public class MeldListService {
         return userManager.current();
     }
 
-    public List<MeldPost> findAll(int start, int limit) {
-        return entityManager.createQuery("select p from MeldPost p order by p.created asc ", MeldPost.class)
-                .setFirstResult(start)
-                .setMaxResults(limit)
-                .getResultList();
+    public List<MeldPost> find(Query search) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<MeldPost> query = builder.createQuery(MeldPost.class);
+        Root<MeldPost> root = query.from(MeldPost.class);
+        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root, tables));
+        query.select(root).where(predicate).orderBy(builder.asc(root.get(MeldPost_.created)));
+        TypedQuery<MeldPost> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(search.getIndex());
+        typedQuery.setMaxResults(search.getLimit());
+        return typedQuery.getResultList();
     }
 
-    public long countAll() {
-        return entityManager.createQuery("select count(p) from MeldImagePost p ", Long.class)
-                .getSingleResult();
+    long count(Query search) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<MeldPost> root = query.from(MeldPost.class);
+        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root, tables));
+        query.select(builder.count(root)).where(predicate);
+        TypedQuery<Long> typedQuery = entityManager.createQuery(query);
+        return typedQuery.getSingleResult();
     }
 
     public void facebook() {

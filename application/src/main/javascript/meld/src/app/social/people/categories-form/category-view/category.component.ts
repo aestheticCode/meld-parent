@@ -23,7 +23,7 @@ export class CategoryComponent {
 
   users: Items<UserRow> = (query, response) => {
     let equal = QueryBuilder.equal(this.category.id, "category.id");
-    query.predicate = QueryBuilder.subQuery(equal, "user", "relationShip", "to")
+    query.predicate = QueryBuilder.subQuery("user", "","relationShip", "to", equal)
     this.http.post<Container<UserRow>>('service/social/people/find', query)
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);

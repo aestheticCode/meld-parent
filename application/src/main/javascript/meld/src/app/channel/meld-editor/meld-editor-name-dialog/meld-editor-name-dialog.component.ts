@@ -4,7 +4,7 @@ import {Http, Response} from "@angular/http";
 import {QueryBuilder} from "../../../../lib/common/query/QueryBuilder";
 import {UserRow} from "../../../usercontrol/user-table/user-table.interfaces";
 import {MeldListComponent} from "../../../../lib/component/meld-list/meld-list.component";
-import {Items} from "../../../../lib/component/meld-list/Items";
+import {Items} from '../../../../lib/common/query/Items';
 
 @Component({
   selector: 'app-meld-editor-name-dialog',
@@ -22,14 +22,14 @@ export class MeldEditorNameDialogComponent {
               private dialogRef: MatDialogRef<MeldEditorNameDialogComponent>) {
   }
 
-  users: Items = (params, callback) => {
+  users: Items<any> = (params, callback) => {
     let query = QueryBuilder.query();
     query.limit = 75;
     query.predicate = QueryBuilder.like(this.filter, "name");
     this.http.post('service/usercontrol/user/table', query)
       .subscribe((res: Response) => {
         let rows: UserRow[] = res.json().rows;
-        callback(rows);
+        callback(rows, null);
       });
   };
 

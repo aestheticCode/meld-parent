@@ -9,8 +9,8 @@ import {
   ViewChildren,
   ElementRef, Output, EventEmitter
 } from "@angular/core";
-import {Items} from "./Items";
-import {Params} from "./Params";
+import {Items} from '../../common/query/Items';
+import {QueryBuilder} from '../../common/query/QueryBuilder';
 
 @Component({
   selector: 'meld-list',
@@ -35,7 +35,7 @@ export class MeldListComponent implements OnInit {
 
   @Output() rendered : EventEmitter<any> = new EventEmitter<any>();
 
-  @Input('items') items: Items;
+  @Input('items') items: Items<any>;
 
   @ContentChild(TemplateRef) templateRef: TemplateRef<any>;
 
@@ -45,7 +45,9 @@ export class MeldListComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.items) {
-      this.items(new Params(this.index, 50), (data: Array<any>) => {
+      let query = QueryBuilder.query();
+      query.limit = 50;
+      this.items(query, (data: Array<any>) => {
         this.window = data;
       });
     }
@@ -57,7 +59,10 @@ export class MeldListComponent implements OnInit {
       if (element.scrollHeight - element.scrollTop === element.clientHeight && this.window.length == 50) {
         this.index += 25;
         this.indexChange.emit(this.index);
-        this.items(new Params(this.index, 50), (data: Array<any>) => {
+        let query = QueryBuilder.query();
+        query.limit = 50;
+        query.index = this.index;
+        this.items(query, (data: Array<any>) => {
           this.window = data;
         });
         let scrollDelta = 0;
@@ -72,7 +77,10 @@ export class MeldListComponent implements OnInit {
       if (element.scrollTop == 0 && this.index != 0) {
         this.index -= 25;
         this.indexChange.emit(this.index);
-        this.items(new Params(this.index, 50), (data: Array<any>) => {
+        let query = QueryBuilder.query();
+        query.limit = 50;
+        query.index = this.index;
+        this.items(query, (data: Array<any>) => {
           this.window = data;
         });
         let scrollDelta = 0;
@@ -97,8 +105,10 @@ export class MeldListComponent implements OnInit {
       this.scrollTop = 0;
       this.indexChange.emit(this.index);
       this.scrollTopChange.emit(this.scrollTop);
-
-      this.items(new Params(this.index, 50), (data: Array<any>) => {
+      let query = QueryBuilder.query();
+      query.limit = 50;
+      query.index = this.index;
+      this.items(query, (data: Array<any>) => {
         this.window = data;
       });
     }

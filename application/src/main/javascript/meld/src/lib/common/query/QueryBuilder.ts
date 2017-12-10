@@ -43,7 +43,7 @@ export class QueryBuilder {
     return new JoinPredicate(path, value)
   }
 
-  static subQuery(value : Predicate<any>, select : string, from : string, path : string) {
-    return new SubQueryPredicate(select, from, value, path);
+  static subQuery(select : string, selectPath : string, from : string, fromPath : string, value : Predicate<any>) {
+    return new SubQueryPredicate(selectPath, select, from, fromPath, value);
   }
 }
