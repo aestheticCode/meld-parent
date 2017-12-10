@@ -4,11 +4,11 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
+import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.Identity;
 import net.portrix.meld.usercontrol.group.form.GroupFormController;
-import net.portrix.meld.usercontrol.group.table.query.Query;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

@@ -3,7 +3,7 @@ package net.portrix.generic.rest.api.query;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("like")
-public class Like implements Predicate<String> {
+public class Like implements RestPredicate<String>, RestPath {
 
     private String path;
 

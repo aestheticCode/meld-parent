@@ -5,13 +5,13 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.meta.MetaResponseType;
 import net.portrix.generic.rest.api.meta.Property;
+import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.rest.Secured;
 import net.portrix.meld.usercontrol.Gender;
 import net.portrix.meld.usercontrol.user.form.UserFormController;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
-import net.portrix.meld.usercontrol.user.table.query.Query;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

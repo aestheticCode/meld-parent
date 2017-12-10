@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @JsonTypeName("in")
-public class In implements Predicate<Set<UUID>> {
+public class In implements RestPredicate<Set<UUID>>, RestPath {
 
     private String path;
 

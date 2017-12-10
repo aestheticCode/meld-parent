@@ -21,7 +21,8 @@ export class FollowingViewComponent {
   }
 
   users: Items<UserRow> = (query, response) => {
-    query.predicate = QueryBuilder.subQuery(QueryBuilder.equal(this.service.configuration.user.id, "to.id"), 'relationShip', 'from')
+    let equal = QueryBuilder.equal(this.service.configuration.user.id, "to.id");
+    query.predicate = QueryBuilder.subQuery(equal, "user", 'relationShip', 'from');
     this.http.post<Container<UserRow>>('service/social/people/find', query)
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);

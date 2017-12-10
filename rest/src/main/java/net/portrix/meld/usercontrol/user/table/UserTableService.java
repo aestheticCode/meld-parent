@@ -1,8 +1,9 @@
 package net.portrix.meld.usercontrol.user.table;
 
+import com.google.common.collect.Maps;
+import net.portrix.generic.rest.api.query.Query;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.User_;
-import net.portrix.meld.usercontrol.user.table.query.Query;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -33,7 +34,7 @@ public class UserTableService {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<User> root = query.from(User.class);
-        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(builder, root));
+        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root, Maps.newHashMap()));
         query.select(root).where(predicate).orderBy(builder.asc(root.get(User_.name)));
         TypedQuery<User> typedQuery = entityManager.createQuery(query);
         typedQuery.setFirstResult(search.getIndex());
@@ -45,7 +46,7 @@ public class UserTableService {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<User> root = query.from(User.class);
-        Predicate predicate = search.getPredicate().accept( Query.visitorVisit(builder, root));
+        Predicate predicate = search.getPredicate().accept( Query.visitorVisit(query, builder, root, Maps.newHashMap()));
         query.select(builder.count(root)).where(predicate);
         TypedQuery<Long> typedQuery = entityManager.createQuery(query);
         return typedQuery.getSingleResult();

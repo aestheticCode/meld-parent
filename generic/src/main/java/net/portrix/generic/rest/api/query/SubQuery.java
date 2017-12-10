@@ -1,20 +1,21 @@
-package net.portrix.meld.social.people.find.table.query;
+package net.portrix.generic.rest.api.query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("subQuery")
-public class SubQuery implements Predicate<Predicate<?>>{
+public class SubQuery implements RestPredicate<RestPredicate<?>>, RestPath {
 
-    private Predicate<?> value;
+    private RestPredicate<?> value;
     private Object from;
     private String path;
+    private String select;
 
     @Override
-    public Predicate<?> getValue() {
+    public RestPredicate<?> getValue() {
         return value;
     }
 
-    public void setValue(Predicate<?> value) {
+    public void setValue(RestPredicate<?> value) {
         this.value = value;
     }
 
@@ -37,5 +38,13 @@ public class SubQuery implements Predicate<Predicate<?>>{
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getSelect() {
+        return select;
+    }
+
+    public void setSelect(String select) {
+        this.select = select;
     }
 }

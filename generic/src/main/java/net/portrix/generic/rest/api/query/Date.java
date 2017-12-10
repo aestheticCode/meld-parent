@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.LocalDate;
 
 @JsonTypeName("date")
-public class Date implements Predicate<Date.Value> {
+public class Date implements RestPredicate<Date.Value>, RestPath {
 
     private Date.Value value;
 

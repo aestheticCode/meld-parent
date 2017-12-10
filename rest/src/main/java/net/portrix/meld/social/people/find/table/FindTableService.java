@@ -1,7 +1,8 @@
 package net.portrix.meld.social.people.find.table;
 
+import com.google.common.collect.Maps;
+import net.portrix.generic.rest.api.query.Query;
 import net.portrix.meld.social.people.RelationShip;
-import net.portrix.meld.social.people.find.table.query.Query;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserImage;
 import net.portrix.meld.usercontrol.User_;
@@ -15,12 +16,19 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.HashMap;
 import java.util.List;
 
 @ApplicationScoped
 public class FindTableService {
     
     private final EntityManager entityManager;
+    private HashMap<String, Class<?>> tables = Maps.newHashMap();
+
+    {
+        tables.put("relationShip", RelationShip.class);
+        tables.put("user", User.class);
+    }
 
     @Inject
     public FindTableService(EntityManager entityManager) {
@@ -35,7 +43,7 @@ public class FindTableService {
         List<User> Users;CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<User> root = query.from(User.class);
-        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root));
+        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root, tables));
         query.select(root).where(predicate).orderBy(builder.asc(root.get(User_.name)));
         TypedQuery<User> typedQuery = entityManager.createQuery(query);
         typedQuery.setFirstResult(search.getIndex());
@@ -48,7 +56,7 @@ public class FindTableService {
         long count;CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<User> root = query.from(User.class);
-        Predicate predicate = search.getPredicate().accept( Query.visitorVisit(query, builder, root));
+        Predicate predicate = search.getPredicate().accept( Query.visitorVisit(query, builder, root, tables));
         query.select(builder.count(root)).where(predicate);
         TypedQuery<Long> typedQuery = entityManager.createQuery(query);
         count = typedQuery.getSingleResult();

@@ -2,10 +2,10 @@ package net.portrix.generic.rest.api.query;
 
 import com.google.common.collect.Iterables;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Patrick on 18.07.2017.
@@ -16,7 +16,7 @@ public class Query {
 
     private int limit;
 
-    private Predicate predicate = new Noop();
+    private RestPredicate predicate = new Noop();
 
     public int getIndex() {
         return index;
@@ -34,88 +34,113 @@ public class Query {
         this.limit = limit;
     }
 
-    public Predicate getPredicate() {
+    public RestPredicate getPredicate() {
         return predicate;
     }
 
-    public void setPredicate(Predicate predicate) {
+    public void setPredicate(RestPredicate predicate) {
         this.predicate = predicate;
     }
 
-    public static Predicate.Visitor visitorVisit(CriteriaBuilder builder, Root<?> root) {
-        return new VisitorClass(builder, root);
-    }
+    public static RestPredicate.Visitor visitorVisit(AbstractQuery<?> query, CriteriaBuilder builder, Path<?> root, Map<String, Class<?>> tables) {
 
-    public static class VisitorClass implements Predicate.Visitor {
-        protected final CriteriaBuilder builder;
-        protected final Root<?> root;
-
-        public VisitorClass(CriteriaBuilder builder, Root<?> root) {
-            this.builder = builder;
-            this.root = root;
-        }
-
-        @Override
-        public javax.persistence.criteria.Predicate visit(And and) {
-            List<javax.persistence.criteria.Predicate> predicates = new ArrayList<>();
-            for (Predicate<?> predicate : and.getValue()) {
-                predicates.add(predicate.accept(this));
+        return new RestPredicate.Visitor() {
+            @Override
+            public Predicate visit(And and) {
+                List<Predicate> predicates = new ArrayList<>();
+                for (RestPredicate<?> restPredicate : and.getValue()) {
+                    predicates.add(restPredicate.accept(this));
+                }
+                return builder.and(Iterables.toArray(predicates, Predicate.class));
             }
-            return builder.and(Iterables.toArray(predicates, javax.persistence.criteria.Predicate.class));
-        }
 
-        @Override
-        public javax.persistence.criteria.Predicate visit(Or or) {
-            List<javax.persistence.criteria.Predicate> predicates = new ArrayList<>();
-            for (Predicate<?> predicate : or.getValue()) {
-                predicates.add(predicate.accept(this));
+            @Override
+            public Predicate visit(Or or) {
+                List<Predicate> predicates = new ArrayList<>();
+                for (RestPredicate<?> restPredicate : or.getValue()) {
+                    predicates.add(restPredicate.accept(this));
+                }
+                return builder.or(Iterables.toArray(predicates, Predicate.class));
             }
-            return builder.or(Iterables.toArray(predicates, javax.persistence.criteria.Predicate.class));
-        }
 
-        @Override
-        public javax.persistence.criteria.Predicate visit(Like like) {
-            if (like.getValue() == null) {
+            @Override
+            public Predicate visit(Like like) {
+                if (like.getValue() == null) {
+                    return builder.conjunction();
+                } else {
+                    return builder.like(builder.lower(cursor(root, like)), like.getValue().toLowerCase() + "%");
+
+                }
+            }
+
+            @Override
+            public Predicate visit(In in) {
+                if (in.getValue() == null || in.getValue().isEmpty()) {
+                    return builder.disjunction();
+                } else {
+                    return cursor(root, in).in(in.getValue());
+                }
+
+            }
+
+            @Override
+            public Predicate visit(Noop noop) {
                 return builder.conjunction();
-            } else {
-                return builder.like(root.get(like.getPath()), like.getValue() + "%");
             }
 
-        }
+            @Override
+            public Predicate visit(Date restDate) {
+                List<Predicate> predicates = new ArrayList<>();
 
-        @Override
-        public javax.persistence.criteria.Predicate visit(In in) {
-            if (in.getValue() == null || in.getValue().isEmpty()) {
-                return builder.disjunction();
-            } else {
-                return root.get(in.getPath()).in(in.getValue());
+                if (restDate.getValue().getLt() != null) {
+                    predicates.add(builder.lessThanOrEqualTo(cursor(root, restDate), restDate.getValue().getLt()));
+                }
+
+                if (restDate.getValue().getGt() != null) {
+                    predicates.add(builder.greaterThanOrEqualTo(cursor(root, restDate), restDate.getValue().getGt()));
+                }
+
+                switch (predicates.size()) {
+                    case 1:
+                        return predicates.get(0);
+                    case 2:
+                        return builder.and(Iterables.toArray(predicates, Predicate.class));
+                    default:
+                        return builder.conjunction();
+                }
             }
 
-        }
-
-        @Override
-        public javax.persistence.criteria.Predicate visit(Noop noop) {
-            return builder.conjunction();
-        }
-
-        @Override
-        public javax.persistence.criteria.Predicate visit(Date restDate) {
-            List<javax.persistence.criteria.Predicate> predicates = new ArrayList<>();
-
-            if (restDate.getValue().getLt() != null) {
-                predicates.add(builder.lessThanOrEqualTo(root.get(restDate.getPath()), restDate.getValue().getLt()));
+            @Override
+            public Predicate visit(Join join) {
+                return join.accept(visitorVisit(query, builder, ((Root<?>) root).join(join.getPath()), tables));
             }
 
-            if (restDate.getValue().getGt() != null) {
-                predicates.add(builder.greaterThanOrEqualTo(root.get(restDate.getPath()), restDate.getValue().getGt()));
+            @Override
+            public Predicate visit(SubQuery subQueryPredicate) {
+                Class<?> selectClass = tables.get(subQueryPredicate.getSelect());
+                Subquery subquery = query.subquery(selectClass);
+                Class<?> formClass = tables.get(subQueryPredicate.getFrom());
+                Root from = subquery.from(formClass);
+                subquery.select(cursor(from, subQueryPredicate)).where(subQueryPredicate.getValue().accept(visitorVisit(subquery, builder, from, tables)));
+                return root.in(subquery);
             }
 
-            switch (predicates.size()) {
-                case 1 : return predicates.get(0);
-                case 2 : return builder.and(Iterables.toArray(predicates, javax.persistence.criteria.Predicate.class));
-                default: return builder.conjunction();
+            @Override
+            public Predicate visit(Equal equal) {
+                return builder.equal(cursor(root, equal), equal.getValue());
             }
-        }
+
+        };
 
     }
+
+    private static Path cursor(Path<?> path, RestPath equal) {
+        String[] paths = equal.getPath().split("\\.");
+        Path<?> cursor = path;
+        for (String segment : paths) {
+            cursor = cursor.get(segment);
+        }
+        return cursor;
+    }
+
 }

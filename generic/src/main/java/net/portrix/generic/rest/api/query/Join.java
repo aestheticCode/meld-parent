@@ -1,23 +1,25 @@
-package net.portrix.meld.social.people.category.list.query;
+package net.portrix.generic.rest.api.query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import java.util.UUID;
+@JsonTypeName("join")
+public class Join implements RestPredicate<RestPredicate<?>>, RestPath{
 
-@JsonTypeName("equal")
-public class Equal implements Predicate<UUID> {
-
-    private UUID value;
+    private RestPredicate<?> value;
 
     private String path;
-
+    
     @Override
-    public UUID getValue() {
+    public RestPredicate<?> getValue() {
         return value;
     }
 
-    public void setValue(UUID value) {
+    public void setValue(RestPredicate<?> value) {
         this.value = value;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public void setPath(String path) {
@@ -29,7 +31,4 @@ public class Equal implements Predicate<UUID> {
         return visitor.visit(this);
     }
 
-    public String getPath() {
-        return this.path;
-    }
 }

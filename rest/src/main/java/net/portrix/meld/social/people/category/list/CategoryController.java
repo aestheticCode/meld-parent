@@ -4,19 +4,18 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
+import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.people.Category;
-import net.portrix.meld.social.people.RelationShip;
-import net.portrix.meld.social.people.category.list.query.Query;
-import net.portrix.meld.usercontrol.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Path("social/people")
@@ -55,7 +54,7 @@ public class CategoryController {
                 })
                 .collect(Collectors.toList());
 
-        return new Container<>(categoryFormList, (int)count);
+        return new Container<>(categoryFormList, (int) count);
     }
 
 

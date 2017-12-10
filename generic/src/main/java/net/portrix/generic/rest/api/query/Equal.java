@@ -1,11 +1,11 @@
-package net.portrix.meld.social.people.find.table.query;
+package net.portrix.generic.rest.api.query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import java.util.UUID;
 
 @JsonTypeName("equal")
-public class Equal implements Predicate<UUID> {
+public class Equal implements RestPredicate<UUID>, RestPath{
 
     private UUID value;
 

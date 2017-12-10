@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.Set;
 
 @JsonTypeName("and")
-public class And implements Predicate<Set<Predicate<?>>> {
+public class And implements RestPredicate<Set<RestPredicate<?>>> {
 
-    private Set<Predicate<?>> value;
+    private Set<RestPredicate<?>> value;
 
     @Override
-    public Set<Predicate<?>> getValue() {
+    public Set<RestPredicate<?>> getValue() {
         return value;
     }
 
@@ -19,7 +19,7 @@ public class And implements Predicate<Set<Predicate<?>>> {
         return visitor.visit(this);
     }
 
-    public void setValue(Set<Predicate<?>> value) {
+    public void setValue(Set<RestPredicate<?>> value) {
         this.value = value;
     }
 }
