@@ -2,7 +2,6 @@ package net.portrix.meld.social.profile;
 
 import net.portrix.generic.ddd.AbstractEntity;
 
-import javax.ejb.Local;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;

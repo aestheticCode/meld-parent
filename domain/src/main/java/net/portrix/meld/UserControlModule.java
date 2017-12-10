@@ -5,6 +5,7 @@ import net.portrix.generic.rest.SecurityAction;
 import net.portrix.generic.rest.jsr339.*;
 import net.portrix.meld.usercontrol.Permission;
 import net.portrix.meld.usercontrol.PermissionManager;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,9 +13,12 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.ws.rs.core.UriBuilder;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author by Patrick Bittner on 10.06.15.
@@ -35,6 +39,15 @@ public class UserControlModule {
 
     public UserControlModule() {
         this(null, null);
+    }
+
+    public static File workingDirectory(UUID id) throws IOException {
+        String home = System.getProperty("user.home");
+        File meld = new File(home + File.separator + ".meld");
+        FileUtils.forceMkdir(meld);
+        File imageWorkingDir = new File(meld.getCanonicalPath() + File.separator + id.toString());
+        FileUtils.forceMkdir(imageWorkingDir);
+        return imageWorkingDir;
     }
 
     public void onSecurityAction(@Observes SecurityAction securityAction) {
@@ -61,7 +74,7 @@ public class UserControlModule {
                 String path = StringUtils.removeStart(securityAction.getPath(), "/");
                 path = StringUtils.removeEnd(path, "/");
                 if (uri.getPath().equals(path) && permission.getMethod().equals(securityAction.getMethod())) {
-                    return  permission;
+                    return permission;
                 }
             } catch (IllegalArgumentException e) {
                 // No Op

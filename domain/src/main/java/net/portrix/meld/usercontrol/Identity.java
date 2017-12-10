@@ -2,9 +2,6 @@ package net.portrix.meld.usercontrol;
 
 import net.portrix.generic.ddd.AbstractAggregate;
 import net.portrix.generic.ddd.Aggregate;
-import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
-import org.hibernate.search.annotations.*;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

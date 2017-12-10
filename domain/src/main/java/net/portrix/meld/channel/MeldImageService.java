@@ -7,9 +7,6 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
-import java.awt.image.DataBufferInt;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -41,7 +38,7 @@ public class MeldImageService {
             final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(image.getImage()));
             BufferedImage scaledImg = Scalr.resize(bufferedImage, Scalr.Mode.FIT_TO_WIDTH, 400);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write( scaledImg, "jpg", baos ); // if your image is a jpg
+            ImageIO.write(scaledImg, "jpg", baos); // if your image is a jpg
             baos.flush();
             byte[] imageInByte = baos.toByteArray();
             image.setThumbnail(imageInByte);

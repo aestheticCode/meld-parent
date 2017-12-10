@@ -45,7 +45,7 @@ public class UserImageManager {
             final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(image.getImage()));
             BufferedImage scaledImg = Scalr.resize(bufferedImage, 480, 640);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write( scaledImg, FilenameUtils.getExtension(image.getFileName()), baos ); // if your image is a jpg
+            ImageIO.write(scaledImg, FilenameUtils.getExtension(image.getFileName()), baos); // if your image is a jpg
             baos.flush();
             byte[] imageInByte = baos.toByteArray();
             image.setThumbnail(imageInByte);

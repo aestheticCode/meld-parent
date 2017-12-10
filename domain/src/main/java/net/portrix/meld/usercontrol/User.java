@@ -1,10 +1,9 @@
 package net.portrix.meld.usercontrol;
 
-import net.portrix.meld.social.people.Category;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.Set;
 
 /**
  * @author Patrick Bittner on 31/01/15.

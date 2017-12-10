@@ -335,7 +335,7 @@
                                     <hbm2ddl
                                             export="false"
                                             update="true"
-                                            drop="false"
+                                            drop="true"
                                             create="true"
                                             outputfilename="filename.ddl"
                                             delimiter=";"

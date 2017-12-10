@@ -60,4 +60,10 @@
     </changeSet>
 
 
+    <changeSet objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS" id="2017-12-10-diff" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-10/diff.sql"/>
+    </changeSet>
+
+
+
 </databaseChangeLog>

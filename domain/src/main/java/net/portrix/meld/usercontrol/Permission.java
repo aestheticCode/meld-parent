@@ -2,7 +2,9 @@ package net.portrix.meld.usercontrol;
 
 import net.portrix.generic.ddd.AbstractEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * @author Patrick Bittner on 09/02/15.

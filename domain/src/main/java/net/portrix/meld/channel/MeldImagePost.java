@@ -1,6 +1,9 @@
 package net.portrix.meld.channel;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * @author Patrick Bittner on 06/10/16.

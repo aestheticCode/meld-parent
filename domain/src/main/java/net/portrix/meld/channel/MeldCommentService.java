@@ -27,6 +27,6 @@ public class MeldCommentService {
     }
 
     public MeldComment find(UUID id) {
-       return entityManager.find(MeldComment.class, id);
+        return entityManager.find(MeldComment.class, id);
     }
 }
