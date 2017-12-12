@@ -43,6 +43,7 @@ import {MeldFormGroupModule} from "./component/meld-form-group/meld-form-group.m
 import {MeldTabBarModule} from "./component/meld-tabbar/meld-tabbar.module";
 import {MeldSelectViewModule} from './component/meld-select-view/meld-select-view.module';
 import {MeldPlaceholderModule} from './pipe/meld-placeholder/meld-placeholder.module';
+import {MeldGridModule} from './component/meld-grid/meld-grid.module';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import {MeldPlaceholderModule} from './pipe/meld-placeholder/meld-placeholder.mo
     MeldFileContainerModule,
     MeldFormGroupModule,
     MeldImageModule,
+    MeldGridModule,
     MeldListModule,
     MeldMultiSelectModule,
     MeldScrollbarVerticalModule,
@@ -129,6 +131,7 @@ import {MeldPlaceholderModule} from './pipe/meld-placeholder/meld-placeholder.mo
     MeldEditorModule,
     MeldFileContainerModule,
     MeldFormGroupModule,
+    MeldGridModule,
     MeldImageModule,
     MeldListModule,
     MeldMultiSelectModule,

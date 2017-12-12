@@ -31,7 +31,6 @@
         <mapping class="net.portrix.meld.social.profile.Places"/>
         <mapping class="net.portrix.meld.social.profile.School"/>
         <mapping class="net.portrix.meld.social.profile.WorkHistory"/>
-
         <mapping class="net.portrix.meld.social.people.Category"/>
         <mapping class="net.portrix.meld.social.people.RelationShip"/>
 
@@ -41,6 +40,8 @@
         <mapping class="net.portrix.meld.channel.MeldYouTubePost"/>
         <mapping class="net.portrix.meld.channel.MeldComment"/>
         <mapping class="net.portrix.meld.channel.MeldImage"/>
+
+        <mapping class="net.portrix.meld.media.photos.Photo"/>
 
         <mapping class="org.picketlink.idm.jpa.model.sample.simple.AttributedTypeEntity"/>
         <mapping class="org.picketlink.idm.jpa.model.sample.simple.AccountTypeEntity"/>

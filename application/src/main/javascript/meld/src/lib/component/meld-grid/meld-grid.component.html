@@ -1,0 +1,17 @@
+<div #viewPort style="width: 100%; height: 100%">
+  <meld-window style="height: 100%;" [rowHeight]="rowHeight" [rowsSize]="itemsSize" (windowScrollChange)="onWindowScroll($event)" >
+    <meld-window-body>
+      <ng-template>
+        <div style="width: 100%;">
+          <table style="width: 100%;">
+            <tr *ngFor="let array of itemsWindow">
+              <td *ngFor="let item of array">
+                <ng-container *ngTemplateOutlet="template; context: {$implicit: item}"></ng-container>
+              </td>
+            </tr>
+          </table>
+          </div>
+       </ng-template>
+    </meld-window-body>
+  </meld-window>
+</div>

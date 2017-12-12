@@ -1,0 +1,14 @@
+<div class="container-fluid" style="margin-top: 12px; height: 100%;">
+  <div class="row justify-content-center" style="height: 100%;">
+    <div class="col-md-12">
+      <mat-card style="height: calc(100% - 24px)">
+        <meld-grid [items]="photos" [rowHeight]="202" [columnWidth]="200">
+          <ng-template let-item>
+            <app-photo-view [photo]="item"></app-photo-view>
+          </ng-template>
+        </meld-grid>
+      </mat-card>
+    </div>
+  </div>
+</div>
+

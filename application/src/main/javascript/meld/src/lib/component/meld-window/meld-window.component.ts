@@ -56,7 +56,11 @@ export class MeldWindowComponent {
   constructor() {
     this.debouncer
       .debounceTime(300)
-      .subscribe((value) => this.windowScrollChange.emit(value));
+      .subscribe((value) => {
+        window.setTimeout(() => {
+          this.windowScrollChange.emit(value)
+        }, 1);
+      });
   }
 
   vScrollBarChange(position: number) {

@@ -30,7 +30,7 @@ public class ImageUtils {
             } else {
                 crop = bufferedImage.getSubimage(0, (height - width) / 2, width, width);
             }
-            BufferedImage scaledImg = Scalr.resize(crop, 48, 48);
+            BufferedImage scaledImg = Scalr.resize(crop, 100, 100);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write( scaledImg, FilenameUtils.getExtension(fileName), baos ); // if your image is a jpg
             baos.flush();

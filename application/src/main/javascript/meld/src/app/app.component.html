@@ -23,7 +23,7 @@
           <span style="margin-left: 12px;"><strong>Home</strong></span>
         </a>
 
-        <a class="link" *ngIf="links | meldLink:'register'" routerLink="/usercontrol/registration">
+        <a class="link" *ngIf="links | meldLink:'register'" routerLink="usercontrol/registration">
           <i style="margin-left :24px; vertical-align: middle;" class="material-icons">account_box</i>
           <span style="margin-left: 12px;"><strong>Registration</strong></span>
         </a>
@@ -37,6 +37,12 @@
           <i style="margin-left :24px; vertical-align: middle;" class="material-icons">accessibility</i>
           <span style="margin-left: 12px;"><strong>People</strong></span>
         </a>
+
+        <a class="link" routerLink="media/photos" routerLinkActive="active">
+          <i style="margin-left :24px; vertical-align: middle;" class="material-icons">photo_camera</i>
+          <span style="margin-left: 12px;"><strong>Photos</strong></span>
+        </a>
+
 
         <a class="link" *ngIf="links | meldLink:'meld';" routerLink="channel/meld/posts" routerLinkActive="active">
           <i style="margin-left :24px; vertical-align: middle;" class="material-icons">android</i>

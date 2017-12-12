@@ -11,7 +11,7 @@
     </div>
     <div style="position: absolute;right: 0; display: flex; width: 10px; height: 100%;">
       <meld-scrollbar-vertical [position]="vposition" (positionChange)="vScrollBarChange($event)"
-                               *ngIf="rowsSize * rowHeight > window.offsetHeight && isScrollBarVisible">
+                               *ngIf="isScrollBarVisible && rowsSize * rowHeight > window.offsetHeight">
       </meld-scrollbar-vertical>
     </div>
 
@@ -27,7 +27,7 @@
 
   <div style="position: absolute; bottom: 0;height: 10px; width: 100%;">
 
-    <meld-scrollbar-horizontal *ngIf="window.offsetWidth < window.children[0].offsetWidth && isScrollBarVisible"
+    <meld-scrollbar-horizontal *ngIf="isScrollBarVisible && window.offsetWidth < window.children[0].offsetWidth"
                                [position]="hposition" (positionChange)="hScrollBarChange($event)">
     </meld-scrollbar-horizontal>
   </div>
