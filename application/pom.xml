@@ -332,7 +332,6 @@
                     <changeLogFile>src/main/liquibase/meld.xml</changeLogFile>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/meld</url>
-                    <referenceUrl>hibernate:ejb3:main</referenceUrl>
                     <username>postgres</username>
                     <password>root</password>
                 </configuration>

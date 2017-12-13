@@ -7,6 +7,8 @@ import net.portrix.meld.usercontrol.Permission;
 import net.portrix.meld.usercontrol.PermissionManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
@@ -25,6 +27,8 @@ import java.util.UUID;
  */
 @ApplicationScoped
 public class UserControlModule {
+
+    private final static Logger log = LoggerFactory.getLogger(UserControlModule.class);
 
     private final PermissionManager permissionManager;
 
@@ -107,7 +111,12 @@ public class UserControlModule {
                         permission.setPath(pathName.getPath());
                         permission.setMethod(operation.getHttpMethod());
 
-                        permissionManager.save(permission);
+                        Permission foundPermission = permissionManager.find(permission);
+
+                        if (foundPermission == null) {
+                            log.error("No Permission found: " + UUID.randomUUID().toString());
+                            log.error(permission.toString());
+                        }
                     }
                 }
 

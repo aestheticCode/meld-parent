@@ -82,4 +82,14 @@ public class PermissionManager {
                 .getResultList();
     }
 
+    public Permission find(Permission permission) {
+        try {
+            return entityManager.createQuery("select p from Permission p where p.method = :method and p.path = :path", Permission.class)
+                    .setParameter("method", permission.getMethod())
+                    .setParameter("path", permission.getPath())
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

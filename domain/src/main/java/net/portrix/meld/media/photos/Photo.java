@@ -1,5 +1,6 @@
 package net.portrix.meld.media.photos;
 
+import net.portrix.generic.ddd.AbstractAggregate;
 import net.portrix.generic.ddd.AbstractEntity;
 import net.portrix.meld.UserControlModule;
 import net.portrix.meld.usercontrol.User;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "me_photo")
-public class Photo extends AbstractEntity {
+public class Photo extends AbstractAggregate {
 
     private String fileName;
 
@@ -46,6 +47,10 @@ public class Photo extends AbstractEntity {
         save(getId(), fileName, image, thumbnail);
     }
 
+    @PostRemove
+    void postDelete() throws IOException {
+        delete(getId());
+    }
 
     public String getFileName() {
         return fileName;
@@ -109,5 +114,11 @@ public class Photo extends AbstractEntity {
         File thumbnailFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "thumbnail." + extension);
         return IOUtils.toByteArray(thumbnailFile.toURI());
     }
+
+    private static void delete(UUID id) throws IOException {
+        File workingDirectory = UserControlModule.workingDirectory(id);
+        FileUtils.deleteDirectory(workingDirectory);
+    }
+
 
 }

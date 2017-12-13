@@ -1,11 +1,13 @@
-<div #viewPort style="width: 100%; height: 100%">
+<div #viewPort style="height: 100%">
   <meld-window style="height: 100%;" [rowHeight]="rowHeight" [rowsSize]="itemsSize" (windowScrollChange)="onWindowScroll($event)" >
     <meld-window-body>
       <ng-template>
         <div style="width: 100%;">
           <table style="width: 100%;">
             <tr *ngFor="let array of itemsWindow">
-              <td *ngFor="let item of array">
+              <td *ngFor="let item of array" style="position: relative">
+                <mat-checkbox style="position: absolute; top: 12px; left: 12px;"
+                              [checked]="isItemSelected(item)" (change)="itemSelected(item, $event)"></mat-checkbox>
                 <ng-container *ngTemplateOutlet="template; context: {$implicit: item}"></ng-container>
               </td>
             </tr>

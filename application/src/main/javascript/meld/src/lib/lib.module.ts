@@ -22,8 +22,8 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatSelectModule,
-  MatMenuModule, MatExpansionModule, MatAutocompleteModule
-} from "@angular/material";
+  MatMenuModule, MatExpansionModule, MatAutocompleteModule, MatButtonToggle, MatButtonToggleModule
+} from '@angular/material';
 import {MeldBinaryImageModule} from "./pipe/meld-binary-image/meld-binary-image.module";
 import {MeldHtmlModule} from "./pipe/meld-html/meld-html.module";
 import {MeldLinkModule} from "./pipe/meld-link/meld-link.module";
@@ -68,6 +68,7 @@ import {MeldGridModule} from './component/meld-grid/meld-grid.module';
     MatSidenavModule,
     MatTabsModule,
     MatToolbarModule,
+    MatButtonToggleModule,
     MatSelectModule,
     MatMenuModule,
     MatExpansionModule,
@@ -120,6 +121,7 @@ import {MeldGridModule} from './component/meld-grid/meld-grid.module';
     MatSidenavModule,
     MatTabsModule,
     MatToolbarModule,
+    MatButtonToggleModule,
     MatSelectModule,
     MatMenuModule,
     MatExpansionModule,

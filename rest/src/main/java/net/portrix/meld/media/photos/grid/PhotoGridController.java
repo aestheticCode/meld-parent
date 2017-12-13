@@ -1,6 +1,8 @@
 package net.portrix.meld.media.photos.grid;
 
 import net.portrix.generic.rest.Secured;
+import net.portrix.generic.rest.URLBuilder;
+import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
@@ -23,16 +25,16 @@ import java.util.stream.Collectors;
 @Name("Photos")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class PhotoGridContoller {
+public class PhotoGridController {
 
     private final PhotoGridService service;
 
     @Inject
-    public PhotoGridContoller(PhotoGridService service) {
+    public PhotoGridController(PhotoGridService service) {
         this.service = service;
     }
 
-    public PhotoGridContoller() {
+    public PhotoGridController() {
         this(null);
     }
 
@@ -52,7 +54,7 @@ public class PhotoGridContoller {
 
                     Blob blob = new Blob();
                     blob.setLastModified(photo.getLastModified());
-                    blob.setData(photo.getImage());
+                    blob.setData(photo.getThumbnail());
                     blob.setName(photo.getFileName());
 
                     item.setImage(blob);
@@ -63,6 +65,13 @@ public class PhotoGridContoller {
                 .collect(Collectors.toList());
 
         return new Container<>(items, (int)count);
+    }
+
+    public static URLBuilder<PhotoGridController> linkList(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PhotoGridController.class)
+                .record((method) -> method.list(null))
+                .rel("photos");
     }
 
 }

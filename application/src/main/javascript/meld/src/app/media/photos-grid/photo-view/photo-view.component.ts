@@ -1,18 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Photo} from './photo-view.interfaces';
 
 @Component({
   selector: 'app-photo-view',
   templateUrl: 'photo-view.component.html',
   styleUrls: ['photo-view.component.css']
 })
-export class PhotoViewComponent implements OnInit {
+export class PhotoViewComponent {
 
   @Input('photo')
-  photo : any;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+  photo: Photo;
 
 }

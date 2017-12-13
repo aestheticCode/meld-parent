@@ -9,8 +9,8 @@
             </security>
         </datasource>
         <datasource jndi-name="java:jboss/datasources/meld" pool-name="Meld" enabled="true" use-java-context="true">
-            <connection-url>jdbc:postgresql://localhost:5432/meld</connection-url>
-            <driver>postgresql</driver>
+            <connection-url>jdbc:p6spy:postgresql://localhost:5432/meld</connection-url>
+            <driver>p6spy</driver>
             <pool>
                 <min-pool-size>5</min-pool-size>
                 <initial-pool-size>5</initial-pool-size>
@@ -35,6 +35,9 @@
             </driver>
             <driver name="postgresql" module="org.postgresql">
                 <driver-class>org.postgresql.Driver</driver-class>
+            </driver>
+            <driver name="p6spy" module="com.p6spy">
+                <driver-class>com.p6spy.engine.spy.P6SpyDriver</driver-class>
             </driver>
         </drivers>
     </datasources>

@@ -38,7 +38,7 @@
           <span style="margin-left: 12px;"><strong>People</strong></span>
         </a>
 
-        <a class="link" routerLink="media/photos" routerLinkActive="active">
+        <a class="link" *ngIf="links | meldLink:'photos';" routerLink="media/photos" routerLinkActive="active">
           <i style="margin-left :24px; vertical-align: middle;" class="material-icons">photo_camera</i>
           <span style="margin-left: 12px;"><strong>Photos</strong></span>
         </a>

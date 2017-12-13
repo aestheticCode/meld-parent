@@ -69,5 +69,22 @@
         <sqlFile path="src/main/liquibase/2017-12-12/diff.sql"/>
     </changeSet>
 
+    <changeSet id="2017-12-12-uc_permissions" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-12/uc_permission.sql"/>
+    </changeSet>
+
+    <changeSet id="2017-12-12-uc_role_uc_permission" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-12/uc_role_uc_permission.sql"/>
+    </changeSet>
+
+
+    <changeSet id="2017-12-13-uc_permissions" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-13/uc_permission.sql"/>
+    </changeSet>
+
+    <changeSet id="2017-12-13-uc_role_uc_permission" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-13/uc_role_uc_permission.sql"/>
+    </changeSet>
+
 
 </databaseChangeLog>

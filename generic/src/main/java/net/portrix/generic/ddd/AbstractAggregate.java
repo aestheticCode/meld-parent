@@ -5,6 +5,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.DocumentId;
 
 import javax.persistence.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -23,11 +25,50 @@ public abstract class AbstractAggregate implements Aggregate {
     @Version
     private int version;
 
+    private Instant created;
+
+    private Instant modified;
+
+    @PostUpdate
+    private void postUpdate() {
+        modified = Instant.now();
+    }
+
+    @PostPersist
+    private void postCreate() {
+        created = Instant.now();
+    }
+
     public UUID getId() {
         return id;
     }
 
     public int getVersion() {
         return version;
+    }
+
+    public Instant getCreated() {
+        return created;
+    }
+
+    public Instant getModified() {
+        return modified;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbstractAggregate)) return false;
+
+        AbstractAggregate that = (AbstractAggregate) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

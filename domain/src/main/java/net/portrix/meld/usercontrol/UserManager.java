@@ -83,7 +83,7 @@ public class UserManager implements Serializable {
             final String fileName = "user.png";
             image.setFileName(fileName);
             image.setImage(bytes);
-            image.setThumbnail(ImageUtils.thumnail(fileName, bytes));
+            image.setThumbnail(ImageUtils.thumnail(fileName, bytes, 100));
 
             entityManager.persist(image);
         } catch (IOException e) {

@@ -127,7 +127,7 @@ public class MeldImageController {
     @Produces("img/jpeg")
     @Transactional
     public Response uploadedThumbNail() throws IOException {
-        Response.ResponseBuilder response = Response.ok( ImageUtils.thumnail(imageSession.getFileName(), imageSession.getFileContent()));
+        Response.ResponseBuilder response = Response.ok( ImageUtils.thumnail(imageSession.getFileName(), imageSession.getFileContent(), 100));
         CacheControl control = new CacheControl();
         control.setMustRevalidate(true);
         control.setMaxAge(0);

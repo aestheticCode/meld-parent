@@ -29,8 +29,6 @@ public abstract class MeldPost extends AbstractAggregate {
     @Lob
     private String text;
 
-    private Instant created;
-
     @ManyToOne
     private Category category;
 
@@ -56,14 +54,6 @@ public abstract class MeldPost extends AbstractAggregate {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public Instant getCreated() {
-        return created;
-    }
-
-    public void setCreated(Instant created) {
-        this.created = created;
     }
 
     public List<MeldComment> getComments() {

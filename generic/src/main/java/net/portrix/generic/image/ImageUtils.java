@@ -1,15 +1,18 @@
 package net.portrix.generic.image;
 
+import com.sun.imageio.plugins.gif.GIFImageReader;
+import com.sun.imageio.plugins.gif.GIFImageReaderSpi;
 import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Patrick Bittner on 26.07.17.
@@ -40,6 +43,15 @@ public class ImageUtils {
             log.error(e.getMessage(), e);
         }
         return imageInByte;
+    }
+
+    public List<BufferedImage> frames(InputStream stream) throws IOException{
+        List<BufferedImage> frames = new ArrayList<>();
+        GIFImageReader imageReader = new GIFImageReader(new GIFImageReaderSpi());
+        imageReader.setInput(ImageIO.createImageInputStream(stream));
+        for(int i = 0; i < imageReader.getNumImages(true); i++)
+            frames.add(imageReader.getRawImageType(i).createBufferedImage(imageReader.getWidth(i), imageReader.getHeight(i)));
+        return frames;
     }
 
 }

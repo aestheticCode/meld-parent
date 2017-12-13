@@ -1,5 +1,6 @@
 package net.portrix.meld.usercontrol;
 
+import net.portrix.generic.ddd.AbstractAggregate;
 import net.portrix.generic.ddd.AbstractEntity;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "uc_permission")
 @NamedQuery(name = "findAllPermissions", query = "select p from Permission p")
-public class Permission extends AbstractEntity {
+public class Permission extends AbstractAggregate {
 
     private String name;
 
@@ -42,5 +43,14 @@ public class Permission extends AbstractEntity {
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "name='" + name + '\'' +
+                ", path='" + path + '\'' +
+                ", method='" + method + '\'' +
+                '}';
     }
 }

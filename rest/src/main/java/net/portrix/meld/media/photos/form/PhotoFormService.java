@@ -24,4 +24,12 @@ public class PhotoFormService {
     public Photo find(UUID id) {
         return entityManager.find(Photo.class, id);
     }
+
+    public void save(Photo photo) {
+        entityManager.persist(photo);
+    }
+
+    public void remove(Photo photo) {
+        entityManager.remove(photo);
+    }
 }

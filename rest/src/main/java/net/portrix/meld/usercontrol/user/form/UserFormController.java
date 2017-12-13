@@ -155,7 +155,7 @@ public class UserFormController {
         userImage.setFileName(image.getName());
         userImage.setImage(image.getData());
         userImage.setLastModified(image.getLastModified());
-        userImage.setThumbnail(ImageUtils.thumnail(image.getName(), image.getData()));
+        userImage.setThumbnail(ImageUtils.thumnail(image.getName(), image.getData(), 100));
 
         final List<Group> groups = service.findAllGroups();
         for (Group group : groups) {

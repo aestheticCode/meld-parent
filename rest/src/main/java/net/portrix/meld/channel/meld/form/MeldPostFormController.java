@@ -17,7 +17,6 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.time.Instant;
 import java.util.UUID;
 
 /**
@@ -123,7 +122,7 @@ public class MeldPostFormController {
                 final Blob file = form.getFile();
                 image.setFileName(file.getName());
                 image.setImage(file.getData());
-                image.setThumbnail(ImageUtils.thumnail(file.getName(), file.getData()));
+                image.setThumbnail(ImageUtils.thumnail(file.getName(), file.getData(), 100));
 
                 return read(post.getId());
             }
@@ -167,7 +166,6 @@ public class MeldPostFormController {
                 final User user = service.currentUser();
 
                 post.setUser(user);
-                post.setCreated(Instant.now());
                 post.setText(edit.getText());
 
                 final MeldImage image = new MeldImage();
@@ -175,7 +173,7 @@ public class MeldPostFormController {
                 if (file != null) {
                     image.setFileName(file.getName());
                     image.setImage(file.getData());
-                    image.setThumbnail(ImageUtils.thumnail(file.getName(), file.getData()));
+                    image.setThumbnail(ImageUtils.thumnail(file.getName(), file.getData(), 100));
                 }
 
                 post.setImage(image);
@@ -188,7 +186,6 @@ public class MeldPostFormController {
                 final MeldTextPost post = new MeldTextPost();
                 final User user = service.currentUser();
                 post.setUser(user);
-                post.setCreated(Instant.now());
                 post.setText(edit.getText());
                 service.savePost(post);
                 return read(post.getId());
@@ -200,7 +197,6 @@ public class MeldPostFormController {
                 final MeldYouTubePost post = new MeldYouTubePost();
                 final User user = service.currentUser();
                 post.setUser(user);
-                post.setCreated(Instant.now());
                 post.setVideoId(form.getVideoId());
                 service.savePost(post);
                 return read(post.getId());

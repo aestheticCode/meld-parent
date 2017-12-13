@@ -51,12 +51,13 @@ public class DataImport {
 */
 
 
-  /*      for (Module module : modules) {
+  /*
+        userImport.execute();
+  */
+        for (Module module : modules) {
             module.init();
         }
 
-        userImport.execute();
-  */
     }
 
 

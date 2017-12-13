@@ -4,6 +4,7 @@ import net.portrix.generic.rest.LoginToken;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.meld.channel.meld.list.MeldListController;
+import net.portrix.meld.media.photos.grid.PhotoGridController;
 import net.portrix.meld.social.people.category.list.CategoryController;
 import net.portrix.meld.social.profile.ProfileController;
 import net.portrix.meld.usercontrol.User;
@@ -72,6 +73,8 @@ public class ApplicationController {
         ProfileController.linkProfile(builderFactory)
                 .buildSecured(application::addLink);
         CategoryController.linkProfile(builderFactory)
+                .buildSecured(application::addLink);
+        PhotoGridController.linkList(builderFactory)
                 .buildSecured(application::addLink);
 
         Application.User user = new Application.User();

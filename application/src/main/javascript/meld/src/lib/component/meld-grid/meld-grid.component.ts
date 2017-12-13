@@ -3,6 +3,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Items} from '../../common/query/Items';
 import {LoadWindow} from '../meld-window/LoadWindow';
 import {QueryBuilder} from '../../common/query/QueryBuilder';
+import {MatCheckboxChange} from '@angular/material';
 
 const noop = () => {
 };
@@ -23,6 +24,8 @@ export class MeldGridComponent implements OnInit, ControlValueAccessor {
 
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (value: any) => void = noop;
+
+  public value : any[] = [];
 
   @Input('items')
   public items: Items<any>;
@@ -48,18 +51,21 @@ export class MeldGridComponent implements OnInit, ControlValueAccessor {
   constructor() {
   }
 
+  private calculateColumns() {
+    let element: HTMLDivElement = this.viewPort.nativeElement;
+    return Math.floor(element.offsetWidth / this.columnWidth);
+  }
+
   ngOnInit() {
     window.setTimeout(() => {
-      let element: HTMLDivElement = this.viewPort.nativeElement;
-      this.columns = Math.round(element.offsetWidth / this.columnWidth);
+      this.columns = this.calculateColumns();
       this.refreshItems();
     }, 300);
   }
 
   @HostListener('window:resize')
   onDocumentResize() {
-    let element: HTMLDivElement = this.viewPort.nativeElement;
-    this.columns = Math.round(element.offsetWidth / this.columnWidth);
+    this.columns = this.calculateColumns();
     this.refreshItems();
   }
 
@@ -104,7 +110,40 @@ export class MeldGridComponent implements OnInit, ControlValueAccessor {
     }
   }
 
+  @Input('itemValue')
+  public itemValue = (item) => {
+    return item['id'];
+  };
+
+
+  isItemSelected(item: any) {
+    return this.value.indexOf(this.itemValue(item)) != -1;
+  }
+
+  selectItem(item: any) {
+    this.value.push(this.itemValue(item));
+    this.onChangeCallback(this.value);
+  }
+
+
+  deSelectItem(item: any) {
+    let indexOf = this.value.indexOf(this.itemValue(item));
+    this.value.splice(indexOf, 1);
+    this.onChangeCallback(this.value);
+  }
+
+  itemSelected(item: any, checked: MatCheckboxChange) {
+    if (checked.checked) {
+      this.selectItem(item);
+    } else {
+      this.deSelectItem(item);
+    }
+  }
+
   writeValue(obj: any): void {
+    if (Array.isArray(obj)) {
+      this.value = obj;
+    }
   }
 
   registerOnChange(fn: any): void {
