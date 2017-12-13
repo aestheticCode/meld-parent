@@ -50,7 +50,7 @@ public class RoleTableController {
     @Name("Role Table")
     @Secured
     @Transactional
-    public Container<RoleRowResponse> list(Query search) {
+    public Container<RoleItem> list(Query search) {
         List<Role> Roles;
         long count = 0;
         if (search.getLimit() == 0) {
@@ -60,10 +60,10 @@ public class RoleTableController {
             count = service.countRoles(search);
         }
 
-        final List<RoleRowResponse> selects = new ArrayList<>();
+        final List<RoleItem> selects = new ArrayList<>();
 
         for (Role role : Roles) {
-            RoleRowResponse response = new RoleRowResponse();
+            RoleItem response = new RoleItem();
 
             response.setId(role.getId());
             response.setName(role.getName());
@@ -78,7 +78,7 @@ public class RoleTableController {
             selects.add(response);
         }
 
-        final Container<RoleRowResponse> container = new Container<>(selects, (int) count);
+        final Container<RoleItem> container = new Container<>(selects, (int) count);
 
         RoleFormController.linkSave(builderFactory)
                 .buildSecured(container::addLink);

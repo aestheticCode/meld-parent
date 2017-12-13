@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {MatDialog} from "@angular/material";
-import {ImageDialogComponent} from "./image-dialog/image-dialog.component";
 import {AppService} from '../../app.service';
 import {Configuration} from '../../Configuration';
+import {ImageDialogComponent} from './image/image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-profile',

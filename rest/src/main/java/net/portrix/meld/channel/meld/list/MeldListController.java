@@ -10,10 +10,11 @@ import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
 import net.portrix.meld.channel.*;
-import net.portrix.meld.channel.meld.comment.MeldCommentController;
+import net.portrix.meld.channel.meld.comment.MeldCommentFormController;
 import net.portrix.meld.channel.meld.comment.MeldCommentResponse;
 import net.portrix.meld.channel.meld.form.MeldPostFormController;
 import net.portrix.meld.channel.meld.like.MeldLikeResponse;
+import net.portrix.meld.media.photos.Photo;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 
@@ -189,6 +190,48 @@ public class MeldListController {
                     return item;
 
                 }
+
+                @Override
+                public Object visit(MeldPhotoPost post) {
+                    MeldPhotoItem item = new MeldPhotoItem();
+                    item.setId(post.getId());
+                    item.setName(post.getUser().getFirstName() + " " + post.getUser().getLastName());
+                    item.setText(post.getText());
+                    Photo photo = post.getPhoto();
+                    Blob blob = new Blob();
+                    blob.setName(photo.getFileName());
+                    blob.setLastModified(photo.getLastModified());
+                    blob.setData(photo.getImage());
+                    item.setPhoto(blob);
+                    item.setTime(TimeUtils.format(post.getCreated()));
+                    for (User user : post.getLikes()) {
+
+                        final Link avatarLink = builderFactory.from(UserImageController.class)
+                                .record(method -> method.thumbNail(user.getId()))
+                                .rel("avatar")
+                                .generate();
+
+                        MeldLikeResponse likeResponse = new MeldLikeResponse();
+                        likeResponse.setCurrent(currentUser.equals(user));
+                        likeResponse.setAvatar(avatarLink);
+
+                        item.addLike(likeResponse);
+                    }
+                    if (post.getUser().equals(currentUser)) {
+                        MeldPostFormController.linkRead(post, builderFactory)
+                                .buildSecured(item::addLink);
+                    }
+                    createComments(currentUser, post.getComments(), item.getComments());
+
+                    final Link avatarLink = builderFactory.from(UserImageController.class)
+                            .record(method -> method.thumbNail(post.getUser().getId()))
+                            .rel("avatar")
+                            .generate();
+
+                    item.setAvatar(avatarLink);
+
+                    return item;
+                }
             });
 
             items.add(response);
@@ -207,7 +250,7 @@ public class MeldListController {
             commentResponse.setTime(TimeUtils.format(comment.getCreated()));
 
             if (comment.getUser().equals(currentUser)) {
-                MeldCommentController.linkUpdate(comment, builderFactory)
+                MeldCommentFormController.linkUpdate(comment, builderFactory)
                         .buildSecured(commentResponse::addLink);
             }
 

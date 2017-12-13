@@ -15,6 +15,10 @@ public class TimeUtils {
 
     public static String format(Instant instant) {
 
+        if (instant == null) {
+            return "";
+        }
+
         Duration duration = Duration.between(instant, Instant.now());
 
         String pattern = "";

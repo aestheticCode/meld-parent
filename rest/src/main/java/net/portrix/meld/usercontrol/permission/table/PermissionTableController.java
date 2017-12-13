@@ -7,7 +7,6 @@ import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.*;
-import net.portrix.meld.usercontrol.role.multiselect.RoleMultiSelectController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -44,7 +43,7 @@ public class PermissionTableController {
     @Path("permission/table")
     @Name("Permission Table")
     @Secured
-    public Container<PermissionRowResponse> list(Query search) {
+    public Container<PermissionItem> list(Query search) {
 
         List<Permission> permissions;
         long count = 0;
@@ -55,10 +54,10 @@ public class PermissionTableController {
             count = service.count(search);
         }
 
-        final List<PermissionRowResponse> selects = new ArrayList<>();
+        final List<PermissionItem> selects = new ArrayList<>();
 
         for (Permission permission : permissions) {
-            PermissionRowResponse response = new PermissionRowResponse();
+            PermissionItem response = new PermissionItem();
 
             response.setId(permission.getId());
             response.setName(permission.getName());

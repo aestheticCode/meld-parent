@@ -1,10 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LibModule} from '../../lib/lib.module';
-import {PhotosGridComponent} from './photos-grid/photos-grid.component';
-import {PhotoViewComponent} from './photos-grid/photo-view/photo-view.component';
 import {appRoutingProviders, routing} from './media.routing';
-import { PhotoFormComponent } from './photo-form/photo-form.component';
+import {PhotosGridComponent} from './photo/grid/photos-grid/photos-grid.component';
+import {PhotoFormComponent} from './photo/form/photo-form/photo-form.component';
+import {PhotoDialogComponent} from './photo/grid/photo-dialog/photo-dialog.component';
+import {PhotoViewComponent} from './photo/form/photo-view/photo-view.component';
 
 @NgModule({
   imports: [
@@ -14,11 +15,17 @@ import { PhotoFormComponent } from './photo-form/photo-form.component';
   ],
   declarations: [
     PhotosGridComponent,
-    PhotoViewComponent,
-    PhotoFormComponent
+    PhotoFormComponent,
+    PhotoDialogComponent,
+    PhotoViewComponent
+  ],
+  exports : [
+    PhotoDialogComponent,
+    PhotoViewComponent
   ],
   entryComponents : [
-    PhotoFormComponent
+    PhotoFormComponent,
+    PhotoDialogComponent
   ],
   providers: [
     appRoutingProviders

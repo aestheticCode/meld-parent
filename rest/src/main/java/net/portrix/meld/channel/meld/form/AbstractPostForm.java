@@ -14,6 +14,7 @@ import java.util.UUID;
         @JsonSubTypes.Type(MeldTextPostForm.class),
         @JsonSubTypes.Type(MeldImagePostForm.class),
         @JsonSubTypes.Type(MeldYouTubePostForm.class),
+        @JsonSubTypes.Type(MeldPhotoPostForm.class)
 })
 public abstract class AbstractPostForm implements LinksContainer {
 
@@ -68,5 +69,7 @@ public abstract class AbstractPostForm implements LinksContainer {
         AbstractPostForm visit(MeldTextPostForm form);
 
         AbstractPostForm visit(MeldYouTubePostForm form);
+
+        AbstractPostForm visit(MeldPhotoPostForm form);
     }
 }

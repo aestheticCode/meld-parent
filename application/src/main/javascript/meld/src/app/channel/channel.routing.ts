@@ -1,9 +1,9 @@
 import {ModuleWithProviders} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MeldListComponent} from "./meld-list/meld-list.component";
-import {MeldListGuard} from "./meld-list/meld-list.guard";
-import {MeldFormComponent} from "./meld-form/meld-form.component";
-import {MeldFormGuard} from "./meld-form/meld-form.guard";
+import {MeldListComponent} from './meld/list/meld-list/meld-list.component';
+import {MeldListGuard} from './meld/list/meld-list/meld-list.guard';
+import {MeldFormComponent} from './meld/form/meld-form/meld-form.component';
+import {MeldFormGuard} from './meld/form/meld-form/meld-form.guard';
 
 const appRoutes: Routes = [
   {path: 'meld/posts', component: MeldListComponent, resolve: {posts: MeldListGuard}},

@@ -49,7 +49,7 @@ public class GroupMultiSelectController {
     @Name("Group MultiSelect")
     @Secured
     @Transactional
-    public Container<GroupSelectResponse> list(Query search) {
+    public Container<GroupSelect> list(Query search) {
         List<Group> groups;
         long count = 0;
         if (search.getLimit() == 0) {
@@ -59,10 +59,10 @@ public class GroupMultiSelectController {
             count = service.count(search);
         }
 
-        final List<GroupSelectResponse> selects = new ArrayList<>();
+        final List<GroupSelect> selects = new ArrayList<>();
 
         for (Group group : groups) {
-            GroupSelectResponse response = new GroupSelectResponse();
+            GroupSelect response = new GroupSelect();
 
             response.setId(group.getId());
             response.setName(group.getName());
@@ -73,7 +73,7 @@ public class GroupMultiSelectController {
             selects.add(response);
         }
 
-        final Container<GroupSelectResponse> container = new Container<>(selects, (int) count);
+        final Container<GroupSelect> container = new Container<>(selects, (int) count);
 
         GroupFormController.linkSave(builderFactory)
                 .buildSecured(container::addLink);

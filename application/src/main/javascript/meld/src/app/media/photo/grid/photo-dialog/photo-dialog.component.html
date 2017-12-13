@@ -1,0 +1,13 @@
+<div style="display: flex; flex-flow: column; height: calc(100% - 24px);">
+  <meld-grid style="height : 100%; width: 100%; flex-shrink: 1" [multiSelect]="false"
+             #grid [items]="photos" [rowHeight]="162" [columnWidth]="162">
+    <ng-template let-photo>
+      <img style="max-width: 162px; max-height: 160px; background-size: cover; background-position: center;" (click)="onItemChange(photo)"
+           [src]="photo.image | meldBinaryImage">
+    </ng-template>
+  </meld-grid>
+  <div>
+    <button mat-button (click)="cancel()">Cancel</button>
+  </div>
+</div>
+

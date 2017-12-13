@@ -37,6 +37,7 @@
         <mapping class="net.portrix.meld.channel.MeldImagePost"/>
         <mapping class="net.portrix.meld.channel.MeldTextPost"/>
         <mapping class="net.portrix.meld.channel.MeldYouTubePost"/>
+        <mapping class="net.portrix.meld.channel.MeldPhotoPost"/>
         <mapping class="net.portrix.meld.channel.MeldComment"/>
         <mapping class="net.portrix.meld.channel.MeldImage"/>
 

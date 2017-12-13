@@ -4,7 +4,7 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.meld.channel.meld.list.MeldListController;
 import net.portrix.meld.media.photos.grid.PhotoGridController;
-import net.portrix.meld.social.people.category.list.CategoryController;
+import net.portrix.meld.social.people.category.table.CategoryTableController;
 import net.portrix.meld.social.profile.ProfileController;
 import net.portrix.meld.usercontrol.group.table.GroupTableController;
 import net.portrix.meld.usercontrol.logout.form.LogoutFormController;
@@ -88,7 +88,7 @@ public class LoginFormController {
                 .buildSecured(loginForm::addLink);
         ProfileController.linkProfile(builderFactory)
                 .buildSecured(loginForm::addLink);
-        CategoryController.linkProfile(builderFactory)
+        CategoryTableController.linkProfile(builderFactory)
                 .buildSecured(loginForm::addLink);
         PhotoGridController.linkList(builderFactory)
                 .buildSecured(loginForm::addLink);

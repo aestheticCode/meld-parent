@@ -54,7 +54,7 @@ public class UserTableController {
     @Name("User Table")
     @Secured
     @Transactional
-    public Container<UserRowResponse> list(Query search) {
+    public Container<UserItem> list(Query search) {
         List<User> users;
         long count = 0;
         if(search.getLimit() == 0) {
@@ -64,18 +64,18 @@ public class UserTableController {
             count = service.countUsers(search);
         }
 
-        final List<UserRowResponse> selects = new ArrayList<>();
+        final List<UserItem> selects = new ArrayList<>();
 
         for (User user : users) {
-            UserRowResponse response = new UserRowResponse();
+            UserItem response = new UserItem();
             response.setId(user.getId());
 
             if (user.getGender() == Gender.MALE) {
-                response.setGender(GenderResponse.Male);
+                response.setGender(GenderItem.Male);
             }
 
             if (user.getGender() == Gender.FEMALE) {
-                response.setGender(GenderResponse.Female);
+                response.setGender(GenderItem.Female);
             }
 
             response.setEmail(user.getName());
@@ -91,7 +91,7 @@ public class UserTableController {
             selects.add(response);
         }
 
-        final Container<UserRowResponse> container = new Container<>(selects, (int) count);
+        final Container<UserItem> container = new Container<>(selects, (int) count);
 
         UserFormController.linkSave(builderFactory)
                 .buildSecured(container::addLink);

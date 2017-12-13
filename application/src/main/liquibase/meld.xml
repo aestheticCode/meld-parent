@@ -86,5 +86,9 @@
         <sqlFile path="src/main/liquibase/2017-12-13/uc_role_uc_permission.sql"/>
     </changeSet>
 
+    <changeSet objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS" id="2017-12-13-diff" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-13/diff.sql"/>
+    </changeSet>
+
 
 </databaseChangeLog>

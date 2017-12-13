@@ -18,7 +18,8 @@ import java.util.*;
 @JsonSubTypes({
         @JsonSubTypes.Type(MeldImageItem.class),
         @JsonSubTypes.Type(MeldTextItem.class),
-        @JsonSubTypes.Type(MeldYouTubeItem.class)
+        @JsonSubTypes.Type(MeldYouTubeItem.class),
+        @JsonSubTypes.Type(MeldPhotoItem.class)
 })
 public class MeldItem implements LinksContainer {
 

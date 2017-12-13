@@ -1,4 +1,7 @@
-import {Component, ContentChild, ElementRef, forwardRef, HostListener, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {
+  Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit, Output, TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Items} from '../../common/query/Items';
 import {LoadWindow} from '../meld-window/LoadWindow';
@@ -26,6 +29,9 @@ export class MeldGridComponent implements OnInit, ControlValueAccessor {
   private onChangeCallback: (value: any) => void = noop;
 
   public value : any[] = [];
+
+  @Input('multiSelect')
+  public multiSelect : boolean = true;
 
   @Input('items')
   public items: Items<any>;
@@ -124,7 +130,6 @@ export class MeldGridComponent implements OnInit, ControlValueAccessor {
     this.value.push(this.itemValue(item));
     this.onChangeCallback(this.value);
   }
-
 
   deSelectItem(item: any) {
     let indexOf = this.value.indexOf(this.itemValue(item));

@@ -49,15 +49,15 @@ public class FindTableController {
     @Name("Find User Read")
     @Secured
     @Transactional
-    public Container<FindTableRow> list(Query query) {
+    public Container<FindItem> list(Query query) {
         List<User> users = service.findUsers(query);
         long countUsers = service.countUsers(query);
         User current = userManager.current();
 
-        List<FindTableRow> categoryFormList = users
+        List<FindItem> categoryFormList = users
                 .stream()
                 .map((user) -> {
-                    FindTableRow row = new FindTableRow();
+                    FindItem row = new FindItem();
                     row.setId(user.getId());
                     row.setName(user.getName());
                     row.setFirstName(user.getFirstName());

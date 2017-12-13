@@ -5,7 +5,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.meld.channel.meld.list.MeldListController;
 import net.portrix.meld.media.photos.grid.PhotoGridController;
-import net.portrix.meld.social.people.category.list.CategoryController;
+import net.portrix.meld.social.people.category.table.CategoryTableController;
 import net.portrix.meld.social.profile.ProfileController;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.group.table.GroupTableController;
@@ -72,7 +72,7 @@ public class ApplicationController {
                 .buildSecured(application::addLink);
         ProfileController.linkProfile(builderFactory)
                 .buildSecured(application::addLink);
-        CategoryController.linkProfile(builderFactory)
+        CategoryTableController.linkProfile(builderFactory)
                 .buildSecured(application::addLink);
         PhotoGridController.linkList(builderFactory)
                 .buildSecured(application::addLink);

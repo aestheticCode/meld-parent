@@ -21,7 +21,7 @@ public class ImageUtils {
 
     private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
 
-    public static byte[] thumnail(String fileName, byte[] image)  {
+    public static byte[] thumnail(String fileName, byte[] image, int resolution)  {
         byte[] imageInByte = new byte[0];
         try {
             final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(image));
@@ -33,7 +33,7 @@ public class ImageUtils {
             } else {
                 crop = bufferedImage.getSubimage(0, (height - width) / 2, width, width);
             }
-            BufferedImage scaledImg = Scalr.resize(crop, 100, 100);
+            BufferedImage scaledImg = Scalr.resize(crop, resolution, resolution);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write( scaledImg, FilenameUtils.getExtension(fileName), baos ); // if your image is a jpg
             baos.flush();

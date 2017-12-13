@@ -29,13 +29,14 @@ public abstract class AbstractAggregate implements Aggregate {
 
     private Instant modified;
 
-    @PostUpdate
+    @PreUpdate
     private void postUpdate() {
         modified = Instant.now();
     }
 
-    @PostPersist
+    @PrePersist
     private void postCreate() {
+        modified = Instant.now();
         created = Instant.now();
     }
 

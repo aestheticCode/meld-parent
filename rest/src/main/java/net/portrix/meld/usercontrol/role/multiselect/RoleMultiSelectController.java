@@ -49,7 +49,7 @@ public class RoleMultiSelectController {
     @Name("Role MultiSelect")
     @Secured
     @Transactional
-    public Container<RoleSelectResponse> list(Query search) {
+    public Container<RoleSelect> list(Query search) {
         List<Role> Roles;
         long count = 0;
         if (search.getLimit() == 0) {
@@ -60,10 +60,10 @@ public class RoleMultiSelectController {
         }
 
 
-        final List<RoleSelectResponse> selects = new ArrayList<>();
+        final List<RoleSelect> selects = new ArrayList<>();
 
         for (Role role : Roles) {
-            RoleSelectResponse response = new RoleSelectResponse();
+            RoleSelect response = new RoleSelect();
 
             response.setId(role.getId());
             response.setName(role.getName());
@@ -74,7 +74,7 @@ public class RoleMultiSelectController {
             selects.add(response);
         }
 
-        final Container<RoleSelectResponse> container = new Container<>(selects, (int) count);
+        final Container<RoleSelect> container = new Container<>(selects, (int) count);
 
         RoleFormController.linkSave(builderFactory)
                 .buildSecured(container::addLink);

@@ -6,7 +6,7 @@
           <table style="width: 100%;">
             <tr *ngFor="let array of itemsWindow">
               <td *ngFor="let item of array" style="position: relative">
-                <mat-checkbox style="position: absolute; top: 12px; left: 12px;"
+                <mat-checkbox style="position: absolute; top: 12px; left: 12px;" *ngIf="multiSelect"
                               [checked]="isItemSelected(item)" (change)="itemSelected(item, $event)"></mat-checkbox>
                 <ng-container *ngTemplateOutlet="template; context: {$implicit: item}"></ng-container>
               </td>

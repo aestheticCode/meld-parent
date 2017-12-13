@@ -50,7 +50,7 @@ public class GroupTableController {
     @Name("Group Table")
     @Secured
     @Transactional
-    public Container<GroupRowResponse> list(Query search) {
+    public Container<GroupItem> list(Query search) {
         List<Group> groups;
         long count = 0;
         if (search.getLimit() == 0) {
@@ -61,10 +61,10 @@ public class GroupTableController {
         }
 
 
-        final List<GroupRowResponse> selects = new ArrayList<>();
+        final List<GroupItem> selects = new ArrayList<>();
 
         for (Group group : groups) {
-            GroupRowResponse response = new GroupRowResponse();
+            GroupItem response = new GroupItem();
 
             response.setId(group.getId());
             response.setName(group.getName());
@@ -79,7 +79,7 @@ public class GroupTableController {
             selects.add(response);
         }
 
-        final Container<GroupRowResponse> container = new Container<>(selects, (int) count);
+        final Container<GroupItem> container = new Container<>(selects, (int) count);
 
         GroupFormController.linkSave(builderFactory)
                 .buildSecured(container::addLink);

@@ -7,8 +7,8 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.channel.MeldComment;
 import net.portrix.meld.channel.MeldImagePost;
-import net.portrix.meld.usercontrol.user.image.UserImageController;
 import net.portrix.meld.usercontrol.User;
+import net.portrix.meld.usercontrol.user.image.UserImageController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

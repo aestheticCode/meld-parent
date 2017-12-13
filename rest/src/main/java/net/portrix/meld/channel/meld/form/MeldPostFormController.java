@@ -7,6 +7,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.channel.*;
+import net.portrix.meld.media.photos.Photo;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.usercontrol.User;
 import org.slf4j.Logger;
@@ -97,6 +98,18 @@ public class MeldPostFormController {
 
                 return form;
             }
+
+            @Override
+            public Object visit(MeldPhotoPost post) {
+                MeldPhotoPostForm form = new MeldPhotoPostForm();
+                form.setId(post.getId());
+                form.setPhotoId(post.getPhoto().getId());
+                form.setText(post.getText());
+                linkUpdate(post, builderFactory)
+                        .buildSecured(form::addLink);
+
+                return form;
+            }
         });
 
     }
@@ -149,6 +162,16 @@ public class MeldPostFormController {
                 post.setText(form.getText());
                 return read(id);
             }
+
+            @Override
+            public AbstractPostForm visit(MeldPhotoPostForm form) {
+                final MeldPhotoPost post = (MeldPhotoPost) service.findPost(id);
+                User user = service.currentUser();
+                post.setUser(user);
+                Photo photo = service.findPhoto(form.getPhotoId());
+                post.setPhoto(photo);
+                return read(post.getId());
+            }
         });
 
     }
@@ -198,6 +221,17 @@ public class MeldPostFormController {
                 final User user = service.currentUser();
                 post.setUser(user);
                 post.setVideoId(form.getVideoId());
+                service.savePost(post);
+                return read(post.getId());
+            }
+
+            @Override
+            public AbstractPostForm visit(MeldPhotoPostForm form) {
+                final MeldPhotoPost post = new MeldPhotoPost();
+                User user = service.currentUser();
+                post.setUser(user);
+                Photo photo = service.findPhoto(form.getPhotoId());
+                post.setPhoto(photo);
                 service.savePost(post);
                 return read(post.getId());
             }

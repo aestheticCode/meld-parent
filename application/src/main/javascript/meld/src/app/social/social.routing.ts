@@ -1,27 +1,27 @@
 import {ModuleWithProviders} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProfileComponent} from "./profile/profile.component";
-import {ContactFormComponent} from "./profile/contact-form/contact-form.component";
-import {ContactFormGuard} from "./profile/contact-form/contact-form.guard";
-import {UserFormComponent} from "./profile/user-form/user-form.component";
-import {EducationFormComponent} from "./profile/education-form/education-form.component";
-import {PlacesFormComponent} from "./profile/places-form/places-form.component";
-import {WorkHistoryFormComponent} from "./profile/work-history-form/work-history-form.component";
-import {UserFormGuard} from "./profile/user-form/user.guard";
-import {EducationFormGuard} from "./profile/education-form/education.guard";
-import {UserViewComponent} from "./profile/user-form/user-view.component";
-import {EducationViewComponent} from "./profile/education-form/education-view.component";
-import {PlacesViewComponent} from "./profile/places-form/places-view.component";
-import {PlacesFormGuard} from "./profile/places-form/places.guard";
-import {WorkHistoryFormGuard} from "./profile/work-history-form/work-hisotry.guard";
-import {WorkHistoryViewComponent} from "./profile/work-history-form/work-history-view.component";
-import {ContactViewComponent} from "./profile/contact-form/contact-view.component";
-import {ImageFormComponent} from "./profile/image-form/image-form.component";
+import {ContactFormComponent} from "./profile/contact/contact-form.component";
+import {ContactFormGuard} from "./profile/contact/contact-form.guard";
 import {PeopleComponent} from "./people/people.component";
-import {CategoriesFormComponent} from "./people/categories-form/categories-form.component";
-import {FindViewComponent} from "./people/find-view/find-view.component";
-import {FollowingViewComponent} from "./people/following-view/following-view.component";
-import {CategoriesFormGuard} from "./people/categories-form/categories-form.guard";
+import {CategoriesFormGuard} from './people/category/categories-form/categories-form.guard';
+import {FindViewComponent} from './people/find/find-view/find-view.component';
+import {CategoriesFormComponent} from './people/category/categories-form/categories-form.component';
+import {FollowingViewComponent} from './people/find/following-view/following-view.component';
+import {UserViewComponent} from './profile/user/user-view/user-view.component';
+import {UserFormGuard} from './profile/user/user.guard';
+import {UserFormComponent} from './profile/user/user-form/user-form.component';
+import {EducationViewComponent} from './profile/education/education-view/education-view.component';
+import {EducationFormGuard} from './profile/education/education.guard';
+import {EducationFormComponent} from './profile/education/education-form/education-form.component';
+import {PlacesViewComponent} from './profile/places/places-view/places-view.component';
+import {PlacesFormGuard} from './profile/places/places.guard';
+import {PlacesFormComponent} from './profile/places/places-form/places-form.component';
+import {WorkHistoryViewComponent} from './profile/work-history/work-history-view/work-history-view.component';
+import {WorkHistoryFormGuard} from './profile/work-history/work-hisotry.guard';
+import {WorkHistoryFormComponent} from './profile/work-history/work-history-form/work-history-form.component';
+import {ContactViewComponent} from './profile/contact/contact-view.component';
+import {ImageFormComponent} from './profile/image/image-form/image-form.component';
 
 const appRoutes: Routes = [
   {
