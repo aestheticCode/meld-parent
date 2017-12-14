@@ -38,10 +38,12 @@ import {ChatFormComponent} from './profile/contact/contact-form/chat-form/chat-f
 import {EmailFormComponent} from './profile/contact/contact-form/email-form/email-form.component';
 import {PhoneFormComponent} from './profile/contact/contact-form/phone-form/phone-form.component';
 import {ContactViewComponent} from './profile/contact/contact-view/contact-view.component';
+import {MediaModule} from '../media/media.module';
 @NgModule({
   imports: [
     CommonModule,
     LibModule,
+    MediaModule,
     routing
   ],
   declarations: [

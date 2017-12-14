@@ -8,7 +8,7 @@
         primary key (id)
     );
 
-    alter table so_profile 
-       add constraint FKndle21ej6nl5iv2mhe1q3ntkt 
-       foreign key (photo_id) 
+    alter table so_profile
+       add constraint FKndle21ej6nl5iv2mhe1q3ntkt
+       foreign key (photo_id)
        references me_photo;

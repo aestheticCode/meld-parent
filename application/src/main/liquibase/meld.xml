@@ -90,5 +90,8 @@
         <sqlFile path="src/main/liquibase/2017-12-13/diff.sql"/>
     </changeSet>
 
+    <changeSet objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS" id="2017-12-14-diff" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-14/diff.sql"/>
+    </changeSet>
 
 </databaseChangeLog>

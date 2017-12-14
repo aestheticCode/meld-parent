@@ -3,6 +3,8 @@ import {MatDialog} from "@angular/material";
 import {AppService} from '../../app.service';
 import {Configuration} from '../../Configuration';
 import {ImageDialogComponent} from './image/image-dialog/image-dialog.component';
+import {PhotoDialogComponent} from '../../media/photo/grid/photo-dialog/photo-dialog.component';
+import {Photo} from '../../media/photo/form/photo.interfaces';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +21,10 @@ export class ProfileComponent {
   }
 
   onDialogClick() {
-    this.dialog.open(ImageDialogComponent)
+    let matDialogRef = this.dialog.open(PhotoDialogComponent, {width : '400px'});
+
+    matDialogRef.afterClosed().subscribe((result : Photo) => {
+
+    });
   }
 }
