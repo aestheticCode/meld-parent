@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Address} from '../../address.interfaces';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-social-address-view',

@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {School} from "./school-form.interfaces";
+import {School} from '../../school-form.interfaces';
+
 
 @Component({
   selector: 'app-social-school-form',

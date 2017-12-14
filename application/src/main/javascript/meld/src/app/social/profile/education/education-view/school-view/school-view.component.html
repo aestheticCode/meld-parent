@@ -1,0 +1,13 @@
+<div style="display: flex">
+  <div style="flex: 0.5">
+    <strong>{{school.start | date:'ddMMMyyyy'}} - </strong>
+    <strong *ngIf="! school.tillNow">{{school.end | date:'ddMMMyyyy'}}</strong>
+    <strong *ngIf="school.tillNow">Till Now</strong>
+  </div>
+  <div style="flex: 0.5">
+    <div><strong>{{school.name}}</strong></div>
+    <div>
+      <div>{{school.course}}</div>
+    </div>
+  </div>
+</div>

@@ -1,17 +1,26 @@
 <div style="width: 100%; display: flex; margin-top: 12px;">
-  <div style="flex: 0.33;" >
-    <strong>{{address.start | date:'ddMMMyyyy'}} - {{address.end | date:'ddMMMyyyy'}}</strong>
+  <div>
+    <button mat-icon-button style="margin-top: -12px" (click)="dialog.open()">
+      <mat-icon>room</mat-icon>
+    </button>
   </div>
-  <div style="flex: 0.33">
-    <address>
+  <div style="flex: 0.5">
+    <strong>{{address.start | date:'ddMMMyyyy'}} - </strong>
+    <strong *ngIf="! address.tillNow">{{address.end | date:'ddMMMyyyy'}}</strong>
+    <strong *ngIf="address.tillNow">Till Now</strong>
+  </div>
+  <div style="flex: 0.5" >
+    <address  >
       {{address.street}}<br>
       {{address.zipCode}}<br>
       {{address.state}}<br>
       {{address.country}}<br>
     </address>
   </div>
-  <div style="flex: 0.33;">
-    <app-social-address-map [address]="address" style="height: 200px;"></app-social-address-map>
-  </div>
 </div>
 
+<meld-dialog #dialog [options]="{ width : '300px', height : '300px'}">
+  <ng-template>
+    <app-social-address-map [address]="address" style="height: 200px;"></app-social-address-map>
+  </ng-template>
+</meld-dialog>

@@ -1,4 +1,4 @@
-import {School} from "./school-form/school-form.interfaces";
+import {School} from "./school-form.interfaces";
 
 export interface Education {
 

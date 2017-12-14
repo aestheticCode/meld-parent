@@ -78,7 +78,7 @@ public class PlacesFormController {
             responseType.setZipCode(address.getZipCode());
             responseType.setStart(address.getStart());
             responseType.setEnd(address.getEnd());
-
+            responseType.setTillNow(address.isTillNow());
 
             placesForm.addAddress(responseType);
         }
@@ -107,6 +107,7 @@ public class PlacesFormController {
             address.setZipCode(addressType.getZipCode());
             address.setStart(addressType.getStart());
             address.setEnd(addressType.getEnd());
+            address.setTillNow(addressType.isTillNow());
 
             places.addAddress(address);
 
@@ -138,6 +139,7 @@ public class PlacesFormController {
             address.setZipCode(addressType.getZipCode());
             address.setStart(addressType.getStart());
             address.setEnd(addressType.getEnd());
+            address.setTillNow(addressType.isTillNow());
 
 
             places.addAddress(address);

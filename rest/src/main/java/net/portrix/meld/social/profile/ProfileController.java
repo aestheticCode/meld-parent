@@ -11,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class ProfileController {
             final InputStream inputStream = Thread
                     .currentThread()
                     .getContextClassLoader()
-                    .getResourceAsStream("/META-INF/images/user.png");
+                    .getResourceAsStream("/META-INF/images/way.jpg");
 
             try {
                 byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -80,10 +81,11 @@ public class ProfileController {
 
     }
 
-    @PUT
+    @POST
     @Path("profile")
     @Name("Profile Read")
     @Secured
+    @Transactional
     public ProfileResponse update(ProfileForm form) {
 
         final User user = service.currentUser();
@@ -92,6 +94,7 @@ public class ProfileController {
 
         if (profile == null) {
             profile = new Profile();
+            profile.setUser(user);
         }
 
         Photo photo = service.find(form.getPhotoId());

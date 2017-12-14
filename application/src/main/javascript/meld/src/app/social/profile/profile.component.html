@@ -1,18 +1,12 @@
-<div>
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-md-12" style="padding: 0">
-        <mat-card style="height: 300px; position: relative;
-     background-image: url('./assets/way-427984.jpg');
-     background-size: cover;
-     background-position: center;">
-          <div style="width: 100%; position: absolute; bottom: 12px; display: flex">
-            <h1 style="color: white; flex: 1;">{{user.firstName}} {{user.lastName}}</h1>
-            <button mat-button (click)="onDialogClick()"><mat-icon>more_vert</mat-icon></button>
-          </div>
-        </mat-card>
-      </div>
-    </div>
+<div style="position: relative; width: 100%; height: 200px; overflow: hidden">
+  <img *ngIf="profile" [src]="profile.image | meldBinaryImage" style="width: 100%;">
+  <div style="width: 100%; position: absolute; bottom: 12px; left: 12px; display: flex">
+    <h1 style="color: white; flex: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">{{user.firstName}} {{user.lastName}}</h1>
+    <button mat-button (click)="onDialogClick()">
+      <h1>
+        <mat-icon style="color: white; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">more_vert</mat-icon>
+      </h1>
+    </button>
   </div>
 </div>
 

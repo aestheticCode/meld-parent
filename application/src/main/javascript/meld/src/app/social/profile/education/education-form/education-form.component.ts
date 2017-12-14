@@ -4,8 +4,8 @@ import {Http, Response} from "@angular/http";
 import {Strings} from "../../../../../lib/common/utils/Strings";
 import {Education} from '../education.interfaces';
 import {EducationModel} from '../education.classes';
-import {SchoolFormModel} from '../school-form/school-form.classes';
-import {School} from '../school-form/school-form.interfaces';
+import {SchoolFormModel} from '../school-form.classes';
+import {School} from '../school-form.interfaces';
 
 @Component({
   selector: 'app-social-education-form',

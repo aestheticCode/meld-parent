@@ -1,5 +1,9 @@
 <div style="display: flex">
-  <div style="flex: 0.5"><strong>{{company.start | date:'ddMMMyyyy'}} - {{company.end | date:'ddMMMyyyy'}}</strong></div>
+  <div style="flex: 0.5">
+    <strong>{{company.start | date:'ddMMMyyyy'}} -</strong>
+    <strong *ngIf="! company.tillNow">{{company.end | date:'ddMMMyyyy'}}</strong>
+    <strong *ngIf="company.tillNow">Till Now</strong>
+  </div>
   <div style="flex: 0.5">
     <div><strong>{{company.name}}</strong></div>
     <div>{{company.title}}</div>

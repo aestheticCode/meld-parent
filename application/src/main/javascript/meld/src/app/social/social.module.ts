@@ -8,12 +8,10 @@ import {UserViewComponent} from './profile/user/user-view/user-view.component';
 import {EducationFormComponent} from './profile/education/education-form/education-form.component';
 import {PlacesFormComponent} from './profile/places/places-form/places-form.component';
 import {WorkHistoryFormComponent} from './profile/work-history/work-history-form/work-history-form.component';
-import {SchoolFormComponent} from './profile/education/school-form/school-form.component';
 import {SchoolSortPipe} from './profile/education/school-sort.pipe';
 import {AddressFormComponent} from './profile/places/places-form/address-form/address-form.component';
 import {AddressesSortPipe} from './profile/places/addresses-sort.pipe';
 import {EducationViewComponent} from './profile/education/education-view/education-view.component';
-import {SchoolViewComponent} from './profile/education/school-form/school-view.component';
 import {PlacesViewComponent} from './profile/places/places-view/places-view.component';
 import {WorkHistoryViewComponent} from './profile/work-history/work-history-view/work-history-view.component';
 import {CompanyFormComponent} from './profile/work-history/work-history-form/company-form/company-form.component';
@@ -39,6 +37,8 @@ import {EmailFormComponent} from './profile/contact/contact-form/email-form/emai
 import {PhoneFormComponent} from './profile/contact/contact-form/phone-form/phone-form.component';
 import {ContactViewComponent} from './profile/contact/contact-view/contact-view.component';
 import {MediaModule} from '../media/media.module';
+import {SchoolFormComponent} from './profile/education/education-form/school-form/school-form.component';
+import {SchoolViewComponent} from './profile/education/education-view/school-view/school-view.component';
 @NgModule({
   imports: [
     CommonModule,

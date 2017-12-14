@@ -6,5 +6,6 @@ export interface Company {
   description : string
   start : string
   end : string
+  tillNow : boolean
 
 }

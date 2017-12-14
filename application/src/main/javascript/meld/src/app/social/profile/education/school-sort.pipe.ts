@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {School} from "./school-form/school-form.interfaces";
+import {School} from "./school-form.interfaces";
 
 @Pipe({
   name: 'schoolSort'

@@ -6,12 +6,6 @@
           <mat-card-content>
             <fieldset>
               <legend>User</legend>
-
-              <mat-form-field style="width: 100%;">
-                <input placeholder="Name" [(ngModel)]="user.email" name="email"
-                       matInput minlength="3" maxlength="100"
-                       required #email="ngModel">
-              </mat-form-field>
               <mat-form-field style="width: 100%;">
                 <input placeholder="First Name" [(ngModel)]="user.firstName"
                        matInput name="firstName" minlength="3" maxlength="100" required>

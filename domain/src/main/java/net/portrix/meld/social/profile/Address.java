@@ -30,6 +30,8 @@ public class Address extends AbstractEntity {
     @Column(name = "endDate")
     private LocalDate end;
 
+    private boolean tillNow;
+
     public String getStreet() {
         return street;
     }
@@ -84,5 +86,13 @@ public class Address extends AbstractEntity {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public boolean isTillNow() {
+        return tillNow;
+    }
+
+    public void setTillNow(boolean tillNow) {
+        this.tillNow = tillNow;
     }
 }

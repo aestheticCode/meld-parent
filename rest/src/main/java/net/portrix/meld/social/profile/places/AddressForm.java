@@ -24,6 +24,8 @@ public class AddressForm {
 
     private LocalDate end;
 
+    private boolean tillNow;
+
     public UUID getId() {
         return id;
     }
@@ -86,5 +88,13 @@ public class AddressForm {
 
     public void setEnd(LocalDate end) {
         this.end = end;
+    }
+
+    public boolean isTillNow() {
+        return tillNow;
+    }
+
+    public void setTillNow(boolean tillNow) {
+        this.tillNow = tillNow;
     }
 }

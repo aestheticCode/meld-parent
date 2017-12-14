@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {School} from "./school-form.interfaces";
+import {School} from '../../school-form.interfaces';
 
 @Component({
   selector: 'app-social-school-view',

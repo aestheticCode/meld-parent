@@ -10,4 +10,6 @@ export interface School {
 
   end : string
 
+  tillNow : boolean
+
 }

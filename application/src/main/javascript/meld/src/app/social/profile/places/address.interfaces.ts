@@ -14,4 +14,6 @@ export interface Address {
 
   end : string
 
+  tillNow : boolean
+
 }

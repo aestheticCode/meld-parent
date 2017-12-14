@@ -74,6 +74,7 @@ public class WorkHistoryFormController {
             companyForm.setName(company.getName());
             companyForm.setStart(company.getStart());
             companyForm.setTitle(company.getTitle());
+            companyForm.setTillNow(company.isTillNow());
 
             historyResponseType.addCompany(companyForm);
         }
@@ -101,6 +102,7 @@ public class WorkHistoryFormController {
             company.setName(companyType.getName());
             company.setStart(companyType.getStart());
             company.setTitle(companyType.getTitle());
+            company.setTillNow(companyType.isTillNow());
 
             workHistory.addCompany(company);
         }
@@ -129,6 +131,7 @@ public class WorkHistoryFormController {
             company.setName(companyType.getName());
             company.setStart(companyType.getStart());
             company.setTitle(companyType.getTitle());
+            company.setTillNow(companyType.isTillNow());
 
             workHistory.addCompany(company);
         }

@@ -1,6 +1,7 @@
 import {Address} from "./address.interfaces";
 
 export class AddressModel implements Address {
+  tillNow: boolean;
   street: string;
   zipCode: string;
   state: string;

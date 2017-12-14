@@ -28,13 +28,16 @@
       </div>
 
       <div style="width: 50%">
-        <mat-form-field style="width: 100%">
+        <mat-form-field style="width: 100%" *ngIf="! company.tillNow">
           <meld-date #datePickerEnd placeholder="End" [(ngModel)]="company.end" name="end"></meld-date>
           <button matSuffix mat-icon-button (click)="datePickerEnd.clear()"><mat-icon>delete</mat-icon></button>
           <button matSuffix mat-icon-button (click)="datePickerEnd.open()"><mat-icon >today</mat-icon></button>
         </mat-form-field>
       </div>
+
     </div>
+
+    <mat-checkbox [(ngModel)]="company.tillNow" name="tillNow">Till Now</mat-checkbox>
 
 
   </fieldset>

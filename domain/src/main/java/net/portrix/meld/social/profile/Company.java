@@ -24,6 +24,8 @@ public class Company extends AbstractEntity {
     @Column(name = "endDate")
     private LocalDate end;
 
+    private boolean tillNow;
+
     private String description;
 
     public String getName() {
@@ -56,6 +58,14 @@ public class Company extends AbstractEntity {
 
     public void setEnd(LocalDate end) {
         this.end = end;
+    }
+
+    public boolean isTillNow() {
+        return tillNow;
+    }
+
+    public void setTillNow(boolean tillNow) {
+        this.tillNow = tillNow;
     }
 
     public String getDescription() {

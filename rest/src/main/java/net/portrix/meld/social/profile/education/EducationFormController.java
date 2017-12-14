@@ -71,6 +71,7 @@ public class EducationFormController {
             schoolFormType.setId(school.getId());
             schoolFormType.setName(school.getName());
             schoolFormType.setStart(school.getStart());
+            schoolFormType.setTillNow(school.isTillNow());
 
             form.addSchool(schoolFormType);
         }
@@ -95,6 +96,7 @@ public class EducationFormController {
             school.setEnd(schoolType.getEnd());
             school.setName(schoolType.getName());
             school.setStart(schoolType.getStart());
+            school.setTillNow(schoolType.isTillNow());
 
             education.addSchool(school);
         }
@@ -122,6 +124,7 @@ public class EducationFormController {
             school.setEnd(schoolType.getEnd());
             school.setName(schoolType.getName());
             school.setStart(schoolType.getStart());
+            school.setTillNow(schoolType.isTillNow());
 
             education.addSchool(school);
         }

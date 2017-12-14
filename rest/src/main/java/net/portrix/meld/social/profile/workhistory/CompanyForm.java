@@ -18,6 +18,8 @@ public class CompanyForm {
 
     private LocalDate end;
 
+    private boolean tillNow;
+
     private String description;
 
     public UUID getId() {
@@ -58,6 +60,14 @@ public class CompanyForm {
 
     public void setEnd(LocalDate end) {
         this.end = end;
+    }
+
+    public boolean isTillNow() {
+        return tillNow;
+    }
+
+    public void setTillNow(boolean tillNow) {
+        this.tillNow = tillNow;
     }
 
     public String getDescription() {

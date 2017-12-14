@@ -38,6 +38,7 @@ public class EducationFormService {
     }
 
     public void saveEducation(final Education education) {
+        education.setUser(userManager.current());
         entityManager.persist(education);
     }
 

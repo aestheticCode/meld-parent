@@ -4,16 +4,20 @@ import net.portrix.meld.media.photos.Photo;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import java.util.UUID;
 
+@ApplicationScoped
 public class ProfileService {
 
     private final UserManager userManager;
 
     private final EntityManager entityManager;
 
+    @Inject
     public ProfileService(UserManager userManager, EntityManager entityManager) {
         this.userManager = userManager;
         this.entityManager = entityManager;
