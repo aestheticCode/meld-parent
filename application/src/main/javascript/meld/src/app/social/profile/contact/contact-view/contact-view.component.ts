@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ContactModel} from "./contact-form.classes";
-import {Contact} from "./contact-form.interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Http} from "@angular/http";
+import {Contact} from '../contact-form.interfaces';
+import {ContactModel} from '../contact-form.classes';
 
 @Component({
   selector: 'app-contact-view',

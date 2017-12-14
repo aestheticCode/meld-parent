@@ -1,8 +1,4 @@
 import {NgModule} from '@angular/core';
-import {ContactFormComponent} from './profile/contact/contact-form.component';
-import {ChatFormComponent} from './profile/contact/chat-form/chat-form.component';
-import {EmailFormComponent} from './profile/contact/email-form/email-form.component';
-import {PhoneFormComponent} from './profile/contact/phone-form/phone-form.component';
 import {ProfileComponent} from './profile/profile.component';
 import {LibModule} from '../../lib/lib.module';
 import {CommonModule} from '@angular/common';
@@ -23,7 +19,6 @@ import {WorkHistoryViewComponent} from './profile/work-history/work-history-view
 import {CompanyFormComponent} from './profile/work-history/work-history-form/company-form/company-form.component';
 import {CompanyViewComponent} from './profile/work-history/work-history-view/company-view/company-view.component';
 import {CompanySortPipe} from './profile/work-history/company-sort.pipe';
-import {ContactViewComponent} from './profile/contact/contact-view.component';
 import {ImageFormComponent} from './profile/image/image-form/image-form.component';
 import {PeopleComponent} from './people/people.component';
 import {FindViewComponent} from './people/find/find-view/find-view.component';
@@ -38,6 +33,11 @@ import {AddressMapComponent} from './profile/places/places-view/address-map/addr
 import {AddressViewComponent} from './profile/places/places-view/address-view/address-view.component';
 import {CategoriesSelectComponent} from './people/category/categories-select/categories-select.component';
 import {CategoryDialogComponent} from './people/category/category-dialog/category-dialog.component';
+import {ContactFormComponent} from './profile/contact/contact-form/contact-form.component';
+import {ChatFormComponent} from './profile/contact/contact-form/chat-form/chat-form.component';
+import {EmailFormComponent} from './profile/contact/contact-form/email-form/email-form.component';
+import {PhoneFormComponent} from './profile/contact/contact-form/phone-form/phone-form.component';
+import {ContactViewComponent} from './profile/contact/contact-view/contact-view.component';
 @NgModule({
   imports: [
     CommonModule,

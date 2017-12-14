@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Chat} from "./chat-form/chat-form.interfaces";
-import {Contact} from "./contact-form.interfaces";
-import {ContactModel} from "./contact-form.classes";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Http, Response} from "@angular/http";
 import {PhoneModel} from "./phone-form/phone-form.classes";
 import {Phone} from "./phone-form/phone-form.interfaces";
-import {Strings} from "../../../../lib/common/utils/Strings";
 import {EmailModel} from "./email-form/email-form.classes";
 import {Email} from "./email-form/email-form.interfaces";
 import {ChatModel} from "./chat-form/chat-form.classes";
+import {Contact} from '../contact-form.interfaces';
+import {ContactModel} from '../contact-form.classes';
+import {Strings} from '../../../../../lib/common/utils/Strings';
 
 @Component({
   selector: 'app-social-contact-form',

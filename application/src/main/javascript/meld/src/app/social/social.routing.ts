@@ -1,7 +1,6 @@
 import {ModuleWithProviders} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProfileComponent} from "./profile/profile.component";
-import {ContactFormComponent} from "./profile/contact/contact-form.component";
 import {ContactFormGuard} from "./profile/contact/contact-form.guard";
 import {PeopleComponent} from "./people/people.component";
 import {CategoriesFormGuard} from './people/category/categories-form/categories-form.guard';
@@ -20,8 +19,9 @@ import {PlacesFormComponent} from './profile/places/places-form/places-form.comp
 import {WorkHistoryViewComponent} from './profile/work-history/work-history-view/work-history-view.component';
 import {WorkHistoryFormGuard} from './profile/work-history/work-hisotry.guard';
 import {WorkHistoryFormComponent} from './profile/work-history/work-history-form/work-history-form.component';
-import {ContactViewComponent} from './profile/contact/contact-view.component';
 import {ImageFormComponent} from './profile/image/image-form/image-form.component';
+import {ContactFormComponent} from './profile/contact/contact-form/contact-form.component';
+import {ContactViewComponent} from './profile/contact/contact-view/contact-view.component';
 
 const appRoutes: Routes = [
   {
