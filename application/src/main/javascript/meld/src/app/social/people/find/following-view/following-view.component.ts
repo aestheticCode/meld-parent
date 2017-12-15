@@ -16,13 +16,27 @@ import {CategoryDialogComponent} from '../../category/category-dialog/category-d
 export class FollowingViewComponent {
 
   constructor(private http: HttpClient,
-              private service : AppService,
+              private service: AppService,
               private dialog: MatDialog) {
   }
 
   users: Items<UserRow> = (query, response) => {
-    let equal = QueryBuilder.equal(this.service.configuration.user.id, "to.id");
-    query.predicate = QueryBuilder.subQuery("user" ,"", 'relationShip', 'from', equal);
+    query.predicate = QueryBuilder.and([
+      QueryBuilder.not(
+        QueryBuilder.inSelect(
+          '',
+          QueryBuilder.subQuery(
+            'relationShip',
+            'to', QueryBuilder.equal(this.service.configuration.user.id, 'from.id'))
+        )
+      ),
+      QueryBuilder.inSelect(
+        '',
+        QueryBuilder.subQuery(
+          'relationShip',
+          'from', QueryBuilder.equal(this.service.configuration.user.id, 'to.id'))
+      )
+    ]);
     this.http.post<Container<UserRow>>('service/social/people/find', query)
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);

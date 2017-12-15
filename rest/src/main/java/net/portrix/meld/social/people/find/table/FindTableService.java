@@ -3,8 +3,8 @@ package net.portrix.meld.social.people.find.table;
 import com.google.common.collect.Maps;
 import net.portrix.generic.rest.api.query.Query;
 import net.portrix.meld.social.people.RelationShip;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.UserImage;
 import net.portrix.meld.usercontrol.User_;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,10 +12,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,7 +40,7 @@ public class FindTableService {
         List<User> Users;CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<User> root = query.from(User.class);
-        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root, tables));
+        Expression predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, entityManager, root, tables));
         query.select(root).where(predicate).orderBy(builder.asc(root.get(User_.name)));
         TypedQuery<User> typedQuery = entityManager.createQuery(query);
         typedQuery.setFirstResult(search.getIndex());
@@ -56,17 +53,21 @@ public class FindTableService {
         long count;CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<User> root = query.from(User.class);
-        Predicate predicate = search.getPredicate().accept( Query.visitorVisit(query, builder, root, tables));
+        Expression predicate = search.getPredicate().accept( Query.visitorVisit(query, builder, entityManager, root, tables));
         query.select(builder.count(root)).where(predicate);
         TypedQuery<Long> typedQuery = entityManager.createQuery(query);
         count = typedQuery.getSingleResult();
         return count;
     }
 
-    public UserImage findImage(User user) {
-        return entityManager.createQuery("select i from UserImage i where i.user = :user", UserImage.class)
-                .setParameter("user", user)
-                .getSingleResult();
+    public Profile findImage(User user) {
+        try {
+            return entityManager.createQuery("select i from Profile i where i.user = :user", Profile.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public RelationShip findRelationShip(User current, User user) {

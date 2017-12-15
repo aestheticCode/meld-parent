@@ -3,7 +3,7 @@ package net.portrix.generic.rest.api.query;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Expression;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
@@ -14,33 +14,42 @@ import javax.persistence.criteria.Predicate;
         @JsonSubTypes.Type(Date.class),
         @JsonSubTypes.Type(Join.class),
         @JsonSubTypes.Type(Equal.class),
-        @JsonSubTypes.Type(SubQuery.class)
+        @JsonSubTypes.Type(SubQuery.class),
+        @JsonSubTypes.Type(InSelect.class),
+        @JsonSubTypes.Type(IsNull.class),
+        @JsonSubTypes.Type(Not.class)
 })
 public interface RestPredicate<V> {
 
     V getValue();
 
-    Predicate accept(Visitor visitor);
+    Expression accept(Visitor visitor);
 
     interface Visitor {
 
-        Predicate visit(And and);
+        Expression visit(And and);
 
-        Predicate visit(Or or);
+        Expression visit(Or or);
 
-        Predicate visit(Like like);
+        Expression visit(Like like);
 
-        Predicate visit(In in);
+        Expression visit(In in);
 
-        Predicate visit(Noop noop);
+        Expression visit(Noop noop);
 
-        Predicate visit(Date restDate);
+        Expression visit(Date restDate);
 
-        Predicate visit(Join join);
+        Expression visit(Join join);
 
-        Predicate visit(SubQuery subQuery);
+        Expression visit(SubQuery subQuery);
 
-        Predicate visit(Equal equal);
+        Expression visit(Equal equal);
+
+        Expression visit(InSelect select);
+
+        Expression visit(IsNull isNull);
+
+        Expression visit(Not not);
     }
 
 }

@@ -2,14 +2,14 @@ package net.portrix.generic.rest.api.query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import javax.persistence.criteria.Expression;
+
 @JsonTypeName("subQuery")
 public class SubQuery implements RestPredicate<RestPredicate<?>> {
 
     private RestPredicate<?> value;
-    private Object from;
-    private String fromPath;
-    private String select;
-    private String selectPath;
+    private String from;
+    private String path;
 
     @Override
     public RestPredicate<?> getValue() {
@@ -21,39 +21,23 @@ public class SubQuery implements RestPredicate<RestPredicate<?>> {
     }
 
     @Override
-    public javax.persistence.criteria.Predicate accept(Visitor visitor) {
+    public Expression accept(Visitor visitor) {
         return visitor.visit(this);
     }
 
-    public Object getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(Object from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public String getFromPath() {
-        return fromPath;
+    public String getPath() {
+        return path;
     }
 
-    public void setFromPath(String fromPath) {
-        this.fromPath = fromPath;
-    }
-
-    public String getSelect() {
-        return select;
-    }
-
-    public void setSelect(String select) {
-        this.select = select;
-    }
-
-    public String getSelectPath() {
-        return selectPath;
-    }
-
-    public void setSelectPath(String selectPath) {
-        this.selectPath = selectPath;
+    public void setPath(String path) {
+        this.path = path;
     }
 }

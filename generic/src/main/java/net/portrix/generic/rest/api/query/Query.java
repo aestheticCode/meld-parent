@@ -3,7 +3,11 @@ package net.portrix.generic.rest.api.query;
 import com.google.common.collect.Iterables;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
+import javax.persistence.metamodel.Attribute;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,29 +47,29 @@ public class Query {
         this.predicate = predicate;
     }
 
-    public static RestPredicate.Visitor visitorVisit(AbstractQuery<?> query, CriteriaBuilder builder, Path<?> root, Map<String, Class<?>> tables) {
+    public static RestPredicate.Visitor visitorVisit(AbstractQuery<?> query, CriteriaBuilder builder, EntityManager entityManager, Path<?> root, Map<String, Class<?>> tables) {
 
         return new RestPredicate.Visitor() {
             @Override
-            public Predicate visit(And and) {
+            public Expression visit(And and) {
                 List<Predicate> predicates = new ArrayList<>();
                 for (RestPredicate<?> restPredicate : and.getValue()) {
-                    predicates.add(restPredicate.accept(this));
+                    predicates.add((Predicate) restPredicate.accept(this));
                 }
                 return builder.and(Iterables.toArray(predicates, Predicate.class));
             }
 
             @Override
-            public Predicate visit(Or or) {
+            public Expression visit(Or or) {
                 List<Predicate> predicates = new ArrayList<>();
                 for (RestPredicate<?> restPredicate : or.getValue()) {
-                    predicates.add(restPredicate.accept(this));
+                    predicates.add((Predicate) restPredicate.accept(this));
                 }
                 return builder.or(Iterables.toArray(predicates, Predicate.class));
             }
 
             @Override
-            public Predicate visit(Like like) {
+            public Expression visit(Like like) {
                 if (like.getValue() == null) {
                     return builder.conjunction();
                 } else {
@@ -75,7 +79,7 @@ public class Query {
             }
 
             @Override
-            public Predicate visit(In in) {
+            public Expression visit(In in) {
                 if (in.getValue() == null || in.getValue().isEmpty()) {
                     return builder.disjunction();
                 } else {
@@ -85,12 +89,12 @@ public class Query {
             }
 
             @Override
-            public Predicate visit(Noop noop) {
+            public Expression visit(Noop noop) {
                 return builder.conjunction();
             }
 
             @Override
-            public Predicate visit(Date restDate) {
+            public Expression visit(Date restDate) {
                 List<Predicate> predicates = new ArrayList<>();
 
                 if (restDate.getValue().getLt() != null) {
@@ -112,23 +116,42 @@ public class Query {
             }
 
             @Override
-            public Predicate visit(Join join) {
-                return join.accept(visitorVisit(query, builder, ((Root<?>) root).join(join.getPath()), tables));
+            public Expression visit(Join join) {
+                return join.accept(visitorVisit(query, builder, entityManager, ((Root<?>) root).join(join.getPath()), tables));
             }
 
             @Override
-            public Predicate visit(SubQuery subQueryPredicate) {
-                Class<?> selectClass = tables.get(subQueryPredicate.getSelect());
-                Subquery subquery = query.subquery(selectClass);
-                Class<?> formClass = tables.get(subQueryPredicate.getFrom());
-                Root from = subquery.from(formClass);
-                subquery.select(cursor(from, subQueryPredicate.getFromPath())).where(subQueryPredicate.getValue().accept(visitorVisit(subquery, builder, from, tables)));
-                return cursor(root, subQueryPredicate.getSelectPath()).in(subquery);
+            public Expression visit(SubQuery subQueryPredicate) {
+                Class<?> fromClass = tables.get(subQueryPredicate.getFrom());
+
+                Metamodel metamodel = entityManager.getMetamodel();
+                EntityType<?> entity = metamodel.entity(fromClass);
+                EntityType<?> cursor = cursor(metamodel, entity, subQueryPredicate.getPath());
+
+                Subquery subquery = query.subquery(cursor.getJavaType());
+                Root from = subquery.from(fromClass);
+                subquery.select(cursor(from, subQueryPredicate.getPath())).where(subQueryPredicate.getValue().accept(visitorVisit(subquery, builder, entityManager, from, tables)));
+                return subquery;
             }
 
             @Override
-            public Predicate visit(Equal equal) {
+            public Expression visit(Equal equal) {
                 return builder.equal(cursor(root, equal.getPath()), equal.getValue());
+            }
+
+            @Override
+            public Expression visit(InSelect select) {
+                return cursor(root, select.getPath()).in(select.getValue().accept(this));
+            }
+
+            @Override
+            public Expression visit(IsNull isNull) {
+                return builder.isNull(cursor(root, isNull.getPath()));
+            }
+
+            @Override
+            public Expression visit(Not not) {
+                return builder.not(not.getValue().accept(this));
             }
 
         };
@@ -143,6 +166,20 @@ public class Query {
         Path<?> cursor = path;
         for (String segment : paths) {
             cursor = cursor.get(segment);
+        }
+        return cursor;
+    }
+
+    private static EntityType<?> cursor(Metamodel metamodel, EntityType<?> path, String pathString) {
+        if (StringUtils.isEmpty(pathString)) {
+            return path;
+        }
+        String[] paths = pathString.split("\\.");
+        EntityType<?> cursor = path;
+        for (String segment : paths) {
+            Attribute<?, ?> attribute = cursor.getAttribute(segment);
+            Class<?> javaType = attribute.getJavaType();
+            cursor = metamodel.entity(javaType);
         }
         return cursor;
     }

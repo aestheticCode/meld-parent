@@ -8,6 +8,9 @@ import {EqualPredicate} from "../predicates/EqualPredicate";
 import {DatePredicate, DateType} from "../predicates/DatePredicate";
 import {JoinPredicate} from '../predicates/JoinPredicate';
 import {SubQueryPredicate} from '../predicates/SubQueryPredicate';
+import {InSelectPredicate} from '../predicates/InSelectPredicate';
+import {IsNullPredicate} from '../predicates/IsNullPredicate';
+import {NotPredicate} from '../predicates/NotPredicate';
 
 export class QueryBuilder {
 
@@ -35,6 +38,10 @@ export class QueryBuilder {
     return new InPredicate(values, path);
   }
 
+  public static inSelect(path: string, values: SubQueryPredicate) {
+    return new InSelectPredicate(values, path);
+  }
+
   static date(value: DateType, id: string) {
     return new DatePredicate(value, id);
   }
@@ -43,7 +50,15 @@ export class QueryBuilder {
     return new JoinPredicate(path, value)
   }
 
-  static subQuery(select : string, selectPath : string, from : string, fromPath : string, value : Predicate<any>) {
-    return new SubQueryPredicate(selectPath, select, from, fromPath, value);
+  static subQuery(from : string, path : string, value : Predicate<any>) {
+    return new SubQueryPredicate(from, path, value);
+  }
+
+  static isNull(path : string) {
+    return new IsNullPredicate(path);
+  }
+
+  static not(predicate : Predicate<any>) {
+    return new NotPredicate(predicate);
   }
 }

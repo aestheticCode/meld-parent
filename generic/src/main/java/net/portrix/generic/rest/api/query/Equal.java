@@ -2,10 +2,11 @@ package net.portrix.generic.rest.api.query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import javax.persistence.criteria.Expression;
 import java.util.UUID;
 
 @JsonTypeName("equal")
-public class Equal implements RestPredicate<UUID>, RestPath{
+public class Equal implements RestPredicate<UUID> {
 
     private UUID value;
 
@@ -25,7 +26,7 @@ public class Equal implements RestPredicate<UUID>, RestPath{
     }
 
     @Override
-    public javax.persistence.criteria.Predicate accept(Visitor visitor) {
+    public Expression accept(Visitor visitor) {
         return visitor.visit(this);
     }
 

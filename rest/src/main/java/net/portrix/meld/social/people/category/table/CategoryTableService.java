@@ -12,10 +12,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +37,7 @@ public class CategoryTableService {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Category> query = builder.createQuery(Category.class);
         Root<Category> root = query.from(Category.class);
-        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root, Maps.newHashMap()));
+        Expression predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, entityManager, root, Maps.newHashMap()));
         Predicate userEqual = builder.equal(root.get(Category_.user), userManager.current());
         Predicate and = builder.and(predicate, userEqual);
         query.select(root).where(and).orderBy(builder.asc(root.get(Category_.name)));
@@ -54,7 +51,7 @@ public class CategoryTableService {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<Category> root = query.from(Category.class);
-        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root, Maps.newHashMap()));
+        Expression predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, entityManager , root, Maps.newHashMap()));
         Predicate userEqual = builder.equal(root.get(Category_.user), userManager.current());
         Predicate and = builder.and(predicate, userEqual);
         query.select(builder.count(root)).where(and);

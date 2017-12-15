@@ -9,6 +9,8 @@ export interface Item extends LinksContainer {
 
   time: string;
 
+  category : string;
+
   text: string;
 
   avatar: Link;

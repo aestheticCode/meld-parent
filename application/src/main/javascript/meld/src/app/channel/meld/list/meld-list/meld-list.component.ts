@@ -4,6 +4,7 @@ import {Http, Response} from '@angular/http';
 import {Items} from '../../../../../lib/common/query/Items';
 import {Item} from './meld-item/meld-item.interfaces';
 import {AppService} from '../../../../app.service';
+import {QueryBuilder} from '../../../../../lib/common/query/QueryBuilder';
 
 @Component({
   selector: 'app-meld-list',
@@ -18,8 +19,13 @@ export class MeldListComponent {
   }
 
   posts: Items<Item> = (query, callback) => {
-    //let equal = QueryBuilder.equal(this.service.configuration.user.id, "from.id");
-    //query.predicate = QueryBuilder.subQuery("user", "user", "relationShip", "to", equal);
+    let subQueryPredicate = this.subQueryForRelations(this.service.configuration.user.id);
+    let equalPredicate = this.equalForCurrentUser(this.service.configuration.user.id);
+
+    query.predicate = QueryBuilder.or([
+      subQueryPredicate,
+      equalPredicate
+    ]);
 
     this.http.post('service/channel/meld/posts/', query)
       .subscribe((res: Response) => {
@@ -27,6 +33,33 @@ export class MeldListComponent {
         callback(rows, null);
       });
   };
+
+  private equalForCurrentUser(id: string) {
+    return QueryBuilder.equal(id, 'user.id');
+  }
+
+  private subQueryForRelations(id: string) {
+    return QueryBuilder.and([
+      QueryBuilder.or([
+        QueryBuilder.isNull("category"),
+        QueryBuilder.inSelect(
+          "category",
+          QueryBuilder.subQuery(
+            "relationShip",
+            "category",
+            QueryBuilder.equal(id, "to.id")
+          )
+        )
+      ]),
+      QueryBuilder.inSelect(
+        'user',
+        QueryBuilder.subQuery(
+          'relationShip',
+          'to',
+          QueryBuilder.equal(id, 'from.id')
+        ))
+    ]);
+  }
 
   onCreate() {
     this.router.navigate(['channel/meld/post']);

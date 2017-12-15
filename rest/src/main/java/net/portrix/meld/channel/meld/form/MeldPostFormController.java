@@ -60,6 +60,11 @@ public class MeldPostFormController {
                 MeldImagePostForm response = new MeldImagePostForm();
                 response.setId(post.getId());
                 response.setText(post.getText());
+                Category category = post.getCategory();
+                if (category != null) {
+                    response.setCategory(category.getId());
+                }
+
                 final Blob file = new Blob();
                 final MeldImage image = post.getImage();
 
@@ -80,6 +85,11 @@ public class MeldPostFormController {
                 MeldTextPostForm response = new MeldTextPostForm();
                 response.setId(post.getId());
                 response.setText(post.getText());
+                Category category = post.getCategory();
+                if (category != null) {
+                    response.setCategory(category.getId());
+                }
+
                 linkUpdate(post, builderFactory)
                         .buildSecured(response::addLink);
 
@@ -93,6 +103,11 @@ public class MeldPostFormController {
                 form.setId(post.getId());
                 form.setVideoId(post.getVideoId());
                 form.setText(post.getText());
+                Category category = post.getCategory();
+                if (category != null) {
+                    form.setCategory(category.getId());
+                }
+
                 linkUpdate(post, builderFactory)
                         .buildSecured(form::addLink);
 
@@ -105,6 +120,11 @@ public class MeldPostFormController {
                 form.setId(post.getId());
                 form.setPhotoId(post.getPhoto().getId());
                 form.setText(post.getText());
+                Category category = post.getCategory();
+                if (category != null) {
+                    form.setCategory(category.getId());
+                }
+
                 linkUpdate(post, builderFactory)
                         .buildSecured(form::addLink);
 
@@ -168,6 +188,8 @@ public class MeldPostFormController {
                 final MeldPhotoPost post = (MeldPhotoPost) service.findPost(id);
                 User user = service.currentUser();
                 post.setUser(user);
+                Category category = service.findCategory(edit.getCategory());
+                post.setCategory(category);
                 Photo photo = service.findPhoto(form.getPhotoId());
                 post.setPhoto(photo);
                 return read(post.getId());
@@ -187,6 +209,8 @@ public class MeldPostFormController {
             public AbstractPostForm visit(MeldImagePostForm form) {
                 final MeldImagePost post = new MeldImagePost();
                 final User user = service.currentUser();
+                Category category = service.findCategory(edit.getCategory());
+                post.setCategory(category);
 
                 post.setUser(user);
                 post.setText(edit.getText());
@@ -208,6 +232,9 @@ public class MeldPostFormController {
             public AbstractPostForm visit(MeldTextPostForm form) {
                 final MeldTextPost post = new MeldTextPost();
                 final User user = service.currentUser();
+                Category category = service.findCategory(edit.getCategory());
+                post.setCategory(category);
+
                 post.setUser(user);
                 post.setText(edit.getText());
                 service.savePost(post);
@@ -219,6 +246,9 @@ public class MeldPostFormController {
             public AbstractPostForm visit(MeldYouTubePostForm form) {
                 final MeldYouTubePost post = new MeldYouTubePost();
                 final User user = service.currentUser();
+                Category category = service.findCategory(edit.getCategory());
+                post.setCategory(category);
+
                 post.setUser(user);
                 post.setVideoId(form.getVideoId());
                 service.savePost(post);
@@ -230,6 +260,9 @@ public class MeldPostFormController {
                 final MeldPhotoPost post = new MeldPhotoPost();
                 User user = service.currentUser();
                 post.setUser(user);
+                Category category = service.findCategory(edit.getCategory());
+                post.setCategory(category);
+
                 Photo photo = service.findPhoto(form.getPhotoId());
                 post.setPhoto(photo);
                 service.savePost(post);

@@ -1,5 +1,6 @@
 package net.portrix.meld.usercontrol.user.image;
 
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserImage;
 import net.portrix.meld.usercontrol.UserManager;
@@ -33,8 +34,8 @@ public class UserImageService {
                 .getSingleResult();
     }
 
-    public UserImage findUserImage(User user) {
-        return entityManager.createQuery("select u from UserImage u where u.user = :user", UserImage.class)
+    public Profile findUserImage(User user) {
+        return entityManager.createQuery("select u from Profile u where u.user = :user", Profile.class)
                 .setParameter("user", user)
                 .getSingleResult();
     }

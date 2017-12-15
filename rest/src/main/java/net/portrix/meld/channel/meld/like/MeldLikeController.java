@@ -7,6 +7,7 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.channel.MeldComment;
 import net.portrix.meld.channel.MeldImagePost;
+import net.portrix.meld.channel.MeldPost;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 
@@ -51,7 +52,7 @@ public class MeldLikeController {
     public List<MeldLikeResponse> plusOnePost(@PathParam("id") UUID id) {
 
         final User currentUser = service.currentUser();
-        final MeldImagePost post = service.findPost(id);
+        final MeldPost post = service.findPost(id);
 
         if (post.containsLike(currentUser)) {
             post.removeLike(currentUser);

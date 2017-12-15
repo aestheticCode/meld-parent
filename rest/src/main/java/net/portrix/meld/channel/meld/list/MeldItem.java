@@ -25,13 +25,15 @@ public class MeldItem implements LinksContainer {
 
     private UUID id;
 
+    private Blob avatar;
+
     private String name;
 
     private String time;
 
-    private String text;
+    private String category;
 
-    private Link avatar;
+    private String text;
 
     private List<MeldLikeResponse> likes = new ArrayList<>();
 
@@ -63,6 +65,14 @@ public class MeldItem implements LinksContainer {
         this.time = time;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getText() {
         return text;
     }
@@ -71,11 +81,11 @@ public class MeldItem implements LinksContainer {
         this.text = text;
     }
 
-    public Link getAvatar() {
+    public Blob getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Link avatar) {
+    public void setAvatar(Blob avatar) {
         this.avatar = avatar;
     }
 

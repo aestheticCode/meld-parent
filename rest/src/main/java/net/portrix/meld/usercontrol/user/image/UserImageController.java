@@ -4,6 +4,7 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserImage;
 import org.slf4j.Logger;
@@ -52,8 +53,8 @@ public class UserImageController implements Serializable {
     @Transactional
     public Response image(@PathParam("id") UUID id) {
         final User user = service.findUser(id);
-        final UserImage image = service.findUserImage(user);
-        Response.ResponseBuilder response = Response.ok(image.getImage());
+        final Profile image = service.findUserImage(user);
+        Response.ResponseBuilder response = Response.ok(image.getUserPhoto().getImage());
 
         CacheControl control = new CacheControl();
         control.setMustRevalidate(true);
@@ -74,8 +75,8 @@ public class UserImageController implements Serializable {
     @Transactional
     public Response thumbNail(@PathParam("id") UUID id) {
         final User user = service.findUser(id);
-        final UserImage image = service.findUserImage(user);
-        Response.ResponseBuilder response = Response.ok(image.getThumbnail());
+        final Profile image = service.findUserImage(user);
+        Response.ResponseBuilder response = Response.ok(image.getUserPhoto().getThumbnail());
 
         CacheControl control = new CacheControl();
         control.setMustRevalidate(true);

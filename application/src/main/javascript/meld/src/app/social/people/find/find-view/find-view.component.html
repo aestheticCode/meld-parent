@@ -1,47 +1,31 @@
-<div style="padding: 10px;">
+<div style="margin-top: 12px;">
   <div class="container-fluid" style="margin-top: 12px;">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <mat-card>
           <mat-card-content>
             <div>
-              <meld-table [items]="users" [rowHeight]="48">
+              <meld-table [items]="users" [rowHeight]="100">
                 <meld-colgroup>
-                  <meld-col [width]="50"></meld-col>
-                  <meld-col [width]="90"></meld-col>
-                  <meld-col [width]="90"></meld-col>
-                  <meld-col [width]="80"></meld-col>
+                  <meld-col [width]="100"></meld-col>
+                  <meld-col [width]="200"></meld-col>
                 </meld-colgroup>
-                <meld-thead>
-                  <meld-tr>
-                    <meld-td>
-                      <ng-template><strong>Image</strong></ng-template>
-                    </meld-td>
-                    <meld-td>
-                      <ng-template><strong>First Name</strong></ng-template>
-                    </meld-td>
-                    <meld-td>
-                      <ng-template><strong>Last Name</strong></ng-template>
-                    </meld-td>
-                    <meld-td>
-                      <ng-template><strong>Category</strong></ng-template>
-                    </meld-td>
-                  </meld-tr>
-                </meld-thead>
                 <meld-tbody>
                   <meld-tr>
                     <meld-td>
-                      <ng-template let-user><img style="width: 48px;" [src]="user.image | meldBinaryImage"></ng-template>
-                    </meld-td>
-                    <meld-td>
-                      <ng-template let-user>{{user.firstName}}</ng-template>
-                    </meld-td>
-                    <meld-td>
-                      <ng-template let-user>{{user.lastName}}</ng-template>
+                      <ng-template let-user><img style="width: 100px;" [src]="user.image | meldBinaryImage"></ng-template>
                     </meld-td>
                     <meld-td>
                       <ng-template let-user>
-                        <app-categories-select (onClickChange)="open(user)" [(ngModel)]="user.category"></app-categories-select>
+                        <div style="line-height: 100px; height: 100%; overflow: auto; text-overflow: ellipsis; white-space: nowrap">
+                          <div style="display: flex">
+                            <strong>
+                              {{user.firstName}} {{user.lastName}}
+                            </strong>
+                            <span style="flex: 1"></span>
+                            <app-categories-select (onClickChange)="open(user)" [(ngModel)]="user.category"></app-categories-select>
+                          </div>
+                        </div>
                       </ng-template>
                     </meld-td>
                   </meld-tr>

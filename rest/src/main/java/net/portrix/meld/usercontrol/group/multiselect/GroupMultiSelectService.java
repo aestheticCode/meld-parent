@@ -9,10 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @ApplicationScoped
@@ -33,7 +30,7 @@ public class GroupMultiSelectService {
         List<Group> groups;CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Group> query = builder.createQuery(Group.class);
         Root<Group> root = query.from(Group.class);
-        Predicate predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, root, Maps.newHashMap()));
+        Expression predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, entityManager, root, Maps.newHashMap()));
         query.select(root).where(predicate).orderBy(builder.asc(root.get(Group_.name)));
         TypedQuery<Group> typedQuery = entityManager.createQuery(query);
         typedQuery.setFirstResult(search.getIndex());
@@ -46,7 +43,7 @@ public class GroupMultiSelectService {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<Group> root = query.from(Group.class);
-        Predicate predicate = search.getPredicate().accept( Query.visitorVisit(query, builder, root, Maps.newHashMap()));
+        Expression predicate = search.getPredicate().accept( Query.visitorVisit(query, builder, entityManager , root, Maps.newHashMap()));
         query.select(builder.count(root)).where(predicate);
         TypedQuery<Long> typedQuery = entityManager.createQuery(query);
         return typedQuery.getSingleResult();

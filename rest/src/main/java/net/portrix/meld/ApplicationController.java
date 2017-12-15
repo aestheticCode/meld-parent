@@ -1,7 +1,9 @@
 package net.portrix.meld;
 
+import net.portrix.generic.image.ImageUtils;
 import net.portrix.generic.rest.LoginToken;
 import net.portrix.generic.rest.URLBuilderFactory;
+import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.meld.channel.meld.list.MeldListController;
 import net.portrix.meld.media.photos.grid.PhotoGridController;
@@ -15,6 +17,7 @@ import net.portrix.meld.usercontrol.registration.form.RegistrationFormController
 import net.portrix.meld.usercontrol.role.table.RoleTableController;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 import net.portrix.meld.usercontrol.user.table.UserTableController;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.picketlink.Identity;
 import org.picketlink.credential.DefaultLoginCredentials;
@@ -27,6 +30,9 @@ import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
 
 /**
  * @author Patrick Bittner on 06.06.2015.
@@ -53,6 +59,25 @@ public class ApplicationController {
 
     public ApplicationController() {
         this(null, null, null, null);
+    }
+
+    public static Blob createUserPhotoBlob() {
+        final InputStream inputStream = Thread
+                .currentThread()
+                .getContextClassLoader()
+                .getResourceAsStream("/META-INF/images/user.png");
+        byte[] bytes = null;
+        try {
+            bytes = IOUtils.toByteArray(inputStream);
+
+            Blob blob = new Blob();
+            blob.setName("user.png");
+            blob.setData(ImageUtils.thumnail("user.png", bytes, 200));
+            blob.setLastModified(LocalDateTime.now());
+            return blob;
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     @GET

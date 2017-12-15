@@ -3,20 +3,23 @@ package net.portrix.generic.rest.api.query;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.criteria.Expression;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Predicate;
 
-@JsonTypeName("join")
-public class Join implements RestPredicate<RestPredicate<?>> {
+@JsonTypeName("inSelect")
+public class InSelect implements RestPredicate<SubQuery> {
 
-    private RestPredicate<?> value;
+    private SubQuery value;
 
     private String path;
-    
+
     @Override
-    public RestPredicate<?> getValue() {
+    public SubQuery getValue() {
         return value;
     }
 
-    public void setValue(RestPredicate<?> value) {
+    public void setValue(SubQuery value) {
         this.value = value;
     }
 

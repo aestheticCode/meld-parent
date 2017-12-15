@@ -37,7 +37,7 @@
             <tbody>
             <tr *ngFor="let item of itemsWindow; let index = index;" [class.hover]="isHoveredIndex(index)" (mousemove)="hoveredIndex = index" (mouseleave)="hoveredIndex = undefined">
               <td *ngIf="multiSelect"><mat-checkbox [checked]="isItemSelected(item)" (change)="itemSelected(item, $event)"></mat-checkbox></td>
-              <td *ngFor="let column of body.rows.first.columns | meldTableSorter:columnConfiguration"
+              <td [style.height.px]="rowHeight" *ngFor="let column of body.rows.first.columns | meldTableSorter:columnConfiguration"
                   (click)="selectItemChange.emit(item)">
                 <ng-container *ngTemplateOutlet="column.content; context: {$implicit: item}"></ng-container>
               </td>

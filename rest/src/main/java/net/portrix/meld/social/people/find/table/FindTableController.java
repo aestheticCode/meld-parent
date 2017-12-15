@@ -7,7 +7,9 @@ import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
+import net.portrix.meld.ApplicationController;
 import net.portrix.meld.social.people.RelationShip;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserImage;
 import net.portrix.meld.usercontrol.UserManager;
@@ -62,11 +64,15 @@ public class FindTableController {
                     row.setName(user.getName());
                     row.setFirstName(user.getFirstName());
                     row.setLastName(user.getLastName());
-                    UserImage image = service.findImage(user);
+                    Profile profile = service.findImage(user);
                     Blob blob = new Blob();
-                    blob.setName(image.getFileName());
-                    blob.setLastModified(image.getLastModified());
-                    blob.setData(image.getThumbnail());
+                    if (profile == null) {
+                        blob = ApplicationController.createUserPhotoBlob();
+                    } else {
+                        blob.setName(profile.getUserPhoto().getFileName());
+                        blob.setLastModified(profile.getUserPhoto().getLastModified());
+                        blob.setData(profile.getUserPhoto().getThumbnail());
+                    }
                     row.setImage(blob);
 
                     RelationShip relationShip = service.findRelationShip(current, user);

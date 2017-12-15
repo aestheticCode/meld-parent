@@ -2,6 +2,7 @@ package net.portrix.generic.rest.api.query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import javax.persistence.criteria.Expression;
 import java.util.Set;
 
 @JsonTypeName("and")
@@ -15,7 +16,7 @@ public class And implements RestPredicate<Set<RestPredicate<?>>> {
     }
 
     @Override
-    public javax.persistence.criteria.Predicate accept(Visitor visitor) {
+    public Expression accept(Visitor visitor) {
         return visitor.visit(this);
     }
 

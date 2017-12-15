@@ -4,20 +4,14 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.criteria.Expression;
 
-@JsonTypeName("join")
-public class Join implements RestPredicate<RestPredicate<?>> {
-
-    private RestPredicate<?> value;
+@JsonTypeName("isNull")
+public class IsNull implements RestPredicate<Object> {
 
     private String path;
-    
-    @Override
-    public RestPredicate<?> getValue() {
-        return value;
-    }
 
-    public void setValue(RestPredicate<?> value) {
-        this.value = value;
+    @Override
+    public Object getValue() {
+        return null;
     }
 
     public String getPath() {
@@ -32,5 +26,4 @@ public class Join implements RestPredicate<RestPredicate<?>> {
     public Expression accept(Visitor visitor) {
         return visitor.visit(this);
     }
-
 }

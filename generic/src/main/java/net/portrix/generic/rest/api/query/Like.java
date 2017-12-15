@@ -2,8 +2,10 @@ package net.portrix.generic.rest.api.query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import javax.persistence.criteria.Expression;
+
 @JsonTypeName("like")
-public class Like implements RestPredicate<String>, RestPath {
+public class Like implements RestPredicate<String> {
 
     private String path;
 
@@ -23,7 +25,7 @@ public class Like implements RestPredicate<String>, RestPath {
     }
 
     @Override
-    public javax.persistence.criteria.Predicate accept(Visitor visitor) {
+    public Expression accept(Visitor visitor) {
         return visitor.visit(this);
     }
 

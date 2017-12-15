@@ -9,12 +9,15 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
+import net.portrix.meld.ApplicationController;
 import net.portrix.meld.channel.*;
 import net.portrix.meld.channel.meld.comment.MeldCommentFormController;
 import net.portrix.meld.channel.meld.comment.MeldCommentResponse;
 import net.portrix.meld.channel.meld.form.MeldPostFormController;
 import net.portrix.meld.channel.meld.like.MeldLikeResponse;
 import net.portrix.meld.media.photos.Photo;
+import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 
@@ -77,6 +80,12 @@ public class MeldListController {
                     item.setName(post.getUser().getFirstName() + " " + post.getUser().getLastName());
                     item.setText(post.getText());
                     item.setTime(TimeUtils.format(post.getCreated()));
+                    Category category = post.getCategory();
+                    if (category == null) {
+                        item.setCategory("public");
+                    } else {
+                        item.setCategory(category.getName());
+                    }
                     for (User user : post.getLikes()) {
 
                         final Link avatarLink = builderFactory.from(UserImageController.class)
@@ -106,12 +115,16 @@ public class MeldListController {
 
                     item.setImage(blob);
 
-                    final Link avatarLink = builderFactory.from(UserImageController.class)
-                            .record(method -> method.thumbNail(post.getUser().getId()))
-                            .rel("avatar")
-                            .generate();
-
-                    item.setAvatar(avatarLink);
+                    Blob avatar = new Blob();
+                    Profile profile = service.findProfile(post.getUser());
+                    if (profile == null) {
+                        avatar = ApplicationController.createUserPhotoBlob();
+                    } else {
+                        avatar.setName(profile.getUserPhoto().getFileName());
+                        avatar.setLastModified(profile.getUserPhoto().getLastModified());
+                        avatar.setData(profile.getUserPhoto().getThumbnail());
+                    }
+                    item.setAvatar(avatar);
 
                     return item;
                 }
@@ -123,6 +136,12 @@ public class MeldListController {
                     item.setName(post.getUser().getFirstName() + " " + post.getUser().getLastName());
                     item.setText(post.getText());
                     item.setTime(TimeUtils.format(post.getCreated()));
+                    Category category = post.getCategory();
+                    if (category == null) {
+                        item.setCategory("public");
+                    } else {
+                        item.setCategory(category.getName());
+                    }
                     for (User user : post.getLikes()) {
 
                         final Link avatarLink = builderFactory.from(UserImageController.class)
@@ -142,12 +161,16 @@ public class MeldListController {
                     }
                     createComments(currentUser, post.getComments(), item.getComments());
 
-                    final Link avatarLink = builderFactory.from(UserImageController.class)
-                            .record(method -> method.thumbNail(post.getUser().getId()))
-                            .rel("avatar")
-                            .generate();
-
-                    item.setAvatar(avatarLink);
+                    Blob avatar = new Blob();
+                    Profile profile = service.findProfile(post.getUser());
+                    if (profile == null) {
+                        avatar = ApplicationController.createUserPhotoBlob();
+                    } else {
+                        avatar.setName(profile.getUserPhoto().getFileName());
+                        avatar.setLastModified(profile.getUserPhoto().getLastModified());
+                        avatar.setData(profile.getUserPhoto().getThumbnail());
+                    }
+                    item.setAvatar(avatar);
 
                     return item;
 
@@ -161,6 +184,12 @@ public class MeldListController {
                     item.setText(post.getText());
                     item.setVideoId(post.getVideoId());
                     item.setTime(TimeUtils.format(post.getCreated()));
+                    Category category = post.getCategory();
+                    if (category == null) {
+                        item.setCategory("public");
+                    } else {
+                        item.setCategory(category.getName());
+                    }
                     for (User user : post.getLikes()) {
 
                         final Link avatarLink = builderFactory.from(UserImageController.class)
@@ -180,12 +209,16 @@ public class MeldListController {
                     }
                     createComments(currentUser, post.getComments(), item.getComments());
 
-                    final Link avatarLink = builderFactory.from(UserImageController.class)
-                            .record(method -> method.thumbNail(post.getUser().getId()))
-                            .rel("avatar")
-                            .generate();
-
-                    item.setAvatar(avatarLink);
+                    Blob avatar = new Blob();
+                    Profile profile = service.findProfile(post.getUser());
+                    if (profile == null) {
+                        avatar = ApplicationController.createUserPhotoBlob();
+                    } else {
+                        avatar.setName(profile.getUserPhoto().getFileName());
+                        avatar.setLastModified(profile.getUserPhoto().getLastModified());
+                        avatar.setData(profile.getUserPhoto().getThumbnail());
+                    }
+                    item.setAvatar(avatar);
 
                     return item;
 
@@ -204,6 +237,12 @@ public class MeldListController {
                     blob.setData(photo.getImage());
                     item.setPhoto(blob);
                     item.setTime(TimeUtils.format(post.getCreated()));
+                    Category category = post.getCategory();
+                    if (category == null) {
+                        item.setCategory("public");
+                    } else {
+                        item.setCategory(category.getName());
+                    }
                     for (User user : post.getLikes()) {
 
                         final Link avatarLink = builderFactory.from(UserImageController.class)
@@ -223,12 +262,16 @@ public class MeldListController {
                     }
                     createComments(currentUser, post.getComments(), item.getComments());
 
-                    final Link avatarLink = builderFactory.from(UserImageController.class)
-                            .record(method -> method.thumbNail(post.getUser().getId()))
-                            .rel("avatar")
-                            .generate();
-
-                    item.setAvatar(avatarLink);
+                    Blob avatar = new Blob();
+                    Profile profile = service.findProfile(post.getUser());
+                    if (profile == null) {
+                        avatar = ApplicationController.createUserPhotoBlob();
+                    } else {
+                        avatar.setName(profile.getUserPhoto().getFileName());
+                        avatar.setLastModified(profile.getUserPhoto().getLastModified());
+                        avatar.setData(profile.getUserPhoto().getThumbnail());
+                    }
+                    item.setAvatar(avatar);
 
                     return item;
                 }

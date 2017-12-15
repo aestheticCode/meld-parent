@@ -2,10 +2,11 @@ package net.portrix.generic.rest.api.query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import javax.persistence.criteria.Expression;
 import java.time.LocalDate;
 
 @JsonTypeName("date")
-public class Date implements RestPredicate<Date.Value>, RestPath {
+public class Date implements RestPredicate<Date.Value> {
 
     private Date.Value value;
 
@@ -25,7 +26,7 @@ public class Date implements RestPredicate<Date.Value>, RestPath {
     }
 
     @Override
-    public javax.persistence.criteria.Predicate accept(Visitor visitor) {
+    public Expression accept(Visitor visitor) {
         return visitor.visit(this);
     }
 

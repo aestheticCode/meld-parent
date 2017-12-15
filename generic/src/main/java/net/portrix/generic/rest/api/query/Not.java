@@ -4,13 +4,11 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.criteria.Expression;
 
-@JsonTypeName("join")
-public class Join implements RestPredicate<RestPredicate<?>> {
+@JsonTypeName("not")
+public class Not implements RestPredicate<RestPredicate<?>> {
 
     private RestPredicate<?> value;
 
-    private String path;
-    
     @Override
     public RestPredicate<?> getValue() {
         return value;
@@ -20,17 +18,8 @@ public class Join implements RestPredicate<RestPredicate<?>> {
         this.value = value;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     @Override
     public Expression accept(Visitor visitor) {
         return visitor.visit(this);
     }
-
 }

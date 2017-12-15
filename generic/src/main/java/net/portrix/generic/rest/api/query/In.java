@@ -2,11 +2,12 @@ package net.portrix.generic.rest.api.query;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import javax.persistence.criteria.Expression;
 import java.util.Set;
 import java.util.UUID;
 
 @JsonTypeName("in")
-public class In implements RestPredicate<Set<UUID>>, RestPath {
+public class In implements RestPredicate<Set<UUID>> {
 
     private String path;
 
@@ -26,7 +27,7 @@ public class In implements RestPredicate<Set<UUID>>, RestPath {
     }
 
     @Override
-    public javax.persistence.criteria.Predicate accept(Visitor visitor) {
+    public Expression accept(Visitor visitor) {
         return visitor.visit(this);
     }
 
