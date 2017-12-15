@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * @author Patrick Bittner on 25/11/2016.
@@ -40,13 +41,24 @@ public class ProfileController {
     }
 
     @GET
-    @Path("profile/background")
+    @Path("user/current/profile/background")
     @Name("Profile Background Read")
     @Secured
     public ProfileResponse readBackground() {
-        ProfileResponse response = new ProfileResponse();
+        final User user = service.currentUser();
+        return readBackground(user.getId());
+    }
 
-        User current = service.currentUser();
+    @GET
+    @Path("user/{id}/profile/background")
+    @Name("Profile Background Read")
+    @Secured
+    public ProfileResponse readBackground(@PathParam("id") UUID id) {
+        final ProfileResponse response = new ProfileResponse();
+
+        User current = service.findUser(id);
+
+        response.setName(current.getFirstName() + " " + current.getLastName());
 
         Profile profile = service.find(current);
 
@@ -81,13 +93,24 @@ public class ProfileController {
     }
 
     @GET
-    @Path("profile/user")
+    @Path("user/current/profile/user")
     @Name("Profile User Read")
     @Secured
     public ProfileResponse readUser() {
+        User user = service.currentUser();
+        return readUser(user.getId());
+    }
+
+    @GET
+    @Path("user/{id}/profile/user")
+    @Name("Profile User Read")
+    @Secured
+    public ProfileResponse readUser(@PathParam("id") UUID id) {
         ProfileResponse response = new ProfileResponse();
 
-        User current = service.currentUser();
+        User current = service.findUser(id);
+
+        response.setName(current.getFirstName() + " " + current.getLastName());
 
         Profile profile = service.find(current);
 
@@ -95,7 +118,7 @@ public class ProfileController {
             final InputStream inputStream = Thread
                     .currentThread()
                     .getContextClassLoader()
-                    .getResourceAsStream("/META-INF/images/way.jpg");
+                    .getResourceAsStream("/META-INF/images/user.png");
 
             try {
                 byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -123,7 +146,7 @@ public class ProfileController {
 
 
     @POST
-    @Path("profile/background")
+    @Path("user/current/profile/background")
     @Name("Profile Background Read")
     @Secured
     @Transactional
@@ -149,7 +172,7 @@ public class ProfileController {
     }
 
     @POST
-    @Path("profile/user")
+    @Path("user/current/profile/user")
     @Name("Profile User Update")
     @Secured
     @Transactional

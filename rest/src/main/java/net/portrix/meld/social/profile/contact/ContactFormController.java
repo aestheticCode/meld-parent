@@ -39,7 +39,7 @@ public class ContactFormController {
 
     @GET
     @Path("user/current/contact")
-    @Name("Personal Contact Save")
+    @Name("Personal Contact Read")
     @Secured
     @Transactional
     public ContactForm current() {
@@ -49,7 +49,7 @@ public class ContactFormController {
 
     @GET
     @Path("user/{id: [0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}}/contact")
-    @Name("Personal Contact Save")
+    @Name("Personal Contact Read")
     @Secured
     @Transactional
     public ContactForm read(@PathParam("id") UUID id) {

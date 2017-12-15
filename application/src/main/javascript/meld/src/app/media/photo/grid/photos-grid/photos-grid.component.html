@@ -5,7 +5,7 @@
         <mat-card style="height: calc(100% - 24px)">
           <meld-grid style="width: 100%;" [(ngModel)]="selectedPhotos" #grid [items]="photos" [rowHeight]="162" [columnWidth]="162">
             <ng-template let-photo>
-              <img style="max-width: 162px; max-height: 160px; background-size: cover; background-position: center;"
+              <img style="width: 100%; background-size: cover; background-position: center;"
                    [src]="photo.image | meldBinaryImage">
             </ng-template>
           </meld-grid>

@@ -23,6 +23,7 @@ import {ImageViewComponent} from './profile/image/image-view/image-view.componen
 import {ContactFormComponent} from './profile/contact/contact-form/contact-form.component';
 import {ContactViewComponent} from './profile/contact/contact-view/contact-view.component';
 import {ImageGuard} from './profile/image/image.guard';
+import {ProfileGuard} from './profile/profile.guard';
 
 const appRoutes: Routes = [
   {
@@ -53,8 +54,9 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: 'profile',
+    path: 'profile/:id',
     component: ProfileComponent,
+    resolve: {profile: ProfileGuard},
     children: [
       {
         path: 'user/view',
@@ -117,10 +119,15 @@ const appRoutes: Routes = [
         resolve: {contact: ContactFormGuard}
       },
       {
-        path: '',
+        path: 'image/view',
         component: ImageViewComponent,
         outlet: 'profile',
         resolve: {profile: ImageGuard}
+      },
+      {
+        path: '',
+        redirectTo : 'image/view',
+        outlet: 'profile'
       }
     ]
   }
@@ -132,6 +139,7 @@ export const appRoutingProviders: any[] = [
   PlacesFormGuard,
   WorkHistoryFormGuard,
   CategoriesFormGuard,
-  ImageGuard
+  ImageGuard,
+  ProfileGuard
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(appRoutes);

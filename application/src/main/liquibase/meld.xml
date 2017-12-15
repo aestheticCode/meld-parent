@@ -133,4 +133,12 @@
         <sqlFile path="src/main/liquibase/2017-12-15/diff2.sql"/>
     </changeSet>
 
+    <changeSet id="2017-12-15-uc_permissions3" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-15/uc_permission3.sql"/>
+    </changeSet>
+
+    <changeSet id="2017-12-15-uc_role_uc_permission2" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-15/uc_role_uc_permission2.sql"/>
+    </changeSet>
+
 </databaseChangeLog>

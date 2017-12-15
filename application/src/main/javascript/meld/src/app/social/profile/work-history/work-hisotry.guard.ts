@@ -16,7 +16,7 @@ export class WorkHistoryFormGuard implements Resolve<WorkHistory> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<WorkHistory> {
-        return this.http.get(`service/social/user/current/work/history`)
+        return this.http.get(`service/social/user/${route.parent.params['id']}/work/history`)
             .map((res: Response) => {
               return res.json() as WorkHistory;
             })

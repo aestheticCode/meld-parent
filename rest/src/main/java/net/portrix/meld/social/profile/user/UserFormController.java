@@ -67,27 +67,24 @@ public class UserFormController {
     public UserForm read(@PathParam("id") UUID id) {
 
         final User user = service.findUser(id);
-        final UserImage userImage = service.findUserImage(user);
 
         UserForm response = new UserForm();
         response.setId(user.getId());
 
-        switch (user.getGender()) {
-            case MALE:
-                response.setGender(Gender.Male);
-                break;
-            case FEMALE:
-                response.setGender(Gender.Female);
-                break;
+        if (user.getGender() != null) {
+            switch (user.getGender()) {
+                case MALE:
+                    response.setGender(Gender.Male);
+                    break;
+                case FEMALE:
+                    response.setGender(Gender.Female);
+                    break;
+            }
         }
 
         response.setFirstName(user.getFirstName());
         response.setLastName(user.getLastName());
         response.setBirthday(user.getBirthdate());
-        final Blob image = new Blob();
-        image.setData(userImage.getImage());
-        image.setName(userImage.getFileName());
-        response.setImage(image);
 
         linkRead(user, builderFactory)
                 .buildSecured(response::addLink);

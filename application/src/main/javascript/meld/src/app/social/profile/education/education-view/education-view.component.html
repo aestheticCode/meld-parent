@@ -7,11 +7,10 @@
             <fieldset>
               <legend>Education</legend>
 
-              <div *ngFor="let school of education.schools | schoolSort" style="margin-bottom: 12px;">
+              <table>
+                <tr *ngFor="let school of education.schools | schoolSort" style="margin-bottom: 12px;" app-social-school-view [school]="school"></tr>
+              </table>
 
-                <app-social-school-view [school]="school"></app-social-school-view>
-
-              </div>
               <div *ngIf="education.schools.length === 0" style="line-height: 48px; text-align: center;">
                 No Education.
               </div>

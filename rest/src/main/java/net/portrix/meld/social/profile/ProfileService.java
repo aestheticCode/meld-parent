@@ -48,4 +48,8 @@ public class ProfileService {
     public void save(Profile profile) {
         entityManager.persist(profile);
     }
+
+    public User findUser(UUID id) {
+        return userManager.find(id);
+    }
 }

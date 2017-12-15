@@ -16,7 +16,7 @@ export class PlacesFormGuard implements Resolve<Places> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Places> {
-    return this.http.get(`service/social/user/current/places`)
+    return this.http.get(`service/social/user/${route.parent.params['id']}/places`)
       .map((res: Response) => {
         return res.json() as Places;
       })

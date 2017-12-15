@@ -16,7 +16,7 @@ export class ContactFormGuard implements Resolve<Contact> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Contact> {
-    return this.http.get(`service/social/user/current/contact`)
+    return this.http.get(`service/social/user/${route.parent.params['id']}/contact`)
       .map((res: Response) => {
         return res.json() as Contact;
       })

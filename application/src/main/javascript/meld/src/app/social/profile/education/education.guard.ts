@@ -16,7 +16,7 @@ export class EducationFormGuard implements Resolve<Education> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Education> {
-    return this.http.get(`service/social/user/current/education`)
+    return this.http.get(`service/social/user/${route.parent.params['id']}/education`)
       .map((res: Response) => {
         return res.json() as Education;
       })

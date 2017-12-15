@@ -6,6 +6,7 @@ import {PhotoDialogComponent} from '../../media/photo/grid/photo-dialog/photo-di
 import {Photo} from '../../media/photo/form/photo.interfaces';
 import {HttpClient} from '@angular/common/http';
 import {Profile} from './profile.interfaces';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -14,21 +15,24 @@ import {Profile} from './profile.interfaces';
 })
 export class ProfileComponent implements OnInit {
 
-  user: Configuration.User;
+  id : string;
 
   profile: Profile;
 
   constructor(private dialog: MatDialog,
               private http: HttpClient,
-              service: AppService) {
-    this.user = service.configuration.user;
+              private route: ActivatedRoute) {
   }
 
+
   ngOnInit(): void {
-    this.http.get<Profile>('service/social/profile/background')
-      .subscribe((result) => {
-        this.profile = result;
-      });
+    this.route.params.subscribe( params => {
+      this.id = params.id;
+    });
+
+    this.route.data.forEach((data: { profile: any }) => {
+      this.profile = data.profile;
+    });
   }
 
   onDialogClick() {

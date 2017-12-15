@@ -59,7 +59,7 @@ export class MeldGridComponent implements OnInit, ControlValueAccessor {
 
   private calculateColumns() {
     let element: HTMLDivElement = this.viewPort.nativeElement;
-    return Math.floor(element.offsetWidth / this.columnWidth);
+    return Math.round(element.offsetWidth / this.columnWidth);
   }
 
   ngOnInit() {

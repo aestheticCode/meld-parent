@@ -9,9 +9,19 @@ import java.util.Set;
 
 public class ProfileResponse implements LinksContainer {
 
+    private String name;
+
     private Blob image;
 
     private Set<Link> links = Sets.newHashSet();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Blob getImage() {
         return image;
