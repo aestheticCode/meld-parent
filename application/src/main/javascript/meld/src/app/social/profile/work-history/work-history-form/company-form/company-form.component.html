@@ -1,12 +1,6 @@
 <form>
   <fieldset>
-    <mat-form-field style="width: 100%;">
-      <input placeholder="Name" [(ngModel)]="company.name" name="name" type="text"
-             matInput>
-      <button matSuffix mat-icon-button (click)="onDelete()">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-form-field>
+    <meld-google-maps-autocomplete name="name" [(ngModel)]="company.name" placeholder="Name"></meld-google-maps-autocomplete>
 
     <mat-form-field style="width: 100%;">
       <input placeholder="Title" [(ngModel)]="company.title" name="title" type="text"

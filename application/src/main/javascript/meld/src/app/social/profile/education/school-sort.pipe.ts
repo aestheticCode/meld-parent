@@ -7,7 +7,7 @@ import {School} from "./school-form.interfaces";
 export class SchoolSortPipe implements PipeTransform {
 
   transform(value: School[], args?: any): any {
-    return value.sort((lhf, rhf) => Date.parse(lhf.start) - Date.parse(rhf.start) )
+    return value.sort((lhf, rhf) => lhf.start.year - rhf.start.year )
   }
 
 }

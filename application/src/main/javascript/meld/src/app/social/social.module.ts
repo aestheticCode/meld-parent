@@ -17,7 +17,7 @@ import {WorkHistoryViewComponent} from './profile/work-history/work-history-view
 import {CompanyFormComponent} from './profile/work-history/work-history-form/company-form/company-form.component';
 import {CompanyViewComponent} from './profile/work-history/work-history-view/company-view/company-view.component';
 import {CompanySortPipe} from './profile/work-history/company-sort.pipe';
-import {ImageFormComponent} from './profile/image/image-form/image-form.component';
+import {ImageViewComponent} from './profile/image/image-view/image-view.component';
 import {PeopleComponent} from './people/people.component';
 import {FindViewComponent} from './people/find/find-view/find-view.component';
 import {CategoriesFormComponent} from './people/category/categories-form/categories-form.component';
@@ -26,7 +26,6 @@ import {CategoryComponent} from './people/category/categories-form/category-view
 import {CategoryCreateDialogComponent} from './people/category/categories-form/category-create-dialog/category-dialog.component';
 import {CategoryDeleteDialogComponent} from './people/category/categories-form/category-delete-dialog/category-delete-dialog.component';
 import {CategoryRenameDialogComponent} from './people/category/categories-form/category-rename-dialog/category-rename-dialog.component';
-import {ImageDialogComponent} from './profile/image/image-dialog/image-dialog.component';
 import {AddressMapComponent} from './profile/places/places-view/address-map/address-map.component';
 import {AddressViewComponent} from './profile/places/places-view/address-view/address-view.component';
 import {CategoriesSelectComponent} from './people/category/categories-select/categories-select.component';
@@ -39,6 +38,7 @@ import {ContactViewComponent} from './profile/contact/contact-view/contact-view.
 import {MediaModule} from '../media/media.module';
 import {SchoolFormComponent} from './profile/education/education-form/school-form/school-form.component';
 import {SchoolViewComponent} from './profile/education/education-view/school-view/school-view.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -69,7 +69,7 @@ import {SchoolViewComponent} from './profile/education/education-view/school-vie
     CompanyViewComponent,
     CompanySortPipe,
     ContactViewComponent,
-    ImageFormComponent,
+    ImageViewComponent,
     PeopleComponent,
     FindViewComponent,
     CategoriesFormComponent,
@@ -78,7 +78,6 @@ import {SchoolViewComponent} from './profile/education/education-view/school-vie
     CategoryCreateDialogComponent,
     CategoryDeleteDialogComponent,
     CategoryRenameDialogComponent,
-    ImageDialogComponent,
     AddressMapComponent,
     AddressViewComponent,
     CategoriesSelectComponent,
@@ -107,7 +106,7 @@ import {SchoolViewComponent} from './profile/education/education-view/school-vie
     CompanyViewComponent,
     CompanySortPipe,
     ContactViewComponent,
-    ImageFormComponent,
+    ImageViewComponent,
     PeopleComponent,
     FindViewComponent,
     CategoriesFormComponent,
@@ -116,7 +115,6 @@ import {SchoolViewComponent} from './profile/education/education-view/school-vie
     CategoryCreateDialogComponent,
     CategoryDeleteDialogComponent,
     CategoryRenameDialogComponent,
-    ImageDialogComponent,
     AddressMapComponent,
     AddressViewComponent,
     CategoriesSelectComponent,
@@ -126,7 +124,6 @@ import {SchoolViewComponent} from './profile/education/education-view/school-vie
     CategoryCreateDialogComponent,
     CategoryDeleteDialogComponent,
     CategoryRenameDialogComponent,
-    ImageDialogComponent,
     CategoryDialogComponent
   ],
   providers : [

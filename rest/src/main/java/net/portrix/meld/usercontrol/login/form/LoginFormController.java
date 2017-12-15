@@ -86,7 +86,7 @@ public class LoginFormController {
                 .buildSecured(loginForm::addLink);
         MeldListController.linkMeld(builderFactory)
                 .buildSecured(loginForm::addLink);
-        ProfileController.linkProfile(builderFactory)
+        ProfileController.linkProfileUser(builderFactory)
                 .buildSecured(loginForm::addLink);
         CategoryTableController.linkProfile(builderFactory)
                 .buildSecured(loginForm::addLink);

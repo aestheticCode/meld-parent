@@ -2,9 +2,7 @@ package net.portrix.meld.social.profile;
 
 import net.portrix.generic.ddd.AbstractEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
@@ -18,11 +16,19 @@ public class School extends AbstractEntity {
 
     private String course;
 
-    @Column(name = "startDate")
-    private LocalDate start;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="semester", column=@Column(name = "startSemester")),
+            @AttributeOverride(name="year", column=@Column(name = "startYear"))
+    })
+    private SchoolDate start;
 
-    @Column(name = "endDate")
-    private LocalDate end;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="semester", column=@Column(name = "endSemester")),
+            @AttributeOverride(name="year", column=@Column(name = "endYear"))
+    })
+    private SchoolDate end;
 
     private boolean tillNow;
 
@@ -44,19 +50,19 @@ public class School extends AbstractEntity {
         this.course = course;
     }
 
-    public LocalDate getStart() {
+    public SchoolDate getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
+    public void setStart(SchoolDate start) {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
+    public SchoolDate getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(SchoolDate end) {
         this.end = end;
     }
 

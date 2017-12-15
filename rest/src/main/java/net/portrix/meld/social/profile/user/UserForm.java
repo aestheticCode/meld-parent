@@ -16,8 +16,6 @@ public class UserForm implements LinksContainer {
 
     private UUID id;
 
-    private String email;
-
     private Gender gender;
 
     private String firstName;
@@ -36,14 +34,6 @@ public class UserForm implements LinksContainer {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFirstName() {

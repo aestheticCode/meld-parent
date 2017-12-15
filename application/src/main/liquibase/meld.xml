@@ -107,5 +107,30 @@
         <sqlFile path="src/main/liquibase/2017-12-14/diff2.sql"/>
     </changeSet>
 
+    <changeSet id="2017-12-14-uc_permissions2" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-14/uc_permission2.sql"/>
+    </changeSet>
+
+
+    <changeSet id="2017-12-15-uc_permissions" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-15/uc_permission.sql"/>
+    </changeSet>
+
+    <changeSet objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS" id="2017-12-15-diff" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-15/diff.sql"/>
+    </changeSet>
+
+
+    <changeSet id="2017-12-15-uc_permissions2" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-15/uc_permission2.sql"/>
+    </changeSet>
+
+    <changeSet id="2017-12-15-uc_role_uc_permission" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-15/uc_role_uc_permission.sql"/>
+    </changeSet>
+
+    <changeSet objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS" id="2017-12-15-diff2" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-15/diff2.sql"/>
+    </changeSet>
 
 </databaseChangeLog>

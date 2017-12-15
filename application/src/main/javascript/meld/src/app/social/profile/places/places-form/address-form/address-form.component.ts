@@ -23,30 +23,9 @@ export class AddressFormComponent implements OnInit {
   @ViewChild("street")
   private street: NgModel;
 
-  public streets = [];
+  constructor(private http: HttpClient) {}
 
-
-  constructor(private http: HttpClient) {
-  }
-
-  ngOnInit(): void {
-    this
-      .street
-      .control
-      .valueChanges
-      .debounceTime(300)
-      .subscribe((value: string) => {
-        this.http.post<any>("service/social/place", {value: value})
-          .subscribe((res) => {
-            this.streets = res.rows;
-          })
-      })
-  }
-
-  process(value : string) : string {
-    let parts = value.split(",");
-    return parts[0];
-  }
+  ngOnInit(): void {}
 
   fillForm(value : MatAutocompleteSelectedEvent) {
     let parts = value.option.viewValue.split(",");

@@ -70,7 +70,7 @@ public class ApplicationController {
                 .buildSecured(application::addLink);
         MeldListController.linkMeld(builderFactory)
                 .buildSecured(application::addLink);
-        ProfileController.linkProfile(builderFactory)
+        ProfileController.linkProfileUser(builderFactory)
                 .buildSecured(application::addLink);
         CategoryTableController.linkProfile(builderFactory)
                 .buildSecured(application::addLink);

@@ -17,6 +17,8 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,7 +71,6 @@ public class UserFormController {
 
         UserForm response = new UserForm();
         response.setId(user.getId());
-        response.setEmail(user.getName());
 
         switch (user.getGender()) {
             case MALE:
@@ -105,10 +106,16 @@ public class UserFormController {
     @Name("User Form Update")
     public UserForm update(final UserForm form) {
         final User user = service.currentUser();
-        user.setName(form.getEmail());
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setBirthdate(form.getBirthday());
+
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .appendPattern("dMMMuuuu")
+                .toFormatter();
+        String birthday = form.getBirthday().format(formatter);
+        String userId = form.getFirstName() + form.getLastName() + birthday;
+        user.setName(userId);
 
         final Blob image = form.getImage();
         final UserImage userImage = service.findUserImage(user);
@@ -128,12 +135,17 @@ public class UserFormController {
     @Name("User Form Save")
     public UserForm save(final UserForm form) {
         final User user = new User();
-        user.setName(form.getEmail());
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setBirthdate(form.getBirthday());
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .appendPattern("dMMMuuuu")
+                .toFormatter();
+        String birthday = form.getBirthday().format(formatter);
+        String userId = form.getFirstName() + form.getLastName() + birthday;
+        user.setName(userId);
+
         service.save(user);
-        final List<Group> groups = service.findAllGroups();
 
         return read(user.getId());
     }

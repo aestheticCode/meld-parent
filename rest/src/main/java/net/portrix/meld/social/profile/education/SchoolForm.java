@@ -14,9 +14,9 @@ public class SchoolForm {
 
     private String course;
 
-    private LocalDate start;
+    private SchoolDateForm start;
 
-    private LocalDate end;
+    private SchoolDateForm end;
 
     private boolean tillNow;
 
@@ -46,19 +46,19 @@ public class SchoolForm {
         this.course = course;
     }
 
-    public LocalDate getStart() {
+    public SchoolDateForm getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
+    public void setStart(SchoolDateForm start) {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
+    public SchoolDateForm getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(SchoolDateForm end) {
         this.end = end;
     }
 

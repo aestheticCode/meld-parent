@@ -45,6 +45,8 @@ import {MeldSelectViewModule} from './component/meld-select-view/meld-select-vie
 import {MeldPlaceholderModule} from './pipe/meld-placeholder/meld-placeholder.module';
 import {MeldGridModule} from './component/meld-grid/meld-grid.module';
 import {MeldDialogModule} from './component/meld-dialog/meld-dialog.module';
+import {MeldGoogleMapsAutocompleteComponent} from './component/meld-google-maps-autocomplete/meld-google-maps-autocomplete.component';
+import {MeldGoogleMapsAutocompleteModule} from './component/meld-google-maps-autocomplete/meld-google-maps-autocomplete.module';
 
 
 @NgModule({
@@ -54,26 +56,26 @@ import {MeldDialogModule} from './component/meld-dialog/meld-dialog.module';
     HttpClientModule,
     HttpModule,
 
+    MatAutocompleteModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
     MatNativeDateModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
     MatSidenavModule,
     MatTabsModule,
     MatToolbarModule,
-    MatButtonToggleModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatExpansionModule,
-    MatAutocompleteModule,
 
     MeldComboBoxModule,
     MeldDateModule,
@@ -82,6 +84,7 @@ import {MeldDialogModule} from './component/meld-dialog/meld-dialog.module';
     MeldEditorModule,
     MeldFileContainerModule,
     MeldFormGroupModule,
+    MeldGoogleMapsAutocompleteModule,
     MeldImageModule,
     MeldGridModule,
     MeldListModule,
@@ -136,6 +139,7 @@ import {MeldDialogModule} from './component/meld-dialog/meld-dialog.module';
     MeldEditorModule,
     MeldFileContainerModule,
     MeldFormGroupModule,
+    MeldGoogleMapsAutocompleteModule,
     MeldGridModule,
     MeldImageModule,
     MeldListModule,

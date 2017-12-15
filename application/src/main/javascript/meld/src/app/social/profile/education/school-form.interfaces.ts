@@ -6,10 +6,19 @@ export interface School {
 
   course : string
 
-  start : string
+  start : SchoolDate
 
-  end : string
+  end : SchoolDate
 
   tillNow : boolean
 
 }
+
+export interface SchoolDate {
+
+  year : number;
+
+  semester : string
+
+}
+

@@ -15,6 +15,16 @@ export class SchoolFormComponent {
   @Input("readonly")
   public readonly : boolean = true;
 
+  public semesters : string[] = ['WINTER', 'SUMMER'];
+
+  public years : number[] = [];
+
+  constructor() {
+    for (var i = 1950; i < 2050; i++) {
+      this.years.push(i);
+    }
+  }
+
   @Output("deleteClick")
   private deleteClick : EventEmitter<School> = new EventEmitter();
 

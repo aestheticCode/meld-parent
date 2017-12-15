@@ -6,6 +6,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Education;
 import net.portrix.meld.social.profile.School;
+import net.portrix.meld.social.profile.SchoolDate;
 import net.portrix.meld.usercontrol.User;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -67,11 +68,30 @@ public class EducationFormController {
             SchoolForm schoolFormType = new SchoolForm();
             schoolFormType.setCourse(school.getCourse());
             schoolFormType.setDescription(school.getDescription());
-            schoolFormType.setEnd(school.getEnd());
             schoolFormType.setId(school.getId());
             schoolFormType.setName(school.getName());
-            schoolFormType.setStart(school.getStart());
             schoolFormType.setTillNow(school.isTillNow());
+
+            SchoolDateForm start = new SchoolDateForm();
+            switch (school.getStart().getSemester()) {
+                case SUMMER: start.setSemester(SchoolDateForm.Semester.SUMMER);
+                    break;
+                case WINTER: start.setSemester(SchoolDateForm.Semester.WINTER);
+                    break;
+            }
+            start.setYear(school.getStart().getYear());
+            schoolFormType.setStart(start);
+
+            SchoolDateForm end = new SchoolDateForm();
+            switch (school.getEnd().getSemester()) {
+                case SUMMER: end.setSemester(SchoolDateForm.Semester.SUMMER);
+                    break;
+                case WINTER: end.setSemester(SchoolDateForm.Semester.WINTER);
+                    break;
+            }
+            end.setYear(school.getEnd().getYear());
+            schoolFormType.setEnd(end);
+
 
             form.addSchool(schoolFormType);
         }
@@ -93,10 +113,28 @@ public class EducationFormController {
             School school = new School();
             school.setCourse(schoolType.getCourse());
             school.setDescription(schoolType.getDescription());
-            school.setEnd(schoolType.getEnd());
             school.setName(schoolType.getName());
-            school.setStart(schoolType.getStart());
             school.setTillNow(schoolType.isTillNow());
+
+            SchoolDate start = new SchoolDate();
+            start.setYear(schoolType.getStart().getYear());
+            switch (schoolType.getStart().getSemester()) {
+                case SUMMER: start.setSemester(SchoolDate.Semester.SUMMER);
+                    break;
+                case WINTER: start.setSemester(SchoolDate.Semester.WINTER);
+                    break;
+            }
+            school.setStart(start);
+
+            SchoolDate end = new SchoolDate();
+            end.setYear(schoolType.getEnd().getYear());
+            switch (schoolType.getEnd().getSemester()) {
+                case SUMMER: end.setSemester(SchoolDate.Semester.SUMMER);
+                    break;
+                case WINTER: end.setSemester(SchoolDate.Semester.WINTER);
+                    break;
+            }
+            school.setEnd(end);
 
             education.addSchool(school);
         }
@@ -121,10 +159,28 @@ public class EducationFormController {
             School school = new School();
             school.setCourse(schoolType.getCourse());
             school.setDescription(schoolType.getDescription());
-            school.setEnd(schoolType.getEnd());
             school.setName(schoolType.getName());
-            school.setStart(schoolType.getStart());
             school.setTillNow(schoolType.isTillNow());
+
+            SchoolDate start = new SchoolDate();
+            start.setYear(schoolType.getStart().getYear());
+            switch (schoolType.getStart().getSemester()) {
+                case SUMMER: start.setSemester(SchoolDate.Semester.SUMMER);
+                    break;
+                case WINTER: start.setSemester(SchoolDate.Semester.WINTER);
+                    break;
+            }
+            school.setStart(start);
+
+            SchoolDate end = new SchoolDate();
+            end.setYear(schoolType.getEnd().getYear());
+            switch (schoolType.getEnd().getSemester()) {
+                case SUMMER: end.setSemester(SchoolDate.Semester.SUMMER);
+                    break;
+                case WINTER: end.setSemester(SchoolDate.Semester.WINTER);
+                    break;
+            }
+            school.setEnd(end);
 
             education.addSchool(school);
         }

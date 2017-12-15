@@ -19,9 +19,10 @@ import {PlacesFormComponent} from './profile/places/places-form/places-form.comp
 import {WorkHistoryViewComponent} from './profile/work-history/work-history-view/work-history-view.component';
 import {WorkHistoryFormGuard} from './profile/work-history/work-hisotry.guard';
 import {WorkHistoryFormComponent} from './profile/work-history/work-history-form/work-history-form.component';
-import {ImageFormComponent} from './profile/image/image-form/image-form.component';
+import {ImageViewComponent} from './profile/image/image-view/image-view.component';
 import {ContactFormComponent} from './profile/contact/contact-form/contact-form.component';
 import {ContactViewComponent} from './profile/contact/contact-view/contact-view.component';
+import {ImageGuard} from './profile/image/image.guard';
 
 const appRoutes: Routes = [
   {
@@ -117,8 +118,9 @@ const appRoutes: Routes = [
       },
       {
         path: '',
-        component: ImageFormComponent,
-        outlet: 'profile'
+        component: ImageViewComponent,
+        outlet: 'profile',
+        resolve: {profile: ImageGuard}
       }
     ]
   }
@@ -129,6 +131,7 @@ export const appRoutingProviders: any[] = [
   EducationFormGuard,
   PlacesFormGuard,
   WorkHistoryFormGuard,
-  CategoriesFormGuard
+  CategoriesFormGuard,
+  ImageGuard
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(appRoutes);

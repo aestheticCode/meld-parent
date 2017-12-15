@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -148,15 +149,6 @@ public class PlacesFormController {
         return read(user.getId());
     }
 
-    @POST
-    @Path("place")
-    @Name("Places Geo coding")
-    @Secured
-    public Container<PlacePrediction> geoCoding(LocationForm address) {
-        List<PlacePrediction> placePredictions = service.find(address.getValue());
-        return new Container<>(placePredictions, placePredictions.size());
-    }
-
     public static URLBuilder<PlacesFormController> linkCurrent(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(PlacesFormController.class)
@@ -185,11 +177,5 @@ public class PlacesFormController {
                 .rel("update");
     }
 
-    public static URLBuilder<PlacesFormController> linkGeoCoding(URLBuilderFactory builderFactory) {
-        return builderFactory
-                .from(PlacesFormController.class)
-                .record((method) -> method.geoCoding(null))
-                .rel("geoCoding");
-    }
 
 }

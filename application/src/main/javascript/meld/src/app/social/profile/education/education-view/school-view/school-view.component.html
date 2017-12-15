@@ -1,7 +1,7 @@
 <div style="display: flex">
-  <div style="flex: 0.5">
-    <strong>{{school.start | date:'ddMMMyyyy'}} - </strong>
-    <strong *ngIf="! school.tillNow">{{school.end | date:'ddMMMyyyy'}}</strong>
+  <div style="flex: 0.5;font-size: smaller">
+    <strong style="line-height: 24px;">{{school.start.year}} {{school.start.semester}} - </strong>
+    <strong *ngIf="! school.tillNow">{{school.end.year}} {{school.end.semester}}</strong>
     <strong *ngIf="school.tillNow">Till Now</strong>
   </div>
   <div style="flex: 0.5">

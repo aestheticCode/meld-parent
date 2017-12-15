@@ -1,16 +1,7 @@
 <form>
   <fieldset>
-    <mat-form-field style="width: 100%;">
-      <input matInput #street="ngModel" name="street" placeholder="Street" aria-label="Street" [matAutocomplete]="auto" [(ngModel)]="address.street">
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="fillForm($event)">
-        <mat-option *ngFor="let street of streets" [value]="process(street.description)">
-          <span>{{ street.description }}</span>
-        </mat-option>
-      </mat-autocomplete>
-      <button matSuffix mat-icon-button (click)="onDelete()">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-form-field>
+    <meld-google-maps-autocomplete name="street" [(ngModel)]="address.street" (optionSelected)="fillForm($event)"></meld-google-maps-autocomplete>
+
 
     <mat-form-field style="width: 100%;">
       <input placeholder="Zip Code" [(ngModel)]="address.zipCode" name="zipCode" type="text"

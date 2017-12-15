@@ -6,6 +6,7 @@ import {Education} from '../education.interfaces';
 import {EducationModel} from '../education.classes';
 import {SchoolFormModel} from '../school-form.classes';
 import {School} from '../school-form.interfaces';
+import {Objects} from '../../../../../lib/common/utils/Objects';
 
 @Component({
   selector: 'app-social-education-form',
@@ -72,8 +73,8 @@ export class EducationFormComponent implements OnInit {
       = this.education.schools.filter((school) => {
       return Strings.isNotEmpty(school.name)
         || Strings.isNotEmpty(school.course)
-        || Strings.isNotEmpty(school.start)
-        || Strings.isNotEmpty(school.end)
+        || Objects.isNotNull(school.start)
+        || Objects.isNotNull(school.end)
     })
   }
 

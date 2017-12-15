@@ -1,0 +1,2 @@
+update uc_permission set name = 'Social Profile Background Read', path = 'social/profile/background' WHERE id = '62b967d7-2291-4961-9b24-abf546d3c62c';
+update uc_permission set name = 'Social Profile Background Update', path = 'social/profile/background' WHERE id = '3c7569a3-415c-4b5b-b18d-de69326aab21';

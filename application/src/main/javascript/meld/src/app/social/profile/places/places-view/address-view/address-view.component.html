@@ -4,8 +4,8 @@
       <mat-icon>room</mat-icon>
     </button>
   </div>
-  <div style="flex: 0.5">
-    <strong>{{address.start | date:'ddMMMyyyy'}} - </strong>
+  <div style="flex: 0.5; font-size: smaller;">
+    <strong style="line-height: 24px;">{{address.start | date:'ddMMMyyyy'}} - </strong>
     <strong *ngIf="! address.tillNow">{{address.end | date:'ddMMMyyyy'}}</strong>
     <strong *ngIf="address.tillNow">Till Now</strong>
   </div>

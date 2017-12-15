@@ -20,17 +20,28 @@ import java.util.UUID;
 public class Profile extends AbstractAggregate {
 
     @ManyToOne
-    private Photo photo;
+    private Photo backgroundPhoto;
+
+    @ManyToOne
+    private Photo userPhoto;
 
     @ManyToOne
     private User user;
 
-    public Photo getPhoto() {
-        return photo;
+    public Photo getBackgroundPhoto() {
+        return backgroundPhoto;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setBackgroundPhoto(Photo backgroundPhoto) {
+        this.backgroundPhoto = backgroundPhoto;
+    }
+
+    public Photo getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(Photo userPhoto) {
+        this.userPhoto = userPhoto;
     }
 
     public User getUser() {

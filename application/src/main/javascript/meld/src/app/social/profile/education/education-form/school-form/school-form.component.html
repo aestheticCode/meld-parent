@@ -1,12 +1,7 @@
 <form>
   <fieldset>
-    <mat-form-field style="width: 100%;">
-      <input placeholder="Name" [(ngModel)]="school.name" name="name" type="text"
-             matInput>
-      <button matSuffix mat-icon-button (click)="onDelete()">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-form-field>
+    <meld-google-maps-autocomplete placeholder="Name" name="name" [(ngModel)]="school.name"></meld-google-maps-autocomplete>
+
 
     <mat-form-field style="width: 100%;">
       <input placeholder="Course" [(ngModel)]="school.course" name="course" type="text"
@@ -16,18 +11,28 @@
 
     <div style="display: flex; width: 100%">
       <div style="width: 50%">
-        <mat-form-field style="width: 100%">
-          <meld-date #datePickerStart placeholder="Start" [(ngModel)]="school.start" name="start"></meld-date>
-          <button matSuffix mat-icon-button (click)="datePickerStart.clear()"><mat-icon>delete</mat-icon></button>
-          <button matSuffix mat-icon-button (click)="datePickerStart.open()"><mat-icon >today</mat-icon></button>
+        <mat-form-field style="width: 100%;">
+          <mat-select name="startSemester" placeholder="Start Semester" [(ngModel)]="school.start.semester">
+            <mat-option *ngFor="let semester of semesters" [value]="semester">
+              {{ semester }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+          <input matInput type="number" name="startYear" placeholder="Start Year" [(ngModel)]="school.start.year">
         </mat-form-field>
       </div>
 
       <div style="width: 50%">
-        <mat-form-field style="width: 100%" *ngIf="! school.tillNow">
-          <meld-date #datePickerEnd placeholder="End" [(ngModel)]="school.end" name="end"></meld-date>
-          <button matSuffix mat-icon-button (click)="datePickerEnd.clear()"><mat-icon>delete</mat-icon></button>
-          <button matSuffix mat-icon-button (click)="datePickerEnd.open()"><mat-icon >today</mat-icon></button>
+        <mat-form-field style="width: 100%;">
+          <mat-select name="endSemester" placeholder="End Semester" [(ngModel)]="school.end.semester">
+            <mat-option *ngFor="let semester of semesters" [value]="semester">
+              {{ semester }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+          <input matInput type="number" name="startYear" placeholder="End Year" [(ngModel)]="school.end.year">
         </mat-form-field>
       </div>
 
