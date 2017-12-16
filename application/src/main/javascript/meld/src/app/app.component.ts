@@ -21,7 +21,7 @@ export class AppComponent {
       this.links = linksContainer.links;
     });
 
-    let matchMedia = window.matchMedia( "(max-width: 500px)" );
+    let matchMedia = window.matchMedia( "(max-width: 1000px)" );
 
     if (matchMedia.matches) {
       this.sideNavShow = false;
@@ -34,7 +34,7 @@ export class AppComponent {
     });
 
 
-    window.matchMedia( "(max-width: 700px)" ).addListener((listener) => {
+    window.matchMedia( "(max-width: 1050px)" ).addListener((listener) => {
       this.sideNavShow = true;
       this.sideNavOption = "side";
     });

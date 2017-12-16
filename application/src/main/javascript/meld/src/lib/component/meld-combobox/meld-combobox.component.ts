@@ -1,11 +1,15 @@
 import {
-  Component, ContentChild, EventEmitter, forwardRef, HostListener, Input, OnChanges, Output, SimpleChanges, TemplateRef,
-  ViewChild
+  Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostBinding, HostListener, Input, OnChanges, Optional, Output, Self,
+  SimpleChanges, TemplateRef, ViewChild
 } from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {Items} from "../../common/query/Items";
-import {MeldTableComponent} from "../meld-table/meld-table.component";
-import {QueryBuilder} from "../../common/query/QueryBuilder";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
+import {Items} from '../../common/query/Items';
+import {MeldTableComponent} from '../meld-table/meld-table.component';
+import {QueryBuilder} from '../../common/query/QueryBuilder';
+import {MatFormFieldControl} from '@angular/material';
+import {Subject} from 'rxjs/Subject';
+import {FocusMonitor} from '@angular/cdk/a11y';
+import {Objects} from '../../common/utils/Objects';
 
 const noop = () => {
 };
@@ -20,9 +24,50 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'meld-combobox',
   templateUrl: 'meld-combobox.component.html',
   styleUrls: ['meld-combobox.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR,
+    {provide: MatFormFieldControl, useExisting: MeldComboBoxComponent}]
 })
-export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
+export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, MatFormFieldControl<any> {
+
+  static nextId = 0;
+
+  stateChanges = new Subject<void>();
+
+  @HostBinding()
+  id = `meld-combobox-${MeldComboBoxComponent.nextId++}`;
+
+  @HostBinding('attr.aria-describedby')
+  describedBy = '';
+
+  @Input('required')
+  required: boolean;
+
+  errorState: boolean;
+
+  @Optional() @Self() public ngControl: NgControl;
+
+  get focused() {
+     return document.activeElement === this.input.nativeElement;
+  }
+
+  get shouldPlaceholderFloat() {
+    return this.focused || !this.empty;
+  }
+
+  setDescribedByIds(ids: string[]): void {
+    this.describedBy = ids.join(' ');
+  }
+
+  onContainerClick(event: MouseEvent): void {
+    if ((event.target as Element).tagName.toLowerCase() != 'input') {
+      this.elRef.nativeElement.querySelector('input').focus();
+    }
+  }
+
+  get empty() {
+    return Objects.isNotNull(this.value);
+  }
+
 
   public value: any;
 
@@ -32,20 +77,20 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
 
   public showOverlay: boolean = false;
 
-  @Input("filter")
-  public filter: string = "";
+  @Input('filter')
+  public filter: string = '';
 
-  @Input("placeholder")
-  public placeholder: string = "";
+  @Input('placeholder')
+  public placeholder: string = '';
 
-  @Input("items")
+  @Input('items')
   public items: Items<any>;
 
-  @Input("readonly")
-  public readonly : boolean = false;
+  @Input('readonly')
+  public readonly: boolean = false;
 
-  @Input("disabled")
-  public disabled : boolean = false;
+  @Input('disabled')
+  public disabled: boolean = false;
 
   @Output('selectItemChange')
   private selectItemChange: EventEmitter<any> = new EventEmitter<any>();
@@ -53,12 +98,19 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
   @ContentChild(TemplateRef)
   public template: TemplateRef<any>;
 
-  @ViewChild("table")
+  @ViewChild('table')
   public table: MeldTableComponent;
+
+  @ViewChild('input')
+  private input : ElementRef;
 
   private onTouchedCallback: () => void = noop;
 
   private onChangeCallback: (value: any) => void = noop;
+
+
+  constructor(private elRef: ElementRef) {
+  }
 
   public parentItems: Items<any> = (query, callback) => {
     if (this.value) {
@@ -79,15 +131,15 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
     }
   };
 
-  @Input("predicate")
+  @Input('predicate')
   public predicate = (value) => {
     if (value == null) {
       return null;
     }
-    return QueryBuilder.like(value, "name");
+    return QueryBuilder.like(value, 'name');
   };
 
-  @Input("itemValue")
+  @Input('itemValue')
   public itemValue = (item) => {
     if (item == null) {
       return null;
@@ -95,7 +147,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
     return item['id'];
   };
 
-  @Input("itemName")
+  @Input('itemName')
   public itemName = (item) => {
     if (item == null) {
       return null;
@@ -148,7 +200,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
     this.showOverlay = false;
   }
 
-  @HostListener("document:click")
+  @HostListener('document:click')
   private onDocumentClick() {
     this.showOverlay = false;
   }
@@ -170,7 +222,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
       // Arrow Down
       case 40 : {
         if (table.hoveredIndex === undefined) {
-          table.hoveredIndex = table.scrollWindowChange.startIndex
+          table.hoveredIndex = table.scrollWindowChange.startIndex;
         } else {
           if (table.hoveredIndex < table.scrollWindowChange.startIndex) {
             table.hoveredIndex = table.scrollWindowChange.startIndex;
@@ -188,17 +240,25 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
       this.value = obj;
 
       let meldQuery = QueryBuilder.query();
-      meldQuery.predicate = QueryBuilder.in([obj], "id");
+      meldQuery.predicate = QueryBuilder.in([obj], 'id');
       this.parentItems(meldQuery, () => {
       });
+      this.stateChanges.next();
     }
   }
 
   registerOnChange(fn: any): void {
-    this.onChangeCallback = fn;
+    this.onChangeCallback = (value : any) => {
+      fn(value);
+      this.stateChanges.next();
+    };
   }
 
   registerOnTouched(fn: any): void {
     this.onTouchedCallback = fn;
+  }
+
+  ngOnDestroy() {
+    this.stateChanges.complete();
   }
 }

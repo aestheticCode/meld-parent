@@ -3,6 +3,7 @@ package net.portrix.meld.usercontrol.user.form;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.api.Blob;
+import net.portrix.meld.usercontrol.Gender;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -23,6 +24,8 @@ public class UserForm implements LinksContainer {
     private String lastName;
 
     private LocalDate birthday;
+
+    private Gender gender;
 
     private Set<UUID> roles = new HashSet<>();
 
@@ -70,6 +73,14 @@ public class UserForm implements LinksContainer {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public Blob getImage() {

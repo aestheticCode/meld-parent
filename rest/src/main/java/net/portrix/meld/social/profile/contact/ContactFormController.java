@@ -8,6 +8,7 @@ import net.portrix.meld.social.profile.Chat;
 import net.portrix.meld.social.profile.PersonalContact;
 import net.portrix.meld.social.profile.Phone;
 import net.portrix.meld.usercontrol.User;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -28,13 +29,19 @@ public class ContactFormController {
 
     private final ContactFormService service;
 
+    private final URLBuilderFactory factory;
+
+    private final Identity identity;
+
     @Inject
-    public ContactFormController(ContactFormService service) {
+    public ContactFormController(ContactFormService service, URLBuilderFactory factory, Identity identity) {
         this.service = service;
+        this.factory = factory;
+        this.identity = identity;
     }
 
     public ContactFormController() {
-        this(null);
+        this(null, null, null);
     }
 
     @GET
@@ -85,6 +92,14 @@ public class ContactFormController {
             responseType.setType(phone.getType());
 
             contactResponseType.addPhone(responseType);
+        }
+
+        if (identity.isLoggedIn()) {
+            linkUpdate(factory)
+                    .buildSecured(contactResponseType::addLink);
+
+            linkSave(factory)
+                    .buildSecured(contactResponseType::addLink);
         }
 
         return contactResponseType;

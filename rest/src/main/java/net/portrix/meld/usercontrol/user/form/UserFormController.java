@@ -100,6 +100,8 @@ public class UserFormController {
         response.setFirstName(user.getFirstName());
         response.setLastName(user.getLastName());
         response.setBirthday(user.getBirthdate());
+        response.setGender(user.getGender());
+
         final Blob image = new Blob();
         image.setData(userImage.getImage());
         image.setName(userImage.getFileName());
@@ -148,6 +150,7 @@ public class UserFormController {
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setBirthdate(form.getBirthday());
+        user.setGender(form.getGender());
 
         final Blob image = form.getImage();
         final UserImage userImage = service.findUserImage(user);
@@ -187,6 +190,7 @@ public class UserFormController {
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setBirthdate(form.getBirthday());
+        user.setGender(form.getGender());
         service.save(user);
         final List<Group> groups = service.findAllGroups();
         for (Group group : groups) {

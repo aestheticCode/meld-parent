@@ -6,9 +6,9 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserImage;
+import org.picketlink.Identity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +19,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -38,14 +37,18 @@ public class UserFormController {
 
     private final URLBuilderFactory builderFactory;
 
+    private final Identity identity;
+
+
     @Inject
-    public UserFormController(UserFormService service, URLBuilderFactory builderFactory) {
+    public UserFormController(UserFormService service, URLBuilderFactory builderFactory, Identity identity) {
         this.service = service;
         this.builderFactory = builderFactory;
+        this.identity = identity;
     }
 
     public UserFormController() {
-        this(null, null);
+        this(null, null, null);
     }
 
 

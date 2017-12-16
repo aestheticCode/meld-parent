@@ -6,7 +6,9 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Company;
 import net.portrix.meld.social.profile.WorkHistory;
+import net.portrix.meld.social.profile.education.EducationFormController;
 import net.portrix.meld.usercontrol.User;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -27,13 +29,20 @@ public class WorkHistoryFormController {
 
     private final WorkHistoryFormService service;
 
+    private final URLBuilderFactory factory;
+
+    private final Identity identity;
+
+
     @Inject
-    public WorkHistoryFormController(WorkHistoryFormService service) {
+    public WorkHistoryFormController(WorkHistoryFormService service, URLBuilderFactory factory, Identity identity) {
         this.service = service;
+        this.factory = factory;
+        this.identity = identity;
     }
 
     public WorkHistoryFormController() {
-        this(null);
+        this(null, null, null);
     }
 
 
@@ -78,6 +87,14 @@ public class WorkHistoryFormController {
 
             historyResponseType.addCompany(companyForm);
         }
+
+        if (identity.isLoggedIn()) {
+            linkUpdate(factory)
+                    .buildSecured(historyResponseType::addLink);
+            linkSave(factory)
+                    .buildSecured(historyResponseType::addLink);
+        }
+
 
         return historyResponseType;
     }

@@ -1,22 +1,21 @@
 package net.portrix.meld.social.profile.places;
 
-import com.googlecode.placesapiclient.client.entity.PlacePrediction;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.Container;
+import net.portrix.generic.rest.google.PlacesController;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Address;
 import net.portrix.meld.social.profile.Places;
+import net.portrix.meld.social.profile.education.EducationFormController;
 import net.portrix.meld.usercontrol.User;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -31,13 +30,20 @@ public class PlacesFormController {
 
     private final PlacesFormService service;
 
+    private final URLBuilderFactory factory;
+
+    private final Identity identity;
+
+
     @Inject
-    public PlacesFormController(PlacesFormService service) {
+    public PlacesFormController(PlacesFormService service, URLBuilderFactory factory, Identity identity) {
         this.service = service;
+        this.factory = factory;
+        this.identity = identity;
     }
 
     public PlacesFormController() {
-        this(null);
+        this(null, null, null);
     }
 
 
@@ -83,6 +89,15 @@ public class PlacesFormController {
 
             placesForm.addAddress(responseType);
         }
+
+        if (identity.isLoggedIn()) {
+            linkUpdate(factory)
+                    .buildSecured(placesForm::addLink);
+
+            linkSave(factory)
+                    .buildSecured(placesForm::addLink);
+        }
+
 
         return placesForm;
     }

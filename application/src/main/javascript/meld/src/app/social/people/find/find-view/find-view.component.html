@@ -23,9 +23,11 @@
                       <ng-template let-user>
                         <div style="line-height: 100px; height: 100%; overflow: auto; text-overflow: ellipsis; white-space: nowrap">
                           <div style="display: flex">
-                            <strong>
-                              {{user.firstName}} {{user.lastName}}
-                            </strong>
+                            <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
+                              <strong>
+                                {{user.firstName}} {{user.lastName}}
+                              </strong>
+                            </a>
                             <span style="flex: 1"></span>
                             <app-categories-select (onClickChange)="open(user)" [(ngModel)]="user.category"></app-categories-select>
                           </div>

@@ -21,6 +21,8 @@ import {LoadWindow} from "../meld-window/LoadWindow";
 import {TableColumn} from "./TableColumn";
 import {Items} from "../../common/query/Items";
 import {QueryBuilder} from "../../common/query/QueryBuilder";
+import {MeldTdDirective} from './meld-td/meld-td.directive';
+import {Sort} from '../../common/query/Sort';
 
 const noop = () => {
 };
@@ -69,13 +71,15 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
 
   public itemsSize: number;
 
-  public scrollWindowChange: LoadWindow = new LoadWindow(0, 0, 0, 5);
+  public scrollWindowChange: LoadWindow = new LoadWindow(0, 75, 0, 5);
 
   @Input('items')
   private items: Items<any>;
 
   @Input('rowHeight')
   public rowHeight: number = 37;
+
+  public sorting: Sort[];
 
   @ContentChild(MeldFilterDirective)
   public filter: MeldFilterDirective;
@@ -96,7 +100,6 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
   public itemValue = (item) => {
     return item['id'];
   };
-
 
   constructor(public dialog: MatDialog) {
   }
@@ -119,14 +122,17 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
 
   onWindowScroll(event: LoadWindow) {
     this.scrollWindowChange = event;
-    if (event.callback && this.items instanceof Function) {
+    if (this.items instanceof Function) {
       let query = QueryBuilder.query();
       query.index = event.loadIndex;
       query.limit = event.loadLimit * 5;
+      query.sorting = this.sorting;
       this.items(query, (data: any[], size: number) => {
         this.itemsWindow = data;
         this.itemsSize = size;
-        event.callback();
+        if (event.callback) {
+          event.callback();
+        }
       });
     }
   }
@@ -134,7 +140,10 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
   ngAfterContentInit(): void {
     if (this.colgroup instanceof MeldColgroupDirective) {
       this.columnConfiguration = this.colgroup.columns.map((col, index) => {
-        return new TableColumn(index, col.visible, col.width)
+        if (this.head) {
+          this.head.rows.first.columns.toArray()[index].path = col.path;
+        }
+        return new TableColumn(index, col.visible, col.width, col.path)
       })
     } else {
       if (this.body) {
@@ -145,13 +154,32 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
             let columns = firstRow.columns;
             if (columns) {
               this.columnConfiguration = columns.map((col, index) => {
-                return new TableColumn(index, true, 100);
+                return new TableColumn(index, true, 100, "");
               })
             }
           }
         }
       }
     }
+  }
+
+  onSortClick(column : MeldTdDirective) {
+
+    if (column.asc === true) {
+      column.asc = false;
+    } else
+    if (column.asc === false) {
+      column.asc = undefined;
+    } else
+    if (column.asc === undefined) {
+      column.asc = true;
+    }
+
+    this.sorting = this.head.rows.first.columns
+      .filter((column) => column.asc !== undefined)
+      .map((column) => new Sort(column.path, column.asc));
+
+    this.onWindowScroll(this.scrollWindowChange);
   }
 
   getIdFromItem(item: any) {

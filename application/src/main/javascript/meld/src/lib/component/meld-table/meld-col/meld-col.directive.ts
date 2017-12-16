@@ -11,4 +11,7 @@ export class MeldColDirective {
   @Input('visible')
   public visible : boolean = true;
 
+  @Input('path')
+  public path : string;
+
 }

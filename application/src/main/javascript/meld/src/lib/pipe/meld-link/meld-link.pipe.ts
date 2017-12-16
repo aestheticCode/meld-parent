@@ -7,6 +7,9 @@ import {Link} from "../../common/rest/Link";
 export class MeldLinkPipe implements PipeTransform {
 
   transform(value: Link[], args?: any): any {
+    if (!value) {
+      return false;
+    }
     let result = value.find((link:Link) => {
       return link.rel === args
     });

@@ -6,7 +6,7 @@
     </mat-input-container>
     <button mat-raised-button *ngIf="links | meldLink:'save'" (click)="onCreate()">Create</button>
   </div>
-  <meld-table #table [items]="users" (selectItemChange)="onSelectionChange($event)" [menu]="true" [filter]="true">
+  <meld-table #table [items]="users" (selectItemChange)="onSelectionChange($event)" [menu]="true">
     <meld-filter>
       <ng-template>
         <form>
@@ -30,17 +30,13 @@
       </ng-template>
     </meld-filter>
     <meld-colgroup>
-      <meld-col [width]="100"></meld-col>
-      <meld-col [width]="100"></meld-col>
-      <meld-col [width]="100"></meld-col>
-      <meld-col [width]="100"></meld-col>
-      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100" [path]="'gender'"></meld-col>
+      <meld-col [width]="100" [path]="'firstName'"></meld-col>
+      <meld-col [width]="100" [path]="'lastName'"></meld-col>
+      <meld-col [width]="100" [path]="'birthdate'"></meld-col>
     </meld-colgroup>
     <meld-thead>
       <meld-tr>
-        <meld-td>
-          <ng-template><strong>eMail</strong></ng-template>
-        </meld-td>
         <meld-td>
           <ng-template><strong>Gender</strong></ng-template>
         </meld-td>
@@ -57,9 +53,6 @@
     </meld-thead>
     <meld-tbody>
       <meld-tr>
-        <meld-td>
-          <ng-template let-user>{{user.email}}</ng-template>
-        </meld-td>
         <meld-td>
           <ng-template let-user>{{user.gender}}</ng-template>
         </meld-td>

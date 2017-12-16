@@ -18,9 +18,9 @@
               </fieldset>
             </form>
           </mat-card-content>
-          <mat-card-actions>
-            <button mat-button (click)="onEditClick()">Edit</button>
-            <button mat-button (click)="onCancelClick()">Chancel</button>
+          <mat-card-actions >
+            <button *ngIf="user.links | meldLink:'save'" mat-button (click)="onEditClick()">Edit</button>
+            <button mat-button (click)="onCancel()">Chancel</button>
           </mat-card-actions>
         </mat-card>
 

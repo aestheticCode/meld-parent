@@ -7,7 +7,9 @@ import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Education;
 import net.portrix.meld.social.profile.School;
 import net.portrix.meld.social.profile.SchoolDate;
+import net.portrix.meld.social.profile.contact.ContactFormController;
 import net.portrix.meld.usercontrol.User;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -28,13 +30,20 @@ public class EducationFormController {
 
     private final EducationFormService service;
 
+    private final URLBuilderFactory factory;
+
+    private final Identity identity;
+
+
     @Inject
-    public EducationFormController(EducationFormService service) {
+    public EducationFormController(EducationFormService service, URLBuilderFactory factory, Identity identity) {
         this.service = service;
+        this.factory = factory;
+        this.identity = identity;
     }
 
     public EducationFormController() {
-        this(null);
+        this(null, null, null);
     }
 
     @GET
@@ -95,6 +104,15 @@ public class EducationFormController {
 
             form.addSchool(schoolFormType);
         }
+
+        if (identity.isLoggedIn()) {
+            linkUpdate(factory)
+                    .buildSecured(form::addLink);
+
+            linkSave(factory)
+                    .buildSecured(form::addLink);
+        }
+
 
         return form;
     }

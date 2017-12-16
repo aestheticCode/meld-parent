@@ -17,6 +17,8 @@ export class UserFormComponent implements OnInit {
   @ViewChild('email')
   private email: NgModel;
 
+  public genders = [{value : 'MALE', label : 'Male'}, {value : 'FEMALE', label : 'Female'}];
+
   constructor(private http: Http,
               private route: ActivatedRoute,
               private router : Router) {
@@ -26,20 +28,6 @@ export class UserFormComponent implements OnInit {
     this.route.data.forEach((data: { user: UserForm }) => {
       this.user = data.user || new UserFormModel();
     });
-
-    this.email
-      .control
-      .setAsyncValidators((control: AbstractControl) => {
-        return this.http.post('service/usercontrol/user/form/validate',
-          {name: control.value, id: this.user.id})
-          .map((res: Response) => {
-            if (res.json()) {
-              return null;
-            } else {
-              return {nonUnique: true}
-            }
-          })
-      });
   }
 
   onSave() {

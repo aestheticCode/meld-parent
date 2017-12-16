@@ -30,7 +30,7 @@ export class PhotosGridComponent {
   };
 
   upload() {
-    let dialogRef = this.dialog.open(PhotoFormComponent);
+    let dialogRef = this.dialog.open(PhotoFormComponent, {width : '350px'});
     dialogRef.afterClosed().subscribe((photo) => {
       this.http.post<Container<Photo>>('service/media/photo', photo)
         .subscribe((res) => {

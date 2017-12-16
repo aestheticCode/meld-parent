@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AppService} from '../../../../app.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {MatDialog} from '@angular/material';
 import {Photo} from '../../../../media/photo/form/photo.interfaces';
 import {PhotoDialogComponent} from '../../../../media/photo/grid/photo-dialog/photo-dialog.component';
 import {HttpClient} from '@angular/common/http';
-import {UserForm} from '../../../../usercontrol/user/form/user.interfaces';
-import {UserFormModel} from '../../../../usercontrol/user/form/user.classes';
+import {Profile} from '../../profile.interfaces';
 
 @Component({
   selector: 'app-image-view',
@@ -15,15 +13,16 @@ import {UserFormModel} from '../../../../usercontrol/user/form/user.classes';
 })
 export class ImageViewComponent implements OnInit {
 
-  image;
+  profile: Profile;
 
-  constructor(private http : HttpClient,
+  constructor(private http: HttpClient,
               private route: ActivatedRoute,
-              private dialog : MatDialog) {}
+              private dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
     this.route.data.forEach((data: { profile: any }) => {
-      this.image = data.profile.image;
+      this.profile = data.profile;
     });
   }
 
@@ -33,7 +32,7 @@ export class ImageViewComponent implements OnInit {
     matDialogRef.afterClosed().subscribe((result: Photo) => {
       this.http.post<any>('service/social/profile/user', {photoId: result.id})
         .subscribe((result) => {
-          this.image = result.image;
+          this.profile = result;
         });
     });
 

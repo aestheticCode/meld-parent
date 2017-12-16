@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {UserRow} from "./user-table.interfaces";
 import {FilterTemplate} from "./user-table.interfaces";
@@ -55,14 +55,38 @@ export class UserTableComponent implements OnInit {
           QueryBuilder.like(event, "firstName"),
           QueryBuilder.like(event, "lastName"),
         ]);
+        this.table.refreshItems();
       });
+
+    let matchMedia = window.matchMedia( "(max-width: 1000px)" );
+
+    if (matchMedia.matches) {
+      this.table.columnConfiguration.forEach((column) => {
+        if (column.index === 3) {
+          column.visible = false;
+        }
+      })
+    }
+
+    matchMedia.addListener((listener) => {
+      this.table.columnConfiguration.forEach((column) => {
+        if (column.index === 3) {
+          column.visible = false;
+        }
+      })
+    });
+
+
+    window.matchMedia( "(max-width: 1050px)" ).addListener((listener) => {
+      this.table.columnConfiguration.forEach((column) => {
+        if (column.index === 3) {
+          column.visible = true;
+        }
+      })
+    });
+
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['filter']) {
-      this.table.refreshItems();
-    }
-  }
 
   onCancelClick() {
     this.filterTemplate = new FilterTemplateModel();

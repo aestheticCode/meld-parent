@@ -30,8 +30,13 @@ export class UserViewComponent implements OnInit {
     this.router.navigate(['social', 'profile', {outlets: {profile: ['user', 'edit']}}]);
   }
 
-  onCancelClick() {
-    this.router.navigate(['social', 'profile']);
+  onCancel() {
+    this.route.parent.params
+      .map(param => param.id)
+      .subscribe((id) => {
+        this.router.navigate(['social', 'profile', id]);
+      });
   }
+
 
 }

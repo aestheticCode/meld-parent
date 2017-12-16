@@ -27,7 +27,11 @@ export class WorkHistoryViewComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['social', 'profile']);
+    this.route.parent.params
+      .map(param => param.id)
+      .subscribe((id) => {
+        this.router.navigate(['social', 'profile', id]);
+      });
   }
 
 

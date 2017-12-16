@@ -6,8 +6,10 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.Photo;
+import net.portrix.meld.social.profile.education.EducationFormController;
 import net.portrix.meld.usercontrol.User;
 import org.apache.commons.io.IOUtils;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -31,13 +33,20 @@ public class ProfileController {
 
     private final ProfileService service;
 
+    private final URLBuilderFactory factory;
+
+    private final Identity identity;
+
+
     @Inject
-    public ProfileController(ProfileService service) {
+    public ProfileController(ProfileService service, URLBuilderFactory factory, Identity identity) {
         this.service = service;
+        this.factory = factory;
+        this.identity = identity;
     }
 
     public ProfileController() {
-        this(null);
+        this(null, null, null);
     }
 
     @GET
@@ -81,6 +90,12 @@ public class ProfileController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            if (identity.isLoggedIn()) {
+                linkProfileBackgroundUpdate(factory)
+                        .buildSecured(response::addLink);
+            }
+
             return response;
         } else {
             Blob image = new Blob();
@@ -88,8 +103,15 @@ public class ProfileController {
             image.setData(profile.getBackgroundPhoto().getImage());
             image.setLastModified(profile.getBackgroundPhoto().getLastModified());
             response.setImage(image);
+
+            if (identity.isLoggedIn()) {
+                linkProfileBackgroundUpdate(factory)
+                        .buildSecured(response::addLink);
+            }
+
             return response;
         }
+
     }
 
     @GET
@@ -133,6 +155,12 @@ public class ProfileController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            if (identity.isLoggedIn()) {
+                linkProfileUserUpdate(factory)
+                        .buildSecured(response::addLink);
+            }
+
             return response;
         } else {
             Blob image = new Blob();
@@ -140,6 +168,12 @@ public class ProfileController {
             image.setData(profile.getUserPhoto().getImage());
             image.setLastModified(profile.getUserPhoto().getLastModified());
             response.setImage(image);
+
+            if (identity.isLoggedIn()) {
+                linkProfileUserUpdate(factory)
+                        .buildSecured(response::addLink);
+            }
+
             return response;
         }
     }
@@ -210,6 +244,20 @@ public class ProfileController {
                 .from(ProfileController.class)
                 .record(ProfileController::readBackground)
                 .rel("profile");
+    }
+
+    public static URLBuilder<ProfileController> linkProfileUserUpdate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(ProfileController.class)
+                .record((method) -> method.updateUser(null))
+                .rel("update");
+    }
+
+    public static URLBuilder<ProfileController> linkProfileBackgroundUpdate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(ProfileController.class)
+                .record((method) -> method.updateBackground(null))
+                .rel("update");
     }
 
 }

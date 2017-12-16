@@ -1,13 +1,14 @@
 package net.portrix.meld.social.profile.contact;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import net.portrix.generic.rest.api.Link;
+import net.portrix.generic.rest.api.LinksContainer;
+
+import java.util.*;
 
 /**
  * @author Patrick Bittner on 21/12/2016.
  */
-public class ContactForm {
+public class ContactForm implements LinksContainer {
 
     private UUID id;
 
@@ -16,6 +17,8 @@ public class ContactForm {
     private final List<EmailForm> emails = new ArrayList<>();
 
     private final List<ChatForm> chats = new ArrayList<>();
+
+    private final Set<Link> links = new HashSet<>();
 
     public UUID getId() {
         return id;
@@ -47,5 +50,15 @@ public class ContactForm {
 
     public void addPhone(PhoneForm responseType) {
         phones.add(responseType);
+    }
+
+    @Override
+    public Set<Link> getLinks() {
+        return links;
+    }
+
+    @Override
+    public boolean addLink(Link link) {
+        return links.add(link);
     }
 }

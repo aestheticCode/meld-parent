@@ -32,7 +32,7 @@ public class UserTableService {
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<User> root = query.from(User.class);
         Expression predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, entityManager, root, Maps.newHashMap()));
-        query.select(root).where(predicate).orderBy(builder.asc(root.get(User_.name)));
+        query.select(root).where(predicate).orderBy(Query.sorting(search.getSorting(), builder, root));
         TypedQuery<User> typedQuery = entityManager.createQuery(query);
         typedQuery.setFirstResult(search.getIndex());
         typedQuery.setMaxResults(search.getLimit());

@@ -23,6 +23,8 @@ public class Query {
 
     private RestPredicate predicate = new Noop();
 
+    private List<Sorting> sorting = new ArrayList<>();
+
     public int getIndex() {
         return index;
     }
@@ -45,6 +47,26 @@ public class Query {
 
     public void setPredicate(RestPredicate predicate) {
         this.predicate = predicate;
+    }
+
+    public List<Sorting> getSorting() {
+        return sorting;
+    }
+
+    public void setSorting(List<Sorting> sorting) {
+        this.sorting = sorting;
+    }
+
+    public static List<Order> sorting(List<Sorting> sorting, CriteriaBuilder builder, Path<?> root) {
+        List<Order> orders = new ArrayList<>();
+        for (Sorting sort : sorting) {
+            if (sort.getAsc()) {
+                orders.add(builder.asc(cursor(root, sort.getPath())));
+            } else {
+                orders.add(builder.desc(cursor(root, sort.getPath())));
+            }
+        }
+        return orders;
     }
 
     public static RestPredicate.Visitor visitorVisit(AbstractQuery<?> query, CriteriaBuilder builder, EntityManager entityManager, Path<?> root, Map<String, Class<?>> tables) {

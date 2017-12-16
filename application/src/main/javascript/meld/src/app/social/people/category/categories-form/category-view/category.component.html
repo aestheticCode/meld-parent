@@ -7,14 +7,20 @@
     <meld-tbody>
       <meld-tr>
         <meld-td>
-          <ng-template let-user><img style="width: 100px;" [src]="user.image | meldBinaryImage"></ng-template>
+          <ng-template let-user>
+            <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
+              <img style="width: 100px;" [src]="user.image | meldBinaryImage">
+            </a>
+          </ng-template>
         </meld-td>
         <meld-td>
           <ng-template let-user>
             <div style="line-height: 100px;">
-              <strong>
-                {{user.firstName}} {{user.lastName}}
-              </strong>
+              <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
+                <strong>
+                  {{user.firstName}} {{user.lastName}}
+                </strong>
+              </a>
             </div>
           </ng-template>
         </meld-td>

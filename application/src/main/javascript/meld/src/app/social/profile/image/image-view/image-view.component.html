@@ -3,10 +3,10 @@
     <div class="row justify-content-center">
       <mat-card class="col-md-5">
         <mat-card-content style="text-align: center">
-          <img style="height: 400px; margin: 0 auto;" [src]="image | meldBinaryImage"/>
+          <img style="height: 400px; margin: 0 auto;" [src]="profile.image | meldBinaryImage"/>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button (click)="onEdit()">Edit</button>
+          <button *ngIf="profile.links | meldLink:'save'" mat-button (click)="onEdit()">Edit</button>
         </mat-card-actions>
       </mat-card>
     </div>
