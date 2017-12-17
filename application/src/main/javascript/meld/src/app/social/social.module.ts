@@ -23,9 +23,6 @@ import {FindViewComponent} from './people/find/find-view/find-view.component';
 import {CategoriesFormComponent} from './people/category/categories-form/categories-form.component';
 import {FollowingViewComponent} from './people/find/following-view/following-view.component';
 import {CategoryComponent} from './people/category/categories-form/category-view/category.component';
-import {CategoryCreateDialogComponent} from './people/category/categories-form/category-create-dialog/category-dialog.component';
-import {CategoryDeleteDialogComponent} from './people/category/categories-form/category-delete-dialog/category-delete-dialog.component';
-import {CategoryRenameDialogComponent} from './people/category/categories-form/category-rename-dialog/category-rename-dialog.component';
 import {AddressMapComponent} from './profile/places/places-view/address-map/address-map.component';
 import {AddressViewComponent} from './profile/places/places-view/address-view/address-view.component';
 import {CategoriesSelectComponent} from './people/category/categories-select/categories-select.component';
@@ -38,6 +35,7 @@ import {ContactViewComponent} from './profile/contact/contact-view/contact-view.
 import {MediaModule} from '../media/media.module';
 import {SchoolFormComponent} from './profile/education/education-form/school-form/school-form.component';
 import {SchoolViewComponent} from './profile/education/education-view/school-view/school-view.component';
+import { CategoryFormComponent } from './people/category/categories-form/category-form/category-form.component';
 
 @NgModule({
   imports: [
@@ -75,13 +73,11 @@ import {SchoolViewComponent} from './profile/education/education-view/school-vie
     CategoriesFormComponent,
     FollowingViewComponent,
     CategoryComponent,
-    CategoryCreateDialogComponent,
-    CategoryDeleteDialogComponent,
-    CategoryRenameDialogComponent,
     AddressMapComponent,
     AddressViewComponent,
     CategoriesSelectComponent,
-    CategoryDialogComponent
+    CategoryDialogComponent,
+    CategoryFormComponent
   ],
   exports: [
     ContactFormComponent,
@@ -112,18 +108,12 @@ import {SchoolViewComponent} from './profile/education/education-view/school-vie
     CategoriesFormComponent,
     FollowingViewComponent,
     CategoryComponent,
-    CategoryCreateDialogComponent,
-    CategoryDeleteDialogComponent,
-    CategoryRenameDialogComponent,
     AddressMapComponent,
     AddressViewComponent,
     CategoriesSelectComponent,
     CategoryDialogComponent
   ],
   entryComponents: [
-    CategoryCreateDialogComponent,
-    CategoryDeleteDialogComponent,
-    CategoryRenameDialogComponent,
     CategoryDialogComponent
   ],
   providers : [

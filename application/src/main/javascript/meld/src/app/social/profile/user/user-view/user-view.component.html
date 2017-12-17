@@ -14,6 +14,8 @@
                 <meld-form-group [label]="'Last Name'">{{user.lastName}}</meld-form-group>
                 <hr/>
                 <meld-form-group [label]="'Birthday'">{{user.birthday}}</meld-form-group>
+                <hr/>
+                <meld-form-group [label]="'Gender'">{{user.gender | meldEnum:[{value : 'MALE', label : 'Male'}, {value : 'FEMALE', label : 'Female'}] }}</meld-form-group>
 
               </fieldset>
             </form>

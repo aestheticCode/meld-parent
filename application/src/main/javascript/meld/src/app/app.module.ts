@@ -1,11 +1,11 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 
-import {AppComponent} from './app.component';
-import {LibModule} from "../lib/lib.module";
+import {AppComponent} from 'app/app.component';
+import {LibModule} from "lib/lib.module";
 import {appRoutingProviders, routing} from "./app.routing";
-import {AppHome} from "./app.home";
-import {AppService} from "./app.service";
+import {AppHome} from "app/app.home";
+import {AppService} from "app/app.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export function initConfiguration(configService: AppService): Function {

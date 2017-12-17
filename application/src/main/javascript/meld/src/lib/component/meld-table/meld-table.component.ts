@@ -81,6 +81,9 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
 
   public sorting: Sort[];
 
+  @Input('initialize')
+  public initialize : boolean = true;
+
   @ContentChild(MeldFilterDirective)
   public filter: MeldFilterDirective;
 
@@ -105,7 +108,9 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
   }
 
   ngOnInit(): void {
-    this.refreshItems();
+    if (this.initialize) {
+      this.refreshItems();
+    }
   }
 
   public refreshItems() {

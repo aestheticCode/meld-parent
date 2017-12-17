@@ -8,7 +8,7 @@ meld-combobox .overlay {
   flex-direction: column;
   position: absolute;
   width: 100%;
-  top : 40px;
+  top : 25px;
   max-height: calc(37px * 4);
   background-color: white;
   border: 1px solid lightgray;

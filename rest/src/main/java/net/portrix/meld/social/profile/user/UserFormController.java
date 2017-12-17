@@ -74,24 +74,14 @@ public class UserFormController {
         UserForm response = new UserForm();
         response.setId(user.getId());
 
-        if (user.getGender() != null) {
-            switch (user.getGender()) {
-                case MALE:
-                    response.setGender(Gender.Male);
-                    break;
-                case FEMALE:
-                    response.setGender(Gender.Female);
-                    break;
-            }
-        }
-
         response.setFirstName(user.getFirstName());
         response.setLastName(user.getLastName());
         response.setBirthday(user.getBirthdate());
+        response.setGender(user.getGender());
 
-        linkRead(user, builderFactory)
-                .buildSecured(response::addLink);
         linkUpdate(builderFactory)
+                .buildSecured(response::addLink);
+        linkSave(builderFactory)
                 .buildSecured(response::addLink);
 
         return response;
@@ -109,6 +99,7 @@ public class UserFormController {
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setBirthdate(form.getBirthday());
+        user.setGender(form.getGender());
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("dMMMuuuu")
@@ -138,6 +129,8 @@ public class UserFormController {
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setBirthdate(form.getBirthday());
+        user.setGender(form.getGender());
+
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("dMMMuuuu")
                 .toFormatter();

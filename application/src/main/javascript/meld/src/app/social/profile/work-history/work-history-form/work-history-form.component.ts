@@ -6,6 +6,7 @@ import {WorkHistoryModel} from '../work-history.classes';
 import {CompanyModel} from '../company.classes';
 import {Company} from '../company.interfaces';
 import {Strings} from '../../../../../lib/common/utils/Strings';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-work-history-form',
@@ -18,6 +19,7 @@ export class WorkHistoryFormComponent implements OnInit {
 
   constructor(private http: Http,
               private route: ActivatedRoute,
+              private location : Location,
               private router : Router) {
   }
 
@@ -49,7 +51,7 @@ export class WorkHistoryFormComponent implements OnInit {
     this.http.post("service/social/user/current/work/history", this.workHistory)
       .subscribe((res: Response) => {
         this.workHistory = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['work', 'history', 'view']}}]);
+        this.location.back();
       })
   }
 
@@ -58,13 +60,13 @@ export class WorkHistoryFormComponent implements OnInit {
     this.http.put("service/social/user/current/work/history", this.workHistory)
       .subscribe((res: Response) => {
         this.workHistory = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['work', 'history', 'view']}}]);
+        this.location.back();
       })
   }
 
   onCancel() {
     this.filterEmpty();
-    this.router.navigate(['social', 'profile', {outlets: {profile: ['work', 'history', 'view']}}]);
+    this.location.back();
   }
 
   private filterEmpty() {

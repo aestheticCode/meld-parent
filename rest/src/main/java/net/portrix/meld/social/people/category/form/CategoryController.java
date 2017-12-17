@@ -36,6 +36,23 @@ public class CategoryController {
         this(null);
     }
 
+    @GET
+    @Path("category/{id}")
+    @Name("Categories Read")
+    @Secured
+    @Transactional
+    public CategoryForm read(@PathParam("id") UUID id) {
+
+        Category category = service.find(id);
+
+        CategoryForm result = new CategoryForm();
+        result.setId(category.getId());
+        result.setName(category.getName());
+
+        return result;
+
+    }
+
 
     @POST
     @Path("category")
@@ -52,12 +69,7 @@ public class CategoryController {
 
         service.save(category);
 
-        CategoryForm result = new CategoryForm();
-        result.setId(category.getId());
-        result.setName(category.getName());
-
-        return result;
-
+        return read(category.getId());
     }
 
     @PUT
@@ -70,11 +82,7 @@ public class CategoryController {
         Category category = service.find(id);
         category.setName(form.getName());
 
-        CategoryForm result = new CategoryForm();
-        result.setId(category.getId());
-        result.setName(category.getName());
-
-        return result;
+        return read(category.getId());
 
     }
 

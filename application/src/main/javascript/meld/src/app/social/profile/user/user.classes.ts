@@ -9,6 +9,7 @@ export class UserFormModel implements UserForm {
   firstName: string;
   lastName: string;
   birthday: string;
+  gender : string;
   roles: string[];
   groups: string[];
   links: Link[] = [];

@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Http, Response} from "@angular/http";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AbstractControl, NgModel} from "@angular/forms";
+import {Http, Response} from '@angular/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NgModel} from '@angular/forms';
 import {UserForm} from '../user.interfaces';
 import {UserFormModel} from '../user.classes';
+import {Enum} from '../../../../../lib/pipe/meld-enum/meld-enum.interfaces';
 
 @Component({
   selector: 'app-user-form',
@@ -16,6 +17,8 @@ export class UserFormComponent implements OnInit {
 
   @ViewChild('email')
   private email: NgModel;
+
+  public genders: Enum[] = [{value: 'MALE', label: 'Male'}, {value: 'FEMALE', label: 'Female'}];
 
   constructor(private http: Http,
               private route: ActivatedRoute,

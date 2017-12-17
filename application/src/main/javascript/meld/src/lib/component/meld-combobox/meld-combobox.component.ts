@@ -108,33 +108,20 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
 
   private onChangeCallback: (value: any) => void = noop;
 
-
-  constructor(private elRef: ElementRef) {
-  }
+  constructor(private elRef: ElementRef) {}
 
   public parentItems: Items<any> = (query, callback) => {
-    if (this.value) {
-      const response = (data: [any], size: number) => {
-        if (this.filter.length === 0) {
-          this.filter = this.itemName(data[0]);
-        }
-      };
-      query.predicate = this.predicate(this.filter);
-      this.items(query, response);
-    } else {
-      const response = (data: [any], size: number) => {
-        callback(data, size);
-        this.size = size;
-      };
-      query.predicate = this.predicate(this.filter);
-      this.items(query, response);
-    }
+    query.predicate = this.predicate(this.filter);
+    this.items(query, (data: [any], size: number) => {
+      callback(data, size);
+      this.size = size;
+    });
   };
 
   @Input('predicate')
   public predicate = (value) => {
     if (value == null) {
-      return null;
+      return undefined;
     }
     return QueryBuilder.like(value, 'name');
   };
@@ -193,6 +180,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
       this.showOverlay = false;
     } else {
       this.showOverlay = true;
+      this.table.refreshItems();
     }
   }
 
@@ -239,10 +227,15 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
     if (obj) {
       this.value = obj;
 
-      let meldQuery = QueryBuilder.query();
-      meldQuery.predicate = QueryBuilder.in([obj], 'id');
-      this.parentItems(meldQuery, () => {
-      });
+      let query = QueryBuilder.query();
+      query.predicate = QueryBuilder.in([obj], 'id');
+      const response = (data: [any], size: number) => {
+        if (this.filter.length === 0) {
+          this.filter = this.itemName(data[0]);
+        }
+      };
+      this.items(query, response);
+
       this.stateChanges.next();
     }
   }

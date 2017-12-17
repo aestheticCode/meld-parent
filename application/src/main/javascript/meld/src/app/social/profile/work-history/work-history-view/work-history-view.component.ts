@@ -23,14 +23,15 @@ export class WorkHistoryViewComponent implements OnInit {
   }
 
   onEdit() {
-    this.router.navigate(['social', 'profile', {outlets: {profile: ['work', 'history', 'edit']}}]);
+    this.route.parent.params.subscribe((params) => {
+      this.router.navigate(['social', 'profile', params['id'] , {outlets: {profile: ['work', 'history', 'edit']}}]);
+    });
   }
 
   onCancel() {
     this.route.parent.params
-      .map(param => param.id)
-      .subscribe((id) => {
-        this.router.navigate(['social', 'profile', id]);
+      .subscribe((param) => {
+        this.router.navigate(['social', 'profile', param['id']]);
       });
   }
 

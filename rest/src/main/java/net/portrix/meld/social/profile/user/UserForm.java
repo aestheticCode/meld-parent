@@ -3,6 +3,7 @@ package net.portrix.meld.social.profile.user;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
+import net.portrix.meld.usercontrol.Gender;
 
 import java.time.LocalDate;
 import java.util.HashSet;

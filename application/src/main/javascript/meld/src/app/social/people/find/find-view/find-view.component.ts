@@ -27,8 +27,10 @@ export class FindViewComponent {
     let matDialogRef = this.dialog.open(CategoryDialogComponent, {data : user});
 
     matDialogRef.afterClosed().subscribe((result) => {
-      this.http.put<UserRow>('service/social/people/find', result)
-        .subscribe((res: UserRow) => {});
+      if (result) {
+        this.http.put<UserRow>('service/social/people/find', result)
+          .subscribe((res: UserRow) => {});
+      }
     })
   }
 

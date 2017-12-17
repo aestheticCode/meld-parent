@@ -21,6 +21,15 @@
                 <button matSuffix mat-icon-button (click)="datePicker.open()"><mat-icon >today</mat-icon></button>
               </mat-form-field>
 
+              <mat-form-field style="width: 100%;">
+                <mat-select name="gender" placeholder="Gender" [(ngModel)]="user.gender">
+                  <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                    {{ gender.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+
             </fieldset>
           </mat-card-content>
           <mat-card-actions>

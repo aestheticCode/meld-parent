@@ -24,6 +24,8 @@ import {ContactFormComponent} from './profile/contact/contact-form/contact-form.
 import {ContactViewComponent} from './profile/contact/contact-view/contact-view.component';
 import {ImageGuard} from './profile/image/image.guard';
 import {ProfileGuard} from './profile/profile.guard';
+import {CategoryFormComponent} from './people/category/categories-form/category-form/category-form.component';
+import {CategoryFormGuard} from './people/category/categories-form/category-form/category-form.guard';
 
 const appRoutes: Routes = [
   {
@@ -35,6 +37,17 @@ const appRoutes: Routes = [
         component: CategoriesFormComponent,
         outlet: 'people',
         resolve: {container: CategoriesFormGuard}
+      },
+      {
+        path : 'category/:id',
+        component : CategoryFormComponent,
+        outlet : 'people',
+        resolve : {category : CategoryFormGuard}
+      },
+      {
+        path : 'category',
+        component : CategoryFormComponent,
+        outlet : 'people'
       },
       {
         path: 'find',
@@ -140,6 +153,7 @@ export const appRoutingProviders: any[] = [
   WorkHistoryFormGuard,
   CategoriesFormGuard,
   ImageGuard,
-  ProfileGuard
+  ProfileGuard,
+  CategoryFormGuard
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(appRoutes);

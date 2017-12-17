@@ -70,7 +70,6 @@ public class Query {
     }
 
     public static RestPredicate.Visitor visitorVisit(AbstractQuery<?> query, CriteriaBuilder builder, EntityManager entityManager, Path<?> root, Map<String, Class<?>> tables) {
-
         return new RestPredicate.Visitor() {
             @Override
             public Expression visit(And and) {
