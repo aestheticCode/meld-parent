@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Http} from "@angular/http";
+import {ActivatedRoute, Router} from '@angular/router';
 import {Places} from '../places.interfaces';
 import {PlacesModel} from '../places.classes';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-social-places-view',
@@ -13,28 +13,20 @@ export class PlacesViewComponent implements OnInit {
 
   public places: Places;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
+  constructor(private router: MeldRouterService) {
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { places: Places }) => {
-      this.places = data.places || new PlacesModel();
-    });
+    this.places = this.router.data.places || new PlacesModel();
   }
 
   onEdit() {
-    this.router.navigate(['social', 'profile', {outlets: {profile: ['places', 'edit']}}]);
+    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['places', 'edit']}}]);
   }
 
   onCancel() {
-    this.route.parent.params
-      .map(param => param.id)
-      .subscribe((id) => {
-        this.router.navigate(['social', 'profile', id]);
-      });
-  }
-
+    this.router.navigate(['social', 'profile', this.router.param.id]);
+    }
 
 
 }

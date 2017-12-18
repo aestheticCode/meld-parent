@@ -233,6 +233,13 @@ public class UserFormController {
         return service.validateUserName(validation);
     }
 
+    public static URLBuilder<UserFormController> linkCreate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(UserFormController.class)
+                .record(UserFormController::create)
+                .rel("create");
+    }
+
     public static URLBuilder<UserFormController> linkRead(User user, URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(UserFormController.class)

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {MeldScrollbarVerticalModule} from "./component/meld-scrollbar-vertical/meld-scrollbar-vertical.module";
@@ -49,6 +49,7 @@ import {MeldGoogleMapsAutocompleteComponent} from './component/meld-google-maps-
 import {MeldGoogleMapsAutocompleteModule} from './component/meld-google-maps-autocomplete/meld-google-maps-autocomplete.module';
 import {MeldEnumPipe} from './pipe/meld-enum/meld-enum.pipe';
 import {MeldEnumModule} from './pipe/meld-enum/meld-enum.module';
+import {MeldRouterService} from './service/meld-router/meld-router.service';
 
 
 @NgModule({
@@ -166,4 +167,11 @@ import {MeldEnumModule} from './pipe/meld-enum/meld-enum.module';
   ]
 })
 export class LibModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: LibModule,
+      providers: [MeldRouterService],
+    };
+  }
+
 }

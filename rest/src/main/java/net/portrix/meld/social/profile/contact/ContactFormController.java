@@ -55,18 +55,33 @@ public class ContactFormController {
     }
 
     @GET
+    @Path("user/{id}/contact/create")
+    @Name("Personal Contact Create")
+    @Secured
+    @Transactional
+    public ContactForm create(@PathParam("id") String id) {
+
+        ContactForm form = new ContactForm();
+
+        linkSave(factory)
+                .buildSecured(form::addLink);
+
+        return form;
+    }
+
+    @GET
     @Path("user/{id: [0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}}/contact")
     @Name("Personal Contact Read")
     @Secured
     @Transactional
-    public ContactForm read(@PathParam("id") UUID id) {
+    public ContactForm read(@PathParam("id") UUID id) throws NotFoundException {
 
         User user = service.findUser(id);
 
         PersonalContact contact = service.findPersonalContact(user);
 
         if (contact == null) {
-            return new ContactForm();
+            throw new NotFoundException();
         }
 
         final ContactForm contactResponseType = new ContactForm();
@@ -97,9 +112,9 @@ public class ContactFormController {
         if (identity.isLoggedIn()) {
             linkUpdate(factory)
                     .buildSecured(contactResponseType::addLink);
-
-            linkSave(factory)
+            linkDelete(factory)
                     .buildSecured(contactResponseType::addLink);
+
         }
 
         return contactResponseType;
@@ -178,6 +193,18 @@ public class ContactFormController {
 
     }
 
+    @DELETE
+    @Path("user/current/contact")
+    @Name("Personal Contact Delete")
+    @Secured
+    @Transactional
+    public void delete() {
+        User currentUser = service.currentUser();
+        PersonalContact contact = service.findPersonalContact(currentUser);
+        service.delete(contact);
+    }
+
+
     public static URLBuilder<ContactFormController> linkCurrent(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(ContactFormController.class)
@@ -204,6 +231,13 @@ public class ContactFormController {
                 .from(ContactFormController.class)
                 .record((method) -> method.update(null))
                 .rel("update");
+    }
+
+    public static URLBuilder<ContactFormController> linkDelete(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(ContactFormController.class)
+                .record(ContactFormController::delete)
+                .rel("delete");
     }
 
 }

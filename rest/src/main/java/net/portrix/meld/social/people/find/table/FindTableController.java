@@ -52,8 +52,8 @@ public class FindTableController {
     @Secured
     @Transactional
     public Container<FindItem> list(Query query) {
-        List<User> users = service.findUsers(query);
-        long countUsers = service.countUsers(query);
+        List<User> users = service.find(query);
+        long countUsers = service.count(query);
         User current = userManager.current();
 
         List<FindItem> categoryFormList = users

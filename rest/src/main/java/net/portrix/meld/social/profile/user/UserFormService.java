@@ -45,31 +45,6 @@ public class UserFormService {
     }
 
 
-    public List<Role> findAllRoles(User user) {
-        return entityManager.createQuery("select r from Role r join r.scopes i where i = :user", Role.class)
-                .setParameter("user", user)
-                .getResultList();
-    }
-
-
-    public List<Role> findAllRoles() {
-        return entityManager
-                    .createNamedQuery("findAllRoles", Role.class)
-                    .getResultList();
-    }
-
-    public List<Group> findAllGroups(User user) {
-        return entityManager.createQuery("select g from Group g join g.members i where i = :user", Group.class)
-                .setParameter("user", user)
-                .getResultList();
-    }
-
-    public List<Group> findAllGroups() {
-        return entityManager
-                    .createNamedQuery("findAllGroups", Group.class)
-                    .getResultList();
-    }
-
     public boolean validateUserName(UserNameValidation validation) {
         if (StringUtils.isEmpty(validation.getName())) {
             return true;
@@ -89,13 +64,6 @@ public class UserFormService {
 
         return entityManager.createQuery(query)
                 .getSingleResult() == 0;
-    }
-
-    public UserImage findUserImage(User user) {
-        return entityManager
-                .createQuery("select u from UserImage u where u.user = :user", UserImage.class)
-                .setParameter("user", user)
-                .getSingleResult();
     }
 
     public void save(User user) {

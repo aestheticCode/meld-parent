@@ -15,14 +15,14 @@
                 <hr/>
                 <meld-form-group [label]="'Birthday'">{{user.birthday}}</meld-form-group>
                 <hr/>
-                <meld-form-group [label]="'Gender'">{{user.gender | meldEnum:[{value : 'MALE', label : 'Male'}, {value : 'FEMALE', label : 'Female'}] }}</meld-form-group>
+                <meld-form-group [label]="'Gender'">{{user.gender | meldEnum:genders }}</meld-form-group>
 
               </fieldset>
             </form>
           </mat-card-content>
           <mat-card-actions >
-            <button *ngIf="user.links | meldLink:'save'" mat-button (click)="onEditClick()">Edit</button>
-            <button mat-button (click)="onCancel()">Chancel</button>
+            <button *ngIf="user.links | meldLink:'save'" mat-button (click)="onEditClick()" >Edit</button>
+            <button mat-button (click)="onCancelClick()" >Chancel</button>
           </mat-card-actions>
         </mat-card>
 

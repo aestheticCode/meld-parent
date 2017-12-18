@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Http} from "@angular/http";
+import {Http} from '@angular/http';
 import {Contact} from '../contact-form.interfaces';
 import {ContactModel} from '../contact-form.classes';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-contact-view',
@@ -14,27 +14,20 @@ export class ContactViewComponent implements OnInit {
   contact: Contact;
 
   constructor(private http: Http,
-              private route: ActivatedRoute,
-              private router : Router) {
+              private router: MeldRouterService) {
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { contact: Contact }) => {
-      this.contact = data.contact || new ContactModel();
-    });
+    this.contact = this.router.data.contact || new ContactModel();
   }
 
 
   onEdit() {
-    this.router.navigate(['social', 'profile', {outlets: {profile: ['contact', 'edit']}}]);
+    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['contact', 'edit']}}]);
   }
 
   onCancel() {
-    this.route.parent.params
-      .map(param => param.id)
-      .subscribe((id) => {
-        this.router.navigate(['social', 'profile', id]);
-      });
+    this.router.navigate(['social', 'profile', this.router.param.id]);
   }
 
 

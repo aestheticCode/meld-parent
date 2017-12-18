@@ -57,4 +57,7 @@ public class PlacesFormService {
         return userManager.current();
     }
 
+    public void deletePlaces(Places places) {
+        entityManager.remove(places);
+    }
 }

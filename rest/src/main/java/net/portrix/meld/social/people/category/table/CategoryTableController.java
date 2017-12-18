@@ -41,7 +41,7 @@ public class CategoryTableController {
     @Name("Categories Read")
     @Secured
     public Container<CategoryItem> list(Query query) {
-        List<Category> categories = service.findAll(query);
+        List<Category> categories = service.find(query);
         long count = service.count(query);
 
         List<CategoryItem> categoryFormList = categories

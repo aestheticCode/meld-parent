@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {Http, Response} from "@angular/http";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {Http, Response} from '@angular/http';
 import {Places} from '../places.interfaces';
 import {PlacesModel} from '../places.classes';
 import {AddressModel} from '../address.classes';
 import {Address} from '../address.interfaces';
 import {Strings} from '../../../../../lib/common/utils/Strings';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-social-places-form',
@@ -17,18 +17,15 @@ export class PlacesFormComponent implements OnInit {
   public places: Places;
 
   constructor(private http: Http,
-              private route: ActivatedRoute,
-              private router : Router) {
+              private router: MeldRouterService) {
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { places: Places }) => {
-      this.places = data.places || new PlacesModel();
-    });
+    this.places = this.router.data.places || new PlacesModel();
   }
 
   onCreateAddress() {
-    this.places.addresses.push(new AddressModel())
+    this.places.addresses.push(new AddressModel());
   }
 
   onDeleteAddress(address: Address) {
@@ -46,25 +43,25 @@ export class PlacesFormComponent implements OnInit {
 
   onSave() {
     this.filterEmptyAddress();
-    this.http.post("service/social/user/current/places", this.places)
+    this.http.post('service/social/user/current/places', this.places)
       .subscribe((res: Response) => {
         this.places = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['places', 'view']}}]);
-      })
+        this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['places', 'view']}}]);
+      });
   }
 
   onUpdate() {
     this.filterEmptyAddress();
-    this.http.put("service/social/user/current/places", this.places)
+    this.http.put('service/social/user/current/places', this.places)
       .subscribe((res: Response) => {
         this.places = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['places', 'view']}}]);
-      })
+        this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['places', 'view']}}]);
+      });
   }
 
   onCancel() {
     this.filterEmptyAddress();
-    this.router.navigate(['social', 'profile', {outlets: {profile: ['places', 'view']}}]);
+    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['places', 'view']}}]);
   }
 
   private filterEmptyAddress() {
@@ -74,8 +71,8 @@ export class PlacesFormComponent implements OnInit {
         || Strings.isNotEmpty(address.zipCode)
         || Strings.isNotEmpty(address.city)
         || Strings.isNotEmpty(address.state)
-        || Strings.isNotEmpty(address.country)
-    })
+        || Strings.isNotEmpty(address.country);
+    });
   }
 
 }

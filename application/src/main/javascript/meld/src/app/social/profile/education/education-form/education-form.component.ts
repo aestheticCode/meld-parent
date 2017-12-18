@@ -7,6 +7,7 @@ import {EducationModel} from '../education.classes';
 import {SchoolFormModel} from '../school-form.classes';
 import {School} from '../school-form.interfaces';
 import {Objects} from '../../../../../lib/common/utils/Objects';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-social-education-form',
@@ -18,14 +19,11 @@ export class EducationFormComponent implements OnInit {
   public education: Education;
 
   constructor(private http: Http,
-              private route: ActivatedRoute,
-              private router : Router) {
+              private router : MeldRouterService) {
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { education: Education }) => {
-      this.education = data.education || new EducationModel();
-    });
+    this.education = this.router.data.education || new EducationModel();
   }
 
   onCreateSchool() {
@@ -50,7 +48,7 @@ export class EducationFormComponent implements OnInit {
     this.http.post("service/social/user/current/education", this.education)
       .subscribe((res: Response) => {
         this.education = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['education', 'view']}}]);
+        this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['education', 'view']}}]);
       })
   }
 
@@ -59,13 +57,13 @@ export class EducationFormComponent implements OnInit {
     this.http.put("service/social/user/current/education", this.education)
       .subscribe((res: Response) => {
         this.education = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['education', 'view']}}]);
+        this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['education', 'view']}}]);
       })
   }
 
   onCancel() {
     this.filterEmptySchools();
-    this.router.navigate(['social', 'profile', {outlets: {profile: ['education', 'view']}}]);
+    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['education', 'view']}}]);
   }
 
   private filterEmptySchools() {

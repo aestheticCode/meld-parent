@@ -50,4 +50,8 @@ public class MeldPostFormService {
     public Photo findPhoto(UUID photoId) {
         return entityManager.find(Photo.class, photoId);
     }
+
+    public void deletePost(MeldPost post) {
+        entityManager.remove(post);
+    }
 }

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Http} from "@angular/http";
 import {UserForm} from '../user.interfaces';
 import {UserFormModel} from '../user.classes';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-user-view',
@@ -13,30 +14,20 @@ export class UserViewComponent implements OnInit {
 
   public user: UserForm;
 
-  public readonly: boolean = true;
+  public genders = [{value : 'MALE', label : 'Male'}, {value : 'FEMALE', label : 'Female'}];
 
-  constructor(private http: Http,
-              private route: ActivatedRoute,
-              private router: Router) {
-  }
+  constructor(public router: MeldRouterService) {}
 
   ngOnInit() {
-    this.route.data.forEach((data: { user: UserForm }) => {
-      this.user = data.user || new UserFormModel();
-    });
+    this.user = this.router.data.user || new UserFormModel();
   }
 
   onEditClick() {
-    this.router.navigate(['social', 'profile', {outlets: {profile: ['user', 'edit']}}]);
+    this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['user', 'edit']}}]);
   }
 
   onCancel() {
-    this.route.parent.params
-      .map(param => param.id)
-      .subscribe((id) => {
-        this.router.navigate(['social', 'profile', id]);
-      });
+    this.router.navigate(['social', 'profile', this.router.param.id]);
   }
-
 
 }

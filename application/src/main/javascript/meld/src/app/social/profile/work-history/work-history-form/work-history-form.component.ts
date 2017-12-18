@@ -7,6 +7,7 @@ import {CompanyModel} from '../company.classes';
 import {Company} from '../company.interfaces';
 import {Strings} from '../../../../../lib/common/utils/Strings';
 import {Location} from '@angular/common';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-work-history-form',
@@ -18,15 +19,11 @@ export class WorkHistoryFormComponent implements OnInit {
   public workHistory: WorkHistory;
 
   constructor(private http: Http,
-              private route: ActivatedRoute,
-              private location : Location,
-              private router : Router) {
+              private router : MeldRouterService) {
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { workHistory: WorkHistory }) => {
-      this.workHistory = data.workHistory || new WorkHistoryModel();
-    });
+    this.workHistory = this.router.data.workHistory || new WorkHistoryModel();
   }
 
   onCreateAddress() {
@@ -51,7 +48,7 @@ export class WorkHistoryFormComponent implements OnInit {
     this.http.post("service/social/user/current/work/history", this.workHistory)
       .subscribe((res: Response) => {
         this.workHistory = res.json();
-        this.location.back();
+        this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['work', 'history', 'view']}}]);
       })
   }
 
@@ -60,13 +57,13 @@ export class WorkHistoryFormComponent implements OnInit {
     this.http.put("service/social/user/current/work/history", this.workHistory)
       .subscribe((res: Response) => {
         this.workHistory = res.json();
-        this.location.back();
+        this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['work', 'history', 'view']}}]);
       })
   }
 
   onCancel() {
     this.filterEmpty();
-    this.location.back();
+    this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['work', 'history', 'view']}}]);
   }
 
   private filterEmpty() {

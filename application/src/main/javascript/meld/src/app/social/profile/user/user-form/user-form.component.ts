@@ -5,6 +5,7 @@ import {NgModel} from '@angular/forms';
 import {UserForm} from '../user.interfaces';
 import {UserFormModel} from '../user.classes';
 import {Enum} from '../../../../../lib/pipe/meld-enum/meld-enum.interfaces';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-user-form',
@@ -21,21 +22,18 @@ export class UserFormComponent implements OnInit {
   public genders: Enum[] = [{value: 'MALE', label: 'Male'}, {value: 'FEMALE', label: 'Female'}];
 
   constructor(private http: Http,
-              private route: ActivatedRoute,
-              private router: Router) {
+              private router: MeldRouterService) {
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { user: UserForm }) => {
-      this.user = data.user || new UserFormModel();
-    });
+    this.user = this.router.data.user || new UserFormModel();
   }
 
   onSave() {
     this.http.post(`service/social/user/current/form`, this.user)
       .subscribe((res: Response) => {
         this.user = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['user', 'view']}}]);
+        this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['user', 'view']}}]);
       });
   }
 
@@ -43,8 +41,12 @@ export class UserFormComponent implements OnInit {
     this.http.put(`service/social/user/current/form`, this.user)
       .subscribe((res: Response) => {
         this.user = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['user', 'view']}}]);
+        this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['user', 'view']}}]);
       });
+  }
+
+  onCancel() {
+    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['user', 'view']}}]);
   }
 
 }

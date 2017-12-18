@@ -48,4 +48,8 @@ public class ContactFormService {
     public User currentUser() {
         return userManager.current();
     }
+
+    public void delete(PersonalContact contact) {
+        entityManager.remove(contact);
+    }
 }

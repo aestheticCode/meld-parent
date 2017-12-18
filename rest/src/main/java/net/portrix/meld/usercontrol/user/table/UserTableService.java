@@ -1,53 +1,34 @@
 package net.portrix.meld.usercontrol.user.table;
 
-import com.google.common.collect.Maps;
-import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.ddd.AbstractQueryService;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.User_;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import java.util.List;
+import java.util.Collections;
+import java.util.Map;
 
 @ApplicationScoped
-public class UserTableService {
-
-    private final EntityManager entityManager;
+public class UserTableService extends AbstractQueryService<User> {
 
     @Inject
     public UserTableService(EntityManager entityManager) {
-        this.entityManager = entityManager;
+        super(entityManager);
     }
 
     public UserTableService() {
         this(null);
     }
 
-
-    public List<User> findUsers(Query search) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-        Root<User> root = query.from(User.class);
-        Expression predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, entityManager, root, Maps.newHashMap()));
-        query.select(root).where(predicate).orderBy(Query.sorting(search.getSorting(), builder, root));
-        TypedQuery<User> typedQuery = entityManager.createQuery(query);
-        typedQuery.setFirstResult(search.getIndex());
-        typedQuery.setMaxResults(search.getLimit());
-        return typedQuery.getResultList();
+    @Override
+    public Class<User> getEntityClass() {
+        return User.class;
     }
 
-    public long countUsers(Query search) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> query = builder.createQuery(Long.class);
-        Root<User> root = query.from(User.class);
-        Expression predicate = search.getPredicate().accept( Query.visitorVisit(query, builder, entityManager, root, Maps.newHashMap()));
-        query.select(builder.count(root)).where(predicate);
-        TypedQuery<Long> typedQuery = entityManager.createQuery(query);
-        return typedQuery.getSingleResult();
-
+    @Override
+    public Map<String, Class<?>> getTables() {
+        return Collections.emptyMap();
     }
 
 }

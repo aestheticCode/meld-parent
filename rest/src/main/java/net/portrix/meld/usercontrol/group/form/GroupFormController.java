@@ -45,6 +45,20 @@ public class GroupFormController {
 
     @Secured
     @GET
+    @Path("group/create/form")
+    @Name("Group Form Create")
+    @Transactional
+    public GroupForm create() {
+        GroupForm form = new GroupForm();
+
+        linkSave(builderFactory)
+                .buildSecured(form::addLink);
+
+        return form;
+    }
+
+    @Secured
+    @GET
     @Path("group/{id}/form")
     @Name("Group Form Read")
     @Transactional
@@ -146,6 +160,12 @@ public class GroupFormController {
         return service.validateName(validation);
     }
 
+    public static URLBuilder<GroupFormController> linkCreate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(GroupFormController.class)
+                .record(GroupFormController::create)
+                .rel("create");
+    }
 
     public static URLBuilder<GroupFormController> linkUpdate(Group group, URLBuilderFactory builderFactory) {
         return builderFactory

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {WorkHistory} from '../work-history.interfaces';
 import {WorkHistoryModel} from '../work-history.classes';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-work-history-view',
@@ -12,27 +13,19 @@ export class WorkHistoryViewComponent implements OnInit {
 
   public workHistory: WorkHistory;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
+  constructor(private router: MeldRouterService) {
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { workHistory: WorkHistory }) => {
-      this.workHistory = data.workHistory || new WorkHistoryModel();
-    });
+    this.workHistory = this.router.data.workHistory || new WorkHistoryModel();
   }
 
   onEdit() {
-    this.route.parent.params.subscribe((params) => {
-      this.router.navigate(['social', 'profile', params['id'] , {outlets: {profile: ['work', 'history', 'edit']}}]);
-    });
+    this.router.navigate(['social', 'profile', this.router.param.id , {outlets: {profile: ['work', 'history', 'edit']}}]);
   }
 
   onCancel() {
-    this.route.parent.params
-      .subscribe((param) => {
-        this.router.navigate(['social', 'profile', param['id']]);
-      });
+    this.router.navigate(['social', 'profile', this.router.param.id]);
   }
 
 

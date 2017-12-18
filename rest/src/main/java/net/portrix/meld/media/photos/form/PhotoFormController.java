@@ -39,6 +39,16 @@ public class PhotoFormController {
     }
 
     @GET
+    @Path("photo/create")
+    @Name("Photo Read")
+    @Secured
+    @Transactional
+    public PhotoForm create() {
+        return new PhotoForm();
+    }
+
+
+    @GET
     @Path("photo/{id}")
     @Name("Photo Read")
     @Secured
@@ -111,6 +121,12 @@ public class PhotoFormController {
         }
     }
 
+    public static URLBuilder<PhotoFormController> linkCreate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PhotoFormController.class)
+                .record(PhotoFormController::create)
+                .rel("create");
+    }
 
     public static URLBuilder<PhotoFormController> linkRead(UUID id, URLBuilderFactory builderFactory) {
         return builderFactory

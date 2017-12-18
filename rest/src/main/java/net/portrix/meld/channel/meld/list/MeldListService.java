@@ -1,6 +1,7 @@
 package net.portrix.meld.channel.meld.list;
 
 import com.google.common.collect.Maps;
+import net.portrix.generic.ddd.AbstractQueryService;
 import net.portrix.generic.rest.api.query.Query;
 import net.portrix.meld.channel.MeldPost;
 import net.portrix.meld.channel.MeldPost_;
@@ -21,25 +22,14 @@ import java.util.Map;
  * @author Patrick Bittner on 09.08.17.
  */
 @ApplicationScoped
-public class MeldListService {
+public class MeldListService extends AbstractQueryService<MeldPost> {
 
     private final UserManager userManager;
 
-    private final EntityManager entityManager;
-
-    private final Map<String, Class<?>> tables = Maps.newHashMap();
-
-    {
-        tables.put("relationShip", RelationShip.class);
-        tables.put("user", User.class);
-    }
-
-    @Inject
-    public MeldListService(UserManager userManager, EntityManager entityManager) {
+    public MeldListService(EntityManager entityManager, UserManager userManager) {
+        super(entityManager);
         this.userManager = userManager;
-        this.entityManager = entityManager;
     }
-
 
     public MeldListService() {
         this(null, null);
@@ -55,32 +45,6 @@ public class MeldListService {
         return userManager.current();
     }
 
-    public List<MeldPost> find(Query search) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<MeldPost> query = builder.createQuery(MeldPost.class);
-        Root<MeldPost> root = query.from(MeldPost.class);
-        Expression predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, entityManager, root, tables));
-        query.select(root).where(predicate).orderBy(builder.desc(root.get(MeldPost_.created)));
-        TypedQuery<MeldPost> typedQuery = entityManager.createQuery(query);
-        typedQuery.setFirstResult(search.getIndex());
-        typedQuery.setMaxResults(search.getLimit());
-        return typedQuery.getResultList();
-    }
-
-    long count(Query search) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> query = builder.createQuery(Long.class);
-        Root<MeldPost> root = query.from(MeldPost.class);
-        Expression predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, entityManager, root, tables));
-        query.select(builder.count(root)).where(predicate);
-        TypedQuery<Long> typedQuery = entityManager.createQuery(query);
-        return typedQuery.getSingleResult();
-    }
-
-    public void facebook() {
-
-    }
-
     public Profile findProfile(User user) {
         try {
             return entityManager.createQuery("select p from Profile p where p.user = :user", Profile.class)
@@ -90,4 +54,19 @@ public class MeldListService {
             return null;
         }
     }
+
+    @Override
+    public Class<MeldPost> getEntityClass() {
+        return MeldPost.class;
+    }
+
+    @Override
+    public Map<String, Class<?>> getTables() {
+        Map<String, Class<?>> tables = Maps.newHashMap();
+        tables.put("relationShip", RelationShip.class);
+        tables.put("user", User.class);
+        return tables;
+    }
+
+
 }

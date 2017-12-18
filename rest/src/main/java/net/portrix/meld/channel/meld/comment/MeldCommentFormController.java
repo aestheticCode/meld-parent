@@ -46,6 +46,22 @@ public class MeldCommentFormController {
 
     @POST
     @Secured
+    @Path("meld/post/{id}/comment/create")
+    @Name("Meld Post create Comment")
+    @Transactional
+    public MeldCommentResponse create(@PathParam("id") UUID id) {
+        MeldCommentResponse response = new MeldCommentResponse();
+
+        MeldPost post = service.findPost(id);
+
+        linkSave(post, builderFactory)
+                .buildSecured(response::addLink);
+
+        return response;
+    }
+
+    @POST
+    @Secured
     @Path("meld/post/{id}/comment")
     @Name("Meld Post add Comment")
     @Transactional
@@ -71,7 +87,7 @@ public class MeldCommentFormController {
         response.setTime(TimeUtils.format(meldComment.getCreated()));
         response.setText(meldComment.getText());
 
-        MeldCommentFormController.linkUpdate(meldComment, builderFactory)
+        MeldCommentFormController.linkDelete(meldComment, builderFactory)
                 .buildSecured(response::addLink);
 
         for (User user : meldComment.getLikes()) {
@@ -118,7 +134,7 @@ public class MeldCommentFormController {
         response.setTime(TimeUtils.format(meldComment.getCreated()));
         response.setText(meldComment.getText());
 
-        MeldCommentFormController.linkUpdate(meldComment, builderFactory)
+        MeldCommentFormController.linkDelete(meldComment, builderFactory)
                 .buildSecured(response::addLink);
 
         for (User user : meldComment.getLikes()) {
@@ -146,6 +162,31 @@ public class MeldCommentFormController {
 
     }
 
+    @DELETE
+    @Secured
+    @Path("meld/post/comment/{id}")
+    @Name("Meld Post add Comment")
+    @Transactional
+    public void delete(@PathParam("id") UUID id) {
+        MeldComment comment = service.findComment(id);
+
+        User user = service.currentUser();
+
+        if (comment.getUser() == user) {
+
+            service.deleteComment(comment);
+
+        }
+    }
+
+
+    public static URLBuilder<MeldCommentFormController> linkCreate(MeldPost post, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(MeldCommentFormController.class)
+                .record(method -> method.create(post.getId()))
+                .rel("create");
+    }
+
     public static URLBuilder<MeldCommentFormController> linkUpdate(MeldComment comment, URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(MeldCommentFormController.class)
@@ -153,5 +194,18 @@ public class MeldCommentFormController {
                 .rel("update");
     }
 
+    public static URLBuilder<MeldCommentFormController> linkSave(MeldPost post, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(MeldCommentFormController.class)
+                .record(method -> method.save(post.getId(), null))
+                .rel("save");
+    }
+
+    public static URLBuilder<MeldCommentFormController> linkDelete(MeldComment comment, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(MeldCommentFormController.class)
+                .record(method -> method.delete(comment.getId()))
+                .rel("delete");
+    }
 
 }

@@ -10,6 +10,7 @@ import {ChatModel} from "./chat-form/chat-form.classes";
 import {Contact} from '../contact-form.interfaces';
 import {ContactModel} from '../contact-form.classes';
 import {Strings} from '../../../../../lib/common/utils/Strings';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-social-contact-form',
@@ -21,14 +22,11 @@ export class ContactFormComponent implements OnInit {
   contact: Contact;
 
   constructor(private http: Http,
-              private route: ActivatedRoute,
-              private router : Router) {
+              private router : MeldRouterService) {
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { contact: Contact }) => {
-      this.contact = data.contact || new ContactModel();
-    });
+    this.contact = this.router.data.contact || new ContactModel();
   }
 
   onCreatePhone() {
@@ -86,7 +84,7 @@ export class ContactFormComponent implements OnInit {
     this.http.post("service/social/user/current/contact", this.contact)
       .subscribe((res: Response) => {
         this.contact = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['contact', 'view']}}]);
+        this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['user', 'view']}}]);
       })
   }
 
@@ -97,7 +95,7 @@ export class ContactFormComponent implements OnInit {
     this.http.put("service/social/user/current/contact", this.contact)
       .subscribe((res: Response) => {
         this.contact = res.json();
-        this.router.navigate(['social', 'profile', {outlets: {profile: ['contact', 'view']}}]);
+        this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['user', 'view']}}]);
       })
   }
 
@@ -105,7 +103,7 @@ export class ContactFormComponent implements OnInit {
     this.filterEmptyPhones();
     this.filterEmptyEmails();
     this.filterEmptyChats();
-    this.router.navigate(['social', 'profile', {outlets: {profile: ['contact', 'view']}}]);
+    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['user', 'view']}}]);
   }
 
   private filterEmptyPhones() {

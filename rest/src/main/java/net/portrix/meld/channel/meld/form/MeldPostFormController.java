@@ -48,6 +48,42 @@ public class MeldPostFormController {
 
     @Secured
     @GET
+    @Path("meld/create/{type}")
+    @Name("Meld Post Create")
+    @Transactional
+    public AbstractPostForm create(@PathParam("type") String type) {
+        switch (type) {
+            case "image": {
+                MeldImagePostForm form = new MeldImagePostForm();
+                linkSave(builderFactory)
+                        .buildSecured(form::addLink);
+                return form;
+            }
+            case "text": {
+                MeldTextPostForm form = new MeldTextPostForm();
+                linkSave(builderFactory)
+                        .buildSecured(form::addLink);
+                return form;
+            }
+            case "photo": {
+                MeldPhotoPostForm form = new MeldPhotoPostForm();
+                linkSave(builderFactory)
+                        .buildSecured(form::addLink);
+                return form;
+            }
+            case "youtube": {
+                MeldYouTubePostForm form = new MeldYouTubePostForm();
+                linkSave(builderFactory)
+                        .buildSecured(form::addLink);
+                return form;
+            }
+            default:
+                return null;
+        }
+    }
+
+    @Secured
+    @GET
     @Path("meld/{id}")
     @Name("Meld Post Read")
     @Transactional
@@ -271,6 +307,29 @@ public class MeldPostFormController {
         });
     }
 
+    @Secured
+    @PUT
+    @Path("meld/{id}")
+    @Name("Meld Post Delete")
+    @Transactional
+    public void delete(@PathParam("id") UUID id) {
+        MeldPost post = service.findPost(id);
+
+        User user = service.currentUser();
+
+        if (post.getUser() == user) {
+            service.deletePost(post);
+        }
+    }
+
+
+    public static URLBuilder<MeldPostFormController> linkCreate(String type, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(MeldPostFormController.class)
+                .record(method -> method.create(type))
+                .rel("create");
+    }
+
 
     public static URLBuilder<MeldPostFormController> linkRead(MeldPost post, URLBuilderFactory builderFactory) {
         return builderFactory
@@ -286,12 +345,18 @@ public class MeldPostFormController {
                 .rel("update");
     }
 
-    private static URLBuilder<MeldPostFormController> linkSave(MeldPost post, URLBuilderFactory builderFactory) {
+    private static URLBuilder<MeldPostFormController> linkSave(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(MeldPostFormController.class)
                 .record(method -> method.save(null))
                 .rel("save");
     }
 
+    private static URLBuilder<MeldPostFormController> linkDelete(MeldPost post, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(MeldPostFormController.class)
+                .record(method -> method.delete(post.getId()))
+                .rel("delete");
+    }
 
 }

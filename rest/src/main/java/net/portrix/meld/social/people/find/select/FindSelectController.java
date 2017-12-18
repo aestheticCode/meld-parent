@@ -1,4 +1,4 @@
-package net.portrix.meld.social.people.find.form;
+package net.portrix.meld.social.people.find.select;
 
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
@@ -11,7 +11,6 @@ import net.portrix.meld.usercontrol.UserManager;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,19 +20,19 @@ import javax.ws.rs.core.MediaType;
 @Name("Social")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class FindFormController {
+public class FindSelectController {
 
     private final UserManager userManager;
 
-    private final FindFormService service;
+    private final FindSelectService service;
 
     @Inject
-    public FindFormController(UserManager userManager, FindFormService service) {
+    public FindSelectController(UserManager userManager, FindSelectService service) {
         this.userManager = userManager;
         this.service = service;
     }
 
-    public FindFormController() {
+    public FindSelectController() {
         this(null, null);
     }
 
@@ -42,7 +41,7 @@ public class FindFormController {
     @Name("Find User Read")
     @Secured
     @Transactional
-    public FindForm update(FindForm form) {
+    public FindSelect update(FindSelect form) {
 
         User current = userManager.current();
         User user = userManager.find(form.getId());
@@ -57,7 +56,7 @@ public class FindFormController {
         Category category = service.findCategory(form.getCategory());
 
         if (category == null) {
-            throw new NoResultException();
+            throw new NotFoundException();
         }
 
         if (relationShip == null) {
@@ -77,9 +76,9 @@ public class FindFormController {
 
     }
 
-    public static URLBuilder<FindFormController> linkUpdate(URLBuilderFactory builderFactory) {
+    public static URLBuilder<FindSelectController> linkUpdate(URLBuilderFactory builderFactory) {
         return builderFactory
-                .from(FindFormController.class)
+                .from(FindSelectController.class)
                 .record((method) -> method.update(null))
                 .rel("find");
     }

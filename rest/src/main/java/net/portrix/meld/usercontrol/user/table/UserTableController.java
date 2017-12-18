@@ -60,8 +60,8 @@ public class UserTableController {
         if(search.getLimit() == 0) {
             users = new ArrayList<>();
         } else {
-            users = service.findUsers(search);
-            count = service.countUsers(search);
+            users = service.find(search);
+            count = service.count(search);
         }
 
         final List<UserItem> selects = new ArrayList<>();

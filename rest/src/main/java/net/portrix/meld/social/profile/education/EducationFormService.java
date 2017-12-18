@@ -49,4 +49,8 @@ public class EducationFormService {
     public User currentUser() {
         return userManager.current();
     }
+
+    public void deleteEducation(Education education) {
+        entityManager.remove(education);
+    }
 }

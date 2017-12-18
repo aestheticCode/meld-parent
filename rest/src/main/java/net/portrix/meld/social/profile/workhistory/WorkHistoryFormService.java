@@ -48,4 +48,8 @@ public class WorkHistoryFormService {
     public User currentUser() {
         return userManager.current();
     }
+
+    public void deleteWorkHistory(WorkHistory workHistory) {
+        entityManager.remove(workHistory);
+    }
 }

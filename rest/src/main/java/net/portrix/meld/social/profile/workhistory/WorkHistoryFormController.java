@@ -6,7 +6,6 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Company;
 import net.portrix.meld.social.profile.WorkHistory;
-import net.portrix.meld.social.profile.education.EducationFormController;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
 
@@ -45,6 +44,20 @@ public class WorkHistoryFormController {
         this(null, null, null);
     }
 
+
+    @GET
+    @Path("user/current/work/history/create")
+    @Name("Work History Read Current")
+    @Secured
+    @Transactional
+    public WorkHistoryForm create() {
+        WorkHistoryForm form = new WorkHistoryForm();
+
+        linkSave(factory)
+                .buildSecured(form::addLink);
+
+        return form;
+    }
 
     @GET
     @Path("user/current/work/history")
@@ -91,7 +104,7 @@ public class WorkHistoryFormController {
         if (identity.isLoggedIn()) {
             linkUpdate(factory)
                     .buildSecured(historyResponseType::addLink);
-            linkSave(factory)
+            linkDelete(factory)
                     .buildSecured(historyResponseType::addLink);
         }
 
@@ -156,6 +169,27 @@ public class WorkHistoryFormController {
         return read(workHistory.getId());
     }
 
+    @DELETE
+    @Path("user/current/work/history")
+    @Name("Work History Delete")
+    @Secured
+    @Transactional
+    public void delete() {
+        User user = service.currentUser();
+
+        WorkHistory workHistory = service.findWorkHistory(user);
+
+        service.deleteWorkHistory(workHistory);
+    }
+
+    public static URLBuilder<WorkHistoryFormController> linkCreate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(WorkHistoryFormController.class)
+                .record(WorkHistoryFormController::create)
+                .rel("update");
+    }
+
+
     public static URLBuilder<WorkHistoryFormController> linkCurrent(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(WorkHistoryFormController.class)
@@ -183,4 +217,12 @@ public class WorkHistoryFormController {
                 .record((method) -> method.update(null))
                 .rel("update");
     }
+
+    public static URLBuilder<WorkHistoryFormController> linkDelete(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(WorkHistoryFormController.class)
+                .record(WorkHistoryFormController::delete)
+                .rel("update");
+    }
+
 }

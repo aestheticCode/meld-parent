@@ -114,8 +114,9 @@ public class UserControlModule {
                         Permission foundPermission = permissionManager.find(permission);
 
                         if (foundPermission == null) {
-                            log.error("No Permission found: " + UUID.randomUUID().toString());
-                            log.error(permission.toString());
+                            String id = UUID.randomUUID().toString();
+                            String statement = "INSERT INTO public.uc_permission (id, method, name, path) VALUES ('%s', '%s', '%s', '%s');";
+                            log.error(String.format("Missing Permission\n" + statement, id, permission.getMethod(), permission.getName(), permission.getPath()) );
                         }
                     }
                 }

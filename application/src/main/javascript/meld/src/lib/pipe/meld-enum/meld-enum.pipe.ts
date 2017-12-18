@@ -7,10 +7,14 @@ import {Enum} from './meld-enum.interfaces';
 export class MeldEnumPipe implements PipeTransform {
 
   transform(value: string, args?: Enum[]): any {
-    return args
-      .filter((enumarable) => enumarable.value === value)
-      .shift()
-      .label;
+    if (value) {
+      return args
+        .filter((enumarable) => enumarable.value === value)
+        .shift()
+        .label;
+    }
+
+    return "";
   }
 
 }

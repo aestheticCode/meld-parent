@@ -3,11 +3,9 @@ package net.portrix.meld.social.profile.places;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.google.PlacesController;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Address;
 import net.portrix.meld.social.profile.Places;
-import net.portrix.meld.social.profile.education.EducationFormController;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
 
@@ -46,6 +44,19 @@ public class PlacesFormController {
         this(null, null, null);
     }
 
+    @GET
+    @Path("user/current/places/create")
+    @Name("Places Create")
+    @Secured
+    @Transactional
+    public PlacesForm create() {
+        PlacesForm form = new PlacesForm();
+
+        linkSave(factory)
+                .buildSecured(form::addLink);
+
+        return form;
+    }
 
     @GET
     @Path("user/current/places")
@@ -94,7 +105,7 @@ public class PlacesFormController {
             linkUpdate(factory)
                     .buildSecured(placesForm::addLink);
 
-            linkSave(factory)
+            linkDelete(factory)
                     .buildSecured(placesForm::addLink);
         }
 
@@ -164,6 +175,27 @@ public class PlacesFormController {
         return read(user.getId());
     }
 
+    @DELETE
+    @Path("user/current/places")
+    @Name("Places Update")
+    @Secured
+    @Transactional
+    public void delete() {
+        User user = service.currentUser();
+
+        Places places = service.findPlaces(user);
+
+        service.deletePlaces(places);
+    }
+
+
+    public static URLBuilder<PlacesFormController> linkCreate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PlacesFormController.class)
+                .record(PlacesFormController::create)
+                .rel("create");
+    }
+
     public static URLBuilder<PlacesFormController> linkCurrent(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(PlacesFormController.class)
@@ -192,5 +224,11 @@ public class PlacesFormController {
                 .rel("update");
     }
 
+    public static URLBuilder<PlacesFormController> linkDelete(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PlacesFormController.class)
+                .record(PlacesFormController::delete)
+                .rel("delete");
+    }
 
 }

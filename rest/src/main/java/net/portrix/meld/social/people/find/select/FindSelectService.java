@@ -1,4 +1,4 @@
-package net.portrix.meld.social.people.find.form;
+package net.portrix.meld.social.people.find.select;
 
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
@@ -11,16 +11,16 @@ import javax.persistence.NoResultException;
 import java.util.UUID;
 
 @ApplicationScoped
-public class FindFormService {
+public class FindSelectService {
 
     private final EntityManager entityManager;
 
     @Inject
-    public FindFormService(EntityManager entityManager) {
+    public FindSelectService(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    public FindFormService() {
+    public FindSelectService() {
         this(null);
     }
 

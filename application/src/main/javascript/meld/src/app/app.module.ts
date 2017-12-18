@@ -20,7 +20,7 @@ export function initConfiguration(configService: AppService): Function {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    LibModule,
+    LibModule.forRoot(),
     routing
   ],
   providers: [

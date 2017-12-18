@@ -44,6 +44,21 @@ public class RoleFormController {
     }
 
     @GET
+    @Path("role/create/form")
+    @Name("Role Form Create")
+    @Secured
+    @Transactional
+    public RoleForm create() {
+        RoleForm form = new RoleForm();
+
+        linkSave(builderFactory)
+                .buildSecured(form::addLink);
+
+        return form;
+    }
+
+
+    @GET
     @Path("role/{id}/form")
     @Name("Role Form Read")
     @Secured
@@ -69,8 +84,6 @@ public class RoleFormController {
         }
         roleForm.setMembers(members);
 
-        linkRead(role, builderFactory)
-                .buildSecured(roleForm::addLink);
         linkUpdate(role, builderFactory)
                 .buildSecured(roleForm::addLink);
         linkDelete(role, builderFactory)
@@ -142,6 +155,13 @@ public class RoleFormController {
     @Name("Role Form Name Validate")
     public boolean validate(RoleNameValidation validation) {
         return service.validateName(validation);
+    }
+
+    public static URLBuilder<RoleFormController> linkCreate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(RoleFormController.class)
+                .record(RoleFormController::create)
+                .rel("create");
     }
 
 

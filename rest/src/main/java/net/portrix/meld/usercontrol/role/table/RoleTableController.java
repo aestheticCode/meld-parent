@@ -56,8 +56,8 @@ public class RoleTableController {
         if (search.getLimit() == 0) {
             Roles = new ArrayList<>();
         } else {
-            Roles = service.findRoles(search);
-            count = service.countRoles(search);
+            Roles = service.find(search);
+            count = service.count(search);
         }
 
         final List<RoleItem> selects = new ArrayList<>();

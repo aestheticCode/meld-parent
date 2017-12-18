@@ -144,9 +144,17 @@
     <changeSet id="2017-12-16-uc_permissions" author="patrick">
         <sqlFile path="src/main/liquibase/2017-12-16/uc_permission.sql"/>
     </changeSet>
+
     <changeSet id="2017-12-16-uc_role_uc_permission" author="patrick">
         <sqlFile path="src/main/liquibase/2017-12-16/uc_role_uc_permission.sql"/>
     </changeSet>
 
+    <changeSet id="2017-12-17-uc_permissions" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-17/uc_permission.sql"/>
+    </changeSet>
+
+    <changeSet id="2017-12-17-uc_role_uc_permission" author="patrick">
+        <sqlFile path="src/main/liquibase/2017-12-17/uc_role_uc_permission.sql"/>
+    </changeSet>
 
 </databaseChangeLog>

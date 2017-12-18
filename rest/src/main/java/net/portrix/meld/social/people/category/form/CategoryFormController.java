@@ -3,7 +3,6 @@ package net.portrix.meld.social.people.category.form;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
@@ -16,25 +15,43 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Path("social/people")
 @ApplicationScoped
 @Name("Social")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class CategoryController {
+public class CategoryFormController {
 
     private final CategoryService service;
 
+    private final URLBuilderFactory factory;
+
     @Inject
-    public CategoryController(CategoryService service) {
+    public CategoryFormController(CategoryService service, URLBuilderFactory factory) {
         this.service = service;
+        this.factory = factory;
     }
 
-    public CategoryController() {
-        this(null);
+    public CategoryFormController() {
+        this(null, null);
     }
+
+    @GET
+    @Path("category/create")
+    @Name("Categories Read")
+    @Secured
+    @Transactional
+    public CategoryForm create() {
+        CategoryForm result = new CategoryForm();
+
+        linkSave(factory)
+                .buildSecured(result::addLink);
+
+        return result;
+
+    }
+
 
     @GET
     @Path("category/{id}")
@@ -49,10 +66,14 @@ public class CategoryController {
         result.setId(category.getId());
         result.setName(category.getName());
 
+        linkUpdate(category, factory)
+                .buildSecured(result::addLink);
+        linkDelete(category, factory)
+                .buildSecured(result::addLink);
+
         return result;
 
     }
-
 
     @POST
     @Path("category")
@@ -105,24 +126,31 @@ public class CategoryController {
 
     }
 
-    public static URLBuilder<CategoryController> linkDelete(UUID id, URLBuilderFactory builderFactory) {
+    public static URLBuilder<CategoryFormController> linkCreate(URLBuilderFactory builderFactory) {
         return builderFactory
-                .from(CategoryController.class)
-                .record((method) -> method.delete(id))
+                .from(CategoryFormController.class)
+                .record(CategoryFormController::create)
+                .rel("create");
+    }
+
+    public static URLBuilder<CategoryFormController> linkDelete(Category category, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(CategoryFormController.class)
+                .record((method) -> method.delete(category.getId()))
                 .rel("delete");
     }
 
-    public static URLBuilder<CategoryController> linkSave(URLBuilderFactory builderFactory) {
+    public static URLBuilder<CategoryFormController> linkSave(URLBuilderFactory builderFactory) {
         return builderFactory
-                .from(CategoryController.class)
+                .from(CategoryFormController.class)
                 .record((method) -> method.save(null))
                 .rel("save");
     }
 
-    public static URLBuilder<CategoryController> linkUpdate(UUID id, URLBuilderFactory builderFactory) {
+    public static URLBuilder<CategoryFormController> linkUpdate(Category category, URLBuilderFactory builderFactory) {
         return builderFactory
-                .from(CategoryController.class)
-                .record((method) -> method.update(id, null))
+                .from(CategoryFormController.class)
+                .record((method) -> method.update(category.getId(), null))
                 .rel("update");
     }
 

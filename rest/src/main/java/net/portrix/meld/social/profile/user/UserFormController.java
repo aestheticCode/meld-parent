@@ -51,7 +51,6 @@ public class UserFormController {
         this(null, null, null);
     }
 
-
     @Secured
     @GET
     @Path("user/current/form")
@@ -108,14 +107,6 @@ public class UserFormController {
         String userId = form.getFirstName() + form.getLastName() + birthday;
         user.setName(userId);
 
-        final Blob image = form.getImage();
-        final UserImage userImage = service.findUserImage(user);
-
-        userImage.setFileName(image.getName());
-        userImage.setImage(image.getData());
-        userImage.setLastModified(image.getLastModified());
-        userImage.setThumbnail(ImageUtils.thumnail(image.getName(), image.getData(), 100));
-
         return read(user.getId());
     }
 
@@ -142,6 +133,17 @@ public class UserFormController {
 
         return read(user.getId());
     }
+
+    @Secured
+    @DELETE
+    @Path("user/current/form")
+    @Name("User Form Delete")
+    @Transactional
+    public void delete() {
+        User user = service.currentUser();
+        service.deleteUser(user);
+    }
+
 
 
     @Secured
@@ -179,6 +181,13 @@ public class UserFormController {
                 .from(UserFormController.class)
                 .record(method -> method.save(null))
                 .rel("save");
+    }
+
+    public static URLBuilder<UserFormController> linkDelete(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(UserFormController.class)
+                .record(UserFormController::delete)
+                .rel("delete");
     }
 
 }

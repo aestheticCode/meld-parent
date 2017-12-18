@@ -7,7 +7,6 @@ import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Education;
 import net.portrix.meld.social.profile.School;
 import net.portrix.meld.social.profile.SchoolDate;
-import net.portrix.meld.social.profile.contact.ContactFormController;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
 
@@ -47,6 +46,21 @@ public class EducationFormController {
     }
 
     @GET
+    @Path("user/current/education/create")
+    @Name("Education Create")
+    @Secured
+    @Transactional
+    public EducationForm create() {
+        EducationForm form = new EducationForm();
+
+        linkSave(factory)
+                .buildSecured(form::addLink);
+
+        return form;
+    }
+
+
+    @GET
     @Path("user/current/education")
     @Name("Education Read")
     @Secured
@@ -83,9 +97,11 @@ public class EducationFormController {
 
             SchoolDateForm start = new SchoolDateForm();
             switch (school.getStart().getSemester()) {
-                case SUMMER: start.setSemester(SchoolDateForm.Semester.SUMMER);
+                case SUMMER:
+                    start.setSemester(SchoolDateForm.Semester.SUMMER);
                     break;
-                case WINTER: start.setSemester(SchoolDateForm.Semester.WINTER);
+                case WINTER:
+                    start.setSemester(SchoolDateForm.Semester.WINTER);
                     break;
             }
             start.setYear(school.getStart().getYear());
@@ -93,9 +109,11 @@ public class EducationFormController {
 
             SchoolDateForm end = new SchoolDateForm();
             switch (school.getEnd().getSemester()) {
-                case SUMMER: end.setSemester(SchoolDateForm.Semester.SUMMER);
+                case SUMMER:
+                    end.setSemester(SchoolDateForm.Semester.SUMMER);
                     break;
-                case WINTER: end.setSemester(SchoolDateForm.Semester.WINTER);
+                case WINTER:
+                    end.setSemester(SchoolDateForm.Semester.WINTER);
                     break;
             }
             end.setYear(school.getEnd().getYear());
@@ -108,8 +126,7 @@ public class EducationFormController {
         if (identity.isLoggedIn()) {
             linkUpdate(factory)
                     .buildSecured(form::addLink);
-
-            linkSave(factory)
+            linkDelete(factory)
                     .buildSecured(form::addLink);
         }
 
@@ -137,9 +154,11 @@ public class EducationFormController {
             SchoolDate start = new SchoolDate();
             start.setYear(schoolType.getStart().getYear());
             switch (schoolType.getStart().getSemester()) {
-                case SUMMER: start.setSemester(SchoolDate.Semester.SUMMER);
+                case SUMMER:
+                    start.setSemester(SchoolDate.Semester.SUMMER);
                     break;
-                case WINTER: start.setSemester(SchoolDate.Semester.WINTER);
+                case WINTER:
+                    start.setSemester(SchoolDate.Semester.WINTER);
                     break;
             }
             school.setStart(start);
@@ -147,9 +166,11 @@ public class EducationFormController {
             SchoolDate end = new SchoolDate();
             end.setYear(schoolType.getEnd().getYear());
             switch (schoolType.getEnd().getSemester()) {
-                case SUMMER: end.setSemester(SchoolDate.Semester.SUMMER);
+                case SUMMER:
+                    end.setSemester(SchoolDate.Semester.SUMMER);
                     break;
-                case WINTER: end.setSemester(SchoolDate.Semester.WINTER);
+                case WINTER:
+                    end.setSemester(SchoolDate.Semester.WINTER);
                     break;
             }
             school.setEnd(end);
@@ -183,9 +204,11 @@ public class EducationFormController {
             SchoolDate start = new SchoolDate();
             start.setYear(schoolType.getStart().getYear());
             switch (schoolType.getStart().getSemester()) {
-                case SUMMER: start.setSemester(SchoolDate.Semester.SUMMER);
+                case SUMMER:
+                    start.setSemester(SchoolDate.Semester.SUMMER);
                     break;
-                case WINTER: start.setSemester(SchoolDate.Semester.WINTER);
+                case WINTER:
+                    start.setSemester(SchoolDate.Semester.WINTER);
                     break;
             }
             school.setStart(start);
@@ -193,9 +216,11 @@ public class EducationFormController {
             SchoolDate end = new SchoolDate();
             end.setYear(schoolType.getEnd().getYear());
             switch (schoolType.getEnd().getSemester()) {
-                case SUMMER: end.setSemester(SchoolDate.Semester.SUMMER);
+                case SUMMER:
+                    end.setSemester(SchoolDate.Semester.SUMMER);
                     break;
-                case WINTER: end.setSemester(SchoolDate.Semester.WINTER);
+                case WINTER:
+                    end.setSemester(SchoolDate.Semester.WINTER);
                     break;
             }
             school.setEnd(end);
@@ -204,6 +229,25 @@ public class EducationFormController {
         }
 
         return current();
+    }
+
+    @DELETE
+    @Path("user/current/education")
+    @Name("Education Delete")
+    @Secured
+    @Transactional
+    public void delete() {
+        User user = service.currentUser();
+
+        Education education = service.findEducation(user);
+        service.deleteEducation(education);
+    }
+
+    public static URLBuilder<EducationFormController> linkCreate(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(EducationFormController.class)
+                .record(EducationFormController::create)
+                .rel("create");
     }
 
     public static URLBuilder<EducationFormController> linkCurrent(URLBuilderFactory builderFactory) {
@@ -233,4 +277,12 @@ public class EducationFormController {
                 .record((method) -> method.update(null))
                 .rel("update");
     }
+
+    public static URLBuilder<EducationFormController> linkDelete(URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(EducationFormController.class)
+                .record(EducationFormController::delete)
+                .rel("update");
+    }
+
 }

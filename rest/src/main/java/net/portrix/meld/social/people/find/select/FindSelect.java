@@ -1,10 +1,10 @@
-package net.portrix.meld.social.people.find.form;
+package net.portrix.meld.social.people.find.select;
 
 import net.portrix.generic.rest.api.Blob;
 
 import java.util.UUID;
 
-public class FindForm {
+public class FindSelect {
     private UUID id;
 
     private Blob image;
