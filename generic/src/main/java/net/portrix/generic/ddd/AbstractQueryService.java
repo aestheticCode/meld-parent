@@ -1,7 +1,6 @@
 package net.portrix.generic.ddd;
 
-import com.google.common.collect.Maps;
-import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -24,23 +23,23 @@ public abstract class AbstractQueryService<E> {
 
     public abstract Map<String, Class<?>> getTables();
 
-    public List<E> find(Query search) {
+    public List<E> find(Search search) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<E> query = builder.createQuery(getEntityClass());
         Root<E> root = query.from(getEntityClass());
-        Expression predicate = search.getPredicate().accept(Query.visitorVisit(query, builder, entityManager, root, getTables()));
-        query.select(root).where(predicate).orderBy(Query.sorting(search.getSorting(), builder, root));
+        Expression predicate = search.getExpression().accept(Search.visitorVisit(entityManager, builder, query, root, this.getTables()));
+        query.select(root).where(predicate).orderBy(Search.sorting(search.getSorting(), builder, root));
         TypedQuery<E> typedQuery = entityManager.createQuery(query);
         typedQuery.setFirstResult(search.getIndex());
         typedQuery.setMaxResults(search.getLimit());
         return typedQuery.getResultList();
     }
 
-    public long count(Query search) {
+    public long count(Search search) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<E> root = query.from(getEntityClass());
-        Expression predicate = search.getPredicate().accept( Query.visitorVisit(query, builder, entityManager, root, getTables()));
+        Expression predicate = search.getExpression().accept(Search.visitorVisit(entityManager, builder, query, root, getTables()));
         query.select(builder.count(root)).where(predicate);
         TypedQuery<Long> typedQuery = entityManager.createQuery(query);
         return typedQuery.getSingleResult();

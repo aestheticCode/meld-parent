@@ -5,18 +5,17 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import javax.persistence.criteria.Expression;
 
 @JsonTypeName("join")
-public class Join implements RestPredicate<RestPredicate<?>> {
+public class Join implements RestPredicate {
 
-    private RestPredicate<?> value;
+    private RestPredicate value;
 
     private String path;
-    
-    @Override
-    public RestPredicate<?> getValue() {
+
+    public RestPredicate getValue() {
         return value;
     }
 
-    public void setValue(RestPredicate<?> value) {
+    public void setValue(RestPredicate value) {
         this.value = value;
     }
 

@@ -141,6 +141,7 @@ public class RoleFormController {
     @Path("role/{id}/form")
     @Name("Role Form Delete")
     @Secured
+    @Transactional
     public Response delete(@PathParam("id") UUID id) {
         final Role role = service.findRole(id);
         service.deleteRole(role);

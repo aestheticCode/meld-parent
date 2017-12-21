@@ -7,10 +7,10 @@
             <fieldset>
               <legend>Work History</legend>
 
-              <div *ngFor="let company of workHistory.companies | companySort" style="margin-bottom: 12px;">
-                <app-social-company-view [company]="company"></app-social-company-view>
-                <hr/>
-              </div>
+              <table>
+                <tr *ngFor="let company of workHistory.companies | companySort" app-social-company-view [company]="company"></tr>
+              </table>
+
               <div *ngIf="workHistory.companies.length === 0" style="line-height: 48px; text-align: center;">
                 No Work History.
               </div>
@@ -20,7 +20,7 @@
 
           </mat-card-content>
           <mat-card-actions >
-            <button *ngIf="workHistory.links | meldLink:'save'"  mat-button (click)="onEdit()">Edit</button>
+            <button *ngIf="workHistory.links | meldLink:'update,save'"  mat-button (click)="onEdit()">Edit</button>
             <button mat-button (click)="onCancel()">Chancel</button>
           </mat-card-actions>
         </mat-card>

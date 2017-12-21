@@ -5,13 +5,17 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserForm} from '../user.interfaces';
 import {UserFormModel} from '../user.classes';
 import {Enum} from '../../../../../lib/pipe/meld-enum/meld-enum.interfaces';
+import {AbstractForm} from '../../../../../lib/common/forms/AbstractForm';
+import {HttpClient} from '@angular/common/http';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: 'user-form.component.html',
   styleUrls: ['user-form.component.css']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent extends AbstractForm<UserForm> implements OnInit {
 
   public user: UserForm;
 
@@ -20,35 +24,33 @@ export class UserFormComponent implements OnInit {
 
   public genders : Enum[] = [{value : 'MALE', label : 'Male'}, {value : 'FEMALE', label : 'Female'}];
 
-  constructor(private http: Http,
-              private route: ActivatedRoute,
-              private router : Router) {
+  private router: MeldRouterService;
+
+  constructor(http: HttpClient,
+              router : MeldRouterService) {
+    super(http);
+    this.router = router;
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { user: UserForm }) => {
-      this.user = data.user || new UserFormModel();
-    });
+    this.user = this.router.data.user;
   }
 
-  onSave() {
-    this.http.post(`service/usercontrol/user/form`, this.user)
-      .subscribe((res: Response) => {
-        this.user = res.json();
-        this.router.navigate(['usercontrol/user', this.user.id, 'view']);
-      });
+  public saveRequest(): Observable<UserForm> {
+    return this.http.post<UserForm>(`service/usercontrol/user/form`, this.user)
   }
 
-  onUpdate() {
-    this.http.put(`service/usercontrol/user/${this.user.id}/form`, this.user)
-      .subscribe((res: Response) => {
-        this.user = res.json();
-        this.router.navigate(['usercontrol/user', this.user.id, 'view']);
-      });
+  public updateRequest(): Observable<UserForm> {
+    return this.http.put<UserForm>(`service/usercontrol/user/${this.user.id}/form`, this.user)
+
   }
 
-  onCancel() {
-    this.router.navigate(['usercontrol/user', this.user.id, 'view']);
+  public deleteRequest(): Observable<UserForm> {
+    return this.http.delete<UserForm>(`service/usercontrol/user/${this.user.id}/form`)
+  }
+
+  public postRequest(form: UserForm) {
+    this.router.navigate(['usercontrol/users']);
   }
 
 }

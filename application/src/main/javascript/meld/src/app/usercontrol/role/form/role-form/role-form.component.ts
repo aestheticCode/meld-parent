@@ -1,18 +1,20 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {RoleForm} from "./RoleForm";
-import {Http, Response} from "@angular/http";
-import {ActivatedRoute} from "@angular/router";
-import {RoleFormModel} from "./RoleFormModel";
-import {NgModel} from "@angular/forms";
-import {PermissionRow} from "./PermissionRow";
-import {Items} from '../../../../../lib/common/query/Items';
+import {PermissionRow, RoleForm} from './role-form.interfaces';
+import {Response} from '@angular/http';
+import {NgModel} from '@angular/forms';
+import {AbstractForm} from '../../../../../lib/common/forms/AbstractForm';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
+import {Container} from '../../../../../lib/common/rest/Container';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-role-form',
   templateUrl: 'role-form.component.html',
   styleUrls: ['role-form.component.css']
 })
-export class RoleFormComponent implements OnInit {
+export class RoleFormComponent extends AbstractForm<RoleForm> implements OnInit {
 
   public role: RoleForm;
 
@@ -22,15 +24,16 @@ export class RoleFormComponent implements OnInit {
   @ViewChild('input')
   private input: ElementRef;
 
+  private router: MeldRouterService;
 
-  constructor(private http: Http,
-              private route: ActivatedRoute) {
+  constructor(http: HttpClient,
+              router: MeldRouterService) {
+    super(http);
+    this.router = router;
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { role: any }) => {
-      this.role = data.role || new RoleFormModel();
-    });
+    this.role = this.router.data.role;
 
     this.name
       .control
@@ -52,27 +55,29 @@ export class RoleFormComponent implements OnInit {
 
   }
 
-
-  permissions : Items<PermissionRow> = (query, response) => {
-    this.http.post('service/usercontrol/permission/table', query)
-      .subscribe((res: Response) => {
-        const json = res.json();
+  permissions: Items<PermissionRow> = (query, response) => {
+    this.http.post<Container<PermissionRow>>('service/usercontrol/permission/table', query)
+      .subscribe((res: Container<PermissionRow>) => {
+        const json = res;
         response(json.rows, json.size);
       });
   };
 
-  onSave() {
-    this.http.post('service/usercontrol/role/form', this.role)
-      .subscribe((res: Response) => {
-        this.role = res.json();
-      });
+  saveRequest(): Observable<RoleForm> {
+    return this.http.post<RoleForm>('service/usercontrol/role/form', this.role);
+
   }
 
-  onUpdate() {
-    this.http.put(`service/usercontrol/role/${this.role.id}/form`, this.role)
-      .subscribe((res: Response) => {
-        this.role = res.json();
-      });
+  updateRequest(): Observable<RoleForm> {
+    return this.http.put<RoleForm>(`service/usercontrol/role/${this.role.id}/form`, this.role);
+
   }
 
+  deleteRequest(): Observable<RoleForm> {
+    return this.http.delete<RoleForm>(`service/usercontrol/role/${this.role.id}/form`);
+  }
+
+  public postRequest(form: RoleForm) {
+    this.router.navigate(['usercontrol', 'roles']);
+  }
 }

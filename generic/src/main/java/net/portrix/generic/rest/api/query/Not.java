@@ -5,16 +5,15 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import javax.persistence.criteria.Expression;
 
 @JsonTypeName("not")
-public class Not implements RestPredicate<RestPredicate<?>> {
+public class Not implements RestPredicate {
 
-    private RestPredicate<?> value;
+    private RestPredicate value;
 
-    @Override
-    public RestPredicate<?> getValue() {
+    public RestPredicate getValue() {
         return value;
     }
 
-    public void setValue(RestPredicate<?> value) {
+    public void setValue(RestPredicate value) {
         this.value = value;
     }
 

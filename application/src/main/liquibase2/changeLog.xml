@@ -9,4 +9,8 @@
         <sqlFile path="src/main/liquibase2/uc_permission.sql"/>
     </changeSet>
 
+    <changeSet id="uc_role_uc_permission" author="patrick">
+        <sqlFile path="src/main/liquibase2/uc_role_uc_permission.sql"/>
+    </changeSet>
+
 </databaseChangeLog>

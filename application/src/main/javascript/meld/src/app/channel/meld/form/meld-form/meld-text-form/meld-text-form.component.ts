@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
-import {MeldTextPostModel} from './meld-text-form.classes';
+import {Component, OnInit} from '@angular/core';
 import {MeldTextPost} from './meld-text-form.interfaces';
 import {MeldFormPostComponent} from '../meld-form.classes';
+import {HttpClient} from '@angular/common/http';
+import {MeldRouterService} from '../../../../../../lib/service/meld-router/meld-router.service';
 
 
 @Component({
@@ -9,8 +10,18 @@ import {MeldFormPostComponent} from '../meld-form.classes';
   templateUrl: 'meld-text-form.component.html',
   styleUrls: ['meld-text-form.component.css']
 })
-export class MeldTextFormComponent extends MeldFormPostComponent {
+export class MeldTextFormComponent extends MeldFormPostComponent implements OnInit {
 
-  public post: MeldTextPost = new MeldTextPostModel();
+  public post: MeldTextPost;
+
+  constructor(private http: HttpClient,
+              private router : MeldRouterService) {
+    super();
+  }
+
+  ngOnInit(): void {
+    this.post = this.router.data.post;
+  }
+
 
 }

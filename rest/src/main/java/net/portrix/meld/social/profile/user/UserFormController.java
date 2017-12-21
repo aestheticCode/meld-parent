@@ -80,7 +80,7 @@ public class UserFormController {
 
         linkUpdate(builderFactory)
                 .buildSecured(response::addLink);
-        linkSave(builderFactory)
+        linkDelete(builderFactory)
                 .buildSecured(response::addLink);
 
         return response;

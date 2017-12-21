@@ -81,6 +81,9 @@ public class UserFormController {
             log.error(e.getMessage(), e);
         }
 
+        linkSave(builderFactory)
+                .buildSecured(response::addLink);
+
         return response;
     }
 
@@ -215,6 +218,7 @@ public class UserFormController {
     @DELETE
     @Path("user/{id}/form")
     @Name("User Form Delete")
+    @Transactional
     public Response delete(@PathParam("id") UUID id) {
 
         final User user = service.findUser(id);

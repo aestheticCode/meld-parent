@@ -8,13 +8,12 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 @JsonTypeName("inSelect")
-public class InSelect implements RestPredicate<SubQuery> {
+public class InSelect implements RestPredicate {
 
     private SubQuery value;
 
     private String path;
 
-    @Override
     public SubQuery getValue() {
         return value;
     }

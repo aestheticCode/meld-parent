@@ -3,9 +3,9 @@ import {HttpClient} from "@angular/common/http";
 import {UserRow} from "./category.interfaces";
 import {MatDialog} from "@angular/material";
 import {Category} from '../../categories.interfaces';
-import {Items} from '../../../../../../lib/common/query/Items';
-import {QueryBuilder} from '../../../../../../lib/common/query/QueryBuilder';
 import {Container} from '../../../../../../lib/common/rest/Container';
+import {QueryBuilder} from '../../../../../../lib/common/search/search.classes';
+import {Items} from '../../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-social-category',
@@ -18,15 +18,14 @@ export class CategoryComponent {
   category: Category;
 
 
-  constructor(private http: HttpClient,
-              private dialog : MatDialog) {}
+  constructor(private http: HttpClient) {}
 
   users: Items<UserRow> = (query, response) => {
-    query.predicate = QueryBuilder.inSelect(
-      "",
+    query.expression = QueryBuilder.inSelect(
       QueryBuilder.subQuery(
         "relationShip",
-        "to", QueryBuilder.equal(this.category.id, "category.id"))
+        "to",
+        QueryBuilder.path("category.id", QueryBuilder.equal(this.category.id)))
     );
     this.http.post<Container<UserRow>>('service/social/people/find', query)
       .subscribe((res: Container<UserRow>) => {

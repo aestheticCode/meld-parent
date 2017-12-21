@@ -112,6 +112,8 @@ public class MeldPostFormController {
 
                 linkUpdate(post, builderFactory)
                         .buildSecured(response::addLink);
+                linkDelete(post, builderFactory)
+                        .buildSecured(response::addLink);
 
                 return response;
             }
@@ -127,6 +129,8 @@ public class MeldPostFormController {
                 }
 
                 linkUpdate(post, builderFactory)
+                        .buildSecured(response::addLink);
+                linkDelete(post, builderFactory)
                         .buildSecured(response::addLink);
 
                 return response;
@@ -146,6 +150,8 @@ public class MeldPostFormController {
 
                 linkUpdate(post, builderFactory)
                         .buildSecured(form::addLink);
+                linkDelete(post, builderFactory)
+                        .buildSecured(form::addLink);
 
                 return form;
             }
@@ -162,6 +168,8 @@ public class MeldPostFormController {
                 }
 
                 linkUpdate(post, builderFactory)
+                        .buildSecured(form::addLink);
+                linkDelete(post, builderFactory)
                         .buildSecured(form::addLink);
 
                 return form;
@@ -308,7 +316,7 @@ public class MeldPostFormController {
     }
 
     @Secured
-    @PUT
+    @DELETE
     @Path("meld/{id}")
     @Name("Meld Post Delete")
     @Transactional

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import javax.persistence.criteria.Expression;
 
 @JsonTypeName("like")
-public class Like implements RestPredicate<String> {
+public class Like implements RestPredicate {
 
     private String path;
 
@@ -19,7 +19,6 @@ public class Like implements RestPredicate<String> {
         this.path = path;
     }
 
-    @Override
     public String getValue() {
         return value;
     }

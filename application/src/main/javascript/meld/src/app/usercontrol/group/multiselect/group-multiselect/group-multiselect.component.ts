@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {GroupSelect} from "./GroupSelect";
-import {Items} from '../../../../../lib/common/query/Items';
+import {GroupSelect} from "./group-multiselect.interfaces";
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 const noop = () => {
 };

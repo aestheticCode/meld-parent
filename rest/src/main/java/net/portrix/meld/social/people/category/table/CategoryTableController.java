@@ -5,6 +5,7 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.people.Category;
 
@@ -40,7 +41,7 @@ public class CategoryTableController {
     @Path("categories")
     @Name("Categories Read")
     @Secured
-    public Container<CategoryItem> list(Query query) {
+    public Container<CategoryItem> list(Search query) {
         List<Category> categories = service.find(query);
         long count = service.count(query);
 

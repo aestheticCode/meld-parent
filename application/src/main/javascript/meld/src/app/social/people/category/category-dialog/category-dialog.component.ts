@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Items} from '../../../../../lib/common/query/Items';
 import {Category} from '../categories.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-category-dialog',

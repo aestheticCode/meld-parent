@@ -166,6 +166,12 @@
                     <artifactId>hibernate-search-infinispan</artifactId>
                     <scope>provided</scope>
                 </dependency>
+
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-search-backend-jms</artifactId>
+                    <scope>provided</scope>
+                </dependency>
             </dependencies>
         </profile>
 
@@ -328,36 +334,8 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.5.3</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <changeLogFile>src/main/liquibase/meld.xml</changeLogFile>
-                            <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://localhost:5432/meld</url>
-                            <username>postgres</username>
-                            <password>root</password>
-                        </configuration>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>LATEST</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.5.3</version>
                 <configuration>
-                    <changeLogFile>src/main/liquibase2/changeLog.xml</changeLogFile>
+                    <changeLogFile>src/main/liquibase2/changeLog.sql</changeLogFile>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/meld</url>
                     <username>postgres</username>

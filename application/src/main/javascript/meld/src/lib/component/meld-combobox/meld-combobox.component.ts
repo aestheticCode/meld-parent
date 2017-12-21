@@ -3,13 +3,13 @@ import {
   SimpleChanges, TemplateRef, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
-import {Items} from '../../common/query/Items';
 import {MeldTableComponent} from '../meld-table/meld-table.component';
-import {QueryBuilder} from '../../common/query/QueryBuilder';
 import {MatFormFieldControl} from '@angular/material';
 import {Subject} from 'rxjs/Subject';
 import {FocusMonitor} from '@angular/cdk/a11y';
 import {Objects} from '../../common/utils/Objects';
+import {QueryBuilder} from '../../common/search/search.classes';
+import {Items} from '../../common/search/search.interfaces';
 
 const noop = () => {
 };
@@ -111,7 +111,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
   constructor(private elRef: ElementRef) {}
 
   public parentItems: Items<any> = (query, callback) => {
-    query.predicate = this.predicate(this.filter);
+    query.expression = this.predicate(this.filter);
     this.items(query, (data: [any], size: number) => {
       callback(data, size);
       this.size = size;
@@ -123,7 +123,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
     if (value == null) {
       return undefined;
     }
-    return QueryBuilder.like(value, 'name');
+    return QueryBuilder.path('name', QueryBuilder.like(value));
   };
 
   @Input('itemValue')
@@ -228,7 +228,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
       this.value = obj;
 
       let query = QueryBuilder.query();
-      query.predicate = QueryBuilder.in([obj], 'id');
+      query.expression = QueryBuilder.path('id', QueryBuilder.in([obj]));
       const response = (data: [any], size: number) => {
         if (this.filter.length === 0) {
           this.filter = this.itemName(data[0]);

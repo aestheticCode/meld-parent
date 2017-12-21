@@ -37,7 +37,7 @@ public class UserFormService {
     }
 
     public void deleteUser(User user) {
-        entityManager.remove(user);
+        userManager.delete(user);
     }
 
     public User findUser(UUID id) {

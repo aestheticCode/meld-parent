@@ -19,7 +19,7 @@
        id int8 not null,
         name varchar(255),
         typeName varchar(255),
-        value varchar(1024),
+        expressions varchar(1024),
         owner_id varchar(255),
         primary key (id)
     );

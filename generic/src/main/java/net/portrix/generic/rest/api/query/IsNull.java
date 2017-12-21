@@ -5,14 +5,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import javax.persistence.criteria.Expression;
 
 @JsonTypeName("isNull")
-public class IsNull implements RestPredicate<Object> {
+public class IsNull implements RestPredicate {
 
     private String path;
-
-    @Override
-    public Object getValue() {
-        return null;
-    }
 
     public String getPath() {
         return path;

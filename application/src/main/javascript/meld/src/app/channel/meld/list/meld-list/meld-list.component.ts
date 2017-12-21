@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {Http, Response} from '@angular/http';
-import {Items} from '../../../../../lib/common/query/Items';
 import {Item} from './meld-item/meld-item.interfaces';
 import {AppService} from '../../../../app.service';
-import {QueryBuilder} from '../../../../../lib/common/query/QueryBuilder';
+import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-meld-list',
@@ -22,7 +22,7 @@ export class MeldListComponent {
     let subQueryPredicate = this.subQueryForRelations(this.service.configuration.user.id);
     let equalPredicate = this.equalForCurrentUser(this.service.configuration.user.id);
 
-    query.predicate = QueryBuilder.or([
+    query.expression = QueryBuilder.or([
       subQueryPredicate,
       equalPredicate
     ]);
@@ -35,38 +35,36 @@ export class MeldListComponent {
   };
 
   private equalForCurrentUser(id: string) {
-    return QueryBuilder.equal(id, 'user.id');
+    return QueryBuilder.path('user.id', QueryBuilder.equal(id));
   }
 
   private subQueryForRelations(id: string) {
     return QueryBuilder.and([
       QueryBuilder.or([
-        QueryBuilder.isNull("category"),
-        QueryBuilder.inSelect(
-          "category",
+        QueryBuilder.path('category', QueryBuilder.isNull()),
+        QueryBuilder.path('category', QueryBuilder.inSelect(
           QueryBuilder.subQuery(
-            "relationShip",
-            "category",
-            QueryBuilder.equal(id, "to.id")
+            'relationShip',
+            'category',
+            QueryBuilder.path('to.id', QueryBuilder.equal(id))
           )
-        )
+        ))
       ]),
-      QueryBuilder.inSelect(
-        'user',
+      QueryBuilder.path('user', QueryBuilder.inSelect(
         QueryBuilder.subQuery(
           'relationShip',
           'to',
-          QueryBuilder.equal(id, 'from.id')
-        ))
+          QueryBuilder.path('from.id', QueryBuilder.equal(id))
+        )))
     ]);
   }
 
   onCreate() {
-    this.router.navigate(['channel/meld/post']);
+    this.router.navigate(['channel/meld/post/text']);
   }
 
   onPostClick(post) {
-    this.router.navigate(['channel/meld/post', post.id]);
+    this.router.navigate(['channel/meld/post', post.id, post.type]);
   }
 
 }

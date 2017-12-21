@@ -2,8 +2,8 @@ import {Component, EventEmitter, forwardRef, OnInit, Output} from '@angular/core
 import {HttpClient} from '@angular/common/http';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Category} from '../categories.interfaces';
-import {Items} from '../../../../../lib/common/query/Items';
 import {Container} from '../../../../../lib/common/rest/Container';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 const noop = () => {
 };

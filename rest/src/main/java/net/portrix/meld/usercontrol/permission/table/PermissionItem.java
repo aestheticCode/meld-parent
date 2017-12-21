@@ -4,6 +4,7 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.Links;
 import net.portrix.generic.rest.api.LinksContainer;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -20,6 +21,8 @@ public class PermissionItem implements LinksContainer {
     private String path;
 
     private String method;
+
+    private Instant created;
 
     private Set<Link> links = new HashSet<>();
 
@@ -55,6 +58,13 @@ public class PermissionItem implements LinksContainer {
         this.method = method;
     }
 
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
 
     @Override
     public Set<Link> getLinks() {

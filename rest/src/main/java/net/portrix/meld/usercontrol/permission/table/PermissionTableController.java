@@ -5,6 +5,7 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.*;
 
@@ -43,7 +44,7 @@ public class PermissionTableController {
     @Path("permission/table")
     @Name("Permission Table")
     @Secured
-    public Container<PermissionItem> list(Query search) {
+    public Container<PermissionItem> list(Search search) {
 
         List<Permission> permissions;
         long count = 0;
@@ -63,6 +64,7 @@ public class PermissionTableController {
             response.setName(permission.getName());
             response.setMethod(permission.getMethod());
             response.setPath(permission.getPath());
+            response.setCreated(permission.getCreated());
 
             selects.add(response);
         }
@@ -74,7 +76,7 @@ public class PermissionTableController {
     public static URLBuilder<PermissionTableController> linkRoles(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(PermissionTableController.class)
-                .record(method -> method.list(new Query()))
+                .record(method -> method.list(null))
                 .rel("permissions");
     }
 

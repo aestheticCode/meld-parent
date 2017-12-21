@@ -7,6 +7,7 @@ import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
 import net.portrix.meld.ApplicationController;
@@ -61,7 +62,7 @@ public class MeldListController {
     @Path("meld/posts")
     @Name("Meld Posts")
     @Transactional
-    public Container<MeldItem> list(Query search) {
+    public Container<MeldItem> list(Search search) {
 
         final User currentUser = service.currentUser();
 

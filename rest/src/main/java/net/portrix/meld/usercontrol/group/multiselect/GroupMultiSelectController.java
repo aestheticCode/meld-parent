@@ -5,6 +5,7 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.group.form.GroupFormController;
@@ -49,7 +50,7 @@ public class GroupMultiSelectController {
     @Name("Group MultiSelect")
     @Secured
     @Transactional
-    public Container<GroupSelect> list(Query search) {
+    public Container<GroupSelect> list(Search search) {
         List<Group> groups;
         long count = 0;
         if (search.getLimit() == 0) {
@@ -84,7 +85,7 @@ public class GroupMultiSelectController {
     public static URLBuilder<GroupMultiSelectController> linkGroups(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(GroupMultiSelectController.class)
-                .record(method -> method.list(new Query()))
+                .record(method -> method.list(null))
                 .rel("roles");
     }
 

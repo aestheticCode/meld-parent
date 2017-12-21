@@ -22,7 +22,7 @@ export class UserViewComponent implements OnInit {
     this.user = this.router.data.user || new UserFormModel();
   }
 
-  onEditClick() {
+  onEdit() {
     this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['user', 'edit']}}]);
   }
 

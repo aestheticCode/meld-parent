@@ -1,29 +1,35 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {RoleForm} from "./RoleForm";
+import {RoleForm} from './role-form.interfaces';
 import {AppService} from '../../../../app.service';
+import {HttpClient} from '@angular/common/http';
+import {AbstractGuard} from '../../../../../lib/common/AbstractGuard';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
-export class RoleFormGuard implements Resolve<RoleForm> {
+export class RoleFormGuard extends AbstractGuard<RoleForm> {
 
-    constructor(private http: Http,
-                private router: Router,
-                private app: AppService) {
-    }
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
+  }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RoleForm> {
-        return this.http.get(`service/usercontrol/role/${route.params['id']}/form`)
-            .map((res: Response) => {
-                return res.json() as RoleForm;
-            })
-            .catch((error: Response) => {
-                this.app.redirectUrl = state.url;
-                this.router.navigate(['usercontrol/login']);
-                return Observable.of(null);
-            })
-    }
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RoleForm> {
+    return this.http.get<RoleForm>(`service/usercontrol/role/${route.params['id']}/form`);
+  }
+
+}
+
+@Injectable()
+export class RoleCreateGuard extends AbstractGuard<RoleForm> {
+
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
+  }
+
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RoleForm> {
+    return this.http.get<RoleForm>(`service/usercontrol/role/create/form`);
+  }
+
 }

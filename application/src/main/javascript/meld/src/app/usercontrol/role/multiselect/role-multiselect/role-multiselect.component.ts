@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {Items} from "../../../../../lib/common/query/Items";
-import {RoleSelect} from "./RoleSelect";
+import {RoleSelect} from "./role-multiselect.interfaces";
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 const noop = () => {};
 
@@ -11,7 +11,6 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   useExisting: forwardRef(() => RoleMultiselectComponent),
   multi: true
 };
-
 
 @Component({
   selector: 'app-role-multiselect',

@@ -6,13 +6,12 @@ import javax.persistence.criteria.Expression;
 import java.util.UUID;
 
 @JsonTypeName("equal")
-public class Equal implements RestPredicate<UUID> {
+public class Equal implements RestPredicate {
 
     private UUID value;
 
     private String path;
 
-    @Override
     public UUID getValue() {
         return value;
     }

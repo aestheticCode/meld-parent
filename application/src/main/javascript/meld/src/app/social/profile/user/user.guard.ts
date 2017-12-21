@@ -1,29 +1,38 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {UserForm} from "./user.interfaces";
-import {AppService} from "../../../app.service";
+import {UserForm} from './user.interfaces';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {AppService} from '../../../app.service';
+import {Observable} from 'rxjs/Observable';
+import {AbstractGuard} from '../../../../lib/common/AbstractGuard';
 
 @Injectable()
-export class UserFormGuard implements Resolve<UserForm> {
+export class UserFormGuard extends AbstractGuard<UserForm> {
 
-    constructor(private http: Http,
-                private router: Router,
-                private app: AppService) {
-    }
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
+  }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserForm> {
-        return this.http.get(`service/social/user/${route.parent.params['id']}/form`)
-            .map((res: Response) => {
-              return res.json() as UserForm;
-            })
-            .catch((error: Response) => {
-                this.app.redirectUrl = state.url;
-                this.router.navigate(['usercontrol/login']);
-                return Observable.of(null);
-            })
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserForm> {
+    return this.http.get<UserForm>(`service/social/user/${route.parent.params['id']}/form`);
+  }
+
+  errorHandler(status: number, route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserForm> {
+    if (status === 404) {
+      return this.http.get<UserForm>(`service/social/user/${route.parent.params['id']}/form/create`)
+        .map((res: UserForm) => {
+          return res;
+        })
+        .catch((error: HttpResponse<UserForm>) => {
+          if (error.status === 403) {
+            this.app.redirectUrl = state.url;
+            this.router.navigate(['usercontrol/login']);
+            return Observable.of(null);
+          }
+        });
     }
+  }
+
 }

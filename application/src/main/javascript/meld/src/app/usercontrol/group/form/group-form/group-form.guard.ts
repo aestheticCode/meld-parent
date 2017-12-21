@@ -1,29 +1,35 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {GroupForm} from './GroupForm';
+import {GroupForm} from './group-form.interfaces';
 import {AppService} from '../../../../app.service';
+import {HttpClient} from '@angular/common/http';
+import {AbstractGuard} from '../../../../../lib/common/AbstractGuard';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
-export class GroupFormGuard implements Resolve<GroupForm> {
+export class GroupFormGuard extends AbstractGuard<GroupForm> {
 
-    constructor(private http: Http,
-                private router: Router,
-                private app: AppService) {
-    }
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
+  }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<GroupForm> {
-        return this.http.get(`service/usercontrol/group/${route.params['id']}/form`)
-            .map((res: Response) => {
-                return res.json() as GroupForm;
-            })
-            .catch((error: Response) => {
-                this.app.redirectUrl = state.url;
-                this.router.navigate(['usercontrol/login']);
-                return Observable.of(null);
-            })
-    }
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<GroupForm> {
+    return this.http.get<GroupForm>(`service/usercontrol/group/${route.params['id']}/form`);
+  }
+
+}
+
+@Injectable()
+export class GroupCreateGuard extends AbstractGuard<GroupForm> {
+
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
+  }
+
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<GroupForm> {
+    return this.http.get<GroupForm>(`service/usercontrol/group/create/form`);
+  }
+
 }

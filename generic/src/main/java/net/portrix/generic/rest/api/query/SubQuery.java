@@ -5,18 +5,17 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import javax.persistence.criteria.Expression;
 
 @JsonTypeName("subQuery")
-public class SubQuery implements RestPredicate<RestPredicate<?>> {
+public class SubQuery implements RestPredicate {
 
-    private RestPredicate<?> value;
+    private RestPredicate value;
     private String from;
     private String path;
 
-    @Override
-    public RestPredicate<?> getValue() {
+    public RestPredicate getValue() {
         return value;
     }
 
-    public void setValue(RestPredicate<?> value) {
+    public void setValue(RestPredicate value) {
         this.value = value;
     }
 

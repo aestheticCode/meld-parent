@@ -81,7 +81,7 @@ public class EducationFormController {
 
         Education education = service.findEducation(user);
         if (education == null) {
-            education = new Education();
+            throw new NotFoundException();
         }
 
         final EducationForm form = new EducationForm();
@@ -282,7 +282,7 @@ public class EducationFormController {
         return builderFactory
                 .from(EducationFormController.class)
                 .record(EducationFormController::delete)
-                .rel("update");
+                .rel("delete");
     }
 
 }

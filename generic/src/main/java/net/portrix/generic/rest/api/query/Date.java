@@ -6,13 +6,12 @@ import javax.persistence.criteria.Expression;
 import java.time.LocalDate;
 
 @JsonTypeName("date")
-public class Date implements RestPredicate<Date.Value> {
+public class Date implements RestPredicate {
 
     private Date.Value value;
 
     private String path;
 
-    @Override
     public Date.Value getValue() {
         return value;
     }

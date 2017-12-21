@@ -5,6 +5,7 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.Identity;
@@ -50,7 +51,7 @@ public class GroupTableController {
     @Name("Group Table")
     @Secured
     @Transactional
-    public Container<GroupItem> list(Query search) {
+    public Container<GroupItem> list(Search search) {
         List<Group> groups;
         long count = 0;
         if (search.getLimit() == 0) {
@@ -91,7 +92,7 @@ public class GroupTableController {
     public static URLBuilder<GroupTableController> linkGroups(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(GroupTableController.class)
-                .record(method -> method.list(new Query()))
+                .record(method -> method.list(null))
                 .rel("groups");
     }
 }

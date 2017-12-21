@@ -1,15 +1,25 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MeldImagePost} from './meld-image-form.interfaces';
-import {MeldImagePostModel} from './meld-image-form.classes';
 import {MeldFormPostComponent} from '../meld-form.classes';
+import {HttpClient} from '@angular/common/http';
+import {MeldRouterService} from '../../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-meld-image-form',
   templateUrl: 'meld-image-form.component.html',
   styleUrls: ['meld-image-form.component.css']
 })
-export class MeldImageFormComponent extends MeldFormPostComponent {
+export class MeldImageFormComponent extends MeldFormPostComponent implements OnInit {
 
-  public post: MeldImagePost = new MeldImagePostModel();
+  public post: MeldImagePost;
+
+  constructor(private http: HttpClient,
+              private router : MeldRouterService) {
+    super();
+  }
+
+  ngOnInit(): void {
+    this.post = this.router.data.post;
+  }
 
 }

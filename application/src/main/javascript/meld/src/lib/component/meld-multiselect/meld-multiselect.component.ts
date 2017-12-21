@@ -12,10 +12,10 @@ import {
   ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {Items} from "../../common/query/Items";
 import {MeldComboBoxComponent} from "../meld-combobox/meld-combobox.component";
 import {MeldTableComponent} from "../meld-table/meld-table.component";
-import {QueryBuilder} from "../../common/query/QueryBuilder";
+import {QueryBuilder} from '../../common/search/search.classes';
+import {Items} from '../../common/search/search.interfaces';
 
 const noop = () => {
 };
@@ -76,7 +76,7 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
   };
 
   selectedItems: Items<any> = (query, response) => {
-    query.predicate = QueryBuilder.in(this.value, "id");
+    query.expression = QueryBuilder.path( "id", QueryBuilder.in(this.value));
     this.items(query, response);
   };
 

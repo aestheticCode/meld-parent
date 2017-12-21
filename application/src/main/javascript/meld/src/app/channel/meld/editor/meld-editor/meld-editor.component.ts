@@ -5,7 +5,7 @@ import {DOCUMENT} from "@angular/common";
 import {MeldEditorAvatarDialogComponent} from "./meld-editor-avatar-dialog/meld-editor-avatar-dialog.component";
 import {MeldEditorNameDialogComponent} from "./meld-editor-name-dialog/meld-editor-name-dialog.component";
 import {MeldEditorComponent as MeldEditor} from "../../../../../lib/component/meld-editor/meld-editor.component";
-import {UserRow} from '../../../../usercontrol/user/table/user-table.interfaces';
+import {UserRow} from '../../../../usercontrol/user/table/user-table/user-table.interfaces';
 
 const noop = () => {};
 

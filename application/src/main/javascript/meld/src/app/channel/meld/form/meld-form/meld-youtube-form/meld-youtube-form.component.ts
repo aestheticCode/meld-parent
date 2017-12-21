@@ -1,7 +1,8 @@
-import {Component, ElementRef, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {MeldYouTubePost} from './meld-youtube-form.interfaces';
-import {MeldYouTubePostModel} from './meld-youtube-form.classes';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {HttpClient} from '@angular/common/http';
+import {MeldRouterService} from '../../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-meld-youtube-form',
@@ -10,13 +11,21 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 })
 export class MeldYoutubeFormComponent {
 
-  post: MeldYouTubePost = new MeldYouTubePostModel();
+  post: MeldYouTubePost;
 
-  _url : string;
+  _url: string;
 
-  youtubeUrl : SafeUrl;
+  youtubeUrl: SafeUrl;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer,
+              private http: HttpClient,
+              private router : MeldRouterService) {
+  }
+
+  ngOnInit(): void {
+    this.post = this.router.data.post;
+  }
+
 
 
   get url(): string {
@@ -29,12 +38,11 @@ export class MeldYoutubeFormComponent {
     const youtubeRegExp = /(?:[?&]vi?=|\/embed\/|\/\d\d?\/|\/vi?\/|https?:\/\/(?:www\.)?youtu\.be\/)([^&\n?#]+)/;
     const match = this._url.match(youtubeRegExp);
 
-    if( match && match[ 1 ].length == 11 ) {
-      this.post.videoId = match[ 1 ];
+    if (match && match[1].length == 11) {
+      this.post.videoId = match[1];
       this.youtubeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.post.videoId}?autoplay=0`);
     }
 
   }
-
 
 }

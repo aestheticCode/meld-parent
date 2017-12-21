@@ -6,6 +6,7 @@ import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.meta.MetaResponseType;
 import net.portrix.generic.rest.api.meta.Property;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.rest.Secured;
 import net.portrix.meld.usercontrol.Gender;
@@ -54,7 +55,7 @@ public class UserTableController {
     @Name("User Table")
     @Secured
     @Transactional
-    public Container<UserItem> list(Query search) {
+    public Container<UserItem> list(Search search) {
         List<User> users;
         long count = 0;
         if(search.getLimit() == 0) {

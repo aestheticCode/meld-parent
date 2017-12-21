@@ -222,7 +222,7 @@ public class WorkHistoryFormController {
         return builderFactory
                 .from(WorkHistoryFormController.class)
                 .record(WorkHistoryFormController::delete)
-                .rel("update");
+                .rel("delete");
     }
 
 }

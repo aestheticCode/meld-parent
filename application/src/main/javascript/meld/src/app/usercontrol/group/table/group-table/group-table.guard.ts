@@ -1,31 +1,22 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {GroupRow} from "./GroupRow";
+import {GroupRow} from './group-table.interfaces';
 import {AppService} from '../../../../app.service';
-import {Container} from '../../../../../lib/common/rest/Container';
-import {QueryBuilder} from '../../../../../lib/common/query/QueryBuilder';
+import {HttpClient} from '@angular/common/http';
+import {AbstractGuard} from '../../../../../lib/common/AbstractGuard';
+import {Observable} from 'rxjs/Observable';
+import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 
 @Injectable()
-export class GroupTableGuard implements Resolve<Container<GroupRow>> {
+export class GroupTableGuard extends AbstractGuard<GroupRow> {
 
-    constructor(private http: Http,
-                private router: Router,
-                private app: AppService) {
-    }
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
+  }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Container<GroupRow>> {
-        return this.http.post('service/usercontrol/group/table', QueryBuilder.query())
-            .map((res: Response) => {
-                return res.json() as Container<GroupRow>;
-            })
-            .catch((error: Response) => {
-                this.app.redirectUrl = state.url;
-                this.router.navigate(['usercontrol/login']);
-                return Observable.of(null);
-            })
-    }
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<GroupRow> {
+    return this.http.post<GroupRow>('service/usercontrol/group/table', QueryBuilder.query());
+  }
 }

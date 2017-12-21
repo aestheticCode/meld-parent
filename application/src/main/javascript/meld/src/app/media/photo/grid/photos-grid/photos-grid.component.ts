@@ -2,10 +2,10 @@ import {Component, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material';
 import {MeldGridComponent} from '../../../../../lib/component/meld-grid/meld-grid.component';
-import {Items} from '../../../../../lib/common/query/Items';
 import {Photo} from '../grid.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {PhotoFormComponent} from '../../form/photo-form/photo-form.component';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-photos-grid',

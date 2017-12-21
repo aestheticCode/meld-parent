@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from '@angular/material';
-import {Items} from '../../../../../lib/common/query/Items';
 import {UserRow} from '../find.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {CategoryDialogComponent} from '../../category/category-dialog/category-dialog.component';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-social-find-view',

@@ -6,6 +6,9 @@ import org.apache.commons.io.IOUtils;
 import org.picketlink.Identity;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.credential.Password;
+import org.picketlink.idm.query.Condition;
+import org.picketlink.idm.query.IdentityQuery;
+import org.picketlink.idm.query.IdentityQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +18,8 @@ import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.UUID;
 
@@ -61,6 +66,14 @@ public class UserManager implements Serializable {
 
     public void save(User user) {
 
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .appendPattern("dMMMuuuu")
+                .toFormatter();
+        String birthday = user.getBirthdate().format(formatter);
+        String userId = user.getFirstName() + user.getLastName() + birthday;
+
+        user.setName(userId);
+
         entityManager.persist(user);
 
         final org.picketlink.idm.model.basic.User identityType
@@ -95,45 +108,51 @@ public class UserManager implements Serializable {
 
     public void delete(User user) {
 
+        UserImage image = entityManager.createQuery("select i from UserImage i where i.user = :user", UserImage.class)
+                .setParameter("user", user)
+                .getSingleResult();
+
+        entityManager.remove(image);
+
         entityManager.remove(user);
 
-        identityManager.remove(new org.picketlink.idm.model.basic.User(user.getName()));
+        org.picketlink.idm.model.basic.User user1 = findUser(user);
+
+        identityManager.remove(user1);
 
     }
 
     public void updatePassword(User user, String password) {
-        final List<org.picketlink.idm.model.basic.User> resultList = identityManager.createIdentityQuery(org.picketlink.idm.model.basic.User.class)
-                .setParameter(org.picketlink.idm.model.basic.User.LOGIN_NAME, user.getName())
-                .getResultList();
+        org.picketlink.idm.model.basic.User resultList = findUser(user);
 
-        if (resultList.isEmpty()) {
-            throw new IllegalStateException("No User found for name " + user.getName());
-        }
-
-        if (resultList.size() > 1) {
-            throw new IllegalStateException("Multiple User found for name " + user.getName());
-        }
-
-        identityManager.updateCredential(resultList.get(0), new Password(password));
+        identityManager.updateCredential(resultList, new Password(password));
     }
 
     public void updateToken(User user, String token) {
-        final List<org.picketlink.idm.model.basic.User> resultList = identityManager.createIdentityQuery(org.picketlink.idm.model.basic.User.class)
-                .setParameter(org.picketlink.idm.model.basic.User.LOGIN_NAME, user.getName())
-                .getResultList();
+        org.picketlink.idm.model.basic.User user1 = findUser(user);
 
-        if (resultList.isEmpty()) {
-            throw new IllegalStateException("No User found for name " + user.getName());
-        }
-
-        if (resultList.size() > 1) {
-            throw new IllegalStateException("Multiple User found for name " + user.getName());
-        }
-
-        identityManager.updateCredential(resultList.get(0), new LoginToken(user.getName(), token));
+        identityManager.updateCredential(user1, new LoginToken(user.getName(), token));
     }
 
     public User find(UUID id) {
         return entityManager.find(User.class, id);
     }
+
+    private org.picketlink.idm.model.basic.User findUser(User user) {
+        IdentityQueryBuilder builder = identityManager.getQueryBuilder();
+        Condition equal = builder.equal(org.picketlink.idm.model.basic.User.ID, user.getExternalId());
+        IdentityQuery<org.picketlink.idm.model.basic.User> identityQuery = builder.createIdentityQuery(org.picketlink.idm.model.basic.User.class);
+        identityQuery.where(equal);
+        List<org.picketlink.idm.model.basic.User> resultList = identityQuery.getResultList();
+
+        if (resultList.isEmpty()) {
+            throw new IllegalStateException("No User found for name " + user.getName());
+        }
+
+        if (resultList.size() > 1) {
+            throw new IllegalStateException("Multiple User found for name " + user.getName());
+        }
+        return resultList.get(0);
+    }
+
 }

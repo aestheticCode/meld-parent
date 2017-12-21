@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Http} from '@angular/http';
 import {Education} from '../education.interfaces';
-import {EducationModel} from '../education.classes';
-import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
+import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-social-education-view',
@@ -13,12 +12,10 @@ export class EducationViewComponent implements OnInit {
 
   public education: Education;
 
-  constructor(private http: Http,
-              private router: MeldRouterService) {
-  }
+  constructor(private router: MeldRouterService) {}
 
   ngOnInit() {
-    this.education = this.router.data.education || new EducationModel();
+    this.education = this.router.data.education;
   }
 
   onEdit() {

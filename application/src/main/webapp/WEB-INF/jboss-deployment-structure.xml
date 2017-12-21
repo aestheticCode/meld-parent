@@ -5,6 +5,7 @@
 
         <dependencies>
             <module name="com.mysql.jdbc"/>
+            <module name="javax.jms.api"/>
             <module name="org.javassist"/>
             <module name="com.google.guava"/>
             <module name="com.fasterxml.jackson.core.jackson-annotations"/>
@@ -17,6 +18,7 @@
             <module name="org.picketlink.idm.api" meta-inf="import"/>
 
             <module name="org.hibernate.search.orm" services="export" />
+            <module name="org.hibernate.infinispan" services="export"/>
         </dependencies>
 
     </deployment>

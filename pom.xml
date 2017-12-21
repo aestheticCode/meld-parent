@@ -206,7 +206,29 @@
                 <version>2.5.5.SP8</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>5.1.10.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>5.1.10.Final</version>
+            </dependency>
 
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-search-backend-jms</artifactId>
+                <version>5.8.0.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-search-orm</artifactId>
+                <version>5.8.0.Final</version>
+            </dependency>
             <!--=========================================== 3rd Party Libraries =====================================-->
 
 

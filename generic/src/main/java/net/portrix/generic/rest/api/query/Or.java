@@ -6,12 +6,11 @@ import javax.persistence.criteria.Expression;
 import java.util.Set;
 
 @JsonTypeName("or")
-public class Or implements RestPredicate<Set<RestPredicate<?>>> {
+public class Or implements RestPredicate {
 
-    private Set<RestPredicate<?>> value;
+    private Set<RestPredicate> value;
 
-    @Override
-    public Set<RestPredicate<?>> getValue() {
+    public Set<RestPredicate> getValue() {
         return value;
     }
 
@@ -20,7 +19,7 @@ public class Or implements RestPredicate<Set<RestPredicate<?>>> {
         return visitor.visit(this);
     }
 
-    public void setValue(Set<RestPredicate<?>> value) {
+    public void setValue(Set<RestPredicate> value) {
         this.value = value;
     }
 }

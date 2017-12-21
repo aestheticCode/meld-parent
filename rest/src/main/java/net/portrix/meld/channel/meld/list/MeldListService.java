@@ -26,6 +26,7 @@ public class MeldListService extends AbstractQueryService<MeldPost> {
 
     private final UserManager userManager;
 
+    @Inject
     public MeldListService(EntityManager entityManager, UserManager userManager) {
         super(entityManager);
         this.userManager = userManager;

@@ -6,6 +6,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.Photo;
 
@@ -43,9 +44,9 @@ public class PhotoGridController {
     @Name("Photos Read")
     @Secured
     @Transactional
-    public Container<PhotoItem> list(Query query) {
+    public Container<PhotoItem> list(Search query) {
 
-        List<Photo> photos = service.findAll(query);
+        List<Photo> photos = service.find(query);
         long count = service.count(query);
 
         List<PhotoItem> items = photos.stream()

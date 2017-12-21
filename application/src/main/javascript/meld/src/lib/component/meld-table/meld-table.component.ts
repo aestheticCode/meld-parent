@@ -19,10 +19,9 @@ import {MeldTfooterDirective} from "./meld-tfooter/meld-tfooter.directive";
 import {MeldTableFilterDialogComponent} from "./meld-filter-dialog/meld-table-filter-dialog.component";
 import {LoadWindow} from "../meld-window/LoadWindow";
 import {TableColumn} from "./TableColumn";
-import {Items} from "../../common/query/Items";
-import {QueryBuilder} from "../../common/query/QueryBuilder";
 import {MeldTdDirective} from './meld-td/meld-td.directive';
-import {Sort} from '../../common/query/Sort';
+import {Items} from '../../common/search/search.interfaces';
+import {QueryBuilder, Sort} from '../../common/search/search.classes';
 
 const noop = () => {
 };

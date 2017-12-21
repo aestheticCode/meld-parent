@@ -1,5 +1,8 @@
 package net.portrix.meld.usercontrol;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -11,12 +14,15 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "uc_user")
 @NamedQuery(name = "findUser", query = "select u from User u where u.name = :name")
+@Indexed
 public class User extends Identity {
 
     private String externalId;
 
+    @Field
     private String firstName;
 
+    @Field
     private String lastName;
 
     private Gender gender;

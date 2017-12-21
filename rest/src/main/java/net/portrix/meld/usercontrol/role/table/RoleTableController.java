@@ -5,6 +5,7 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.Identity;
 import net.portrix.meld.usercontrol.Role;
@@ -50,7 +51,7 @@ public class RoleTableController {
     @Name("Role Table")
     @Secured
     @Transactional
-    public Container<RoleItem> list(Query search) {
+    public Container<RoleItem> list(Search search) {
         List<Role> Roles;
         long count = 0;
         if (search.getLimit() == 0) {
@@ -90,7 +91,7 @@ public class RoleTableController {
     public static URLBuilder<RoleTableController> linkRoles(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(RoleTableController.class)
-                .record(method -> method.list(new Query()))
+                .record(method -> method.list(null))
                 .rel("roles");
     }
 

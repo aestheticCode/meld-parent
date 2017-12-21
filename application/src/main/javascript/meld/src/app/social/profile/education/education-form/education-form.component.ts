@@ -1,33 +1,39 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Http, Response} from "@angular/http";
-import {Strings} from "../../../../../lib/common/utils/Strings";
+import {Component, OnInit} from '@angular/core';
+import {Strings} from 'lib/common/utils/Strings';
 import {Education} from '../education.interfaces';
-import {EducationModel} from '../education.classes';
-import {SchoolFormModel} from '../school-form.classes';
 import {School} from '../school-form.interfaces';
-import {Objects} from '../../../../../lib/common/utils/Objects';
-import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
+import {Objects} from 'lib/common/utils/Objects';
+import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
+import {SchoolFormModel} from '../school-form.classes';
+import {AbstractForm} from '../../../../../lib/common/forms/AbstractForm';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {Contact} from '../../contact/contact-form.interfaces';
+import {Equal} from 'tslint/lib/utils';
 
 @Component({
   selector: 'app-social-education-form',
   templateUrl: 'education-form.component.html',
   styleUrls: ['education-form.component.css']
 })
-export class EducationFormComponent implements OnInit {
+export class EducationFormComponent extends AbstractForm<Education> implements OnInit {
 
-  public education: Education;
+  public education : Education;
 
-  constructor(private http: Http,
-              private router : MeldRouterService) {
+  private router: MeldRouterService;
+
+  constructor(http: HttpClient,
+              router: MeldRouterService) {
+    super(http);
+    this.router = router;
   }
 
   ngOnInit() {
-    this.education = this.router.data.education || new EducationModel();
+    this.education = this.router.data.education;
   }
 
   onCreateSchool() {
-    this.education.schools.push(new SchoolFormModel())
+    this.education.schools.push(new SchoolFormModel());
   }
 
   onDeleteSchool(school: School) {
@@ -43,37 +49,32 @@ export class EducationFormComponent implements OnInit {
     }
   }
 
-  onSave() {
-    this.filterEmptySchools();
-    this.http.post("service/social/user/current/education", this.education)
-      .subscribe((res: Response) => {
-        this.education = res.json();
-        this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['education', 'view']}}]);
-      })
+  public saveRequest(): Observable<Education> {
+    return this.http.post<Education>('service/social/user/current/education', this.education)
   }
 
-  onUpdate() {
-    this.filterEmptySchools();
-    this.http.put("service/social/user/current/education", this.education)
-      .subscribe((res: Response) => {
-        this.education = res.json();
-        this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['education', 'view']}}]);
-      })
+  public updateRequest(): Observable<Education> {
+    return this.http.put<Education>('service/social/user/current/education', this.education)
   }
 
-  onCancel() {
-    this.filterEmptySchools();
-    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['education', 'view']}}]);
+  public deleteRequest(): Observable<Education> {
+    return this.http.delete<Education>('service/social/user/current/education')
   }
 
-  private filterEmptySchools() {
+
+  public preRequest() {
     this.education.schools
       = this.education.schools.filter((school) => {
       return Strings.isNotEmpty(school.name)
         || Strings.isNotEmpty(school.course)
         || Objects.isNotNull(school.start)
-        || Objects.isNotNull(school.end)
-    })
+        || Objects.isNotNull(school.end);
+    });
   }
+
+  public postRequest() {
+    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['education', 'view']}}]);
+  }
+
 
 }

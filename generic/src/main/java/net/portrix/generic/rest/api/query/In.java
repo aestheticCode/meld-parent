@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @JsonTypeName("in")
-public class In implements RestPredicate<Set<UUID>> {
+public class In implements RestPredicate {
 
     private String path;
 
@@ -21,7 +21,6 @@ public class In implements RestPredicate<Set<UUID>> {
         this.path = path;
     }
 
-    @Override
     public Set<UUID> getValue() {
         return value;
     }

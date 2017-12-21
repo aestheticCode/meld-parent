@@ -6,15 +6,14 @@
           <mat-card-content>
             <fieldset>
               <legend>Places</legend>
-
-              <div style="margin-bottom: 12px;">
-                <app-social-address-view *ngFor="let address of places.addresses | addressesSort" [address]="address"></app-social-address-view>
-              </div>
+              <table>
+                <tr *ngFor="let address of places.addresses | addressesSort" app-social-address-view [address]="address"></tr>
+              </table>
             </fieldset>
           </mat-card-content>
 
           <mat-card-actions>
-            <button *ngIf="places.links | meldLink:'save'" mat-button (click)="onEdit()">Edit</button>
+            <button *ngIf="places.links | meldLink:'update,save'" mat-button (click)="onEdit()">Edit</button>
             <button mat-button (click)="onCancel()">Chancel</button>
           </mat-card-actions>
 

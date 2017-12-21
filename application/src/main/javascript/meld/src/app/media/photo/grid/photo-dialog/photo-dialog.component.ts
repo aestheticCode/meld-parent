@@ -2,9 +2,9 @@ import {Component, ViewChild} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
 import {MeldGridComponent} from '../../../../../lib/component/meld-grid/meld-grid.component';
 import {HttpClient} from '@angular/common/http';
-import {Items} from '../../../../../lib/common/query/Items';
 import {Photo} from '../../form/photo.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-photo-dialog',

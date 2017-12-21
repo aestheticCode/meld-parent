@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgModel} from "@angular/forms";
-import {Http, Response} from "@angular/http";
-import {ActivatedRoute, Router} from "@angular/router";
-import {GroupRow} from "./GroupRow";
-import {Predicate} from '../../../../../lib/common/predicates/Predicate';
+import {NgModel} from '@angular/forms';
+import {Http, Response} from '@angular/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {GroupRow} from './group-table.interfaces';
 import {Link} from '../../../../../lib/common/rest/Link';
-import {QueryBuilder} from '../../../../../lib/common/query/QueryBuilder';
-import {Items} from '../../../../../lib/common/query/Items';
+import {RestExpression} from '../../../../../lib/common/search/expression.interfaces';
+import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-group-table',
@@ -15,7 +15,7 @@ import {Items} from '../../../../../lib/common/query/Items';
 })
 export class GroupTableComponent implements OnInit {
 
-  filter: Predicate<any>;
+  filter: RestExpression;
 
   links: Link[] = [];
 
@@ -36,12 +36,12 @@ export class GroupTableComponent implements OnInit {
       .valueChanges
       .debounceTime(300)
       .subscribe((event) => {
-        this.filter = QueryBuilder.like(event, "name");
+        this.filter = QueryBuilder.path('name', QueryBuilder.like(event));
       });
   }
 
   groups: Items<GroupRow> = (query, response) => {
-    query.predicate = this.filter;
+    query.expression = this.filter;
     this.http.post('service/usercontrol/group/table', query)
       .subscribe((res: Response) => {
         const json = res.json();
@@ -50,7 +50,7 @@ export class GroupTableComponent implements OnInit {
   };
 
   onSelection(group: GroupRow) {
-    if (group.links.find((link) => link.rel === "read")) {
+    if (group.links.find((link) => link.rel === 'read')) {
       this.router.navigate(['usercontrol/group', group.id]);
     }
   }

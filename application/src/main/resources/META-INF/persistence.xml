@@ -3,21 +3,9 @@
     <persistence-unit name="main" transaction-type="JTA">
         <jta-data-source>java:jboss/datasources/meld</jta-data-source>
         <properties>
-<!--        <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>-->
             <property name="hibernate.ejb.cfgfile" value="META-INF/hibernate.cfg.xml"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect" />
             <property name="hibernate.connection.autocommit" value="false" />
-            <property name="hibernate.search.default.worker.backend" value="jgroups"/>
-            <property name="hibernate.search.default.directory_provider" value="infinispan"/>
-            <property name="hibernate.search.default.exclusive_index_use" value="false"/>
-            <property name="hibernate.search.infinispan.chunk_size" value="300000000"/>
-            <property name="hibernate.search.reader.strategy" value="shared"/>
-            <property name="hibernate.search.lucene_version" value="LUCENE_CURRENT"/>
-            <property name="hibernate.search.worker.execution" value="async"/>
-            <property name="hibernate.search.infinispan.cachemanager_jndiname" value="java:jboss/infinispan/container/hibernateSearch"/>
         </properties>
     </persistence-unit>
-
 </persistence>

@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {AppService} from '../../../../app.service';
 import {HttpClient} from '@angular/common/http';
-import {Items} from '../../../../../lib/common/query/Items';
 import {UserRow} from '../find.interfaces';
-import {QueryBuilder} from '../../../../../lib/common/query/QueryBuilder';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {CategoryDialogComponent} from '../../category/category-dialog/category-dialog.component';
+import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-following-view',
@@ -21,20 +21,20 @@ export class FollowingViewComponent {
   }
 
   users: Items<UserRow> = (query, response) => {
-    query.predicate = QueryBuilder.and([
+    query.expression = QueryBuilder.and([
       QueryBuilder.not(
         QueryBuilder.inSelect(
-          '',
           QueryBuilder.subQuery(
             'relationShip',
-            'to', QueryBuilder.equal(this.service.configuration.user.id, 'from.id'))
+            'to',
+            QueryBuilder.path('from.id', QueryBuilder.equal(this.service.configuration.user.id)))
         )
       ),
       QueryBuilder.inSelect(
-        '',
         QueryBuilder.subQuery(
           'relationShip',
-          'from', QueryBuilder.equal(this.service.configuration.user.id, 'to.id'))
+          'from',
+          QueryBuilder.path('to.id', QueryBuilder.equal(this.service.configuration.user.id)))
       )
     ]);
     this.http.post<Container<UserRow>>('service/social/people/find', query)

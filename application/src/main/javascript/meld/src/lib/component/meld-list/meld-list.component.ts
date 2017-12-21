@@ -9,8 +9,8 @@ import {
   ViewChildren,
   ElementRef, Output, EventEmitter
 } from "@angular/core";
-import {Items} from '../../common/query/Items';
-import {QueryBuilder} from '../../common/query/QueryBuilder';
+import {Items} from '../../common/search/search.interfaces';
+import {QueryBuilder} from '../../common/search/search.classes';
 
 @Component({
   selector: 'meld-list',

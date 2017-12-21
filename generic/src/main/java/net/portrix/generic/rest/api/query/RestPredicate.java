@@ -17,11 +17,10 @@ import javax.persistence.criteria.Expression;
         @JsonSubTypes.Type(SubQuery.class),
         @JsonSubTypes.Type(InSelect.class),
         @JsonSubTypes.Type(IsNull.class),
-        @JsonSubTypes.Type(Not.class)
+        @JsonSubTypes.Type(Not.class),
+        @JsonSubTypes.Type(Levensthein.class)
 })
-public interface RestPredicate<V> {
-
-    V getValue();
+public interface RestPredicate {
 
     Expression accept(Visitor visitor);
 
@@ -50,6 +49,8 @@ public interface RestPredicate<V> {
         Expression visit(IsNull isNull);
 
         Expression visit(Not not);
+
+        Expression visit(Levensthein concat);
     }
 
 }

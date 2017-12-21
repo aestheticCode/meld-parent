@@ -7,7 +7,7 @@
             <fieldset>
               <legend>Education</legend>
 
-              <table>
+              <table style="width: 100%;">
                 <tr *ngFor="let school of education.schools | schoolSort" style="margin-bottom: 12px;" app-social-school-view [school]="school"></tr>
               </table>
 
@@ -18,7 +18,7 @@
             </fieldset>
           </mat-card-content>
           <mat-card-actions>
-            <button *ngIf="education.links | meldLink:'save'" mat-button (click)="onEdit()">Edit</button>
+            <button *ngIf="education.links | meldLink:'update,save'" mat-button (click)="onEdit()">Edit</button>
             <button mat-button (click)="onCancel()">Cancel</button>
           </mat-card-actions>
         </mat-card>

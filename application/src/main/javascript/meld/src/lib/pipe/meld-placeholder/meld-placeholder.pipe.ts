@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'meldPlaceholder'
+  name: 'meldPlaceholder',
+  pure: false
 })
 export class MeldPlaceholderPipe implements PipeTransform {
 
@@ -9,6 +10,7 @@ export class MeldPlaceholderPipe implements PipeTransform {
     if (value) {
       return value;
     }
+
     return args;
   }
 

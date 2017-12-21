@@ -6,6 +6,7 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.ApplicationController;
 import net.portrix.meld.social.people.RelationShip;
@@ -51,7 +52,7 @@ public class FindTableController {
     @Name("Find User Read")
     @Secured
     @Transactional
-    public Container<FindItem> list(Query query) {
+    public Container<FindItem> list(Search query) {
         List<User> users = service.find(query);
         long countUsers = service.count(query);
         User current = userManager.current();

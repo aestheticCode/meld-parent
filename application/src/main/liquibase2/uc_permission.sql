@@ -1,7 +1,6 @@
 --liquibase formatted sql
 
 --changeset patrick:1
-
 INSERT INTO public.uc_permission (id, method, name, path) VALUES ('9b021db1-3822-4513-b878-0184839d69cf', 'DELETE', 'Social Education Delete', 'social/user/current/education');
 INSERT INTO public.uc_permission (id, method, name, path) VALUES ('97fe5371-786c-49fd-b907-86dd0dadf00c', 'GET', 'Social Education Create', 'social/user/current/education/create');
 INSERT INTO public.uc_permission (id, method, name, path) VALUES ('bf192238-28aa-4d20-91ca-02d23f966389', 'GET', 'Channel Meld Post Create', 'channel/meld/create/{type}');
@@ -17,3 +16,7 @@ INSERT INTO public.uc_permission (id, method, name, path) VALUES ('33987671-e431
 INSERT INTO public.uc_permission (id, method, name, path) VALUES ('5ad30e51-b94a-492c-920c-15b262f13ad9', 'DELETE', 'Social Work History Delete', 'social/user/current/work/history');
 INSERT INTO public.uc_permission (id, method, name, path) VALUES ('1c6d710e-6c75-4e21-a396-43c0f70152d1', 'GET', 'Social Places Create', 'social/user/current/places/create');
 INSERT INTO public.uc_permission (id, method, name, path) VALUES ('3e243e64-8747-42d3-a0d2-22f3b8210897', 'DELETE', 'Social Places Update', 'social/user/current/places');
+
+--changeset patrick:2
+INSERT INTO public.uc_permission (id, method, name, path) VALUES ('d4267e61-cae0-4033-85c1-37974a68e409', 'DELETE', 'Channel Meld Post Delete', 'channel/meld/{id}');
+

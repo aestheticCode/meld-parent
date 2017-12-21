@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Http} from '@angular/http';
 import {Contact} from '../contact-form.interfaces';
-import {ContactModel} from '../contact-form.classes';
 import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 
 @Component({
@@ -18,7 +17,7 @@ export class ContactViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.contact = this.router.data.contact || new ContactModel();
+    this.contact = this.router.data.contact;
   }
 
 

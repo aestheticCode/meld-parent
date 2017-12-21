@@ -5,6 +5,7 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.Role;
 import net.portrix.meld.usercontrol.role.form.RoleFormController;
@@ -49,7 +50,7 @@ public class RoleMultiSelectController {
     @Name("Role MultiSelect")
     @Secured
     @Transactional
-    public Container<RoleSelect> list(Query search) {
+    public Container<RoleSelect> list(Search search) {
         List<Role> Roles;
         long count = 0;
         if (search.getLimit() == 0) {
@@ -86,7 +87,7 @@ public class RoleMultiSelectController {
     public static URLBuilder<RoleMultiSelectController> linkRoles(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(RoleMultiSelectController.class)
-                .record(method -> method.list(new Query()))
+                .record(method -> method.list(null))
                 .rel("roles");
     }
 

@@ -2,11 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgModel} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Http, Response} from "@angular/http";
-import {Predicate} from '../../../../../lib/common/predicates/Predicate';
 import {Link} from '../../../../../lib/common/rest/Link';
-import {QueryBuilder} from '../../../../../lib/common/query/QueryBuilder';
-import {Items} from '../../../../../lib/common/query/Items';
-import {RoleRow} from './RoleRow';
+import {RoleRow} from './role-table.intefaces';
+import {RestExpression} from '../../../../../lib/common/search/expression.interfaces';
+import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-role-table',
@@ -15,7 +15,7 @@ import {RoleRow} from './RoleRow';
 })
 export class RoleTableComponent implements OnInit {
 
-  public filter: Predicate<any>;
+  public filter: RestExpression;
 
   public links: Link[] = [];
 
@@ -37,13 +37,13 @@ export class RoleTableComponent implements OnInit {
       .valueChanges
       .debounceTime(300)
       .subscribe((event) => {
-        this.filter = QueryBuilder.like(event, "name");
+        this.filter = QueryBuilder.path("name", QueryBuilder.like(event));
       });
 
   }
 
   roles: Items<RoleRow> = (query, response) => {
-    query.predicate = this.filter;
+    query.expression = this.filter;
     this.http.post('service/usercontrol/role/table', query)
       .subscribe((res: Response) => {
         const json = res.json();

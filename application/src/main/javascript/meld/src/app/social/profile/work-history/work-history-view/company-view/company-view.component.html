@@ -1,12 +1,10 @@
-<div style="display: flex">
-  <div style="flex: 0.5; font-size: smaller">
-    <strong style="line-height: 24px;">{{company.start | date:'ddMMMyyyy'}} -</strong>
-    <strong *ngIf="! company.tillNow">{{company.end | date:'ddMMMyyyy'}}</strong>
-    <strong *ngIf="company.tillNow">Till Now</strong>
-  </div>
-  <div style="flex: 0.5">
-    <div><strong>{{company.name}}</strong></div>
-    <div>{{company.title}}</div>
-    <div>{{company.description}}</div>
-  </div>
-</div>
+<td style="width: 50%; font-size: smaller; vertical-align: top">
+  <strong style="line-height: 24px;">{{company.start | date:'ddMMMyyyy'}} -</strong>
+  <strong *ngIf="! company.tillNow">{{company.end | date:'ddMMMyyyy'}}</strong>
+  <strong *ngIf="company.tillNow">Till Now</strong>
+</td>
+<td>
+  <div><strong>{{company.name}}</strong></div>
+  <div>{{company.title}}</div>
+  <div>{{company.description}}</div>
+</td>

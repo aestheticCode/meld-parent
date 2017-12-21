@@ -1,33 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import {Http, Response} from "@angular/http";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
 import {WorkHistory} from '../work-history.interfaces';
-import {WorkHistoryModel} from '../work-history.classes';
 import {CompanyModel} from '../company.classes';
 import {Company} from '../company.interfaces';
-import {Strings} from '../../../../../lib/common/utils/Strings';
-import {Location} from '@angular/common';
-import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
+import {Strings} from 'lib/common/utils/Strings';
+import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
+import {AbstractForm} from 'lib/common/forms/AbstractForm';
+import {HttpClient} from '@angular/common/http';
+import {Places} from '../../places/places.interfaces';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-work-history-form',
   templateUrl: 'work-history-form.component.html',
   styleUrls: ['work-history-form.component.css']
 })
-export class WorkHistoryFormComponent implements OnInit {
+export class WorkHistoryFormComponent extends AbstractForm<WorkHistory> implements OnInit {
 
   public workHistory: WorkHistory;
+  private router: MeldRouterService;
 
-  constructor(private http: Http,
-              private router : MeldRouterService) {
+  constructor(http: HttpClient,
+              router: MeldRouterService) {
+    super(http);
+    this.router = router;
   }
 
   ngOnInit() {
-    this.workHistory = this.router.data.workHistory || new WorkHistoryModel();
+    this.workHistory = this.router.data.workHistory;
   }
 
   onCreateAddress() {
-    this.workHistory.companies.push(new CompanyModel())
+    this.workHistory.companies.push(new CompanyModel());
   }
 
   onDeleteAddress(address: Company) {
@@ -43,27 +46,24 @@ export class WorkHistoryFormComponent implements OnInit {
     }
   }
 
-  onSave() {
-    this.filterEmpty();
-    this.http.post("service/social/user/current/work/history", this.workHistory)
-      .subscribe((res: Response) => {
-        this.workHistory = res.json();
-        this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['work', 'history', 'view']}}]);
-      })
+  public saveRequest(): Observable<WorkHistory> {
+    return this.http.post<WorkHistory>( 'service/social/user/current/work/history', this.workHistory)
   }
 
-  onUpdate() {
-    this.filterEmpty();
-    this.http.put("service/social/user/current/work/history", this.workHistory)
-      .subscribe((res: Response) => {
-        this.workHistory = res.json();
-        this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['work', 'history', 'view']}}]);
-      })
+  public updateRequest(): Observable<WorkHistory> {
+    return this.http.put<WorkHistory>('service/social/user/current/work/history', this.workHistory)
   }
 
-  onCancel() {
+  public deleteRequest(): Observable<WorkHistory> {
+    return this.http.delete<WorkHistory>('service/social/user/current/work/history')
+  }
+
+  public preRequest() {
     this.filterEmpty();
-    this.router.navigate(['social', 'profile', this.router.param.id,{outlets: {profile: ['work', 'history', 'view']}}]);
+  }
+
+  public postRequest() {
+    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['work', 'history', 'view']}}]);
   }
 
   private filterEmpty() {
@@ -72,8 +72,8 @@ export class WorkHistoryFormComponent implements OnInit {
       return Strings.isNotEmpty(company.name)
         || Strings.isNotEmpty(company.description)
         || Strings.isNotEmpty(company.start)
-        || Strings.isNotEmpty(company.end)
-    })
+        || Strings.isNotEmpty(company.end);
+    });
   }
 
 }

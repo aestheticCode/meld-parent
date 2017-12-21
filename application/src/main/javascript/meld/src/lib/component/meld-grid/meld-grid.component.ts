@@ -3,10 +3,10 @@ import {
   ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Items} from '../../common/query/Items';
 import {LoadWindow} from '../meld-window/LoadWindow';
-import {QueryBuilder} from '../../common/query/QueryBuilder';
 import {MatCheckboxChange} from '@angular/material';
+import {Items} from '../../common/search/search.interfaces';
+import {QueryBuilder} from '../../common/search/search.classes';
 
 const noop = () => {
 };

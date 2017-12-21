@@ -1,8 +1,8 @@
 import {Component, ContentChild, forwardRef, Input, TemplateRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Objects} from '../../common/utils/Objects';
-import {Items} from '../../common/query/Items';
-import {QueryBuilder} from '../../common/query/QueryBuilder';
+import {QueryBuilder} from '../../common/search/search.classes';
+import {Items} from '../../common/search/search.interfaces';
 
 const noop = () => {
 };
@@ -38,7 +38,7 @@ export class MeldSelectViewComponent implements ControlValueAccessor {
     if (Objects.isNotNull(obj)) {
       this.value = obj;
       let query = QueryBuilder.query();
-      query.predicate = this.predicate([this.value]);
+      query.expression = this.predicate([this.value]);
       this.items(query, (data, size) => {
         this.item = data[0];
       });
@@ -50,7 +50,7 @@ export class MeldSelectViewComponent implements ControlValueAccessor {
     if (values == null) {
       return null;
     }
-    return QueryBuilder.in(values, 'id');
+    return QueryBuilder.path('id', QueryBuilder.in(values));
   };
 
   registerOnChange(fn: any): void {
