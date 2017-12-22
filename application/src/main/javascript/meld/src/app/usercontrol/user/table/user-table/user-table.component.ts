@@ -9,9 +9,9 @@ import {Link} from 'lib/common/rest/Link';
 import {Strings} from 'lib/common/utils/Strings';
 import {Objects} from 'lib/common/utils/Objects';
 import {Container} from 'lib/common/rest/Container';
-import {QueryBuilder} from 'lib/common/search/search.classes';
+import {LevenstheinSort, QueryBuilder} from 'lib/common/search/search.classes';
 import {RestExpression} from 'lib/common/search/expression.interfaces';
-import {Items} from '../../../../../lib/common/search/search.interfaces';
+import {Items, SortExpression} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
   selector: 'app-user-table',
@@ -22,6 +22,9 @@ export class UserTableComponent implements OnInit {
 
   @Input('filter')
   public filter: RestExpression;
+
+  @Input('sort')
+  public sort : SortExpression;
 
   public filterTemplate: FilterTemplate = new FilterTemplateModel();
 
@@ -49,10 +52,7 @@ export class UserTableComponent implements OnInit {
       .valueChanges
       .debounceTime(300)
       .subscribe((event: string) => {
-        this.filter = QueryBuilder.or([
-          QueryBuilder.path('firstName', QueryBuilder.like(event)),
-          QueryBuilder.path('lastName', QueryBuilder.like(event))
-        ]);
+        this.sort = new LevenstheinSort(event, ['firstName', 'lastName'], true);
         this.table.refreshItems();
       });
 
@@ -118,6 +118,7 @@ export class UserTableComponent implements OnInit {
 
   users: Items<UserRow> = (query, response) => {
     query.expression = this.filter;
+    query.sorting.unshift(this.sort);
     this.http.post('service/usercontrol/user/table', query)
       .subscribe((res: Response) => {
         const json = res.json() as Container<UserRow>;

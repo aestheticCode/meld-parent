@@ -3,6 +3,7 @@ import {
   AndExpression, EqualExpression, InExpression, InSelectExpression, IsNullExpression, LevenstheinExpression, LikeExpression, NotExpression,
   OrExpression, PathExpression, SubQueryExpression
 } from './expression.classes';
+import {SortExpression} from './search.interfaces';
 
 export class QueryBuilder {
 
@@ -61,14 +62,15 @@ export class Query {
 
   constructor(public index: number = 0,
               public limit: number = 0,
-              public expression?: RestExpression,
-              public sorting?: Sort[]) {
+              public expression: RestExpression = undefined,
+              public sorting: SortExpression[] = []) {
   }
 
 
 }
 
-export class Sort {
+export class NormalSort implements SortExpression {
+  type: string = 'normal';
 
   constructor(public path: string,
               public asc: boolean) {
@@ -76,3 +78,12 @@ export class Sort {
 
 }
 
+export class LevenstheinSort implements SortExpression {
+  type: string = 'levensthein';
+
+  constructor(public value : string,
+              public paths: string[],
+              public asc: boolean) {
+  }
+
+}

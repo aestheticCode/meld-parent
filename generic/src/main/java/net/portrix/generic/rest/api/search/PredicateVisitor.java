@@ -1,13 +1,12 @@
 package net.portrix.generic.rest.api.search;
 
-import net.portrix.generic.rest.api.search.expression.*;
+import net.portrix.generic.rest.api.search.predicate.*;
 
 import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Subquery;
 
-public interface Visitor {
+public interface PredicateVisitor {
 
     Predicate visitAnd(AndExpression and);
 

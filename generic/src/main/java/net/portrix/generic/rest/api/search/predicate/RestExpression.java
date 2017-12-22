@@ -1,8 +1,8 @@
-package net.portrix.generic.rest.api.search.expression;
+package net.portrix.generic.rest.api.search.predicate;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import net.portrix.generic.rest.api.search.Visitor;
+import net.portrix.generic.rest.api.search.PredicateVisitor;
 
 import javax.persistence.criteria.Expression;
 
@@ -24,6 +24,6 @@ import javax.persistence.criteria.Expression;
 })
 public interface RestExpression {
 
-    Expression<?> accept(Visitor visitor);
+    Expression<?> accept(PredicateVisitor visitor);
 
 }

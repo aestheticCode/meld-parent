@@ -1,15 +1,15 @@
-package net.portrix.generic.rest.api.search.expression;
+package net.portrix.generic.rest.api.search.predicate;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import net.portrix.generic.rest.api.search.Visitor;
+import net.portrix.generic.rest.api.search.PredicateVisitor;
 
 import javax.persistence.criteria.Expression;
 
-@JsonTypeName("subQuery")
-public class SubQueryExpression implements RestExpression {
+@JsonTypeName("path")
+public class PathExpression implements RestExpression {
 
     private RestExpression expression;
-    private String from;
+
     private String path;
 
     public RestExpression getExpression() {
@@ -18,14 +18,6 @@ public class SubQueryExpression implements RestExpression {
 
     public void setExpression(RestExpression expression) {
         this.expression = expression;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
     }
 
     public String getPath() {
@@ -37,7 +29,7 @@ public class SubQueryExpression implements RestExpression {
     }
 
     @Override
-    public Expression<?> accept(Visitor visitor) {
-        return visitor.visitSubQuery(this);
+    public Expression<?> accept(PredicateVisitor visitor) {
+        return visitor.visitPath(this);
     }
 }

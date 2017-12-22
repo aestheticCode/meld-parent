@@ -1,7 +1,7 @@
-package net.portrix.generic.rest.api.search.expression;
+package net.portrix.generic.rest.api.search.predicate;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import net.portrix.generic.rest.api.search.Visitor;
+import net.portrix.generic.rest.api.search.PredicateVisitor;
 
 import javax.persistence.criteria.Expression;
 import java.util.List;
@@ -30,7 +30,7 @@ public class ConcatExpression implements RestExpression {
     }
 
     @Override
-    public Expression<?> accept(Visitor visitor) {
+    public Expression<?> accept(PredicateVisitor visitor) {
         return visitor.visitConcat(this);
     }
 }

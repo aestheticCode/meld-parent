@@ -21,7 +21,7 @@ import {LoadWindow} from "../meld-window/LoadWindow";
 import {TableColumn} from "./TableColumn";
 import {MeldTdDirective} from './meld-td/meld-td.directive';
 import {Items} from '../../common/search/search.interfaces';
-import {QueryBuilder, Sort} from '../../common/search/search.classes';
+import {QueryBuilder, NormalSort} from '../../common/search/search.classes';
 
 const noop = () => {
 };
@@ -78,7 +78,7 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
   @Input('rowHeight')
   public rowHeight: number = 37;
 
-  public sorting: Sort[];
+  public sorting: NormalSort[];
 
   @Input('initialize')
   public initialize : boolean = true;
@@ -181,7 +181,7 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
 
     this.sorting = this.head.rows.first.columns
       .filter((column) => column.asc !== undefined)
-      .map((column) => new Sort(column.path, column.asc));
+      .map((column) => new NormalSort(column.path, column.asc));
 
     this.onWindowScroll(this.scrollWindowChange);
   }

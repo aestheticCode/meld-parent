@@ -2,7 +2,9 @@ package net.portrix.generic.rest.api.search;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import net.portrix.generic.rest.api.search.expression.*;
+import net.portrix.generic.rest.api.search.predicate.*;
+import net.portrix.generic.rest.api.search.sort.NormalExpression;
+import net.portrix.generic.rest.api.search.sort.SortExpression;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -22,7 +24,7 @@ public class Search {
 
     private RestExpression expression = new NoopExpression();
 
-    private List<Sorting> sorting = new ArrayList<>();
+    private List<SortExpression> sorting = new ArrayList<>();
 
     public int getIndex() {
         return index;
@@ -48,16 +50,55 @@ public class Search {
         this.expression = expression;
     }
 
-    public List<Sorting> getSorting() {
+    public List<SortExpression> getSorting() {
         return sorting;
     }
 
-    public void setSorting(List<Sorting> sorting) {
+    public void setSorting(List<SortExpression> sorting) {
         this.sorting = sorting;
     }
 
-    public static Visitor visitorVisit(EntityManager entityManager, CriteriaBuilder builder,  AbstractQuery<?> query, Expression<?> root, Map<String, Class<?>> tables) {
-        return new Visitor() {
+    public static List<Order> sorting(List<SortExpression> sorting, CriteriaBuilder builder, Path<?> root) {
+        List<Order> orders = new ArrayList<>();
+        for (SortExpression sort : sorting) {
+            orders.add(sort.accept(new SortVisitor() {
+                @Override
+                public Order visit(NormalExpression sort) {
+                    if (sort.getAsc()) {
+                        return builder.asc(cursor(root, sort.getPath()));
+                    } else {
+                        return builder.desc(cursor(root, sort.getPath()));
+                    }
+                }
+                @Override
+                public Order visit(net.portrix.generic.rest.api.search.sort.LevenstheinExpression levenstheinExpression) {
+
+                    List<Path> paths = Lists.newArrayList();
+                    for (String path : levenstheinExpression.getPaths()) {
+                        paths.add(cursor(root, path));
+                    }
+                    Expression<String> concat = builder.function("concat", String.class, Iterables.toArray(paths, Path.class));
+                    Expression[] expressions = {
+                            builder.literal(levenstheinExpression.getValue()),
+                            concat,
+                            builder.literal(1),
+                            builder.literal(255),
+                            builder.literal(255)};
+                    Expression<Integer> levenshtein = builder.function("levenshtein", Integer.class, expressions);
+
+                    if (levenstheinExpression.getAsc()) {
+                        return builder.asc(levenshtein);
+                    } else {
+                        return builder.desc(levenshtein);
+                    }
+                }
+            }));
+        }
+        return orders;
+    }
+
+    public static PredicateVisitor visitorVisit(EntityManager entityManager, CriteriaBuilder builder, AbstractQuery<?> query, Expression<?> root, Map<String, Class<?>> tables) {
+        return new PredicateVisitor() {
 
             @Override
             public Predicate visitAnd(AndExpression and) {
@@ -198,14 +239,4 @@ public class Search {
         return cursor;
     }
 
-    public static List<Order> sorting(List<Sorting> sorting, CriteriaBuilder builder, Path<?> root) {
-        List<Order> orders = new ArrayList<>();
-        for (Sorting sort : sorting) {
-            if (sort.getAsc()) {
-                orders.add(builder.asc(cursor(root, sort.getPath())));
-            } else {
-                orders.add(builder.desc(cursor(root, sort.getPath())));
-            }
-        }
-        return orders;
-    }}
+ }
