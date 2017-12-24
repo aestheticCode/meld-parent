@@ -6,6 +6,7 @@ import {Container} from '../../../../../lib/common/rest/Container';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
 import {Selects} from '../../../../../lib/component/meld-combobox/meld-combobox.interfaces';
 import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
+import {AppService} from '../../../../app.service';
 
 @Component({
   selector: 'app-category-dialog',
@@ -18,6 +19,7 @@ export class CategoryDialogComponent {
 
   constructor(private http : HttpClient,
               @Inject(MAT_DIALOG_DATA) data: any,
+              private service : AppService,
               public dialogRef: MatDialogRef<CategoryDialogComponent>) {
     this.user = data;
   }
@@ -29,7 +31,10 @@ export class CategoryDialogComponent {
     if (search.selected) {
       query.expression = QueryBuilder.path("id", QueryBuilder.equal(search.selected));
     } else {
-      query.expression = QueryBuilder.path("name", QueryBuilder.like(search.filter));
+      query.expression = QueryBuilder.and([
+        QueryBuilder.path("user.id", QueryBuilder.equal(this.service.configuration.user.id)),
+        QueryBuilder.path("name", QueryBuilder.like(search.filter))
+      ]);
     }
     this.http.post<Container<Category>>('service/social/people/categories', query)
       .subscribe((res: Container<Category>) => {

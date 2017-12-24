@@ -1,31 +1,29 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {Category} from '../categories.interfaces';
 import {AppService} from '../../../../app.service';
+import {AbstractGuard} from '../../../../../lib/common/AbstractGuard';
+import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 
 @Injectable()
-export class CategoriesFormGuard implements Resolve<Container<Category>> {
+export class CategoriesFormGuard extends AbstractGuard<Container<Category>> {
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private app: AppService) {
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Container<Category>> {
-    return this.http.post<Container<Category>>(`service/social/people/categories`, {})
-      .map((res: Container<Category>) => {
-        return res;
-      })
-      .catch((error: HttpErrorResponse) => {
-        this.app.redirectUrl = state.url;
-        this.router.navigate(['usercontrol/login']);
-        return Observable.of(null);
-      })
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Container<Category>> {
+    const query = QueryBuilder.query();
+    query.index = 0;
+    query.limit = 75;
+    query.expression = QueryBuilder.path("user.id", QueryBuilder.equal(this.app.configuration.user.id));
+    return this.http.post<Container<Category>>(`service/social/people/categories`, query);
   }
+
+
 }
