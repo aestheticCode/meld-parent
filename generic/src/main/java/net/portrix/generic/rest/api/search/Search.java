@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import net.portrix.generic.rest.api.search.predicate.*;
 import net.portrix.generic.rest.api.search.sort.NormalExpression;
 import net.portrix.generic.rest.api.search.sort.SortExpression;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
@@ -151,6 +151,9 @@ public class Search {
 
             @Override
             public Predicate visitIn(InExpression in) {
+                if (in.getValues() == null || in.getValues().isEmpty()) {
+                    return builder.disjunction();
+                }
                 return root.in(in.getValues());
             }
 

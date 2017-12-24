@@ -34,6 +34,8 @@ import {MeldDialogModule} from './component/meld-dialog/meld-dialog.module';
 import {MeldGoogleMapsAutocompleteModule} from './component/meld-google-maps-autocomplete/meld-google-maps-autocomplete.module';
 import {MeldEnumModule} from './pipe/meld-enum/meld-enum.module';
 import {MeldRouterService} from './service/meld-router/meld-router.service';
+import {MeldGoogleMapsDetailsComponent} from './component/meld-google-maps-details/meld-google-maps-details.component';
+import {MeldGoogleMapsDetailsModule} from './component/meld-google-maps-details/meld-google-maps-details.module';
 
 
 @NgModule({
@@ -72,6 +74,7 @@ import {MeldRouterService} from './service/meld-router/meld-router.service';
     MeldFileContainerModule,
     MeldFormGroupModule,
     MeldGoogleMapsAutocompleteModule,
+    MeldGoogleMapsDetailsModule,
     MeldImageModule,
     MeldGridModule,
     MeldListModule,
@@ -128,6 +131,7 @@ import {MeldRouterService} from './service/meld-router/meld-router.service';
     MeldFileContainerModule,
     MeldFormGroupModule,
     MeldGoogleMapsAutocompleteModule,
+    MeldGoogleMapsDetailsModule,
     MeldGridModule,
     MeldImageModule,
     MeldListModule,

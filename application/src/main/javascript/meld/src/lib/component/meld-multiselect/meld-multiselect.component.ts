@@ -16,6 +16,7 @@ import {MeldComboBoxComponent} from "../meld-combobox/meld-combobox.component";
 import {MeldTableComponent} from "../meld-table/meld-table.component";
 import {QueryBuilder} from '../../common/search/search.classes';
 import {Items} from '../../common/search/search.interfaces';
+import {Selects} from '../meld-combobox/meld-combobox.interfaces';
 
 const noop = () => {
 };
@@ -71,7 +72,15 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
 
   private onChangeCallback: (value: any) => void = noop;
 
-  parentItems: Items<any> = (query, response) => {
+  parentItems: Selects<any> = (search, response) => {
+    const query = QueryBuilder.query();
+    query.index = search.index;
+    query.limit = search.limit;
+    if (search.selected) {
+      query.expression = QueryBuilder.path("id", QueryBuilder.equal(search.selected));
+    } else {
+      query.expression = QueryBuilder.path("name", QueryBuilder.like(search.filter));
+    }
     this.items(query, response);
   };
 

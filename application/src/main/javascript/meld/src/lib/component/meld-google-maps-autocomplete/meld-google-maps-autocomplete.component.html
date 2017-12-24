@@ -1,12 +1,26 @@
+<!--
 <mat-form-field style="width: 100%;">
   <input matInput #input="ngModel" [name]="name" [placeholder]="placeholder"
          [matAutocomplete]="auto" [(ngModel)]="value" (ngModelChange)="onValueChange($event)">
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
     <mat-option *ngFor="let location of locations" [value]="process(location.value)">
-      <span>{{ location.value }}</span>
+      <div>
+        <span style="font-size: smaller;">{{ location.value }}</span>
+      </div>
     </mat-option>
   </mat-autocomplete>
   <button matSuffix mat-icon-button (click)="onDelete()">
     <mat-icon>delete</mat-icon>
   </button>
+</mat-form-field>
+-->
+<mat-form-field style="width: 100%;">
+  <meld-combobox [rowHeight]="47" [itemValue]="itemValue" [itemName]="itemName"  [(ngModel)]="value" [placeholder]="placeholder" [name]="name" [items]="places" (ngModelChange)="onValueChange($event)">
+    <ng-template let-place>
+      <div style="height: 40px; vertical-align: center;">
+        {{place.name}}
+      </div>
+    </ng-template>
+  </meld-combobox>
+  <mat-hint>{{value?.formatted}}</mat-hint>
 </mat-form-field>

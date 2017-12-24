@@ -1,7 +1,10 @@
 <form>
   <fieldset>
-    <meld-google-maps-autocomplete placeholder="Name" name="name" [(ngModel)]="school.name"></meld-google-maps-autocomplete>
+    <meld-google-maps-autocomplete [firstPartOnly]="false" placeholder="Name" name="name" [(ngModel)]="school.location"></meld-google-maps-autocomplete>
 
+    <meld-google-maps-details [id]="school?.location?.id" style="margin-top: -20px; margin-bottom: 20px;">
+      <ng-template let-item><span style="font-size: smaller">{{item?.formatted_address}}</span></ng-template>
+    </meld-google-maps-details>
 
     <mat-form-field style="width: 100%;">
       <input placeholder="Course" [(ngModel)]="school.course" name="course" type="text"

@@ -4,6 +4,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Category} from '../categories.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
+import {Selects} from '../../../../../lib/component/meld-combobox/meld-combobox.interfaces';
+import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 
 @Component({
   selector: 'app-category-dialog',
@@ -20,7 +22,15 @@ export class CategoryDialogComponent {
     this.user = data;
   }
 
-  categories: Items<Category> = (query, response) => {
+  categories: Selects<Category> = (search, response) => {
+    let query = QueryBuilder.query();
+    query.index = search.index;
+    query.limit = search.limit;
+    if (search.selected) {
+      query.expression = QueryBuilder.path("id", QueryBuilder.equal(search.selected));
+    } else {
+      query.expression = QueryBuilder.path("name", QueryBuilder.like(search.filter));
+    }
     this.http.post<Container<Category>>('service/social/people/categories', query)
       .subscribe((res: Container<Category>) => {
         response(res.rows, res.size);

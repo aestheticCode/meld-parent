@@ -1,6 +1,7 @@
 package net.portrix.generic.time;
 
-import org.apache.commons.lang3.time.DurationFormatUtils;
+
+import org.apache.commons.lang.time.DurationFormatUtils;
 
 import java.time.Duration;
 import java.time.Instant;

@@ -29,7 +29,7 @@ export class SchoolFormComponent {
   private deleteClick : EventEmitter<School> = new EventEmitter();
 
   onDelete() {
-    this.school.name = undefined;
+    this.school.location = undefined;
     this.school.course = undefined;
     this.school.start = undefined;
     this.school.end = undefined;

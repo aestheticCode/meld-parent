@@ -1,18 +1,17 @@
 package net.portrix.generic.rest.google;
 
-import com.googlecode.placesapiclient.client.entity.PlacePrediction;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
+import net.portrix.generic.rest.google.client.PlaceDetails;
+import net.portrix.generic.rest.google.client.PlacePrediction;
+import net.portrix.generic.rest.google.client.PlacePredictions;
 import net.portrix.generic.rest.jsr339.Name;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,42 +21,52 @@ import java.util.List;
 @Name("Generic Google")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class PlacesController {
+public class GooglePlacesController {
 
     private final PlacesService service;
 
     @Inject
-    public PlacesController(PlacesService service) {
+    public GooglePlacesController(PlacesService service) {
         this.service = service;
     }
 
-    public PlacesController() {
+    public GooglePlacesController() {
         this(null);
     }
 
     @POST
-    @Path("place")
+    @Path("place/autocomplete")
     @Name("Places Geo coding")
     @Secured
     public Container<LocationForm> geoCoding(LocationForm address) {
-        List<PlacePrediction> placePredictions = service.find(address.getValue());
+        PlacePredictions placePredictions = service.find(address.getName());
         List<LocationForm> forms = new ArrayList<>();
         if (placePredictions == null) {
             return new Container<>(forms, forms.size());
         }
 
-        for (PlacePrediction placePrediction : placePredictions) {
+        for (PlacePrediction placePrediction : placePredictions.getPredictions()) {
             LocationForm form = new LocationForm();
-            form.setValue(placePrediction.getDescription());
+            form.setName(placePrediction.getDescription());
+            form.setId(placePrediction.getPlace_id());
             forms.add(form);
         }
 
         return new Container<>(forms, forms.size());
     }
 
-    public static URLBuilder<PlacesController> linkGeoCoding(URLBuilderFactory builderFactory) {
+    @GET
+    @Path("place/{id}/details")
+    @Name("Places Details")
+    @Secured
+    public PlaceDetails details(@PathParam("id") String id) {
+        return service.findDetails(id);
+       }
+
+
+    public static URLBuilder<GooglePlacesController> linkGeoCoding(URLBuilderFactory builderFactory) {
         return builderFactory
-                .from(PlacesController.class)
+                .from(GooglePlacesController.class)
                 .record((method) -> method.geoCoding(null))
                 .rel("geoCoding");
     }

@@ -30,7 +30,7 @@ public class EventSubscriberContainer {
     private static <X, E> boolean isApplicable(final TypeToken<E> eventType,
                                                final ResolvedParameter<X> parameter,
                                                final Annotation[] qualifiers) {
-        final boolean assignableFromEventType = eventType.isAssignableFrom(parameter.getType());
+        final boolean assignableFromEventType = eventType.isSubtypeOf(parameter.getType());
         if (assignableFromEventType) {
 
             final boolean qualifiersMatchingType = Stream.of(qualifiers)

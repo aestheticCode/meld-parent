@@ -3,7 +3,7 @@ package net.portrix.generic.rest.jsr339;
 import net.portrix.generic.model.type.resolved.ResolvedMethod;
 import net.portrix.generic.model.type.resolved.ResolvedType;
 import net.portrix.generic.rest.Secured;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HttpMethod;
@@ -73,7 +73,7 @@ public class ResourceUtil {
                 final Locator resourceLocator = new Locator(secured != null, pathString, name, resource);
                 resource.add(resourceLocator);
                 for (ResolvedType<?> subResourceType : subResourceTypes) {
-                    if (resolvedMethod.getReturnType().isAssignableFrom(subResourceType.getType())) {
+                    if (resolvedMethod.getReturnType().isSubtypeOf(subResourceType.getType())) {
                         resourceLocator.add(process(subResourceType, resourceLocator, subResourceTypes));
                     }
                 }

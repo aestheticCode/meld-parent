@@ -6,6 +6,7 @@ import {
 } from '@angular/material';
 import {MeldGoogleMapsAutocompleteComponent} from './meld-google-maps-autocomplete.component';
 import {FormsModule} from '@angular/forms';
+import {MeldComboBoxModule} from '../meld-combobox/meld-combobox.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import {FormsModule} from '@angular/forms';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MeldComboBoxModule,
     CommonModule,
     FormsModule
   ],

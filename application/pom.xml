@@ -172,6 +172,19 @@
                     <artifactId>hibernate-search-backend-jms</artifactId>
                     <scope>provided</scope>
                 </dependency>
+
+                <dependency>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+
             </dependencies>
         </profile>
 
@@ -335,7 +348,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.5.3</version>
                 <configuration>
-                    <changeLogFile>src/main/liquibase2/changeLog.sql</changeLogFile>
+                    <changeLogFile>src/main/liquibase2/changeLog.xml</changeLogFile>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/meld</url>
                     <username>postgres</username>

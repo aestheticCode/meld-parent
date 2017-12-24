@@ -4,7 +4,7 @@ import com.google.common.collect.Iterables;
 import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.Group_;
 import net.portrix.meld.usercontrol.Role;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

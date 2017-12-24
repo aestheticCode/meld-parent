@@ -15,7 +15,7 @@ public abstract class AbstractMetaModel<B, K> implements MetaModel.Normal<B, K> 
                                                                  final TypeToken<V> valueType) {
         final MetaProperty<B, K, ?> property = get(key);
 
-        if (valueType.isAssignableFrom(property.getType())) {
+        if (valueType.isSubtypeOf(property.getType())) {
             return (M) property;
         }
 
@@ -25,7 +25,7 @@ public abstract class AbstractMetaModel<B, K> implements MetaModel.Normal<B, K> 
     @SuppressWarnings("unchecked")
     protected <V, M extends MetaProperty<B, K, V>> List<M> findInternal(final TypeToken<V> typeToken) {
         return getProperties().stream()
-                .filter(property -> typeToken.isAssignableFrom(property.getType()))
+                .filter(property -> typeToken.isSubtypeOf(property.getType()))
                 .map(property -> (M) property)
                 .collect(Collectors.toList());
 

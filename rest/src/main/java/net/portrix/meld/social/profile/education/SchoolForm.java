@@ -1,6 +1,7 @@
 package net.portrix.meld.social.profile.education;
 
-import java.time.LocalDate;
+import net.portrix.generic.rest.google.LocationForm;
+
 import java.util.UUID;
 
 /**
@@ -10,7 +11,7 @@ public class SchoolForm {
 
     private UUID id;
 
-    private String name;
+    private LocationForm location;
 
     private String course;
 
@@ -30,12 +31,12 @@ public class SchoolForm {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public LocationForm getLocation() {
+        return location;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLocation(LocationForm location) {
+        this.location = location;
     }
 
     public String getCourse() {

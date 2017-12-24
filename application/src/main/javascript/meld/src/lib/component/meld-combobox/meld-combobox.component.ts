@@ -1,8 +1,9 @@
 import {
-  Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostBinding, HostListener, Input, OnChanges, Optional, Output, Self,
+  Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostBinding, HostListener, Input, OnChanges, OnInit, Optional, Output,
+  Self,
   SimpleChanges, TemplateRef, ViewChild
 } from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, NgModel} from '@angular/forms';
 import {MeldTableComponent} from '../meld-table/meld-table.component';
 import {MatFormFieldControl} from '@angular/material';
 import {Subject} from 'rxjs/Subject';
@@ -10,6 +11,7 @@ import {FocusMonitor} from '@angular/cdk/a11y';
 import {Objects} from '../../common/utils/Objects';
 import {QueryBuilder} from '../../common/search/search.classes';
 import {Items} from '../../common/search/search.interfaces';
+import {Search, Selects} from './meld-combobox.interfaces';
 
 const noop = () => {
 };
@@ -51,7 +53,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
   }
 
   get shouldPlaceholderFloat() {
-    return this.focused || !this.empty;
+    return this.focused || ! this.empty;
   }
 
   setDescribedByIds(ids: string[]): void {
@@ -65,7 +67,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
   }
 
   get empty() {
-    return Objects.isNotNull(this.value);
+    return Objects.isNull(this.value);
   }
 
 
@@ -84,7 +86,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
   public placeholder: string = '';
 
   @Input('items')
-  public items: Items<any>;
+  public items: Selects<any>;
 
   @Input('readonly')
   public readonly: boolean = false;
@@ -104,26 +106,38 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
   @ViewChild('input')
   private input : ElementRef;
 
+  @Input('rowHeight')
+  public rowHeight : number = 28;
+
+  private filterChanges = new Subject<string>();
+
   private onTouchedCallback: () => void = noop;
 
   private onChangeCallback: (value: any) => void = noop;
 
-  constructor(private elRef: ElementRef) {}
+  constructor(private elRef: ElementRef) {
+    this.filterChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .subscribe((event : string) => {
+        this.showOverlay = true;
+        this.filter = event;
+        this.table.refreshItems();
+        this.value = null;
+      })
+  }
+
 
   public parentItems: Items<any> = (query, callback) => {
-    query.expression = this.predicate(this.filter);
-    this.items(query, (data: [any], size: number) => {
+    const search : Search = {
+      filter : this.filter,
+      index : query.index,
+      limit : query.limit,
+    };
+    this.items(search, (data: [any], size: number) => {
       callback(data, size);
       this.size = size;
     });
-  };
-
-  @Input('predicate')
-  public predicate = (value) => {
-    if (value == null) {
-      return undefined;
-    }
-    return QueryBuilder.path('name', QueryBuilder.like(value));
   };
 
   @Input('itemValue')
@@ -149,10 +163,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
   }
 
   public onFilterChange(event) {
-    this.showOverlay = true;
-    this.filter = event;
-    this.table.refreshItems();
-    this.value = null;
+    this.filterChanges.next(event);
   }
 
   public onSelectItemChange(event) {
@@ -227,14 +238,22 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor, M
     if (obj) {
       this.value = obj;
 
-      let query = QueryBuilder.query();
-      query.expression = QueryBuilder.path('id', QueryBuilder.in([obj]));
-      const response = (data: [any], size: number) => {
-        if (this.filter.length === 0) {
-          this.filter = this.itemName(data[0]);
-        }
-      };
-      this.items(query, response);
+      let itemName = this.itemName(this.value);
+      if (itemName) {
+        this.filter = itemName;
+      } else {
+        const search : Search = {
+          selected : obj
+        };
+
+        const callback = (data: [any], size: number) => {
+          if (this.filter.length === 0) {
+            this.filter = this.itemName(data[0]);
+            this.stateChanges.next();
+          }
+        };
+        this.items(search, callback);
+      }
 
       this.stateChanges.next();
     }

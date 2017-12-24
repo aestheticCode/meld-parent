@@ -2,13 +2,23 @@ package net.portrix.generic.rest.google;
 
 public class LocationForm {
 
-    private String value;
+    private String id;
 
-    public String getValue() {
-        return value;
+    private String name;
+
+    public String getId() {
+        return id;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

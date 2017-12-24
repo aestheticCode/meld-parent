@@ -3,6 +3,7 @@ package net.portrix.meld.social.profile.education;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
+import net.portrix.generic.rest.google.LocationForm;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Education;
 import net.portrix.meld.social.profile.School;
@@ -92,7 +93,11 @@ public class EducationFormController {
             schoolFormType.setCourse(school.getCourse());
             schoolFormType.setDescription(school.getDescription());
             schoolFormType.setId(school.getId());
-            schoolFormType.setName(school.getName());
+
+            LocationForm locationForm = new LocationForm();
+            locationForm.setName(school.getName());
+            schoolFormType.setLocation(locationForm);
+
             schoolFormType.setTillNow(school.isTillNow());
 
             SchoolDateForm start = new SchoolDateForm();
@@ -148,7 +153,7 @@ public class EducationFormController {
             School school = new School();
             school.setCourse(schoolType.getCourse());
             school.setDescription(schoolType.getDescription());
-            school.setName(schoolType.getName());
+            school.setName(schoolType.getLocation().getName());
             school.setTillNow(schoolType.isTillNow());
 
             SchoolDate start = new SchoolDate();
@@ -198,7 +203,7 @@ public class EducationFormController {
             School school = new School();
             school.setCourse(schoolType.getCourse());
             school.setDescription(schoolType.getDescription());
-            school.setName(schoolType.getName());
+            school.setName(schoolType.getLocation().getName());
             school.setTillNow(schoolType.isTillNow());
 
             SchoolDate start = new SchoolDate();

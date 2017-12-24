@@ -18,7 +18,7 @@ import net.portrix.meld.usercontrol.role.table.RoleTableController;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 import net.portrix.meld.usercontrol.user.table.UserTableController;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.picketlink.Identity;
 import org.picketlink.credential.DefaultLoginCredentials;
 import org.picketlink.idm.credential.TokenCredential;

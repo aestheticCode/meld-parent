@@ -1,15 +1,11 @@
 package net.portrix.meld.social.profile.places;
 
-import com.google.maps.GeoApiContext;
-import com.googlecode.placesapiclient.client.service.impl.PlacesServiceImpl;
-import net.portrix.generic.rest.google.GoogleResource;
 import net.portrix.meld.social.profile.Places;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

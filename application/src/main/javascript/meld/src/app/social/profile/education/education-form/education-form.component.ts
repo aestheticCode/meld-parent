@@ -65,7 +65,7 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
   public preRequest() {
     this.education.schools
       = this.education.schools.filter((school) => {
-      return Strings.isNotEmpty(school.name)
+      return Objects.isNotNull(school.location)
         || Strings.isNotEmpty(school.course)
         || Objects.isNotNull(school.start)
         || Objects.isNotNull(school.end);

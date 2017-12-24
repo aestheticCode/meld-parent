@@ -17,6 +17,7 @@ export class FindViewComponent {
               private dialog : MatDialog) {}
 
   users: Items<UserRow> = (query, response) => {
+
     this.http.post<Container<UserRow>>('service/social/people/find', query)
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);

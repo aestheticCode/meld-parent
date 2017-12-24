@@ -3,6 +3,11 @@ import {HttpClient} from '@angular/common/http';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel} from '@angular/forms';
 import {MatAutocompleteSelectedEvent} from '@angular/material';
 import {Strings} from '../../common/utils/Strings';
+import {Place} from './meld-google-maps-autocomplete.interfaces';
+import {Container} from '../../common/rest/Container';
+import {Selects} from '../meld-combobox/meld-combobox.interfaces';
+import {Objects} from '../../common/utils/Objects';
+import {MeldGoogleMapsDetails} from '../meld-google-maps-details/meld-google-maps-details.intefaces';
 
 const noop = () => {};
 
@@ -19,20 +24,12 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   styleUrls: ['meld-google-maps-autocomplete.component.css'],
   providers : [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class MeldGoogleMapsAutocompleteComponent implements OnInit, ControlValueAccessor {
+export class MeldGoogleMapsAutocompleteComponent implements ControlValueAccessor {
 
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (value: any) => void = noop;
 
-  public value : string;
-
-  public locations = [];
-
-  @ViewChild('input')
-  private input : NgModel;
-
-  @Output('optionsSelected')
-  private optionSelected: EventEmitter<MatAutocompleteSelectedEvent> = new EventEmitter<MatAutocompleteSelectedEvent>();
+  public value : any;
 
   @Input('name')
   public name : string;
@@ -40,37 +37,52 @@ export class MeldGoogleMapsAutocompleteComponent implements OnInit, ControlValue
   @Input('placeholder')
   public placeholder : string;
 
+  @Input('firstPartOnly')
+  public firstPartOnly: boolean = true;
+
   constructor(private http : HttpClient) { }
 
-  ngOnInit() {
-    this
-      .input
-      .control
-      .valueChanges
-      .debounceTime(300)
-      .subscribe((value: string) => {
-        this.http.post<any>("service/generic/google/place", {value: value})
-          .subscribe((res) => {
-            this.locations = res.rows;
-          })
+  places : Selects<Place> = (search, callback) => {
+    this.http.post<Container<Place>>("service/generic/google/place/autocomplete", {name: search.filter})
+      .subscribe((res) => {
+        callback(res.rows, res.rows.length);
       })
-  }
-
-  onOptionSelected(event) {
-    this.optionSelected.emit(event);
-  }
+  };
 
   process(value : string) : string {
-    let parts = value.split(",");
-    return parts[0];
+    if (this.firstPartOnly) {
+      let parts = value.split(",");
+      return parts[0];
+    }
+    return value;
   }
 
-  onValueChange(event : string) {
-    this.onChangeCallback(event);
+  onValueChange(event : any) {
+    this.http.get<MeldGoogleMapsDetails>(`service/generic/google/place/${event.id}/details`)
+      .subscribe((res) => {
+        this.value.formatted = res.formattedAddress;
+        this.onChangeCallback(event);
+      });
   }
+
+  public itemValue = (item) => {
+    if (item == null) {
+      return null;
+    }
+    return item;
+  };
+
+  public itemName = (item) => {
+    if (item == null) {
+      return null;
+    }
+    let itemName : string = item['name'];
+    return itemName.split(",")[0];
+  };
+
 
   writeValue(obj: any): void {
-    if (Strings.isNotEmpty(obj)) {
+    if (Objects.isNotNull(obj)) {
       this.value = obj;
     }
   }

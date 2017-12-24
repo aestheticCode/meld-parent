@@ -2,7 +2,7 @@ package net.portrix.generic.rest.api.query;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;

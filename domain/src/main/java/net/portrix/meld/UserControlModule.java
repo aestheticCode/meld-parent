@@ -6,7 +6,7 @@ import net.portrix.generic.rest.jsr339.*;
 import net.portrix.meld.usercontrol.Permission;
 import net.portrix.meld.usercontrol.PermissionManager;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

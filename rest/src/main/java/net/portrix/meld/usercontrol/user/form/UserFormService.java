@@ -2,7 +2,7 @@ package net.portrix.meld.usercontrol.user.form;
 
 import com.google.common.collect.Iterables;
 import net.portrix.meld.usercontrol.*;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

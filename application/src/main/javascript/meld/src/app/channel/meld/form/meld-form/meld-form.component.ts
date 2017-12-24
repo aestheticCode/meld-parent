@@ -41,7 +41,7 @@ export class MeldFormComponent extends AbstractForm<MeldPost> implements OnInit 
   }
 
   saveRequest(): Observable<MeldPost> {
-    return this.http.put<MeldPost>(`service/channel/meld`, this.post);
+    return this.http.post<MeldPost>(`service/channel/meld`, this.post);
   }
 
   updateRequest(): Observable<MeldPost> {

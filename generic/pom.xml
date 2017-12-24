@@ -14,32 +14,9 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-plus</artifactId>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.google.oauth-client</groupId>
-            <artifactId>google-oauth-client-jetty</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.maps</groupId>
-            <artifactId>google-maps-services</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.googlecode.places-api-client</groupId>
-            <artifactId>places-api-client</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-youtube</artifactId>
-        </dependency>
-
 
         <dependency>
             <groupId>cglib</groupId>
@@ -47,8 +24,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
         </dependency>
 
         <dependency>
