@@ -348,7 +348,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.5.3</version>
                 <configuration>
-                    <changeLogFile>src/main/liquibase2/changeLog.xml</changeLogFile>
+                    <changeLogFile>src/main/liquibase2/changeLog.sql</changeLogFile>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/meld</url>
                     <username>postgres</username>
