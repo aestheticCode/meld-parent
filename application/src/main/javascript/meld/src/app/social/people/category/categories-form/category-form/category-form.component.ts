@@ -1,57 +1,47 @@
 import {Component, OnInit} from '@angular/core';
 import {Category} from '../../categories.interfaces';
 import {HttpClient} from '@angular/common/http';
-import {UserForm} from '../../../../../usercontrol/user/form/user.interfaces';
-import {UserFormModel} from '../../../../../usercontrol/user/form/user.classes';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CategoryModel} from '../../categories.classes';
+import {AbstractForm} from '../../../../../../lib/common/forms/AbstractForm';
+import {Observable} from 'rxjs/Observable';
+import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 
 @Component({
   selector: 'app-category-form',
-  templateUrl: './category-form.component.html',
-  styleUrls: ['./category-form.component.css']
+  templateUrl: 'category-form.component.html',
+  styleUrls: ['category-form.component.css']
 })
-export class CategoryFormComponent implements OnInit {
+export class CategoryFormComponent extends AbstractForm<Category> implements OnInit {
 
   category: Category;
 
-  constructor(private route : ActivatedRoute,
-              private router : Router,
-              private http: HttpClient) {
+  constructor(private router: MeldRouterService,
+              http: HttpClient) {
+    super(http);
   }
 
   ngOnInit() {
-    this.route.data.forEach((data: { category: Category }) => {
-      this.category = data.category || new CategoryModel();
-    });
-
-  }
-
-  onCreate() {
-    this.http.post<Category>('service/social/people/category', this.category)
-      .subscribe((res: Category) => {
-        this.router.navigate(['social', 'people', { outlets: { people: ['categories'] } }]);
-      });
-  }
-
-  onDelete() {
-    this.http.delete(`service/social/people/category/${this.category.id}`)
-      .subscribe((res) => {
-        this.router.navigate(['social', 'people', { outlets: { people: ['categories'] } }]);
-      });
-  }
-
-
-  onRename() {
-    this.http.put<Category>(`service/social/people/category/${this.category.id}`, this.category)
-      .subscribe((res: Category) => {
-        this.router.navigate(['social', 'people', { outlets: { people: ['categories'] } }]);
-      });
+    this.category = this.router.data.category;
   }
 
   onCancel() {
-    this.router.navigate(['social', 'people', { outlets: { people: ['categories'] } }]);
+    this.router.navigate(['social', 'people', {outlets: {people: ['categories']}}]);
+  }
+
+  saveRequest(): Observable<Category> {
+    return this.http.post<Category>('service/social/people/category', this.category);
+  }
+
+  updateRequest(): Observable<Category> {
+    return this.http.put<Category>(`service/social/people/category/${this.category.id}`, this.category);
+
+  }
+
+  deleteRequest(): Observable<Category> {
+    return this.http.delete<Category>(`service/social/people/category/${this.category.id}`);
   }
 
 
+  public postRequest(form: Category) {
+    this.router.navigate(['social', 'people', {outlets: {people: ['categories']}}]);
+  }
 }

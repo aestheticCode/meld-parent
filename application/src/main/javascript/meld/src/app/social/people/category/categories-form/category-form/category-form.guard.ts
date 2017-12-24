@@ -1,29 +1,37 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Category} from '../../categories.interfaces';
 import {AppService} from '../../../../../app.service';
+import {AbstractGuard} from '../../../../../../lib/common/AbstractGuard';
 
 @Injectable()
-export class CategoryFormGuard implements Resolve<Category> {
+export class CategoryFormGuard extends AbstractGuard<Category> {
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private app: AppService) {
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category> {
-    return this.http.get<Category>(`service/social/people/category/${route.params['id']}`)
-      .map((res: Category) => {
-        return res;
-      })
-      .catch((error: HttpErrorResponse) => {
-        this.app.redirectUrl = state.url;
-        this.router.navigate(['usercontrol/login']);
-        return Observable.of(null);
-      });
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category> {
+    return this.http.get<Category>(`service/social/people/category/${route.params['id']}`);
   }
+
+
+}
+
+@Injectable()
+export class CategoryCreateGuard extends AbstractGuard<Category> {
+
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
+  }
+
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category> {
+    return this.http.get<Category>(`service/social/people/category/create`);
+  }
+
+
 }

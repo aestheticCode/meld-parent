@@ -51,8 +51,9 @@ export class UserTableComponent implements OnInit {
       .control
       .valueChanges
       .debounceTime(300)
+      .distinctUntilChanged()
       .subscribe((event: string) => {
-        this.sort = new LevenstheinSort(event, ['firstName', 'lastName'], true);
+        this.sort = new LevenstheinSort(event, ['firstName', 'lastName'], false);
         this.table.refreshItems();
       });
 
@@ -118,7 +119,9 @@ export class UserTableComponent implements OnInit {
 
   users: Items<UserRow> = (query, response) => {
     query.expression = this.filter;
-    query.sorting.unshift(this.sort);
+    if (this.sort) {
+      query.sorting.unshift(this.sort);
+    }
     this.http.post('service/usercontrol/user/table', query)
       .subscribe((res: Response) => {
         const json = res.json() as Container<UserRow>;

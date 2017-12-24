@@ -79,12 +79,9 @@ public class Search {
                     }
                     Expression<String> concat = builder.function("concat", String.class, Iterables.toArray(paths, Path.class));
                     Expression[] expressions = {
-                            builder.literal(levenstheinExpression.getValue()),
-                            concat,
-                            builder.literal(1),
-                            builder.literal(255),
-                            builder.literal(255)};
-                    Expression<Integer> levenshtein = builder.function("levenshtein", Integer.class, expressions);
+                            builder.literal(levenstheinExpression.getValue().toLowerCase()),
+                            builder.lower(concat)};
+                    Expression<Integer> levenshtein = builder.function("difference", Integer.class, expressions);
 
                     if (levenstheinExpression.getAsc()) {
                         return builder.asc(levenshtein);
@@ -202,11 +199,11 @@ public class Search {
             @Override
             public Expression<?> visitLevensthein(LevenstheinExpression levenstheinExpression) {
                 Expression[] expressions = {
-                        builder.literal(levenstheinExpression.getValue()),
-                        root,
+                        builder.literal(levenstheinExpression.getValue().toLowerCase()),
+                        builder.lower((Expression<String>) root),
                         builder.literal(1),
-                        builder.literal(255),
-                        builder.literal(255)
+                        builder.literal(24),
+                        builder.literal(24)
                 };
 
                 Expression<Integer> levenshtein = builder.function("levenshtein", Integer.class, expressions);
