@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {AbstractGuard} from 'lib/common/AbstractGuard';
 import {HttpClient} from '@angular/common/http';
-import {MeldImagePost} from './meld-Image-form.interfaces';
+import {MeldImagePost} from './meld-image-form.interfaces';
 import {AppService} from '../../../../../app.service';
 
 @Injectable()
