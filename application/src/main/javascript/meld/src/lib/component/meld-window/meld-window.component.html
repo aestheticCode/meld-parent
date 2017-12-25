@@ -6,7 +6,7 @@
   </div>
 
   <div style="display: flex; width: 100%; height:100%; position: relative;">
-    <div #window style="overflow: hidden; width: 100%;" (wheel)="onWindowWheel($event)">
+    <div #window style="overflow: hidden; width: 100%;" (wheel)="onWindowWheel($event)" meldTouchWheel (meldTouchWheelChange)="onTouchMove($event)">
       <ng-template [ngTemplateOutlet]="body.template"></ng-template>
     </div>
     <div style="position: absolute;right: 0; display: flex; width: 10px; height: 100%;">

@@ -6,6 +6,12 @@ public class LocationForm {
 
     private String name;
 
+    private String formatted;
+
+    private Double lat;
+
+    private Double lng;
+
     public String getId() {
         return id;
     }
@@ -20,5 +26,29 @@ public class LocationForm {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getFormatted() {
+        return formatted;
+    }
+
+    public void setFormatted(String formatted) {
+        this.formatted = formatted;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 }

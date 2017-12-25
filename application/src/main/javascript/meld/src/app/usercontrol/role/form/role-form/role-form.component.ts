@@ -45,7 +45,7 @@ export class RoleFormComponent extends AbstractForm<RoleForm> implements OnInit 
           this.http.post('service/usercontrol/role/form/validate',
             {name: value, id: this.role.id})
             .subscribe((res: Response) => {
-              let isValid = res.json();
+              let isValid = res;
               if (!isValid) {
                 inputElement.invalid = true;
               }

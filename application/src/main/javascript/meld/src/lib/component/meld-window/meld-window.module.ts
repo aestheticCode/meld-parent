@@ -6,12 +6,14 @@ import {MeldWindowFooterDirective} from "./meld-window-footer/meld-window-footer
 import {MeldWindowHeaderDirective} from "./meld-window-head/meld-window-header.directive";
 import {MeldScrollbarHorizontalModule} from "../meld-scrollbar-horizontal/meld-scrollbar-horizontal.module";
 import {MeldScrollbarVerticalModule} from "../meld-scrollbar-vertical/meld-scrollbar-vertical.module";
+import {MeldTouchWheelModule} from '../../directive/meld-touch-wheel/meld-touch-wheel.module';
 
 @NgModule({
   imports: [
     CommonModule,
     MeldScrollbarHorizontalModule,
-    MeldScrollbarVerticalModule
+    MeldScrollbarVerticalModule,
+    MeldTouchWheelModule
   ],
   declarations: [
     MeldWindowComponent,

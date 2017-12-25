@@ -18,6 +18,8 @@ public class PlaceDetails {
     @JsonProperty("formatted_phone_number")
     private String formattedPhoneNumber;
 
+    private Geometry geometry;
+
     private URL icon;
 
     private String id;
@@ -58,6 +60,14 @@ public class PlaceDetails {
 
     public void setFormattedPhoneNumber(String formattedPhoneNumber) {
         this.formattedPhoneNumber = formattedPhoneNumber;
+    }
+
+    public Geometry getGeometry() {
+        return geometry;
+    }
+
+    public void setGeometry(Geometry geometry) {
+        this.geometry = geometry;
     }
 
     public URL getIcon() {

@@ -29,7 +29,7 @@ export class MeldGoogleMapsAutocompleteComponent implements ControlValueAccessor
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (value: any) => void = noop;
 
-  public value : any;
+  public value : Place;
 
   @Input('name')
   public name : string;
@@ -60,7 +60,9 @@ export class MeldGoogleMapsAutocompleteComponent implements ControlValueAccessor
   onValueChange(event : any) {
     this.http.get<MeldGoogleMapsDetails>(`service/generic/google/place/${event.id}/details`)
       .subscribe((res) => {
-        this.value.formatted = res.formattedAddress;
+        this.value.address = res.formatted_address;
+        this.value.lat = res.geometry.location.lat;
+        this.value.lng = res.geometry.location.lng;
         this.onChangeCallback(event);
       });
   }

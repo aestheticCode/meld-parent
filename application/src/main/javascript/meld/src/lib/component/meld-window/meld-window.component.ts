@@ -4,6 +4,7 @@ import {MeldWindowHeaderDirective} from "./meld-window-head/meld-window-header.d
 import {MeldWindowBodyDirective} from "./meld-window-body/meld-window-body.directive";
 import {MeldWindowFooterDirective} from "./meld-window-footer/meld-window-footer.directive";
 import {LoadWindow} from "./LoadWindow";
+import {TouchWheelEvent} from '../../directive/meld-touch-wheel/meld-touch-wheel.classes';
 
 @Component({
   selector: 'meld-window',
@@ -71,6 +72,33 @@ export class MeldWindowComponent {
   hScrollBarChange(position: number) {
     this.hposition = position;
     this.onhPositionChange();
+  }
+
+  onTouchMove(event : TouchWheelEvent) {
+    const windowElement: HTMLElement = this.window.nativeElement;
+    const deltaY = event.deltaY;
+    const deltaX = event.deltaX;
+    const height = this.rowsSize * this.rowHeight - windowElement.clientHeight;
+    this.vposition += deltaY / height;
+    this.hposition += deltaX / windowElement.offsetWidth;
+    if (this.vposition < 0) {
+      this.vposition = 0;
+    }
+    if (this.vposition > 1) {
+      this.vposition = 1;
+    }
+    if (this.hposition < 0) {
+      this.hposition = 0;
+    }
+    if (this.hposition > 1) {
+      this.hposition = 1;
+    }
+    if (this.rowsSize * this.rowHeight > windowElement.offsetHeight) {
+      this.onvPositionChange();
+    }
+    this.onhPositionChange();
+    return false;
+
   }
 
   onWindowWheel(event: WheelEvent) {
