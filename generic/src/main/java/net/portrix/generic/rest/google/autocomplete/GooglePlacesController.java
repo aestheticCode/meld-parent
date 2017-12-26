@@ -1,12 +1,11 @@
-package net.portrix.generic.rest.google;
+package net.portrix.generic.rest.google.autocomplete;
 
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.google.client.PlaceDetails;
-import net.portrix.generic.rest.google.client.PlacePrediction;
-import net.portrix.generic.rest.google.client.PlacePredictions;
+import net.portrix.generic.rest.google.autocomplete.client.PlacePredictionForm;
+import net.portrix.generic.rest.google.autocomplete.client.PlacePredictions;
 import net.portrix.generic.rest.jsr339.Name;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -23,10 +22,10 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class GooglePlacesController {
 
-    private final PlacesService service;
+    private final GooglePlacesService service;
 
     @Inject
-    public GooglePlacesController(PlacesService service) {
+    public GooglePlacesController(GooglePlacesService service) {
         this.service = service;
     }
 
@@ -45,7 +44,7 @@ public class GooglePlacesController {
             return new Container<>(forms, forms.size());
         }
 
-        for (PlacePrediction placePrediction : placePredictions.getPredictions()) {
+        for (PlacePredictionForm placePrediction : placePredictions.getPredictions()) {
             LocationForm form = new LocationForm();
             form.setName(placePrediction.getDescription());
             form.setId(placePrediction.getPlace_id());
@@ -54,15 +53,6 @@ public class GooglePlacesController {
 
         return new Container<>(forms, forms.size());
     }
-
-    @GET
-    @Path("place/{id}/details")
-    @Name("Places Details")
-    @Secured
-    public PlaceDetails details(@PathParam("id") String id) {
-        return service.findDetails(id);
-       }
-
 
     public static URLBuilder<GooglePlacesController> linkGeoCoding(URLBuilderFactory builderFactory) {
         return builderFactory

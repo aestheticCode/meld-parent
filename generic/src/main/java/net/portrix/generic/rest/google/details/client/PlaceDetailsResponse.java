@@ -1,17 +1,17 @@
-package net.portrix.generic.rest.google.client;
+package net.portrix.generic.rest.google.details.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlaceDetailsResponse {
 
-    private PlaceDetails result;
+    private PlaceDetailsForm result;
 
-    public PlaceDetails getResult() {
+    public PlaceDetailsForm getResult() {
         return result;
     }
 
-    public void setResult(PlaceDetails result) {
+    public void setResult(PlaceDetailsForm result) {
         this.result = result;
     }
 }

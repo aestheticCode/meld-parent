@@ -3,9 +3,10 @@ package net.portrix.meld.social.profile.education;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.google.LocationForm;
+import net.portrix.generic.rest.google.details.LocationDetailForm;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Education;
+import net.portrix.meld.social.profile.Place;
 import net.portrix.meld.social.profile.School;
 import net.portrix.meld.social.profile.SchoolDate;
 import net.portrix.meld.usercontrol.User;
@@ -94,8 +95,17 @@ public class EducationFormController {
             schoolFormType.setDescription(school.getDescription());
             schoolFormType.setId(school.getId());
 
-            LocationForm locationForm = new LocationForm();
-            locationForm.setName(school.getName());
+            LocationDetailForm locationForm = new LocationDetailForm();
+            locationForm.setId(school.getPlace().getId());
+            locationForm.setName(school.getPlace().getName());
+            locationForm.setStreet(school.getPlace().getStreet());
+            locationForm.setStreetNumber(school.getPlace().getStreetNumber());
+            locationForm.setZipCode(school.getPlace().getZipCode());
+            locationForm.setState(school.getPlace().getState());
+            locationForm.setCountry(school.getPlace().getCountry());
+            locationForm.setLat(school.getPlace().getLat());
+            locationForm.setLng(school.getPlace().getLng());
+
             schoolFormType.setLocation(locationForm);
 
             schoolFormType.setTillNow(school.isTillNow());
@@ -153,7 +163,21 @@ public class EducationFormController {
             School school = new School();
             school.setCourse(schoolType.getCourse());
             school.setDescription(schoolType.getDescription());
-            school.setName(schoolType.getLocation().getName());
+
+            Place place = new Place();
+            place.setId(schoolType.getLocation().getId());
+            place.setName(schoolType.getLocation().getName());
+
+            place.setStreet(schoolType.getLocation().getStreet());
+            place.setStreetNumber(schoolType.getLocation().getStreetNumber());
+            place.setZipCode(schoolType.getLocation().getZipCode());
+            place.setState(schoolType.getLocation().getState());
+            place.setCountry(schoolType.getLocation().getCountry());
+
+            place.setLat(schoolType.getLocation().getLat());
+            place.setLng(schoolType.getLocation().getLng());
+
+            school.setPlace(place);
             school.setTillNow(schoolType.isTillNow());
 
             SchoolDate start = new SchoolDate();
@@ -203,7 +227,20 @@ public class EducationFormController {
             School school = new School();
             school.setCourse(schoolType.getCourse());
             school.setDescription(schoolType.getDescription());
-            school.setName(schoolType.getLocation().getName());
+
+            Place place = new Place();
+            place.setId(schoolType.getLocation().getId());
+            place.setName(schoolType.getLocation().getName());
+
+            place.setStreet(schoolType.getLocation().getStreet());
+            place.setStreetNumber(schoolType.getLocation().getStreetNumber());
+            place.setZipCode(schoolType.getLocation().getZipCode());
+            place.setState(schoolType.getLocation().getState());
+            place.setCountry(schoolType.getLocation().getCountry());
+
+            place.setLat(schoolType.getLocation().getLat());
+            place.setLng(schoolType.getLocation().getLng());
+            school.setPlace(place);
             school.setTillNow(schoolType.isTillNow());
 
             SchoolDate start = new SchoolDate();

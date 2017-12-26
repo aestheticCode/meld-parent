@@ -1,4 +1,4 @@
-package net.portrix.generic.rest.google.client;
+package net.portrix.generic.rest.google.autocomplete.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -7,13 +7,13 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlacePredictions {
 
-    private List<PlacePrediction> predictions;
+    private List<PlacePredictionForm> predictions;
 
-    public List<PlacePrediction> getPredictions() {
+    public List<PlacePredictionForm> getPredictions() {
         return predictions;
     }
 
-    public void setPredictions(List<PlacePrediction> predictions) {
+    public void setPredictions(List<PlacePredictionForm> predictions) {
         this.predictions = predictions;
     }
 }

@@ -1,4 +1,4 @@
-package net.portrix.generic.rest.google.client;
+package net.portrix.generic.rest.google.details.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,10 +7,10 @@ import java.net.URL;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PlaceDetails {
+public class PlaceDetailsForm {
 
     @JsonProperty("address_components")
-    private List<PlaceDetail> addressComponents;
+    private List<PlaceDetailForm> addressComponents;
 
     @JsonProperty("formatted_address")
     private String formattedAddress;
@@ -18,7 +18,7 @@ public class PlaceDetails {
     @JsonProperty("formatted_phone_number")
     private String formattedPhoneNumber;
 
-    private Geometry geometry;
+    private GeometryForm geometry;
 
     private URL icon;
 
@@ -38,11 +38,11 @@ public class PlaceDetails {
 
     private String website;
 
-    public List<PlaceDetail> getAddressComponents() {
+    public List<PlaceDetailForm> getAddressComponents() {
         return addressComponents;
     }
 
-    public void setAddressComponents(List<PlaceDetail> addressComponents) {
+    public void setAddressComponents(List<PlaceDetailForm> addressComponents) {
         this.addressComponents = addressComponents;
     }
 
@@ -62,11 +62,11 @@ public class PlaceDetails {
         this.formattedPhoneNumber = formattedPhoneNumber;
     }
 
-    public Geometry getGeometry() {
+    public GeometryForm getGeometry() {
         return geometry;
     }
 
-    public void setGeometry(Geometry geometry) {
+    public void setGeometry(GeometryForm geometry) {
         this.geometry = geometry;
     }
 

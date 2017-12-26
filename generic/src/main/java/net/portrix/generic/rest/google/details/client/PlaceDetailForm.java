@@ -1,8 +1,8 @@
-package net.portrix.generic.rest.google.client;
+package net.portrix.generic.rest.google.details.client;
 
 import java.util.List;
 
-public class PlaceDetail {
+public class PlaceDetailForm {
 
     private String long_name;
 

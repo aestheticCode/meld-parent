@@ -58,13 +58,13 @@ export class MeldGoogleMapsAutocompleteComponent implements ControlValueAccessor
   }
 
   onValueChange(event : any) {
-    this.http.get<MeldGoogleMapsDetails>(`service/generic/google/place/${event.id}/details`)
-      .subscribe((res) => {
-        this.value.address = res.formatted_address;
-        this.value.lat = res.geometry.location.lat;
-        this.value.lng = res.geometry.location.lng;
-        this.onChangeCallback(event);
-      });
+    if (Objects.isNotNull(event)) {
+      this.http.get<Place>(`service/generic/google/place/${event.id}/details`)
+        .subscribe((res) => {
+          this.value = res;
+          this.onChangeCallback(this.value);
+        });
+    }
   }
 
   public itemValue = (item) => {
@@ -73,15 +73,6 @@ export class MeldGoogleMapsAutocompleteComponent implements ControlValueAccessor
     }
     return item;
   };
-
-  public itemName = (item) => {
-    if (item == null) {
-      return null;
-    }
-    let itemName : string = item['name'];
-    return itemName.split(",")[0];
-  };
-
 
   writeValue(obj: any): void {
     if (Objects.isNotNull(obj)) {

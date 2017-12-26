@@ -1,9 +1,9 @@
-package net.portrix.generic.rest.google.client;
+package net.portrix.generic.rest.google.autocomplete.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PlacePrediction {
+public class PlacePredictionForm {
 
     private String id;
 

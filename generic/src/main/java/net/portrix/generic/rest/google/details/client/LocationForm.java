@@ -1,6 +1,6 @@
-package net.portrix.generic.rest.google.client;
+package net.portrix.generic.rest.google.details.client;
 
-public class Location {
+public class LocationForm {
 
     private Double lat;
 

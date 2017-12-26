@@ -1,5 +1,7 @@
 package net.portrix.meld.social.profile.places;
 
+import net.portrix.generic.rest.google.details.LocationDetailForm;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -10,15 +12,7 @@ public class AddressForm {
 
     private UUID id;
 
-    private String street;
-
-    private String zipCode;
-
-    private String state;
-
-    private String city;
-
-    private String country;
+    private LocationDetailForm location;
 
     private LocalDate start;
 
@@ -34,44 +28,12 @@ public class AddressForm {
         this.id = id;
     }
 
-    public String getStreet() {
-        return street;
+    public LocationDetailForm getLocation() {
+        return location;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setLocation(LocationDetailForm location) {
+        this.location = location;
     }
 
     public LocalDate getStart() {

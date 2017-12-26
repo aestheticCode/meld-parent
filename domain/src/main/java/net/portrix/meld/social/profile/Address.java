@@ -2,9 +2,7 @@ package net.portrix.meld.social.profile;
 
 import net.portrix.generic.ddd.AbstractEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
@@ -14,15 +12,20 @@ import java.time.LocalDate;
 @Table(name = "so_address")
 public class Address extends AbstractEntity {
 
-    private String street;
+    @AttributeOverrides({
+            @AttributeOverride(name="id", column=@Column(name = "place_id")),
+            @AttributeOverride(name="name", column=@Column(name = "place_name")),
+            @AttributeOverride(name="street", column=@Column(name = "place_street")),
+            @AttributeOverride(name="streetNumber", column=@Column(name = "place_street_number")),
+            @AttributeOverride(name="zipCode", column=@Column(name = "place_zipCode")),
+            @AttributeOverride(name="state", column=@Column(name = "place_state")),
+            @AttributeOverride(name="country", column=@Column(name = "place_country")),
+            @AttributeOverride(name="lat", column=@Column(name = "place_lat")),
+            @AttributeOverride(name="lng", column=@Column(name = "place_lng"))
 
-    private String zipCode;
-
-    private String state;
-
-    private String city;
-
-    private String country;
+    })
+    @Embedded
+    private Place place;
 
     @Column(name = "startDate")
     private LocalDate start;
@@ -32,32 +35,20 @@ public class Address extends AbstractEntity {
 
     private boolean tillNow;
 
-    public String getStreet() {
-        return street;
+    public Place getPlace() {
+        return place;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
+    public void setPlace(Place place) {
+        this.place = place;
     }
 
     public LocalDate getStart() {
         return start;
+    }
+
+    public void setStart(LocalDate start) {
+        this.start = start;
     }
 
     public LocalDate getEnd() {
@@ -66,26 +57,6 @@ public class Address extends AbstractEntity {
 
     public void setEnd(LocalDate end) {
         this.end = end;
-    }
-
-    public void setStart(LocalDate start) {
-        this.start = start;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public boolean isTillNow() {

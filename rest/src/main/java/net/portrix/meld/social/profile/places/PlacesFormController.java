@@ -3,8 +3,11 @@ package net.portrix.meld.social.profile.places;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
+import net.portrix.generic.rest.google.autocomplete.LocationForm;
+import net.portrix.generic.rest.google.details.LocationDetailForm;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Address;
+import net.portrix.meld.social.profile.Place;
 import net.portrix.meld.social.profile.Places;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
@@ -88,12 +91,20 @@ public class PlacesFormController {
 
         for (Address address : places.getAddresses()) {
             AddressForm responseType = new AddressForm();
-            responseType.setCountry(address.getCountry());
+
+            LocationDetailForm locationForm = new LocationDetailForm();
+            responseType.setLocation(locationForm);
+
+            locationForm.setId(address.getPlace().getId());
+            locationForm.setStreet(address.getPlace().getStreet());
+            locationForm.setStreetNumber(address.getPlace().getStreetNumber());
+            locationForm.setZipCode(address.getPlace().getZipCode());
+            locationForm.setState(address.getPlace().getState());
+            locationForm.setLat(address.getPlace().getLat());
+            locationForm.setLng(address.getPlace().getLng());
+
+
             responseType.setId(address.getId());
-            responseType.setState(address.getState());
-            responseType.setCity(address.getCity());
-            responseType.setStreet(address.getStreet());
-            responseType.setZipCode(address.getZipCode());
             responseType.setStart(address.getStart());
             responseType.setEnd(address.getEnd());
             responseType.setTillNow(address.isTillNow());
@@ -127,11 +138,19 @@ public class PlacesFormController {
 
         for (AddressForm addressType : form.getAddresses()) {
             Address address = new Address();
-            address.setCountry(addressType.getCountry());
-            address.setState(addressType.getState());
-            address.setCity(addressType.getCity());
-            address.setStreet(addressType.getStreet());
-            address.setZipCode(addressType.getZipCode());
+
+            Place place = new Place();
+            address.setPlace(place);
+
+            place.setId(addressType.getLocation().getId());
+            place.setCountry(addressType.getLocation().getCountry());
+            place.setState(addressType.getLocation().getState());
+            place.setState(addressType.getLocation().getState());
+            place.setStreet(addressType.getLocation().getStreet());
+            place.setZipCode(addressType.getLocation().getZipCode());
+            place.setLat(addressType.getLocation().getLat());
+            place.setLng(addressType.getLocation().getLng());
+
             address.setStart(addressType.getStart());
             address.setEnd(addressType.getEnd());
             address.setTillNow(addressType.isTillNow());
@@ -159,11 +178,19 @@ public class PlacesFormController {
 
         for (AddressForm addressType : form.getAddresses()) {
             Address address = new Address();
-            address.setCountry(addressType.getCountry());
-            address.setState(addressType.getState());
-            address.setCity(addressType.getCity());
-            address.setStreet(addressType.getStreet());
-            address.setZipCode(addressType.getZipCode());
+
+            Place place = new Place();
+            address.setPlace(place);
+
+            place.setId(addressType.getLocation().getId());
+            place.setCountry(addressType.getLocation().getCountry());
+            place.setState(addressType.getLocation().getState());
+            place.setState(addressType.getLocation().getState());
+            place.setStreet(addressType.getLocation().getStreet());
+            place.setZipCode(addressType.getLocation().getZipCode());
+            place.setLat(addressType.getLocation().getLat());
+            place.setLng(addressType.getLocation().getLng());
+
             address.setStart(addressType.getStart());
             address.setEnd(addressType.getEnd());
             address.setTillNow(addressType.isTillNow());

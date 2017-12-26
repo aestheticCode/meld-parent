@@ -1,4 +1,4 @@
-package net.portrix.generic.rest.google.client;
+package net.portrix.generic.rest.google.details.client;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
