@@ -1,19 +1,27 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Company} from '../../company.interfaces';
+import {MatDialog} from '@angular/material';
+import {MeldGoogleMapsMarkerComponent} from 'lib/component/meld-google-maps-marker/meld-google-maps-marker.component';
 
 @Component({
-  selector: 'tr[app-social-company-view]',
+  selector: 'app-social-company-view',
   templateUrl: 'company-view.component.html',
   styleUrls: ['company-view.component.css']
 })
-export class CompanyViewComponent implements OnInit {
+export class CompanyViewComponent {
 
   @Input("company")
   company : Company;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) {}
 
-  ngOnInit() {
+  open() {
+    this.dialog.open(MeldGoogleMapsMarkerComponent, {
+      data: this.company.location,
+      width: '300px',
+      height: '300px'
+    });
   }
+
 
 }

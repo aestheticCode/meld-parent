@@ -88,7 +88,7 @@ export class ContactFormComponent extends AbstractForm<Contact> implements OnIni
 
   public postRequest(form : Contact) {
     this.contact = form;
-    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['user', 'view']}}]);
+    this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['contact', 'view']}}]);
   }
 
   public saveRequest(): Observable<Contact> {

@@ -34,9 +34,8 @@ import {MeldDialogModule} from './component/meld-dialog/meld-dialog.module';
 import {MeldGoogleMapsAutocompleteModule} from './component/meld-google-maps-autocomplete/meld-google-maps-autocomplete.module';
 import {MeldEnumModule} from './pipe/meld-enum/meld-enum.module';
 import {MeldRouterService} from './service/meld-router/meld-router.service';
-import {MeldGoogleMapsDetailsComponent} from './component/meld-google-maps-details/meld-google-maps-details.component';
-import {MeldGoogleMapsDetailsModule} from './component/meld-google-maps-details/meld-google-maps-details.module';
 import {MeldTouchWheelModule} from './directive/meld-touch-wheel/meld-touch-wheel.module';
+import {MeldGoogleMapsMarkerModule} from './component/meld-google-maps-marker/meld-google-maps-marker.module';
 
 
 @NgModule({
@@ -75,7 +74,7 @@ import {MeldTouchWheelModule} from './directive/meld-touch-wheel/meld-touch-whee
     MeldFileContainerModule,
     MeldFormGroupModule,
     MeldGoogleMapsAutocompleteModule,
-    MeldGoogleMapsDetailsModule,
+    MeldGoogleMapsMarkerModule,
     MeldImageModule,
     MeldGridModule,
     MeldListModule,
@@ -133,7 +132,7 @@ import {MeldTouchWheelModule} from './directive/meld-touch-wheel/meld-touch-whee
     MeldFileContainerModule,
     MeldFormGroupModule,
     MeldGoogleMapsAutocompleteModule,
-    MeldGoogleMapsDetailsModule,
+    MeldGoogleMapsMarkerModule,
     MeldGridModule,
     MeldImageModule,
     MeldListModule,

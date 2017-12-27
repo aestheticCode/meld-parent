@@ -106,7 +106,7 @@ public class LoginFormController {
         String tokenValue = userId + "." + id.toString();
         return Response
                 .ok()
-                .cookie(new NewCookie("meldToken", tokenValue, "/", "", "", 100, false))
+                .cookie(new NewCookie("rememberMe", tokenValue, "/", "", "", 100, false))
                 .entity(loginForm)
                 .build();
     }

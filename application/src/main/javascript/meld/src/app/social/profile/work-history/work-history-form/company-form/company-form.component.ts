@@ -18,7 +18,7 @@ export class CompanyFormComponent {
   private deleteClick: EventEmitter<Company> = new EventEmitter();
 
   onDelete() {
-    this.company.name = undefined;
+    this.company.location = undefined;
     this.company.description = undefined;
     this.company.start = undefined;
     this.company.end = undefined;

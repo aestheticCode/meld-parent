@@ -9,7 +9,9 @@ import net.portrix.generic.rest.jsr339.Name;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -36,8 +38,8 @@ public class GooglePlacesController {
     @Path("place/{id}/details")
     @Name("Places Details")
     @Secured
-    public LocationDetailForm details(@PathParam("id") String id) {
-        PlaceDetailsForm details = service.findDetails(id);
+    public LocationDetailForm details(@Context HttpServletRequest request, @PathParam("id") String id) {
+        PlaceDetailsForm details = service.findDetails(id, request.getLocale());
 
         String street_number = findWithType("street_number", details.getAddressComponents());
         String street = findWithType("route", details.getAddressComponents());
@@ -74,7 +76,7 @@ public class GooglePlacesController {
     public static URLBuilder<GooglePlacesController> linkGeoCoding(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(GooglePlacesController.class)
-                .record((method) -> method.details(null))
+                .record((method) -> method.details(null, null))
                 .rel("details");
     }
 

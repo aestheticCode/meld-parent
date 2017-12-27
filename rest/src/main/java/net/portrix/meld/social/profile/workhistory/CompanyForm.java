@@ -1,5 +1,7 @@
 package net.portrix.meld.social.profile.workhistory;
 
+import net.portrix.generic.rest.google.details.LocationDetailForm;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -10,7 +12,7 @@ public class CompanyForm {
 
     private UUID id;
 
-    private String name;
+    private LocationDetailForm location;
 
     private String title;
 
@@ -30,12 +32,12 @@ public class CompanyForm {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public LocationDetailForm getLocation() {
+        return location;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLocation(LocationDetailForm location) {
+        this.location = location;
     }
 
     public String getTitle() {

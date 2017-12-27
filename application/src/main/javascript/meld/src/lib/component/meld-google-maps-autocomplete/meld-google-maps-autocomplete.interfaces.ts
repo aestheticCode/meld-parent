@@ -1,8 +1,9 @@
 export interface Place {
 
   id: string;
-  streetNumber: string;
+  name : string;
   street: string;
+  streetNumber: string;
   zipCode : string;
   state : string;
   country : string

@@ -1,5 +1,6 @@
 package net.portrix.meld.social.profile.contact;
 
+import net.portrix.generic.phone.PhoneNumbers;
 import net.portrix.meld.social.profile.PersonalContact;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
@@ -13,18 +14,21 @@ import java.util.UUID;
 @ApplicationScoped
 public class ContactFormService {
 
+    private final PhoneNumbers phoneNumbers;
+
     private final UserManager userManager;
 
     private final EntityManager entityManager;
 
     @Inject
-    public ContactFormService(UserManager userManager, EntityManager entityManager) {
+    public ContactFormService(PhoneNumbers phoneNumbers, UserManager userManager, EntityManager entityManager) {
+        this.phoneNumbers = phoneNumbers;
         this.userManager = userManager;
         this.entityManager = entityManager;
     }
 
     public ContactFormService() {
-        this(null, null);
+        this(null, null, null);
     }
 
     public PersonalContact findPersonalContact(User user) {
@@ -51,5 +55,9 @@ public class ContactFormService {
 
     public void delete(PersonalContact contact) {
         entityManager.remove(contact);
+    }
+
+    public String formatPhoneNumber(String number) {
+        return phoneNumbers.format(number);
     }
 }

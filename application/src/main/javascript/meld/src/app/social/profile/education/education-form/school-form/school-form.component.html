@@ -1,6 +1,6 @@
 <form>
   <fieldset>
-    <meld-google-maps-autocomplete [firstPartOnly]="false" placeholder="Name" name="name" [(ngModel)]="school.location"></meld-google-maps-autocomplete>
+    <meld-google-maps-autocomplete placeholder="Name" name="name" [(ngModel)]="school.location"></meld-google-maps-autocomplete>
 
     <mat-form-field style="width: 100%;">
       <input placeholder="Course" [(ngModel)]="school.course" name="course" type="text"
@@ -12,8 +12,8 @@
       <div style="width: 50%">
         <mat-form-field style="width: 100%;">
           <mat-select name="startSemester" placeholder="Start Semester" [(ngModel)]="school.start.semester">
-            <mat-option *ngFor="let semester of semesters" [value]="semester">
-              {{ semester }}
+            <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+              {{ semester.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -25,8 +25,8 @@
       <div style="width: 50%">
         <mat-form-field style="width: 100%;">
           <mat-select name="endSemester" placeholder="End Semester" [(ngModel)]="school.end.semester">
-            <mat-option *ngFor="let semester of semesters" [value]="semester">
-              {{ semester }}
+            <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+              {{ semester.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>

@@ -12,13 +12,14 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import java.util.Locale;
 
 @ApplicationScoped
 public class GooglePlacesService {
 
     private final static Logger log = LoggerFactory.getLogger(GooglePlacesService.class);
 
-    public PlacePredictions find(String location) {
+    public PlacePredictions find(String location, Locale locale) {
         if (StringUtils.isEmpty(location)) {
             return null;
         }
@@ -28,7 +29,7 @@ public class GooglePlacesService {
 
         GooglePlacesAutocomplete service = webTarget.proxy(GooglePlacesAutocomplete.class);
 
-        return service.execute(GoogleResource.API_KEY, location);
+        return service.execute(GoogleResource.API_KEY, location, locale.getLanguage());
     }
 
 }

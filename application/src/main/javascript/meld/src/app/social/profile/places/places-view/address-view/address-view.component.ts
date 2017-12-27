@@ -1,20 +1,26 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Address} from '../../address.interfaces';
+import {MatDialog} from '@angular/material';
+import {MeldGoogleMapsMarkerComponent} from '../../../../../../lib/component/meld-google-maps-marker/meld-google-maps-marker.component';
 
 @Component({
-  selector: 'tr[app-social-address-view]',
+  selector: 'app-social-address-view',
   templateUrl: 'address-view.component.html',
   styleUrls: ['address-view.component.css']
 })
-export class AddressViewComponent implements OnInit {
+export class AddressViewComponent  {
 
   @Input('address')
   public address: Address;
 
-  constructor() {
-  }
+  constructor(public dialog : MatDialog) {}
 
-  ngOnInit() {
+  open() {
+    this.dialog.open(MeldGoogleMapsMarkerComponent, {
+      data : this.address.location,
+      width : '300px',
+      height : '300px'
+    })
   }
 
 }

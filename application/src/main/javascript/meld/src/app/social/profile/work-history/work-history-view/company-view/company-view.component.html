@@ -1,10 +1,17 @@
-<td style="width: 50%; font-size: smaller; vertical-align: top">
-  <strong style="line-height: 24px;">{{company.start | date:'ddMMMyyyy'}} -</strong>
-  <strong *ngIf="! company.tillNow">{{company.end | date:'ddMMMyyyy'}}</strong>
-  <strong *ngIf="company.tillNow">Till Now</strong>
-</td>
-<td>
-  <div><strong>{{company.name}}</strong></div>
-  <div>{{company.title}}</div>
-  <div>{{company.description}}</div>
-</td>
+<div>
+  <div style="display: flex; font-size: smaller">
+    <strong >{{company.start | date:'ddMMMyyyy'}} -</strong>
+    <strong *ngIf="! company.tillNow">{{company.end | date:'ddMMMyyyy'}}</strong>
+    <strong *ngIf="company.tillNow">Till Now</strong>
+
+    <button mat-icon-button style="margin-top: -12px" (click)="open()">
+      <mat-icon>room</mat-icon>
+    </button>
+  </div>
+  <div>
+    <div><strong>{{company.location.name}}</strong></div>
+    <div>{{company.title}}</div>
+    <div>{{company.description}}</div>
+  </div>
+</div>
+

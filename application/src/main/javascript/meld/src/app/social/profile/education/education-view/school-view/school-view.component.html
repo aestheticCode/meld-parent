@@ -1,11 +1,15 @@
-<td style="font-size: smaller; vertical-align: top; width: 50%">
-  <strong>{{school.start.year}} {{school.start.semester}} - </strong>
-  <strong *ngIf="! school.tillNow">{{school.end.year}} {{school.end.semester}}</strong>
+<div style="font-size: smaller;">
+  <strong>{{school.start.year}} {{school.start.semester | meldEnum:semesters}} - </strong>
+  <strong *ngIf="! school.tillNow">{{school.end.year}} {{school.end.semester | meldEnum:semesters}}</strong>
   <strong *ngIf="school.tillNow">Till Now</strong>
-</td>
-<td style="vertical-align: top; width: 50%">
-  <div><strong>{{school.location.name}}</strong></div>
+
+  <button mat-icon-button style="margin-top: -12px" (click)="open()">
+    <mat-icon>room</mat-icon>
+  </button>
+</div>
+<div>
+  <div>{{school.location.name}}</div>
   <div>
     <div>{{school.course}}</div>
   </div>
-</td>
+</div>

@@ -5,19 +5,27 @@
         <i class="material-icons">phone</i>
       </div>
 
-      <mat-select style="width: 64px;" placeholder="Type" [(ngModel)]="phone.type" name="type">
-        <mat-option *ngFor="let type of types" [value]="type.code">{{ type.name }}</mat-option>
-      </mat-select>
+      <mat-menu #appMenu="matMenu">
+        <button mat-menu-item (click)="phone.type = 'HOME'"> Home </button>
+        <button mat-menu-item (click)="phone.type = 'MOBILE'"> Mobile </button>
+        <button mat-menu-item (click)="phone.type = 'WORK'"> Work </button>
+      </mat-menu>
 
-      <mat-form-field style="margin-left: 6px; flex: 1">
+      <mat-form-field style="margin-left: 6px; flex: 1;">
         <input placeholder="Number" [(ngModel)]="phone.number" name="number" type="tel"
                matInput>
-        <button *ngIf="! readonly" matSuffix mat-icon-button (click)="onDelete()">
+        <button matSuffix mat-icon-button (click)="onDelete()">
           <mat-icon>delete</mat-icon>
         </button>
-        <button *ngIf="! readonly" matSuffix mat-icon-button (click)="onAdd()">
+        <button matSuffix mat-icon-button (click)="onAdd()">
           <mat-icon>add</mat-icon>
         </button>
+        <button matSuffix mat-icon-button [matMenuTriggerFor]="appMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-hint>{{phone.type}}</mat-hint>
+
       </mat-form-field>
     </div>
   </fieldset>

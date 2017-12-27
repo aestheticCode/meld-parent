@@ -103,7 +103,7 @@ public class ContactFormController {
         for (Phone phone : contact.getPhones()) {
             PhoneForm responseType = new PhoneForm();
             responseType.setId(phone.getId());
-            responseType.setNumber(phone.getNumber());
+            responseType.setNumber(service.formatPhoneNumber(phone.getNumber()));
             responseType.setType(phone.getType());
 
             contactResponseType.addPhone(responseType);

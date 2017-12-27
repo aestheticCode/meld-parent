@@ -12,6 +12,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import java.util.Locale;
 
 @ApplicationScoped
 public class GooglePlacesService {
@@ -19,7 +20,7 @@ public class GooglePlacesService {
     private final static Logger log = LoggerFactory.getLogger(GooglePlacesService.class);
 
 
-    public PlaceDetailsForm findDetails(String id) {
+    public PlaceDetailsForm findDetails(String id, Locale locale) {
         if (StringUtils.isEmpty(id)) {
             return null;
         }
@@ -28,6 +29,6 @@ public class GooglePlacesService {
         ResteasyWebTarget rtarget = (ResteasyWebTarget) target;
 
         GooglePlacesDetails service = rtarget.proxy(GooglePlacesDetails.class);
-        return service.execute(GoogleResource.API_KEY, id).getResult();
+        return service.execute(GoogleResource.API_KEY, id, locale.getLanguage()).getResult();
     }
 }

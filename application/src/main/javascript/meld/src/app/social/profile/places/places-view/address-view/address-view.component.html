@@ -1,23 +1,20 @@
-<td style="vertical-align: top;">
-  <button mat-icon-button style="margin-top: -12px" (click)="dialog.open()">
-    <mat-icon>room</mat-icon>
-  </button>
-  <meld-dialog #dialog [options]="{ width : '300px', height : '300px'}">
-    <ng-template>
-      <app-social-address-map [address]="address" style="height: 200px;"></app-social-address-map>
-    </ng-template>
-  </meld-dialog>
-</td>
-<td style="font-size: smaller; vertical-align: top; width: 50%">
-  <strong style="line-height: 24px;">{{address.start | date:'ddMMMyyyy'}} - </strong>
-  <strong *ngIf="! address.tillNow">{{address.end | date:'ddMMMyyyy'}}</strong>
-  <strong *ngIf="address.tillNow">Till Now</strong>
-</td>
-<td>
-  <address  >
-    {{address.location.street}} {{address.location.streetNumber}}<br>
-    {{address.location.zipCode}}<br>
-    {{address.location.state}}<br>
-    {{address.location.country}}<br>
-  </address>
-</td>
+<div>
+  <div style="display: flex; font-size: smaller;">
+    <strong>{{address.start | date:'ddMMMyyyy'}} - </strong>
+    <strong *ngIf="! address.tillNow">{{address.end | date:'ddMMMyyyy'}}</strong>
+    <strong *ngIf="address.tillNow">Till Now</strong>
+
+    <button mat-icon-button style="margin-top: -12px" (click)="open()">
+      <mat-icon>room</mat-icon>
+    </button>
+
+  </div>
+  <div>
+    <address  >
+      {{address.location.street}} {{address.location.streetNumber}}<br>
+      {{address.location.zipCode}}
+      {{address.location.state}}
+      {{address.location.country}}
+    </address>
+  </div>
+</div>

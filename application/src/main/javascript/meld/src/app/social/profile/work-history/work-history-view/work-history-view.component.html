@@ -7,9 +7,9 @@
             <fieldset>
               <legend>Work History</legend>
 
-              <table>
-                <tr *ngFor="let company of workHistory.companies | companySort" app-social-company-view [company]="company"></tr>
-              </table>
+              <div *ngFor="let company of workHistory.companies | companySort">
+                <app-social-company-view [company]="company"></app-social-company-view>
+              </div>
 
               <div *ngIf="workHistory.companies.length === 0" style="line-height: 48px; text-align: center;">
                 No Work History.

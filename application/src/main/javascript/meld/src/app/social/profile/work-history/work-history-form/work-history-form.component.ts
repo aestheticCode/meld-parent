@@ -8,6 +8,7 @@ import {AbstractForm} from 'lib/common/forms/AbstractForm';
 import {HttpClient} from '@angular/common/http';
 import {Places} from '../../places/places.interfaces';
 import {Observable} from 'rxjs/Observable';
+import {Objects} from '../../../../../lib/common/utils/Objects';
 
 @Component({
   selector: 'app-work-history-form',
@@ -69,7 +70,7 @@ export class WorkHistoryFormComponent extends AbstractForm<WorkHistory> implemen
   private filterEmpty() {
     this.workHistory.companies
       = this.workHistory.companies.filter((company) => {
-      return Strings.isNotEmpty(company.name)
+      return Objects.isNotNull(company.location)
         || Strings.isNotEmpty(company.description)
         || Strings.isNotEmpty(company.start)
         || Strings.isNotEmpty(company.end);

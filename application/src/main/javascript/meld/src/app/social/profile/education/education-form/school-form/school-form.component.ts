@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {School} from '../../school-form.interfaces';
+import {Enum} from '../../../../../../lib/pipe/meld-enum/meld-enum.interfaces';
 
 
 @Component({
@@ -15,7 +16,16 @@ export class SchoolFormComponent {
   @Input("readonly")
   public readonly : boolean = true;
 
-  public semesters : string[] = ['WINTER', 'SUMMER'];
+  public semesters : Enum[] = [
+    {
+      value : 'WINTER',
+      label : 'Winter'
+    },
+    {
+      value : 'SUMMER',
+      label : 'Summer'
+    }
+  ];
 
   public years : number[] = [];
 

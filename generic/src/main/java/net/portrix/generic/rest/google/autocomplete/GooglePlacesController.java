@@ -10,7 +10,9 @@ import net.portrix.generic.rest.jsr339.Name;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +39,8 @@ public class GooglePlacesController {
     @Path("place/autocomplete")
     @Name("Places Geo coding")
     @Secured
-    public Container<LocationForm> geoCoding(LocationForm address) {
-        PlacePredictions placePredictions = service.find(address.getName());
+    public Container<LocationForm> geoCoding(@Context HttpServletRequest request, LocationForm address) {
+        PlacePredictions placePredictions = service.find(address.getName(), request.getLocale());
         List<LocationForm> forms = new ArrayList<>();
         if (placePredictions == null) {
             return new Container<>(forms, forms.size());
@@ -57,7 +59,7 @@ public class GooglePlacesController {
     public static URLBuilder<GooglePlacesController> linkGeoCoding(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(GooglePlacesController.class)
-                .record((method) -> method.geoCoding(null))
+                .record((method) -> method.geoCoding(null, null))
                 .rel("geoCoding");
     }
 

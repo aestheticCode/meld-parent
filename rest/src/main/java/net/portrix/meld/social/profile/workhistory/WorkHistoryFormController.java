@@ -3,8 +3,10 @@ package net.portrix.meld.social.profile.workhistory;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
+import net.portrix.generic.rest.google.details.LocationDetailForm;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Company;
+import net.portrix.meld.social.profile.Place;
 import net.portrix.meld.social.profile.WorkHistory;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
@@ -93,7 +95,20 @@ public class WorkHistoryFormController {
             companyForm.setDescription(company.getDescription());
             companyForm.setEnd(company.getEnd());
             companyForm.setId(company.getId());
-            companyForm.setName(company.getName());
+
+            LocationDetailForm location = new LocationDetailForm();
+            location.setId(company.getPlace().getId());
+            location.setName(company.getPlace().getName());
+            location.setStreet(company.getPlace().getStreet());
+            location.setStreetNumber(company.getPlace().getStreetNumber());
+            location.setZipCode(company.getPlace().getZipCode());
+            location.setState(company.getPlace().getState());
+            location.setCountry(company.getPlace().getCountry());
+            location.setLat(company.getPlace().getLat());
+            location.setLng(company.getPlace().getLng());
+
+            companyForm.setLocation(location);
+
             companyForm.setStart(company.getStart());
             companyForm.setTitle(company.getTitle());
             companyForm.setTillNow(company.isTillNow());
@@ -129,7 +144,20 @@ public class WorkHistoryFormController {
             Company company = new Company();
             company.setDescription(companyType.getDescription());
             company.setEnd(companyType.getEnd());
-            company.setName(companyType.getName());
+
+            Place place = new Place();
+            place.setId(companyType.getLocation().getId());
+            place.setName(companyType.getLocation().getName());
+            place.setStreet(companyType.getLocation().getStreet());
+            place.setStreetNumber(companyType.getLocation().getStreetNumber());
+            place.setZipCode(companyType.getLocation().getZipCode());
+            place.setState(companyType.getLocation().getState());
+            place.setCountry(companyType.getLocation().getCountry());
+            place.setLat(companyType.getLocation().getLat());
+            place.setLng(companyType.getLocation().getLng());
+
+            company.setPlace(place);
+
             company.setStart(companyType.getStart());
             company.setTitle(companyType.getTitle());
             company.setTillNow(companyType.isTillNow());
@@ -158,7 +186,19 @@ public class WorkHistoryFormController {
             Company company = new Company();
             company.setDescription(companyType.getDescription());
             company.setEnd(companyType.getEnd());
-            company.setName(companyType.getName());
+
+            Place place = new Place();
+            place.setId(companyType.getLocation().getId());
+            place.setName(companyType.getLocation().getName());
+            place.setStreet(companyType.getLocation().getStreet());
+            place.setStreetNumber(companyType.getLocation().getStreetNumber());
+            place.setZipCode(companyType.getLocation().getZipCode());
+            place.setState(companyType.getLocation().getState());
+            place.setCountry(companyType.getLocation().getCountry());
+            place.setLat(companyType.getLocation().getLat());
+            place.setLng(companyType.getLocation().getLng());
+
+            company.setPlace(place);
             company.setStart(companyType.getStart());
             company.setTitle(companyType.getTitle());
             company.setTillNow(companyType.isTillNow());

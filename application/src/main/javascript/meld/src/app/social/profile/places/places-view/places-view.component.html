@@ -6,9 +6,9 @@
           <mat-card-content>
             <fieldset>
               <legend>Places</legend>
-              <table>
-                <tr *ngFor="let address of places.addresses | addressesSort" app-social-address-view [address]="address"></tr>
-              </table>
+              <div *ngFor="let address of places.addresses | addressesSort">
+                <app-social-address-view [address]="address"></app-social-address-view>
+              </div>
             </fieldset>
           </mat-card-content>
 

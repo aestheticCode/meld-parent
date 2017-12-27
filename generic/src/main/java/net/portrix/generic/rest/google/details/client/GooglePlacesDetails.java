@@ -10,6 +10,6 @@ public interface GooglePlacesDetails {
     @GET
     @Path("json")
     @Produces("application/json")
-    PlaceDetailsResponse execute(@QueryParam("key") String key, @QueryParam("placeid") String placeId);
+    PlaceDetailsResponse execute(@QueryParam("key") String key, @QueryParam("placeid") String placeId, @QueryParam("language") String language);
 
 }
