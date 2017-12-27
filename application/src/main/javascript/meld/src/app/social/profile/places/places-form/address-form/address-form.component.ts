@@ -27,19 +27,12 @@ export class AddressFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  fillForm(value : MatAutocompleteSelectedEvent) {
-    let parts = value.option.viewValue.split(",");
-
-    this.address.state = parts[1].trim();
-    this.address.country = parts[2].trim();
-  }
-
   onDelete() {
-    this.address.city = undefined;
-    this.address.country = undefined;
-    this.address.state = undefined;
-    this.address.street = undefined;
-    this.address.zipCode = undefined;
+    this.address.location.streetNumber = undefined;
+    this.address.location.country = undefined;
+    this.address.location.state = undefined;
+    this.address.location.street = undefined;
+    this.address.location.zipCode = undefined;
 
     this.deleteClick.emit(this.address);
   }

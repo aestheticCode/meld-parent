@@ -20,7 +20,7 @@ export class AddressMapComponent implements OnInit {
     let geocoder = new google.maps.Geocoder();
     let element = this.map.nativeElement;
 
-    geocoder.geocode( {'address' : this.address.street + "," + this.address.state}, (results, status) => {
+    geocoder.geocode( {'address' : this.address.location.street + "," + this.address.location.state}, (results, status) => {
       if (status == google.maps.GeocoderStatus.OK) {
         const maps = new google.maps.Map(element, {
           center: results[0].geometry.location,
@@ -38,7 +38,7 @@ export class AddressMapComponent implements OnInit {
     const request = {
       location: maps.getCenter(),
       radius: 500,
-      query: this.address.street + "," + this.address.state
+      query: this.address.location.street + "," + this.address.location.state
     };
 
     const service = new google.maps.places.PlacesService(maps);

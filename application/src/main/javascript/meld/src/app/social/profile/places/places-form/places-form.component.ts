@@ -47,14 +47,6 @@ export class PlacesFormComponent extends AbstractForm<Places> implements OnInit 
     }
   }
 
-  get form() {
-    return this.places;
-  }
-
-  set form(value: Places) {
-    this.places = value;
-  }
-
   public saveRequest(): Observable<Places> {
     return this.http.post<Places>( 'service/social/user/current/places', this.places)
   }
@@ -78,11 +70,11 @@ export class PlacesFormComponent extends AbstractForm<Places> implements OnInit 
   private filterEmptyAddress() {
     this.places.addresses
       = this.places.addresses.filter((address) => {
-      return Strings.isNotEmpty(address.street)
-        || Strings.isNotEmpty(address.zipCode)
-        || Strings.isNotEmpty(address.city)
-        || Strings.isNotEmpty(address.state)
-        || Strings.isNotEmpty(address.country);
+      return Strings.isNotEmpty(address.location.street)
+        || Strings.isNotEmpty(address.location.zipCode)
+        || Strings.isNotEmpty(address.location.state)
+        || Strings.isNotEmpty(address.location.streetNumber)
+        || Strings.isNotEmpty(address.location.country);
     });
   }
 

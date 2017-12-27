@@ -1,6 +1,6 @@
 <form>
   <fieldset>
-    <meld-google-maps-autocomplete name="street" [(ngModel)]="address.street" (optionSelected)="fillForm($event)"></meld-google-maps-autocomplete>
+    <meld-google-maps-autocomplete placeholder="Address" name="street" [(ngModel)]="address.location"></meld-google-maps-autocomplete>
 
 <!--
     <mat-form-field style="width: 100%;">

@@ -1,14 +1,8 @@
+import {Place} from '../../../../lib/component/meld-google-maps-autocomplete/meld-google-maps-autocomplete.interfaces';
+
 export interface Address {
 
-  street : string
-
-  zipCode : string
-
-  state : string
-
-  city : string
-
-  country : string
+  location : Place
 
   start : string
 

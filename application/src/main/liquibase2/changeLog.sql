@@ -48,3 +48,48 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a
 
     ALTER TABLE so_school
       drop COLUMN place_address;
+
+
+
+--changeset patrick:7
+      alter table public.so_address
+       add column place_country varchar(255);
+
+    alter table public.so_address
+       add column place_id varchar(255);
+
+    alter table public.so_address
+       add column place_lat float8;
+
+    alter table public.so_address
+       add column place_lng float8;
+
+    alter table public.so_address
+       add column place_name varchar(255);
+
+    alter table public.so_address
+       add column place_state varchar(255);
+
+    alter table public.so_address
+       add column place_street varchar(255);
+
+    alter table public.so_address
+       add column place_street_number varchar(255);
+
+    alter table public.so_address
+       add column place_zipCode varchar(255);
+
+    ALTER  TABLE so_address
+      DROP COLUMN city;
+
+    ALTER  TABLE so_address
+      DROP COLUMN country;
+
+    ALTER  TABLE so_address
+      DROP COLUMN state;
+
+    ALTER  TABLE so_address
+      DROP COLUMN street;
+
+
+

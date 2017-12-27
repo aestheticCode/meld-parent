@@ -8,8 +8,6 @@ import {SchoolFormModel} from '../school-form.classes';
 import {AbstractForm} from '../../../../../lib/common/forms/AbstractForm';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {Contact} from '../../contact/contact-form.interfaces';
-import {Equal} from 'tslint/lib/utils';
 
 @Component({
   selector: 'app-social-education-form',
@@ -18,7 +16,7 @@ import {Equal} from 'tslint/lib/utils';
 })
 export class EducationFormComponent extends AbstractForm<Education> implements OnInit {
 
-  public education : Education;
+  public education: Education;
 
   private router: MeldRouterService;
 
@@ -50,15 +48,15 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
   }
 
   public saveRequest(): Observable<Education> {
-    return this.http.post<Education>('service/social/user/current/education', this.education)
+    return this.http.post<Education>('service/social/user/current/education', this.education);
   }
 
   public updateRequest(): Observable<Education> {
-    return this.http.put<Education>('service/social/user/current/education', this.education)
+    return this.http.put<Education>('service/social/user/current/education', this.education);
   }
 
   public deleteRequest(): Observable<Education> {
-    return this.http.delete<Education>('service/social/user/current/education')
+    return this.http.delete<Education>('service/social/user/current/education');
   }
 
 

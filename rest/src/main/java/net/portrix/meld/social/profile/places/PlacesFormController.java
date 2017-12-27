@@ -83,7 +83,7 @@ public class PlacesFormController {
         Places places = service.findPlaces(user);
 
         if (places == null) {
-            return new PlacesForm();
+            throw new NotFoundException();
         }
 
         PlacesForm placesForm = new PlacesForm();
@@ -96,10 +96,12 @@ public class PlacesFormController {
             responseType.setLocation(locationForm);
 
             locationForm.setId(address.getPlace().getId());
+            locationForm.setName(address.getPlace().getName());
             locationForm.setStreet(address.getPlace().getStreet());
             locationForm.setStreetNumber(address.getPlace().getStreetNumber());
             locationForm.setZipCode(address.getPlace().getZipCode());
             locationForm.setState(address.getPlace().getState());
+            locationForm.setCountry(address.getPlace().getCountry());
             locationForm.setLat(address.getPlace().getLat());
             locationForm.setLng(address.getPlace().getLng());
 
@@ -143,9 +145,10 @@ public class PlacesFormController {
             address.setPlace(place);
 
             place.setId(addressType.getLocation().getId());
+            place.setName(addressType.getLocation().getName());
             place.setCountry(addressType.getLocation().getCountry());
             place.setState(addressType.getLocation().getState());
-            place.setState(addressType.getLocation().getState());
+            place.setStreetNumber(addressType.getLocation().getStreetNumber());
             place.setStreet(addressType.getLocation().getStreet());
             place.setZipCode(addressType.getLocation().getZipCode());
             place.setLat(addressType.getLocation().getLat());
@@ -183,9 +186,10 @@ public class PlacesFormController {
             address.setPlace(place);
 
             place.setId(addressType.getLocation().getId());
+            place.setName(addressType.getLocation().getName());
             place.setCountry(addressType.getLocation().getCountry());
             place.setState(addressType.getLocation().getState());
-            place.setState(addressType.getLocation().getState());
+            place.setStreetNumber(addressType.getLocation().getStreetNumber());
             place.setStreet(addressType.getLocation().getStreet());
             place.setZipCode(addressType.getLocation().getZipCode());
             place.setLat(addressType.getLocation().getLat());
