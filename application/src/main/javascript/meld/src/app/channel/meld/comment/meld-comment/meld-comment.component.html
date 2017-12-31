@@ -1,4 +1,4 @@
-<img class="avatar" [src]="comment.avatar.url" style="margin-right: 10px;">
+<img class="avatar" [src]="comment.avatar || 'assets/user.png'" style="margin-right: 10px;">
 <div style="flex-grow: 1;">
 
   <div *ngIf="! edit" style="display: flex; align-items: center">

@@ -1,23 +1,21 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-meld-comment-dialog',
   templateUrl: 'meld-comment-dialog.component.html',
   styleUrls: ['meld-comment-dialog.component.css']
 })
-export class MeldCommentDialogComponent implements OnInit {
+export class MeldCommentDialogComponent {
 
   public comment : any;
 
-  constructor(private http : Http,
+  constructor(private http : HttpClient,
               private dialogRef: MatDialogRef<MeldCommentDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: any) {
     this.comment = data;
-  }
-
-  ngOnInit() {
   }
 
 
@@ -27,9 +25,16 @@ export class MeldCommentDialogComponent implements OnInit {
 
   onPlusOneComment() {
     this.http.get(`service/channel/meld/comment/${this.comment.id}/plus/one`)
-      .subscribe((res: Response) => {
-        this.comment.likes = res.json();
+      .subscribe((res: any) => {
+        this.comment.likes = res;
         this.dialogRef.close();
+      });
+  }
+
+  onDeleteClick() {
+    this.http.delete(`service/channel/meld/post/comment/${this.comment.id}`)
+      .subscribe(res => {
+        this.dialogRef.close(false);
       });
   }
 

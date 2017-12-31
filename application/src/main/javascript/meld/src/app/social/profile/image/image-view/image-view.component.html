@@ -1,14 +1,16 @@
-<div style="padding: 10px;">
-  <div class="container">
+<div style="margin-top: 10px;">
+  <div class="container-fluid">
     <div class="row justify-content-center">
-      <mat-card class="col-md-5">
-        <mat-card-content style="text-align: center">
-          <img style="height: 400px; margin: 0 auto;" [src]="profile.image | meldBinaryImage"/>
-        </mat-card-content>
-        <mat-card-actions>
-          <button *ngIf="profile.links | meldLink:'save'" mat-button (click)="onEdit()">Edit</button>
-        </mat-card-actions>
-      </mat-card>
+      <div class="col-md-5">
+        <mat-card>
+          <mat-card-content>
+            <img style="width: 100%;" [src]="profile.image || 'assets/user.png'"/>
+          </mat-card-content>
+          <mat-card-actions>
+            <button *ngIf="profile.links | meldLink:'save'" mat-button (click)="onEdit()">Edit</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>

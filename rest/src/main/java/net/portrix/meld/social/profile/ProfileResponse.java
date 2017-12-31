@@ -1,17 +1,23 @@
 package net.portrix.meld.social.profile;
 
 import com.google.common.collect.Sets;
-import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 
+import java.net.URI;
 import java.util.Set;
 
 public class ProfileResponse implements LinksContainer {
 
     private String name;
 
-    private Blob image;
+    private URI userImage;
+
+    private URI backgroundImage;
+
+    private URI image;
+
+    private URI background;
 
     private Set<Link> links = Sets.newHashSet();
 
@@ -23,12 +29,40 @@ public class ProfileResponse implements LinksContainer {
         this.name = name;
     }
 
-    public Blob getImage() {
+    public URI getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(URI userImage) {
+        this.userImage = userImage;
+    }
+
+    public URI getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(URI backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
+
+    public void setLinks(Set<Link> links) {
+        this.links = links;
+    }
+
+    public URI getImage() {
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(URI image) {
         this.image = image;
+    }
+
+    public URI getBackground() {
+        return background;
+    }
+
+    public void setBackground(URI background) {
+        this.background = background;
     }
 
     @Override

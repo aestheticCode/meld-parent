@@ -1,9 +1,9 @@
 <div style="position: relative; width: 100%; height: 200px; overflow: hidden">
-  <img *ngIf="profile" [src]="profile.image | meldBinaryImage" style="width: 100%;">
+  <img [src]="profile.background || 'assets/way.jpg'" style="width: 100%;">
   <div style="width: 100%; position: absolute; bottom: 12px; left: 12px; display: flex">
     <h1 style="color: white; flex: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">{{profile.name}}</h1>
     <button mat-button (click)="onDialogClick()">
-      <h1 *ngIf="profile.links | meldLink:'save'" >
+      <h1 *ngIf="profile.links | meldLink:'update'" >
         <mat-icon style="color: white; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">more_vert</mat-icon>
       </h1>
     </button>

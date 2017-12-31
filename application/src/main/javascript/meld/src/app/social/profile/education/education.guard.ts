@@ -6,7 +6,7 @@ import {AppService} from '../../../app.service';
 import {Education} from './education.interfaces';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {Contact} from '../contact/contact-form.interfaces';
+import {Contact} from '../contact/contact.interfaces';
 import {AbstractGuard} from '../../../../lib/common/AbstractGuard';
 
 @Injectable()

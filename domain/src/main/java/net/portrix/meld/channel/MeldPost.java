@@ -5,7 +5,6 @@ import net.portrix.meld.social.people.Category;
 import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,6 +87,10 @@ public abstract class MeldPost extends AbstractAggregate {
 
     public Category getCategory() {
         return category;
+    }
+
+    public boolean removeComment(MeldComment comment) {
+        return comments.remove(comment);
     }
 
     public interface Visitor {

@@ -3,7 +3,7 @@
     <div class="col-md-5">
       <mat-card>
         <mat-card-header>
-          <img mat-card-avatar style="width: 48px; height: 48px;" [src]="post.avatar | meldBinaryImage">
+          <img mat-card-avatar style="width: 48px; height: 48px;" [src]="post.avatar || 'assets/user.png'">
           <mat-card-title style="white-space: nowrap;"><strong>{{post.name}}</strong></mat-card-title>
           <mat-card-subtitle>{{post.category}}</mat-card-subtitle>
           <div style="width: 100%"></div>

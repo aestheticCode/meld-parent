@@ -13,7 +13,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Set;
 import java.util.UUID;
 
@@ -37,6 +39,48 @@ public class PhotoFormController {
     public PhotoFormController() {
         this(null, null);
     }
+
+    @GET
+    @Path("photo/{id}/{fileName}")
+    @Name("Photo Read")
+    @Secured
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Transactional
+    public Response readPhoto(@PathParam("id") final UUID id,
+                              @PathParam("fileName") String fileName) {
+
+        final Photo photo = service.find(id);
+
+        CacheControl cc = new CacheControl();
+        cc.setMaxAge(86400);
+        cc.setPrivate(true);
+
+        return Response.ok(photo.getImage())
+                .cacheControl(cc)
+                .build();
+    }
+
+    @GET
+    @Path("thumbnail/{id}/{fileName}")
+    @Name("Thumbnail Read")
+    @Secured
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Transactional
+    public Response readThumbnail(@PathParam("id") final UUID id,
+                                @PathParam("fileName") String fileName) {
+
+        final Photo photo = service.find(id);
+
+        CacheControl cc = new CacheControl();
+        cc.setMaxAge(86400);
+        cc.setPrivate(true);
+
+        return Response.ok(photo.getImage())
+                .cacheControl(cc)
+                .build();
+
+    }
+
 
     @GET
     @Path("photo/create")
@@ -75,7 +119,7 @@ public class PhotoFormController {
     @Name("Photo Update")
     @Secured
     @Transactional
-    public PhotoForm update(@PathParam("id") final UUID id,final PhotoForm form) {
+    public PhotoForm update(@PathParam("id") final UUID id, final PhotoForm form) {
 
         final Photo photo = service.find(id);
         photo.setUser(userManager.current());
@@ -121,6 +165,20 @@ public class PhotoFormController {
         }
     }
 
+    public static URLBuilder<PhotoFormController> linkPhoto(Photo photo, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PhotoFormController.class)
+                .record((method) -> method.readPhoto(photo.getId(), photo.getFileName()))
+                .rel("photo");
+    }
+
+    public static URLBuilder<PhotoFormController> linkThumbnail(Photo photo, URLBuilderFactory builderFactory) {
+        return builderFactory
+                .from(PhotoFormController.class)
+                .record((method) -> method.readPhoto(photo.getId(), photo.getFileName()))
+                .rel("thumbnail");
+    }
+
     public static URLBuilder<PhotoFormController> linkCreate(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(PhotoFormController.class)
@@ -148,7 +206,6 @@ public class PhotoFormController {
                 .record((method) -> method.save(null))
                 .rel("save");
     }
-
 
 
 }

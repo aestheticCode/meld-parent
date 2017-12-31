@@ -86,7 +86,7 @@ public class LoginFormController {
                 .buildSecured(loginForm::addLink);
         MeldListController.linkMeld(builderFactory)
                 .buildSecured(loginForm::addLink);
-        ProfileController.linkProfileUser(builderFactory)
+        ProfileController.linkProfile(builderFactory)
                 .buildSecured(loginForm::addLink);
         CategoryTableController.linkProfile(builderFactory)
                 .buildSecured(loginForm::addLink);
@@ -106,7 +106,7 @@ public class LoginFormController {
         String tokenValue = userId + "." + id.toString();
         return Response
                 .ok()
-                .cookie(new NewCookie("rememberMe", tokenValue, "/", "", "", 100, false))
+                .cookie(new NewCookie("rememberMe", tokenValue, "/", "", "", 365 * 24 * 60 * 60, false))
                 .entity(loginForm)
                 .build();
     }

@@ -3,6 +3,7 @@ package net.portrix.meld.channel.meld.like;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 
+import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ public class MeldLikeResponse implements LinksContainer {
 
     private boolean current;
 
-    private Link avatar;
+    private URI avatar;
 
     private Set<Link> links = new HashSet<>();
 
@@ -25,11 +26,11 @@ public class MeldLikeResponse implements LinksContainer {
         this.current = current;
     }
 
-    public Link getAvatar() {
+    public URI getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Link avatar) {
+    public void setAvatar(URI avatar) {
         this.avatar = avatar;
     }
 

@@ -14,6 +14,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,7 +44,7 @@ public class LogoutFormController {
 
     @GET
     @Path("logout/form")
-    public LinksContainer logout() {
+    public Response logout() {
 
         service.logout();
 
@@ -67,7 +69,10 @@ public class LogoutFormController {
         RegistrationFormController.linkLogin(builderFactory)
                 .build(container::addLink);
 
-        return container;
+        return Response
+                .ok(container)
+                .cookie(new NewCookie("rememberMe", "", "/", "", "", 0, false))
+                .build();
     }
 
     public static URLBuilder<LogoutFormController> linkLogout(URLBuilderFactory builderFactory) {

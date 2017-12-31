@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import {Item} from './meld-item/meld-item.interfaces';
 import {AppService} from '../../../../app.service';
-import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
+import {NormalSort, QueryBuilder} from '../../../../../lib/common/search/search.classes';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
 
 @Component({
@@ -26,6 +26,8 @@ export class MeldListComponent {
       subQueryPredicate,
       equalPredicate
     ]);
+
+    query.sorting = [new NormalSort("created", false)];
 
     this.http.post('service/channel/meld/posts/', query)
       .subscribe((res: Response) => {

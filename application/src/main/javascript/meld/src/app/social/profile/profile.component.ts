@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
     let matDialogRef = this.dialog.open(PhotoDialogComponent, {width: '400px'});
 
     matDialogRef.afterClosed().subscribe((result: Photo) => {
-      this.http.post('service/social/profile/background', {photoId: result.id})
+      this.http.post('service/social/user/current/profile/background', {photoId: result.id})
         .subscribe((result) => {
           this.ngOnInit();
         });

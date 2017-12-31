@@ -88,7 +88,7 @@ public class UserImageController implements Serializable {
 
         return response.build();
     }
-
+/*
     public static URLBuilder<UserImageController> linkThumbnail(User user, URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(UserImageController.class)
@@ -101,6 +101,6 @@ public class UserImageController implements Serializable {
                 .from(UserImageController.class)
                 .record(method -> method.image(user.getId()))
                 .rel("image");
-    }
+    }*/
 
 }

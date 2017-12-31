@@ -1,7 +1,7 @@
 import {ModuleWithProviders} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProfileComponent} from "./profile/profile.component";
-import {ContactFormGuard} from "./profile/contact/contact-form.guard";
+import {ContactFormGuard} from "./profile/contact/contact.guard";
 import {PeopleComponent} from "./people/people.component";
 import {CategoriesFormGuard} from './people/category/categories-form/categories-form.guard';
 import {FindViewComponent} from './people/find/find-view/find-view.component';

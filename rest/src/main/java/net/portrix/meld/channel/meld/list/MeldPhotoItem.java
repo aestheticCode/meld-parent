@@ -4,16 +4,18 @@ package net.portrix.meld.channel.meld.list;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import net.portrix.generic.rest.api.Blob;
 
+import java.net.URI;
+
 @JsonTypeName("photo")
 public class MeldPhotoItem extends MeldItem {
 
-    private Blob photo;
+    private URI photo;
 
-    public Blob getPhoto() {
+    public URI getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Blob photo) {
+    public void setPhoto(URI photo) {
         this.photo = photo;
     }
 }

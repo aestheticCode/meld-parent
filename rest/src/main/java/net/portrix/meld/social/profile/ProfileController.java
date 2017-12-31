@@ -3,12 +3,10 @@ package net.portrix.meld.social.profile;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.Photo;
-import net.portrix.meld.social.profile.education.EducationFormController;
+import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.usercontrol.User;
-import org.apache.commons.io.IOUtils;
 import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,9 +14,6 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -72,110 +67,21 @@ public class ProfileController {
         Profile profile = service.find(current);
 
         if (profile == null) {
-            final InputStream inputStream = Thread
-                    .currentThread()
-                    .getContextClassLoader()
-                    .getResourceAsStream("/META-INF/images/way.jpg");
-
-            try {
-                byte[] bytes = IOUtils.toByteArray(inputStream);
-
-                Blob image = new Blob();
-
-                image.setName("way.jpg");
-                image.setData(bytes);
-                image.setLastModified(LocalDateTime.now());
-
-                response.setImage(image);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (identity.isLoggedIn()) {
-                linkProfileBackgroundUpdate(factory)
-                        .buildSecured(response::addLink);
-            }
-
-            return response;
-        } else {
-            Blob image = new Blob();
-            image.setName(profile.getBackgroundPhoto().getFileName());
-            image.setData(profile.getBackgroundPhoto().getImage());
-            image.setLastModified(profile.getBackgroundPhoto().getLastModified());
-            response.setImage(image);
-
-            if (identity.isLoggedIn()) {
-                linkProfileBackgroundUpdate(factory)
-                        .buildSecured(response::addLink);
-            }
-
-            return response;
+            return new ProfileResponse();
         }
 
-    }
+        response.setImage(PhotoFormController.linkPhoto(profile.getUserPhoto(), factory)
+                .generateUri());
 
-    @GET
-    @Path("user/current/profile/user")
-    @Name("Profile User Read")
-    @Secured
-    public ProfileResponse readUser() {
-        User user = service.currentUser();
-        return readUser(user.getId());
-    }
+        response.setBackground(PhotoFormController.linkPhoto(profile.getBackgroundPhoto(), factory)
+                .generateUri());
 
-    @GET
-    @Path("user/{id}/profile/user")
-    @Name("Profile User Read")
-    @Secured
-    public ProfileResponse readUser(@PathParam("id") UUID id) {
-        ProfileResponse response = new ProfileResponse();
-
-        User current = service.findUser(id);
-
-        response.setName(current.getFirstName() + " " + current.getLastName());
-
-        Profile profile = service.find(current);
-
-        if (profile == null) {
-            final InputStream inputStream = Thread
-                    .currentThread()
-                    .getContextClassLoader()
-                    .getResourceAsStream("/META-INF/images/user.png");
-
-            try {
-                byte[] bytes = IOUtils.toByteArray(inputStream);
-
-                Blob image = new Blob();
-
-                image.setName("way.jpg");
-                image.setData(bytes);
-                image.setLastModified(LocalDateTime.now());
-
-                response.setImage(image);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (identity.isLoggedIn()) {
-                linkProfileUserUpdate(factory)
-                        .buildSecured(response::addLink);
-            }
-
-            return response;
-        } else {
-            Blob image = new Blob();
-            image.setName(profile.getUserPhoto().getFileName());
-            image.setData(profile.getUserPhoto().getImage());
-            image.setLastModified(profile.getUserPhoto().getLastModified());
-            response.setImage(image);
-
-            if (identity.isLoggedIn()) {
-                linkProfileUserUpdate(factory)
-                        .buildSecured(response::addLink);
-            }
-
-            return response;
+        if (identity.isLoggedIn()) {
+            linkProfileBackgroundUpdate(factory)
+                    .buildSecured(response::addLink);
         }
+
+        return response;
     }
 
 
@@ -228,18 +134,12 @@ public class ProfileController {
             service.save(profile);
         }
 
-        return readUser();
+        return readBackground();
     }
 
 
-    public static URLBuilder<ProfileController> linkProfileUser(URLBuilderFactory builderFactory) {
-        return builderFactory
-                .from(ProfileController.class)
-                .record(ProfileController::readUser)
-                .rel("profile");
-    }
 
-    public static URLBuilder<ProfileController> linkProfileBackground(URLBuilderFactory builderFactory) {
+    public static URLBuilder<ProfileController> linkProfile(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(ProfileController.class)
                 .record(ProfileController::readBackground)

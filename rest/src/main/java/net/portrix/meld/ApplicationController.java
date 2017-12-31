@@ -87,21 +87,6 @@ public class ApplicationController {
 
         final Application application = new Application();
 
-        UserTableController.linkUsers(builderFactory)
-                .buildSecured(application::addLink);
-        GroupTableController.linkGroups(builderFactory)
-                .buildSecured(application::addLink);
-        RoleTableController.linkRoles(builderFactory)
-                .buildSecured(application::addLink);
-        MeldListController.linkMeld(builderFactory)
-                .buildSecured(application::addLink);
-        ProfileController.linkProfileUser(builderFactory)
-                .buildSecured(application::addLink);
-        CategoryTableController.linkProfile(builderFactory)
-                .buildSecured(application::addLink);
-        PhotoGridController.linkList(builderFactory)
-                .buildSecured(application::addLink);
-
         Application.User user = new Application.User();
         application.setUser(user);
 
@@ -142,6 +127,23 @@ public class ApplicationController {
     }
 
     private void generateResponse(Application application, Application.User user) {
+
+        UserTableController.linkUsers(builderFactory)
+                .buildSecured(application::addLink);
+        GroupTableController.linkGroups(builderFactory)
+                .buildSecured(application::addLink);
+        RoleTableController.linkRoles(builderFactory)
+                .buildSecured(application::addLink);
+        MeldListController.linkMeld(builderFactory)
+                .buildSecured(application::addLink);
+        ProfileController.linkProfile(builderFactory)
+                .buildSecured(application::addLink);
+        CategoryTableController.linkProfile(builderFactory)
+                .buildSecured(application::addLink);
+        PhotoGridController.linkList(builderFactory)
+                .buildSecured(application::addLink);
+
+
         final User current = service.current();
 
         user.setId(current.getId());

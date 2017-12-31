@@ -1,9 +1,11 @@
-import {BinaryFile} from '../../../lib/common/rest/BinaryFile';
+import {LinksContainer} from '../../../lib/common/rest/LinksContainer';
 
-export interface Profile {
+export interface Profile extends LinksContainer {
 
-  name : string;
+  name: string;
 
-  image : BinaryFile;
+  image: string;
+
+  background: string;
 
 }

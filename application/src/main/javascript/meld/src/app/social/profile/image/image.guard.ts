@@ -16,7 +16,7 @@ export class ImageGuard implements Resolve<any> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-        return this.http.get(`service/social/user/${route.parent.params['id']}/profile/user`)
+        return this.http.get(`service/social/user/${route.parent.params['id']}/profile/background`)
             .map((res: Response) => {
               return res as any;
             })

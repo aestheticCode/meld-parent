@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Http} from '@angular/http';
-import {Contact} from '../contact-form.interfaces';
+import {Contact} from '../contact.interfaces';
 import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
+import {mobileTypes} from '../contact.classes';
 
 @Component({
   selector: 'app-contact-view',
@@ -29,6 +30,9 @@ export class ContactViewComponent implements OnInit {
     this.router.navigate(['social', 'profile', this.router.param.id]);
   }
 
+  mobiles() {
+    return mobileTypes();
+  }
 
 
 

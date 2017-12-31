@@ -2,12 +2,14 @@ package net.portrix.meld.channel.meld.comment;
 
 import net.portrix.meld.channel.MeldComment;
 import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.UUID;
 
 /**
@@ -48,5 +50,21 @@ public class MeldCommentService {
 
     public void deleteComment(MeldComment comment) {
         entityManager.remove(comment);
+    }
+
+    public Profile findProfile(User user) {
+        try {
+            return entityManager.createQuery("select p from Profile p where p.user = :user", Profile.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public MeldPost findPost(MeldComment comment) {
+        return entityManager.createQuery("select m from MeldPost m join m.comments c where c = :comment", MeldPost.class)
+                .setParameter("comment", comment)
+                .getSingleResult();
     }
 }

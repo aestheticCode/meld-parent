@@ -5,7 +5,7 @@ import {Phone} from './phone-form/phone-form.interfaces';
 import {EmailModel} from './email-form/email-form.classes';
 import {Email} from './email-form/email-form.interfaces';
 import {ChatModel} from './chat-form/chat-form.classes';
-import {Contact} from '../contact-form.interfaces';
+import {Contact} from '../contact.interfaces';
 import {Strings} from 'lib/common/utils/Strings';
 import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 import {AbstractForm} from 'lib/common/forms/AbstractForm';
@@ -87,7 +87,6 @@ export class ContactFormComponent extends AbstractForm<Contact> implements OnIni
   }
 
   public postRequest(form : Contact) {
-    this.contact = form;
     this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['contact', 'view']}}]);
   }
 

@@ -8,7 +8,7 @@
               <legend>Contact</legend>
 
               <div style="text-align: center;" *ngFor="let phone of contact.phones">
-                {{phone.type}} {{phone.number}}
+                {{phone.type | meldEnum:mobiles()}} {{phone.number}}
               </div>
 
               <div *ngIf="contact.phones.length === 0" style="line-height: 48px; text-align: center;">

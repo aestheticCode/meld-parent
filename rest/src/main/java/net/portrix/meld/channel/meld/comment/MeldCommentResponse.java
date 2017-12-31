@@ -4,6 +4,7 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.meld.channel.meld.like.MeldLikeResponse;
 
+import java.net.URI;
 import java.util.*;
 
 /**
@@ -19,7 +20,7 @@ public class MeldCommentResponse implements LinksContainer {
 
     private String time;
 
-    private Link avatar;
+    private URI avatar;
 
     private List<MeldLikeResponse> likes = new ArrayList<>();
 
@@ -59,11 +60,11 @@ public class MeldCommentResponse implements LinksContainer {
         this.time = time;
     }
 
-    public Link getAvatar() {
+    public URI getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Link avatar) {
+    public void setAvatar(URI avatar) {
         this.avatar = avatar;
     }
 

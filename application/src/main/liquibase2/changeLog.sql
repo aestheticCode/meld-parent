@@ -124,5 +124,17 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a
     ALTER TABLE so_company
       drop COLUMN name;
 
+--changeset patrick:9
+INSERT INTO public.uc_permission (id, method, name, path) VALUES ('fba277b2-624b-4d60-af89-eda6074dc717', 'GET', 'Photos Photo Read', 'media/photo/{id}/{fileName}');
+INSERT INTO public.uc_permission (id, method, name, path) VALUES ('348141ce-83ea-4a58-b790-2e23aea389bb', 'GET', 'Photos Thumbnail Read', 'media/thumbnail/{id}/{fileName}');
+
+
+--changeset patrick:10
+
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', 'fba277b2-624b-4d60-af89-eda6074dc717');
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', '348141ce-83ea-4a58-b790-2e23aea389bb');
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', 'fba277b2-624b-4d60-af89-eda6074dc717');
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', '348141ce-83ea-4a58-b790-2e23aea389bb');
+
 
 

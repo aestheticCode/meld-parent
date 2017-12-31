@@ -9,6 +9,8 @@ import net.portrix.generic.time.TimeUtils;
 import net.portrix.meld.channel.MeldComment;
 import net.portrix.meld.channel.MeldPost;
 import net.portrix.meld.channel.meld.like.MeldLikeResponse;
+import net.portrix.meld.media.photos.form.PhotoFormController;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 
@@ -17,6 +19,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.net.URI;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -94,20 +97,21 @@ public class MeldCommentFormController {
             MeldLikeResponse likeResponse = new MeldLikeResponse();
             likeResponse.setCurrent(current.equals(user));
 
-            final Link avatarLink = builderFactory.from(UserImageController.class)
-                    .record(method -> method.thumbNail(user.getId()))
-                    .rel("avatar")
-                    .generate();
+            Profile profile = service.findProfile(user);
+            if (profile != null) {
+                URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                        .generateUri();
 
-            likeResponse.setAvatar(avatarLink);
+                likeResponse.setAvatar(avatar);
+            }
+
 
             response.addLike(likeResponse);
         }
 
-        final Link avatarLink = builderFactory.from(UserImageController.class)
+        final URI avatarLink = builderFactory.from(UserImageController.class)
                 .record(method -> method.thumbNail(current.getId()))
-                .rel("avatar")
-                .generate();
+                .generateUri();
 
         response.setAvatar(avatarLink);
 
@@ -138,22 +142,22 @@ public class MeldCommentFormController {
                 .buildSecured(response::addLink);
 
         for (User user : meldComment.getLikes()) {
-            final Link avatarLink = builderFactory.from(UserImageController.class)
-                    .record(method -> method.thumbNail(user.getId()))
-                    .rel("avatar")
-                    .generate();
-
             MeldLikeResponse likeResponse = new MeldLikeResponse();
             likeResponse.setCurrent(current.equals(user));
-            likeResponse.setAvatar(avatarLink);
+            Profile profile = service.findProfile(user);
+            if (profile != null) {
+                URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                        .generateUri();
+
+                likeResponse.setAvatar(avatar);
+            }
 
             response.addLike(likeResponse);
         }
 
-        final Link avatarLink = builderFactory.from(UserImageController.class)
-                .record(method -> method.thumbNail(current.getId()))
-                .rel("avatar")
-                .generate();
+        Profile profile = service.findProfile(current);
+        URI avatarLink = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                .generateUri();
 
         response.setAvatar(avatarLink);
 
@@ -173,6 +177,10 @@ public class MeldCommentFormController {
         User user = service.currentUser();
 
         if (comment.getUser() == user) {
+
+            MeldPost post = service.findPost(comment);
+
+            post.removeComment(comment);
 
             service.deleteComment(comment);
 

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Contact} from './contact-form.interfaces';
+import {Contact} from './contact.interfaces';
 import {AppService} from 'app/app.service';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {AbstractGuard} from '../../../../lib/common/AbstractGuard';

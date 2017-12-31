@@ -30,7 +30,7 @@ import java.util.function.Consumer;
  */
 public class URLBuilder<B> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(URLBuilder.class);
+    private static final Logger log = LoggerFactory.getLogger(URLBuilder.class);
 
     private final Event<SecurityAction> securityActionEvent;
 
@@ -185,4 +185,12 @@ public class URLBuilder<B> {
     }
 
 
+    public URI generateUri() {
+        try {
+            return new URI("service" + uriBuilder.buildFromMap(params).toASCIIString());
+        } catch (URISyntaxException e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+    }
 }

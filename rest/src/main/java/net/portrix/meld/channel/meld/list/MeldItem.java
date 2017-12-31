@@ -9,6 +9,7 @@ import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.meld.channel.meld.comment.MeldCommentResponse;
 import net.portrix.meld.channel.meld.like.MeldLikeResponse;
 
+import java.net.URI;
 import java.util.*;
 
 /**
@@ -25,7 +26,7 @@ public class MeldItem implements LinksContainer {
 
     private UUID id;
 
-    private Blob avatar;
+    private URI avatar;
 
     private String name;
 
@@ -81,11 +82,11 @@ public class MeldItem implements LinksContainer {
         this.text = text;
     }
 
-    public Blob getAvatar() {
+    public URI getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Blob avatar) {
+    public void setAvatar(URI avatar) {
         this.avatar = avatar;
     }
 

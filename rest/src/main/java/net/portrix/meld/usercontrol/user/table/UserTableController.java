@@ -86,8 +86,6 @@ public class UserTableController {
 
             UserFormController.linkRead(user, builderFactory)
                     .buildSecured(response::addLink);
-            UserImageController.linkThumbnail(user, builderFactory)
-                    .buildSecured(response::addLink);
 
             selects.add(response);
         }

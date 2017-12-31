@@ -8,6 +8,8 @@ import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.channel.MeldComment;
 import net.portrix.meld.channel.MeldImagePost;
 import net.portrix.meld.channel.MeldPost;
+import net.portrix.meld.media.photos.form.PhotoFormController;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.user.image.UserImageController;
 
@@ -16,6 +18,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -65,12 +68,14 @@ public class MeldLikeController {
             MeldLikeResponse response = new MeldLikeResponse();
             response.setCurrent(currentUser.equals(user));
 
-            final Link avatarLink = builderFactory.from(UserImageController.class)
-                    .record(method -> method.thumbNail(post.getId()))
-                    .rel("avatar")
-                    .generate();
+            Profile profile = service.findProfile(user);
+            if (profile != null) {
+                URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                        .generateUri();
 
-            response.setAvatar(avatarLink);
+                response.setAvatar(avatar);
+            }
+
 
             likes.add(response);
         }
@@ -99,12 +104,13 @@ public class MeldLikeController {
             MeldLikeResponse response = new MeldLikeResponse();
             response.setCurrent(currentUser.equals(user));
 
-            final Link avatarLink = builderFactory.from(UserImageController.class)
-                    .record(method -> method.thumbNail(post.getId()))
-                    .rel("avatar")
-                    .generate();
+            Profile profile = service.findProfile(user);
+            if (profile != null) {
+                URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                        .generateUri();
 
-            response.setAvatar(avatarLink);
+                response.setAvatar(avatar);
+            }
 
             likes.add(response);
         }
