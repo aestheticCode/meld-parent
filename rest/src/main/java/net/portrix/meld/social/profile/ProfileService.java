@@ -52,4 +52,44 @@ public class ProfileService {
     public User findUser(UUID id) {
         return userManager.find(id);
     }
+
+    public PersonalContact findContact(User user) {
+        try {
+            return entityManager.createNamedQuery("findPersonalContact", PersonalContact.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public Education findEducation(User user) {
+        try {
+            return entityManager.createNamedQuery("findEducation", Education.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public Places findPlaces(User user) {
+        try {
+            return entityManager.createNamedQuery("findPlaces", Places.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public WorkHistory findWorkHistory(User user) {
+        try {
+            return entityManager.createNamedQuery("findWorkHistory", WorkHistory.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

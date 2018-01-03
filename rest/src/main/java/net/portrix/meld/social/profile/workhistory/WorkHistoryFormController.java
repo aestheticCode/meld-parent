@@ -84,7 +84,7 @@ public class WorkHistoryFormController {
         WorkHistory workHistory = service.findWorkHistory(user);
 
         if (workHistory == null) {
-            return new WorkHistoryForm();
+            throw new NotFoundException();
         }
 
         WorkHistoryForm historyResponseType = new WorkHistoryForm();
@@ -116,13 +116,15 @@ public class WorkHistoryFormController {
             historyResponseType.addCompany(companyForm);
         }
 
-        if (identity.isLoggedIn()) {
+
+        User currentUser = service.currentUser();
+
+        if (user == currentUser) {
             linkUpdate(factory)
                     .buildSecured(historyResponseType::addLink);
             linkDelete(factory)
                     .buildSecured(historyResponseType::addLink);
         }
-
 
         return historyResponseType;
     }
@@ -237,11 +239,11 @@ public class WorkHistoryFormController {
                 .rel("current");
     }
 
-    public static URLBuilder<WorkHistoryFormController> linkRead(UUID id, URLBuilderFactory builderFactory) {
+    public static URLBuilder<WorkHistoryFormController> linkRead(WorkHistory workHistory, URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(WorkHistoryFormController.class)
-                .record((method) -> method.read(id))
-                .rel("read");
+                .record((method) -> method.read(workHistory.getId()))
+                .rel("work-history");
     }
 
     public static URLBuilder<WorkHistoryFormController> linkSave(URLBuilderFactory builderFactory) {

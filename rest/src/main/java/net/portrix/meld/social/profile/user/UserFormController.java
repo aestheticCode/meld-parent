@@ -78,10 +78,15 @@ public class UserFormController {
         response.setBirthday(user.getBirthdate());
         response.setGender(user.getGender());
 
-        linkUpdate(builderFactory)
-                .buildSecured(response::addLink);
-        linkDelete(builderFactory)
-                .buildSecured(response::addLink);
+        User currentUser = service.currentUser();
+
+        if (user == currentUser) {
+            linkUpdate(builderFactory)
+                    .buildSecured(response::addLink);
+            linkDelete(builderFactory)
+                    .buildSecured(response::addLink);
+        }
+
 
         return response;
 

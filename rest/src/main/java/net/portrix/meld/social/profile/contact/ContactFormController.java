@@ -44,6 +44,22 @@ public class ContactFormController {
         this(null, null, null);
     }
 
+
+    @GET
+    @Path("user/current/contact/create")
+    @Name("Personal Contact Create")
+    @Secured
+    @Transactional
+    public ContactForm create() {
+
+        ContactForm form = new ContactForm();
+
+        linkSave(factory)
+                .buildSecured(form::addLink);
+
+        return form;
+    }
+
     @GET
     @Path("user/current/contact")
     @Name("Personal Contact Read")
@@ -52,21 +68,6 @@ public class ContactFormController {
     public ContactForm current() {
         User user = service.currentUser();
         return read(user.getId());
-    }
-
-    @GET
-    @Path("user/{id}/contact/create")
-    @Name("Personal Contact Create")
-    @Secured
-    @Transactional
-    public ContactForm create(@PathParam("id") String id) {
-
-        ContactForm form = new ContactForm();
-
-        linkSave(factory)
-                .buildSecured(form::addLink);
-
-        return form;
     }
 
     @GET
@@ -109,12 +110,13 @@ public class ContactFormController {
             contactResponseType.addPhone(responseType);
         }
 
-        if (identity.isLoggedIn()) {
+        User currentUser = service.currentUser();
+
+        if (user == currentUser) {
             linkUpdate(factory)
                     .buildSecured(contactResponseType::addLink);
             linkDelete(factory)
                     .buildSecured(contactResponseType::addLink);
-
         }
 
         return contactResponseType;
@@ -212,11 +214,11 @@ public class ContactFormController {
                 .rel("current");
     }
 
-    public static URLBuilder<ContactFormController> linkRead(UUID id, URLBuilderFactory builderFactory) {
+    public static URLBuilder<ContactFormController> linkRead(PersonalContact contact, URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(ContactFormController.class)
-                .record((method) -> method.read(id))
-                .rel("read");
+                .record((method) -> method.read(contact.getId()))
+                .rel("contact");
     }
 
     public static URLBuilder<ContactFormController> linkSave(URLBuilderFactory builderFactory) {

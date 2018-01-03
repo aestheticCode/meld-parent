@@ -138,13 +138,15 @@ public class EducationFormController {
             form.addSchool(schoolFormType);
         }
 
-        if (identity.isLoggedIn()) {
+        User currentUser = service.currentUser();
+
+        if (user == currentUser) {
             linkUpdate(factory)
                     .buildSecured(form::addLink);
             linkDelete(factory)
                     .buildSecured(form::addLink);
-        }
 
+        }
 
         return form;
     }
@@ -299,11 +301,11 @@ public class EducationFormController {
                 .rel("current");
     }
 
-    public static URLBuilder<EducationFormController> linkRead(UUID id, URLBuilderFactory builderFactory) {
+    public static URLBuilder<EducationFormController> linkRead(Education education, URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(EducationFormController.class)
-                .record((method) -> method.read(id))
-                .rel("read");
+                .record((method) -> method.read(education.getId()))
+                .rel("education");
     }
 
     public static URLBuilder<EducationFormController> linkSave(URLBuilderFactory builderFactory) {

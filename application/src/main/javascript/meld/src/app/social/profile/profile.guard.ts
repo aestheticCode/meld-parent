@@ -17,7 +17,7 @@ export class ProfileGuard implements Resolve<Profile> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Profile> {
-        return this.http.get<Profile>(`service/social/user/${route.params['id']}/profile/background`)
+        return this.http.get<Profile>(`service/social/user/${route.params['id']}/profile`)
             .map((res) => {
               return res;
             })

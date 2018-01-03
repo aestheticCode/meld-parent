@@ -10,6 +10,7 @@ import org.picketlink.idm.credential.TokenCredential;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.ForbiddenException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
@@ -45,6 +46,11 @@ public class LoginFormService {
         credentials.setPassword(loginForm.getPassword());
 
         Identity.AuthenticationResult authenticationResult = identity.login();
+
+        if (authenticationResult.equals(Identity.AuthenticationResult.FAILED)) {
+            throw new ForbiddenException();
+        }
+
         User current = userManager.current();
 
         userManager.updateToken(current, uuid.toString());

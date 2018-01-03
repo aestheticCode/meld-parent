@@ -92,14 +92,52 @@ public class UserControlModule {
     public Module produce() {
         return () -> {
             final Set<Resource<?>> resources = resourceContainer.getResources();
-
-            process(resources);
-
+            processFoundResources(resources);
+            List<Permission> permissions = permissionManager.findAll();
+            processToDelete(resources, permissions);
         };
 
     }
 
-    private void process(Set<Resource<?>> resources) {
+    private void processToDelete(Set<Resource<?>> resources, List<Permission> permissions) {
+        for (Permission permission : permissions) {
+            Permission toDelete = processToDelete(permission, resources);
+
+            if (toDelete != null) {
+                String statement = "delete from uc_role_uc_permission WHERE permissions_id = '%s';";
+                log.error(String.format("Permission Relations to delete\n" + statement, permission.getId()) );
+
+                String statement1 = "delete from uc_permission WHERE id = '%s';";
+                log.error(String.format("Permission to delete\n" + statement1, permission.getId()) );
+            }
+        }
+
+    }
+
+    private Permission processToDelete(Permission permission, Set<Resource<?>> resources) {
+        for (Resource<?> resource : resources) {
+
+            for (Operation operation : resource.getOperations()) {
+                if (operation.isSecured()) {
+                    for (PathName pathName : operation.getDenormalizedUrls()) {
+
+                        if (permission.getMethod().equals(operation.getHttpMethod())
+                                && permission.getPath().equals(pathName.getPath())) {
+                            return null;
+                        }
+
+                    }
+                }
+
+            }
+            for (Locator locator : resource.getLocators()) {
+                processToDelete(permission, locator.getTypes());
+            }
+        }
+        return permission;
+    }
+
+    private void processFoundResources(Set<Resource<?>> resources) {
         for (Resource<?> resource : resources) {
             for (Operation operation : resource.getOperations()) {
                 if (operation.isSecured()) {
@@ -123,7 +161,7 @@ public class UserControlModule {
 
             }
             for (Locator locator : resource.getLocators()) {
-                process(locator.getTypes());
+                processFoundResources(locator.getTypes());
             }
         }
     }

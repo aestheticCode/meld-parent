@@ -1,10 +1,8 @@
 package net.portrix.meld;
 
 import net.portrix.generic.image.ImageUtils;
-import net.portrix.generic.rest.LoginToken;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
-import net.portrix.generic.rest.api.Link;
 import net.portrix.meld.channel.meld.list.MeldListController;
 import net.portrix.meld.media.photos.grid.PhotoGridController;
 import net.portrix.meld.social.people.category.table.CategoryTableController;
@@ -17,15 +15,12 @@ import net.portrix.meld.usercontrol.registration.form.RegistrationFormController
 import net.portrix.meld.usercontrol.role.table.RoleTableController;
 import net.portrix.meld.usercontrol.user.table.UserTableController;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.picketlink.Identity;
 import org.picketlink.credential.DefaultLoginCredentials;
-import org.picketlink.idm.credential.TokenCredential;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -82,7 +77,7 @@ public class ApplicationController {
     @GET
     @Produces("application/json")
     @Transactional
-    public Application application(@CookieParam("rememberMe") String token) {
+    public Application application() {
 
         final Application application = new Application();
 
@@ -90,70 +85,46 @@ public class ApplicationController {
         application.setUser(user);
 
         if (service.isLoggedIn()) {
-            generateResponse(application, user);
+
+            UserTableController.linkUsers(builderFactory)
+                    .buildSecured(application::addLink);
+            GroupTableController.linkGroups(builderFactory)
+                    .buildSecured(application::addLink);
+            RoleTableController.linkRoles(builderFactory)
+                    .buildSecured(application::addLink);
+            MeldListController.linkMeld(builderFactory)
+                    .buildSecured(application::addLink);
+            ProfileController.linkProfile(builderFactory)
+                    .buildSecured(application::addLink);
+            CategoryTableController.linkProfile(builderFactory)
+                    .buildSecured(application::addLink);
+            PhotoGridController.linkList(builderFactory)
+                    .buildSecured(application::addLink);
+
+
+            final User current = service.current();
+
+            user.setId(current.getId());
+            user.setEmail(current.getName());
+            user.setFirstName(current.getFirstName());
+            user.setLastName(current.getLastName());
+            user.setBirthday(current.getBirthdate());
+
+
+            LogoutFormController.linkLogout(builderFactory)
+                    .build(application::addLink);
         } else {
 
-            if (StringUtils.isNotEmpty(token)) {
-                String[] split = token.split("\\.");
-                credentials.setCredential(new TokenCredential(new LoginToken(split[0], split[1])));
-                Identity.AuthenticationResult result = identity.login();
+            user.setEmail("guest");
+            LoginFormController.linkLogin(builderFactory)
+                    .build(application::addLink);
 
-                if (result.equals(Identity.AuthenticationResult.SUCCESS)) {
-                    generateResponse(application, user);
-                } else {
-                    user.setEmail("guest");
-                    LoginFormController.linkLogin(builderFactory)
-                            .build(application::addLink);
+            RegistrationFormController.linkLogin(builderFactory)
+                    .build(application::addLink);
 
-                    RegistrationFormController.linkLogin(builderFactory)
-                            .build(application::addLink);
-                }
-            } else {
-                user.setEmail("guest");
-                LoginFormController.linkLogin(builderFactory)
-                        .build(application::addLink);
-
-                RegistrationFormController.linkLogin(builderFactory)
-                        .build(application::addLink);
-            }
         }
 
-
-
-
-
         return application;
-    }
-
-    private void generateResponse(Application application, Application.User user) {
-
-        UserTableController.linkUsers(builderFactory)
-                .buildSecured(application::addLink);
-        GroupTableController.linkGroups(builderFactory)
-                .buildSecured(application::addLink);
-        RoleTableController.linkRoles(builderFactory)
-                .buildSecured(application::addLink);
-        MeldListController.linkMeld(builderFactory)
-                .buildSecured(application::addLink);
-        ProfileController.linkProfile(builderFactory)
-                .buildSecured(application::addLink);
-        CategoryTableController.linkProfile(builderFactory)
-                .buildSecured(application::addLink);
-        PhotoGridController.linkList(builderFactory)
-                .buildSecured(application::addLink);
-
-
-        final User current = service.current();
-
-        user.setId(current.getId());
-        user.setEmail(current.getName());
-        user.setFirstName(current.getFirstName());
-        user.setLastName(current.getLastName());
-        user.setBirthday(current.getBirthdate());
-
-
-        LogoutFormController.linkLogout(builderFactory)
-                .build(application::addLink);
     }
 
 

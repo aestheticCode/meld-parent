@@ -6,6 +6,10 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.Photo;
 import net.portrix.meld.media.photos.form.PhotoFormController;
+import net.portrix.meld.social.profile.contact.ContactFormController;
+import net.portrix.meld.social.profile.education.EducationFormController;
+import net.portrix.meld.social.profile.places.PlacesFormController;
+import net.portrix.meld.social.profile.workhistory.WorkHistoryFormController;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
 
@@ -45,26 +49,26 @@ public class ProfileController {
     }
 
     @GET
-    @Path("user/current/profile/background")
+    @Path("user/current/profile")
     @Name("Profile Background Read")
     @Secured
-    public ProfileResponse readBackground() {
+    public ProfileResponse read() {
         final User user = service.currentUser();
-        return readBackground(user.getId());
+        return read(user.getId());
     }
 
     @GET
-    @Path("user/{id}/profile/background")
+    @Path("user/{id}/profile")
     @Name("Profile Background Read")
     @Secured
-    public ProfileResponse readBackground(@PathParam("id") UUID id) {
+    public ProfileResponse read(@PathParam("id") UUID id) {
         final ProfileResponse response = new ProfileResponse();
 
-        User current = service.findUser(id);
+        User user = service.findUser(id);
 
-        response.setName(current.getFirstName() + " " + current.getLastName());
+        response.setName(user.getFirstName() + " " + user.getLastName());
 
-        Profile profile = service.find(current);
+        Profile profile = service.find(user);
 
         if (profile == null) {
             return new ProfileResponse();
@@ -76,8 +80,34 @@ public class ProfileController {
         response.setBackground(PhotoFormController.linkPhoto(profile.getBackgroundPhoto(), factory)
                 .generateUri());
 
-        if (identity.isLoggedIn()) {
+        User currentUser = service.currentUser();
+
+        if (user == currentUser) {
             linkProfileBackgroundUpdate(factory)
+                    .buildSecured(response::addLink);
+        }
+
+        PersonalContact contact = service.findContact(user);
+        if (contact != null) {
+            ContactFormController.linkRead(contact, factory)
+                    .buildSecured(response::addLink);
+        }
+
+        Education education = service.findEducation(user);
+        if (education != null) {
+            EducationFormController.linkRead(education, factory)
+                    .buildSecured(response::addLink);
+        }
+
+        Places places = service.findPlaces(user);
+        if (places != null) {
+            PlacesFormController.linkRead(places, factory)
+                    .buildSecured(response::addLink);
+        }
+
+        WorkHistory workHistory = service.findWorkHistory(user);
+        if (workHistory != null) {
+            WorkHistoryFormController.linkRead(workHistory, factory)
                     .buildSecured(response::addLink);
         }
 
@@ -108,7 +138,7 @@ public class ProfileController {
             service.save(profile);
         }
 
-        return readBackground();
+        return read();
     }
 
     @POST
@@ -134,15 +164,14 @@ public class ProfileController {
             service.save(profile);
         }
 
-        return readBackground();
+        return read();
     }
-
 
 
     public static URLBuilder<ProfileController> linkProfile(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(ProfileController.class)
-                .record(ProfileController::readBackground)
+                .record(ProfileController::read)
                 .rel("profile");
     }
 

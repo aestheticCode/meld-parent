@@ -114,7 +114,9 @@ public class PlacesFormController {
             placesForm.addAddress(responseType);
         }
 
-        if (identity.isLoggedIn()) {
+        User currentUser = service.currentUser();
+
+        if (user == currentUser) {
             linkUpdate(factory)
                     .buildSecured(placesForm::addLink);
 
@@ -234,11 +236,11 @@ public class PlacesFormController {
                 .rel("current");
     }
 
-    public static URLBuilder<PlacesFormController> linkRead(UUID id, URLBuilderFactory builderFactory) {
+    public static URLBuilder<PlacesFormController> linkRead(Places places, URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(PlacesFormController.class)
-                .record((method) -> method.read(id))
-                .rel("read");
+                .record((method) -> method.read(places.getId()))
+                .rel("places");
     }
 
     public static URLBuilder<PlacesFormController> linkSave(URLBuilderFactory builderFactory) {

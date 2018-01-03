@@ -9,6 +9,11 @@
               <div *ngFor="let address of places.addresses | addressesSort">
                 <app-social-address-view [address]="address"></app-social-address-view>
               </div>
+
+              <div *ngIf="places.addresses.length === 0" style="line-height: 48px; text-align: center;">
+                No Places.
+              </div>
+
             </fieldset>
           </mat-card-content>
 

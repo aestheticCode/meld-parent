@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<div style="padding: 10px;">
+<div style="margin-top: 12px;">
   <mat-card style="width: 100%;">
     <mat-card-content>
       <form>
@@ -13,7 +13,7 @@
         <fieldset style="max-height: 400px;">
           <legend>Permissions</legend>
           <meld-table name="permissions" [items]="permissions" [(ngModel)]="role.permissions" [menu]="true"
-                      itemValuePath="id" style="height: 400px;" [multiSelect]="true">
+                      itemValuePath="id" style="max-height: 380px;" [multiSelect]="true">
             <meld-colgroup>
               <meld-col [width]="300" [path]="'name'"></meld-col>
               <meld-col [width]="300" [path]="'path'"></meld-col>

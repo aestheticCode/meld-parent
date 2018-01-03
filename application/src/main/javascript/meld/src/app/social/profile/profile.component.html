@@ -13,10 +13,10 @@
 
   <meld-tabbar>
     <meld-tab [routerLink]="[{ outlets: { profile: ['user', 'view'] } }]" label="User"></meld-tab>
-    <meld-tab [routerLink]="[{ outlets: { profile: ['education', 'view'] } }]" label="Education"></meld-tab>
-    <meld-tab [routerLink]="[{ outlets: { profile: ['places', 'view'] } }]" label="Places"></meld-tab>
-    <meld-tab [routerLink]="[{ outlets: { profile: ['work', 'history', 'view'] } }]" label="Work"></meld-tab>
-    <meld-tab [routerLink]="[{ outlets: { profile: ['contact', 'view'] } }]" label="Contact"></meld-tab>
+    <meld-tab *ngIf="profile.links | meldLink:'education'" [routerLink]="[{ outlets: { profile: ['education', 'view'] } }]" label="Education"></meld-tab>
+    <meld-tab *ngIf="profile.links | meldLink:'places'" [routerLink]="[{ outlets: { profile: ['places', 'view'] } }]" label="Places"></meld-tab>
+    <meld-tab *ngIf="profile.links | meldLink:'work-history'" [routerLink]="[{ outlets: { profile: ['work', 'history', 'view'] } }]" label="Work"></meld-tab>
+    <meld-tab *ngIf="profile.links | meldLink:'contact'" [routerLink]="[{ outlets: { profile: ['contact', 'view'] } }]" label="Contact"></meld-tab>
   </meld-tabbar>
 
   <div style="flex: 1;">
