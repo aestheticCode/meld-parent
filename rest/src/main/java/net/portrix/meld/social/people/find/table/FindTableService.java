@@ -3,6 +3,7 @@ package net.portrix.meld.social.people.find.table;
 import com.google.common.collect.Maps;
 import net.portrix.generic.ddd.AbstractQueryService;
 import net.portrix.generic.rest.api.query.Query;
+import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
 import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
@@ -17,6 +18,7 @@ import javax.persistence.criteria.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @ApplicationScoped
 public class FindTableService extends AbstractQueryService<User> {
@@ -30,7 +32,7 @@ public class FindTableService extends AbstractQueryService<User> {
         this(null);
     }
 
-    public Profile findImage(User user) {
+    public Profile findProfile(User user) {
         try {
             return entityManager.createQuery("select i from Profile i where i.user = :user", Profile.class)
                     .setParameter("user", user)
@@ -50,6 +52,19 @@ public class FindTableService extends AbstractQueryService<User> {
             return null;
         }
     }
+
+    public Category findCategory(UUID id) {
+        return entityManager.find(Category.class, id);
+    }
+
+    public void save(RelationShip relationShip) {
+        entityManager.persist(relationShip);
+    }
+
+    public void remove(RelationShip relationShip) {
+        entityManager.remove(relationShip);
+    }
+
 
     @Override
     public Class<User> getEntityClass() {

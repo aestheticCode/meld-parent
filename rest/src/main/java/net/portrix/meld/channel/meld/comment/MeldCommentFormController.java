@@ -3,7 +3,6 @@ package net.portrix.meld.channel.meld.comment;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
 import net.portrix.meld.channel.MeldComment;
@@ -12,7 +11,6 @@ import net.portrix.meld.channel.meld.like.MeldLikeResponse;
 import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.user.image.UserImageController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -108,12 +106,6 @@ public class MeldCommentFormController {
 
             response.addLike(likeResponse);
         }
-
-        final URI avatarLink = builderFactory.from(UserImageController.class)
-                .record(method -> method.thumbNail(current.getId()))
-                .generateUri();
-
-        response.setAvatar(avatarLink);
 
         return response;
     }

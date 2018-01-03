@@ -2,13 +2,14 @@ package net.portrix.meld.social.people.find.table;
 
 import net.portrix.generic.rest.api.Blob;
 
+import java.net.URI;
 import java.util.UUID;
 
 public class FindItem {
 
     private UUID id;
 
-    private Blob image;
+    private URI image;
 
     private String name;
 
@@ -16,7 +17,7 @@ public class FindItem {
 
     private String lastName;
 
-    private UUID category;
+    private CategorySelect category;
 
     public UUID getId() {
         return id;
@@ -26,11 +27,11 @@ public class FindItem {
         this.id = id;
     }
 
-    public Blob getImage() {
+    public URI getImage() {
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(URI image) {
         this.image = image;
     }
 
@@ -58,11 +59,11 @@ public class FindItem {
         this.lastName = lastName;
     }
 
-    public UUID getCategory() {
+    public CategorySelect getCategory() {
         return category;
     }
 
-    public void setCategory(UUID category) {
+    public void setCategory(CategorySelect category) {
         this.category = category;
     }
 }

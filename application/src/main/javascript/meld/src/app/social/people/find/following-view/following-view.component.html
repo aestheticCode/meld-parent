@@ -1,5 +1,5 @@
-<div style="margin-top: 10px;">
-  <div class="container-fluid" style="margin-top: 12px;">
+<div style="margin-top: 12px;">
+  <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <mat-card>
@@ -15,7 +15,7 @@
                     <meld-td>
                       <ng-template let-user>
                         <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
-                          <img style="width: 100px;" [src]="user.image | meldBinaryImage">
+                          <img style="width: 100px;" [src]="user.image || 'assets/user.png'">
                         </a>
                       </ng-template>
                     </meld-td>
@@ -29,7 +29,17 @@
                               </strong>
                             </a>
                             <span style="flex: 1"></span>
-                            <app-categories-select (onClickChange)="open(user)" [(ngModel)]="user.category"></app-categories-select>
+                            <span (click)="open(user)">
+
+                              <span *ngIf="user.category; else noCategory">
+                                 {{user.category.name}}
+                              </span>
+                              <ng-template #noCategory>
+                                  none
+                              </ng-template>
+
+                            </span>
+
                           </div>
                         </div>
                       </ng-template>

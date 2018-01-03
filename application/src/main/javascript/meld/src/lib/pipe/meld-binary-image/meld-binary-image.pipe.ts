@@ -9,16 +9,16 @@ export class MeldBinaryImagePipe implements PipeTransform {
 
   private fileNameExtension = /.*\.(.*)/;
 
-  transform(file: BinaryFile, args?: any): any {
+  transform(file: BinaryFile, args?: string): any {
     if (file) {
       const regexMatch = this.fileNameExtension.exec(file.name);
       if (regexMatch) {
         return `data:image/${regexMatch[1]};base64,${file.data}`;
       } else {
-        return "";
+        return args;
       }
     } else {
-      return ""
+      return args;
     }
   }
 

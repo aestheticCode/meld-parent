@@ -1,6 +1,8 @@
 package net.portrix.meld.usercontrol.user.form;
 
 import com.google.common.collect.Iterables;
+import net.portrix.meld.media.photos.Photo;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.*;
 import org.apache.commons.lang.StringUtils;
 
@@ -91,9 +93,9 @@ public class UserFormService {
                 .getSingleResult() == 0;
     }
 
-    public UserImage findUserImage(User user) {
+    public Profile findProfile(User user) {
         return entityManager
-                .createQuery("select u from UserImage u where u.user = :user", UserImage.class)
+                .createQuery("select u from Profile u where u.user = :user", Profile.class)
                 .setParameter("user", user)
                 .getSingleResult();
     }
@@ -102,4 +104,7 @@ public class UserFormService {
         userManager.save(user);
     }
 
+    public void savePhoto(Photo photo) {
+        entityManager.persist(photo);
+    }
 }

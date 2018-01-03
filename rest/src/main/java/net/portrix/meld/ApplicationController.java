@@ -15,7 +15,6 @@ import net.portrix.meld.usercontrol.login.form.LoginFormController;
 import net.portrix.meld.usercontrol.logout.form.LogoutFormController;
 import net.portrix.meld.usercontrol.registration.form.RegistrationFormController;
 import net.portrix.meld.usercontrol.role.table.RoleTableController;
-import net.portrix.meld.usercontrol.user.image.UserImageController;
 import net.portrix.meld.usercontrol.user.table.UserTableController;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -152,18 +151,6 @@ public class ApplicationController {
         user.setLastName(current.getLastName());
         user.setBirthday(current.getBirthdate());
 
-        final Link avatarLink = builderFactory.from(UserImageController.class)
-                .record(method -> method.thumbNail(current.getId()))
-                .rel("avatar")
-                .generate();
-
-        final Link imageLink = builderFactory.from(UserImageController.class)
-                .record(method -> method.image(current.getId()))
-                .rel("avatar")
-                .generate();
-
-        user.setAvatar(avatarLink);
-        user.setImage(imageLink);
 
         LogoutFormController.linkLogout(builderFactory)
                 .build(application::addLink);

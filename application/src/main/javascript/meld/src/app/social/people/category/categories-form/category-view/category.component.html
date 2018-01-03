@@ -9,7 +9,7 @@
         <meld-td>
           <ng-template let-user>
             <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
-              <img style="width: 100px;" [src]="user.image | meldBinaryImage">
+              <img style="width: 100px;" [src]="user.image || 'assets/user.png'">
             </a>
           </ng-template>
         </meld-td>
@@ -17,7 +17,7 @@
           <ng-template let-user>
             <div style="line-height: 100px;">
               <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
-                <strong>
+                <strong style="text-overflow: ellipsis; white-space: nowrap">
                   {{user.firstName}} {{user.lastName}}
                 </strong>
               </a>

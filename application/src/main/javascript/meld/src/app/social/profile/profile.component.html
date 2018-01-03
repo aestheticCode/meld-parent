@@ -1,21 +1,25 @@
-<div style="position: relative; width: 100%; height: 200px; overflow: hidden">
-  <img [src]="profile.background || 'assets/way.jpg'" style="width: 100%;">
-  <div style="width: 100%; position: absolute; bottom: 12px; left: 12px; display: flex">
-    <h1 style="color: white; flex: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">{{profile.name}}</h1>
-    <button mat-button (click)="onDialogClick()">
-      <h1 *ngIf="profile.links | meldLink:'update'" >
-        <mat-icon style="color: white; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">more_vert</mat-icon>
-      </h1>
-    </button>
+<div style="display: flex; flex-direction: column; height: 100%;">
+  <div style="position: relative; width: 100%; height: 200px; overflow: hidden">
+    <img [src]="profile.background || 'assets/way.jpg'" style="width: 100%;">
+    <div style="width: 100%; position: absolute; bottom: 12px; left: 12px; display: flex">
+      <h1 style="color: white; flex: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">{{profile.name}}</h1>
+      <button mat-button (click)="onDialogClick()">
+        <h1 *ngIf="profile.links | meldLink:'update'" >
+          <mat-icon style="color: white; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">more_vert</mat-icon>
+        </h1>
+      </button>
+    </div>
+  </div>
+
+  <meld-tabbar>
+    <meld-tab [routerLink]="[{ outlets: { profile: ['user', 'view'] } }]" label="User"></meld-tab>
+    <meld-tab [routerLink]="[{ outlets: { profile: ['education', 'view'] } }]" label="Education"></meld-tab>
+    <meld-tab [routerLink]="[{ outlets: { profile: ['places', 'view'] } }]" label="Places"></meld-tab>
+    <meld-tab [routerLink]="[{ outlets: { profile: ['work', 'history', 'view'] } }]" label="Work"></meld-tab>
+    <meld-tab [routerLink]="[{ outlets: { profile: ['contact', 'view'] } }]" label="Contact"></meld-tab>
+  </meld-tabbar>
+
+  <div style="flex: 1;">
+    <router-outlet name="profile"></router-outlet>
   </div>
 </div>
-
-<meld-tabbar>
-  <meld-tab [routerLink]="[{ outlets: { profile: ['user', 'view'] } }]" label="User"></meld-tab>
-  <meld-tab [routerLink]="[{ outlets: { profile: ['education', 'view'] } }]" label="Education"></meld-tab>
-  <meld-tab [routerLink]="[{ outlets: { profile: ['places', 'view'] } }]" label="Places"></meld-tab>
-  <meld-tab [routerLink]="[{ outlets: { profile: ['work', 'history', 'view'] } }]" label="Work"></meld-tab>
-  <meld-tab [routerLink]="[{ outlets: { profile: ['contact', 'view'] } }]" label="Contact"></meld-tab>
-</meld-tabbar>
-
-<router-outlet name="profile"></router-outlet>

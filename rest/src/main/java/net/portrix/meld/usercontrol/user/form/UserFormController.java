@@ -7,6 +7,8 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
+import net.portrix.meld.media.photos.Photo;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.Role;
 import net.portrix.meld.usercontrol.User;
@@ -62,25 +64,6 @@ public class UserFormController {
     public UserForm create() {
         UserForm response = new UserForm();
 
-        final InputStream inputStream = Thread
-                .currentThread()
-                .getContextClassLoader()
-                .getResourceAsStream("/META-INF/images/user.png");
-
-        byte[] bytes = null;
-        try {
-            bytes = IOUtils.toByteArray(inputStream);
-
-            final Blob image = new Blob();
-            final String fileName = "user.png";
-            image.setName(fileName);
-            image.setData(bytes);
-
-            response.setImage(image);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
-
         linkSave(builderFactory)
                 .buildSecured(response::addLink);
 
@@ -95,7 +78,7 @@ public class UserFormController {
     public UserForm read(@PathParam("id") UUID id) {
 
         final User user = service.findUser(id);
-        final UserImage userImage = service.findUserImage(user);
+        final Profile profile = service.findProfile(user);
 
         UserForm response = new UserForm();
         response.setId(user.getId());
@@ -105,11 +88,12 @@ public class UserFormController {
         response.setBirthday(user.getBirthdate());
         response.setGender(user.getGender());
 
-        final Blob image = new Blob();
-        image.setData(userImage.getImage());
-        image.setName(userImage.getFileName());
-        response.setImage(image);
-
+        if (profile.getUserPhoto() != null) {
+            final Blob image = new Blob();
+            image.setData(profile.getUserPhoto().getImage());
+            image.setName(profile.getUserPhoto().getFileName());
+            response.setImage(image);
+        }
 
         final List<Group> groups = service.findAllGroups(user);
 
@@ -156,12 +140,14 @@ public class UserFormController {
         user.setGender(form.getGender());
 
         final Blob image = form.getImage();
-        final UserImage userImage = service.findUserImage(user);
+        if (image != null) {
+            final Profile profile = service.findProfile(user);
 
-        userImage.setFileName(image.getName());
-        userImage.setImage(image.getData());
-        userImage.setLastModified(image.getLastModified());
-        userImage.setThumbnail(ImageUtils.thumnail(image.getName(), image.getData(), 100));
+            profile.getUserPhoto().setFileName(image.getName());
+            profile.getUserPhoto().setImage(image.getData());
+            profile.getUserPhoto().setLastModified(image.getLastModified());
+            profile.getUserPhoto().setThumbnail(ImageUtils.thumnail(image.getName(), image.getData(), 200));
+        }
 
         final List<Group> groups = service.findAllGroups();
         for (Group group : groups) {
@@ -195,6 +181,16 @@ public class UserFormController {
         user.setBirthdate(form.getBirthday());
         user.setGender(form.getGender());
         service.save(user);
+
+        if (form.getImage() != null) {
+            Photo photo = new Photo();
+            photo.setUser(user);
+            photo.setFileName(form.getImage().getName());
+            photo.setLastModified(form.getImage().getLastModified());
+            photo.setThumbnail(ImageUtils.thumnail(form.getImage().getName(), form.getImage().getData(), 200));
+            service.savePhoto(photo);
+        }
+
         final List<Group> groups = service.findAllGroups();
         for (Group group : groups) {
             if (form.getGroups().contains(group.getId())) {

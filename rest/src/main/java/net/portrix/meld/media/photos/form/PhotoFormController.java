@@ -75,7 +75,7 @@ public class PhotoFormController {
         cc.setMaxAge(86400);
         cc.setPrivate(true);
 
-        return Response.ok(photo.getImage())
+        return Response.ok(photo.getThumbnail())
                 .cacheControl(cc)
                 .build();
 
@@ -175,7 +175,7 @@ public class PhotoFormController {
     public static URLBuilder<PhotoFormController> linkThumbnail(Photo photo, URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(PhotoFormController.class)
-                .record((method) -> method.readPhoto(photo.getId(), photo.getFileName()))
+                .record((method) -> method.readThumbnail(photo.getId(), photo.getFileName()))
                 .rel("thumbnail");
     }
 

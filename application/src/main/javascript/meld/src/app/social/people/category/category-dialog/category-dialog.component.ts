@@ -42,6 +42,10 @@ export class CategoryDialogComponent {
       });
   };
 
+  itemValue = (value : any) => {
+    return value;
+  };
+
   onSave() {
     this.dialogRef.close(this.user);
   }
