@@ -80,7 +80,7 @@ public class UserFormController {
 
         User currentUser = service.currentUser();
 
-        if (user == currentUser) {
+        if (user.equals(currentUser)) {
             linkUpdate(builderFactory)
                     .buildSecured(response::addLink);
             linkDelete(builderFactory)

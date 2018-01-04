@@ -168,7 +168,7 @@ public class MeldCommentFormController {
 
         User user = service.currentUser();
 
-        if (comment.getUser() == user) {
+        if (comment.getUser().equals(user)) {
 
             MeldPost post = service.findPost(comment);
 

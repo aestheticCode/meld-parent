@@ -119,7 +119,7 @@ public class WorkHistoryFormController {
 
         User currentUser = service.currentUser();
 
-        if (user == currentUser) {
+        if (user.equals(currentUser)) {
             linkUpdate(factory)
                     .buildSecured(historyResponseType::addLink);
             linkDelete(factory)
@@ -236,7 +236,7 @@ public class WorkHistoryFormController {
         return builderFactory
                 .from(WorkHistoryFormController.class)
                 .record(WorkHistoryFormController::current)
-                .rel("current");
+                .rel("work-history");
     }
 
     public static URLBuilder<WorkHistoryFormController> linkRead(WorkHistory workHistory, URLBuilderFactory builderFactory) {

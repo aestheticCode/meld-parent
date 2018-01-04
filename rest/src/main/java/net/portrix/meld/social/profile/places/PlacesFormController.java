@@ -116,7 +116,7 @@ public class PlacesFormController {
 
         User currentUser = service.currentUser();
 
-        if (user == currentUser) {
+        if (user.equals(currentUser)) {
             linkUpdate(factory)
                     .buildSecured(placesForm::addLink);
 
@@ -233,7 +233,7 @@ public class PlacesFormController {
         return builderFactory
                 .from(PlacesFormController.class)
                 .record(PlacesFormController::current)
-                .rel("current");
+                .rel("places");
     }
 
     public static URLBuilder<PlacesFormController> linkRead(Places places, URLBuilderFactory builderFactory) {

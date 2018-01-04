@@ -103,7 +103,7 @@ export class ContactFormComponent extends AbstractForm<Contact> implements OnIni
   }
 
   private filterEmptyPhones() {
-    this.contact.phones = this.contact.phones.filter((phone) => Strings.isNotEmpty(phone.type) && Strings.isNotEmpty(phone.number));
+    this.contact.phones = this.contact.phones.filter((phone) => Strings.isNotEmpty(phone.number));
   }
 
   private filterEmptyEmails() {

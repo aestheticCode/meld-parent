@@ -140,7 +140,7 @@ public class EducationFormController {
 
         User currentUser = service.currentUser();
 
-        if (user == currentUser) {
+        if (user.equals(currentUser)) {
             linkUpdate(factory)
                     .buildSecured(form::addLink);
             linkDelete(factory)
@@ -298,7 +298,7 @@ public class EducationFormController {
         return builderFactory
                 .from(EducationFormController.class)
                 .record(EducationFormController::current)
-                .rel("current");
+                .rel("education");
     }
 
     public static URLBuilder<EducationFormController> linkRead(Education education, URLBuilderFactory builderFactory) {

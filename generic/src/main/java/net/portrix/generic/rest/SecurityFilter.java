@@ -4,6 +4,7 @@ import org.picketlink.Identity;
 import org.picketlink.credential.DefaultLoginCredentials;
 import org.picketlink.idm.credential.TokenCredential;
 
+import javax.annotation.Priority;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -22,25 +23,22 @@ import java.util.Map;
  */
 @Provider
 @Secured
+@Priority(2)
 public class SecurityFilter implements ContainerRequestFilter {
 
     private final Event<SecurityAction> securityActionEvent;
 
     private final Identity identity;
 
-    private final DefaultLoginCredentials credentials;
-
     @Inject
     public SecurityFilter(Event<SecurityAction> securityActionEvent,
-                          Identity identity,
-                          DefaultLoginCredentials credentials) {
+                          Identity identity) {
         this.securityActionEvent = securityActionEvent;
         this.identity = identity;
-        this.credentials = credentials;
     }
 
     public SecurityFilter() {
-        this(null, null, null);
+        this(null, null);
     }
 
     @Override
@@ -72,22 +70,6 @@ public class SecurityFilter implements ContainerRequestFilter {
                 requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
             }
 
-        } else {
-            Cookie rememberMe = requestContext.getCookies().get("rememberMe");
-            if (rememberMe != null) {
-                String[] split = rememberMe.getValue().split("\\.");
-                credentials.setCredential(new TokenCredential(new LoginToken(split[0], split[1])));
-                Identity.AuthenticationResult authenticationResult = identity.login();
-
-                if (authenticationResult.equals(Identity.AuthenticationResult.SUCCESS)) {
-                    filter(requestContext);
-                } else {
-                    requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
-                }
-            } else {
-                requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
-            }
         }
-
     }
 }

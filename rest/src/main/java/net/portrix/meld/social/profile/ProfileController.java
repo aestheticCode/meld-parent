@@ -82,7 +82,7 @@ public class ProfileController {
 
         User currentUser = service.currentUser();
 
-        if (user == currentUser) {
+        if (user.equals(currentUser)) {
             linkProfileBackgroundUpdate(factory)
                     .buildSecured(response::addLink);
         }
@@ -108,6 +108,20 @@ public class ProfileController {
         WorkHistory workHistory = service.findWorkHistory(user);
         if (workHistory != null) {
             WorkHistoryFormController.linkRead(workHistory, factory)
+                    .buildSecured(response::addLink);
+        }
+
+        if (currentUser.equals(user)) {
+            ContactFormController.linkCurrent(factory)
+                    .buildSecured(response::addLink);
+
+            EducationFormController.linkCurrent(factory)
+                    .buildSecured(response::addLink);
+
+            PlacesFormController.linkCurrent(factory)
+                    .buildSecured(response::addLink);
+
+            WorkHistoryFormController.linkCurrent(factory)
                     .buildSecured(response::addLink);
         }
 

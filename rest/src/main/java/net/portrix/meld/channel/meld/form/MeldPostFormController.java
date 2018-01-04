@@ -325,7 +325,7 @@ public class MeldPostFormController {
 
         User user = service.currentUser();
 
-        if (post.getUser() == user) {
+        if (post.getUser().equals(user)) {
             service.deletePost(post);
         }
     }

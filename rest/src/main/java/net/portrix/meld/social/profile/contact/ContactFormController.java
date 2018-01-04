@@ -112,7 +112,7 @@ public class ContactFormController {
 
         User currentUser = service.currentUser();
 
-        if (user == currentUser) {
+        if (user.equals(currentUser)) {
             linkUpdate(factory)
                     .buildSecured(contactResponseType::addLink);
             linkDelete(factory)
@@ -211,7 +211,7 @@ public class ContactFormController {
         return builderFactory
                 .from(ContactFormController.class)
                 .record(ContactFormController::current)
-                .rel("current");
+                .rel("contact");
     }
 
     public static URLBuilder<ContactFormController> linkRead(PersonalContact contact, URLBuilderFactory builderFactory) {
