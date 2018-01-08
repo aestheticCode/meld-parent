@@ -13,6 +13,7 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce
 insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', 'fbff4aa3-9368-4a5f-89c7-6af9d8cd6229');
 
 
+/*
 --changeset patrick:5
     alter table public.so_school
        add column place_address varchar(255);
@@ -28,6 +29,7 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a
 
     alter table public.so_school
        add column place_name varchar(255);
+*/
 
 
 --changeset patrick:6
@@ -50,7 +52,6 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a
       drop COLUMN place_address;
 
 
-/*
 
 --changeset patrick:7
       alter table public.so_address
@@ -91,7 +92,6 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a
 
     ALTER  TABLE so_address
       DROP COLUMN street;
-*/
 
 
 --changeset patrick:8
