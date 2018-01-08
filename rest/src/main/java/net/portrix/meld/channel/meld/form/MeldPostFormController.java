@@ -10,6 +10,7 @@ import net.portrix.meld.channel.*;
 import net.portrix.meld.media.photos.Photo;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.usercontrol.User;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,12 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -77,6 +84,12 @@ public class MeldPostFormController {
                         .buildSecured(form::addLink);
                 return form;
             }
+            case "link": {
+                MeldLinkPostForm form = new MeldLinkPostForm();
+                linkSave(builderFactory)
+                        .buildSecured(form::addLink);
+                return form;
+            }
             default:
                 return null;
         }
@@ -94,12 +107,8 @@ public class MeldPostFormController {
             @Override
             public Object visit(MeldImagePost post) {
                 MeldImagePostForm response = new MeldImagePostForm();
-                response.setId(post.getId());
-                response.setText(post.getText());
-                Category category = post.getCategory();
-                if (category != null) {
-                    response.setCategory(category.getId());
-                }
+
+                processPostRead(post, response);
 
                 final Blob file = new Blob();
                 final MeldImage image = post.getImage();
@@ -110,28 +119,14 @@ public class MeldPostFormController {
                     response.setFile(file);
                 }
 
-                linkUpdate(post, builderFactory)
-                        .buildSecured(response::addLink);
-                linkDelete(post, builderFactory)
-                        .buildSecured(response::addLink);
-
                 return response;
             }
 
             @Override
             public Object visit(MeldTextPost post) {
                 MeldTextPostForm response = new MeldTextPostForm();
-                response.setId(post.getId());
-                response.setText(post.getText());
-                Category category = post.getCategory();
-                if (category != null) {
-                    response.setCategory(category.getId());
-                }
 
-                linkUpdate(post, builderFactory)
-                        .buildSecured(response::addLink);
-                linkDelete(post, builderFactory)
-                        .buildSecured(response::addLink);
+                processPostRead(post, response);
 
                 return response;
 
@@ -140,18 +135,10 @@ public class MeldPostFormController {
             @Override
             public Object visit(MeldYouTubePost post) {
                 MeldYouTubePostForm form = new MeldYouTubePostForm();
-                form.setId(post.getId());
-                form.setVideoId(post.getVideoId());
-                form.setText(post.getText());
-                Category category = post.getCategory();
-                if (category != null) {
-                    form.setCategory(category.getId());
-                }
 
-                linkUpdate(post, builderFactory)
-                        .buildSecured(form::addLink);
-                linkDelete(post, builderFactory)
-                        .buildSecured(form::addLink);
+                processPostRead(post, form);
+
+                form.setVideoId(post.getVideoId());
 
                 return form;
             }
@@ -159,18 +146,21 @@ public class MeldPostFormController {
             @Override
             public Object visit(MeldPhotoPost post) {
                 MeldPhotoPostForm form = new MeldPhotoPostForm();
-                form.setId(post.getId());
-                form.setPhotoId(post.getPhoto().getId());
-                form.setText(post.getText());
-                Category category = post.getCategory();
-                if (category != null) {
-                    form.setCategory(category.getId());
-                }
 
-                linkUpdate(post, builderFactory)
-                        .buildSecured(form::addLink);
-                linkDelete(post, builderFactory)
-                        .buildSecured(form::addLink);
+                processPostRead(post, form);
+
+                form.setPhotoId(post.getPhoto().getId());
+
+                return form;
+            }
+
+            @Override
+            public Object visit(MeldLinkPost post) {
+                MeldLinkPostForm form = new MeldLinkPostForm();
+
+                processPostRead(post, form);
+
+                form.setLink(post.getLink());
 
                 return form;
             }
@@ -188,14 +178,10 @@ public class MeldPostFormController {
             @Override
             public AbstractPostForm visit(MeldImagePostForm form) {
                 final MeldImagePost post = (MeldImagePost) service.findPost(id);
-                final User user = service.currentUser();
-                Category category = service.findCategory(edit.getCategory());
-                post.setCategory(category);
-                post.setUser(user);
-                post.setText(form.getText());
+
+                processPostUpdate(form, post);
 
                 final MeldImage image = post.getImage();
-
                 final Blob file = form.getFile();
                 image.setFileName(file.getName());
                 image.setImage(file.getData());
@@ -207,35 +193,40 @@ public class MeldPostFormController {
             @Override
             public AbstractPostForm visit(MeldTextPostForm form) {
                 final MeldImagePost post = (MeldImagePost) service.findPost(id);
-                final User user = service.currentUser();
-                Category category = service.findCategory(edit.getCategory());
-                post.setCategory(category);
-                post.setUser(user);
-                post.setText(form.getText());
+                processPostUpdate(form, post);
                 return read(post.getId());
             }
 
             @Override
             public AbstractPostForm visit(MeldYouTubePostForm form) {
                 final MeldYouTubePost post = (MeldYouTubePost) service.findPost(id);
-                final User user = service.currentUser();
-                Category category = service.findCategory(edit.getCategory());
-                post.setCategory(category);
-                post.setUser(user);
+
+                processPostUpdate(form, post);
+
                 post.setVideoId(form.getVideoId());
-                post.setText(form.getText());
+
                 return read(id);
             }
 
             @Override
             public AbstractPostForm visit(MeldPhotoPostForm form) {
                 final MeldPhotoPost post = (MeldPhotoPost) service.findPost(id);
-                User user = service.currentUser();
-                post.setUser(user);
-                Category category = service.findCategory(edit.getCategory());
-                post.setCategory(category);
+
+                processPostUpdate(form, post);
+
                 Photo photo = service.findPhoto(form.getPhotoId());
                 post.setPhoto(photo);
+                return read(post.getId());
+            }
+
+            @Override
+            public AbstractPostForm visit(MeldLinkPostForm form) {
+                final MeldLinkPost post = new MeldLinkPost();
+
+                processPostUpdate(edit, post);
+
+                post.setLink(form.getLink());
+
                 return read(post.getId());
             }
         });
@@ -247,17 +238,13 @@ public class MeldPostFormController {
     @Path("meld")
     @Name("Meld Post Save")
     @Transactional
-    public AbstractPostForm save(AbstractPostForm edit) {
+    public AbstractPostForm save(final AbstractPostForm edit) {
         return edit.visit(new AbstractPostForm.Visitor() {
             @Override
             public AbstractPostForm visit(MeldImagePostForm form) {
                 final MeldImagePost post = new MeldImagePost();
-                final User user = service.currentUser();
-                Category category = service.findCategory(edit.getCategory());
-                post.setCategory(category);
 
-                post.setUser(user);
-                post.setText(edit.getText());
+                processPostSave(edit, post);
 
                 final MeldImage image = new MeldImage();
                 final Blob file = form.getFile();
@@ -266,8 +253,8 @@ public class MeldPostFormController {
                     image.setImage(file.getData());
                     image.setThumbnail(ImageUtils.thumnail(file.getName(), file.getData(), 100));
                 }
-
                 post.setImage(image);
+
                 service.savePost(post);
                 return read(post.getId());
             }
@@ -275,12 +262,9 @@ public class MeldPostFormController {
             @Override
             public AbstractPostForm visit(MeldTextPostForm form) {
                 final MeldTextPost post = new MeldTextPost();
-                final User user = service.currentUser();
-                Category category = service.findCategory(edit.getCategory());
-                post.setCategory(category);
 
-                post.setUser(user);
-                post.setText(edit.getText());
+                processPostSave(edit, post);
+
                 service.savePost(post);
                 return read(post.getId());
 
@@ -289,12 +273,11 @@ public class MeldPostFormController {
             @Override
             public AbstractPostForm visit(MeldYouTubePostForm form) {
                 final MeldYouTubePost post = new MeldYouTubePost();
-                final User user = service.currentUser();
-                Category category = service.findCategory(edit.getCategory());
-                post.setCategory(category);
 
-                post.setUser(user);
+                processPostSave(edit, post);
+
                 post.setVideoId(form.getVideoId());
+
                 service.savePost(post);
                 return read(post.getId());
             }
@@ -302,14 +285,67 @@ public class MeldPostFormController {
             @Override
             public AbstractPostForm visit(MeldPhotoPostForm form) {
                 final MeldPhotoPost post = new MeldPhotoPost();
-                User user = service.currentUser();
-                post.setUser(user);
-                Category category = service.findCategory(edit.getCategory());
-                post.setCategory(category);
+
+                processPostSave(edit, post);
 
                 Photo photo = service.findPhoto(form.getPhotoId());
                 post.setPhoto(photo);
+
                 service.savePost(post);
+                return read(post.getId());
+            }
+
+            @Override
+            public AbstractPostForm visit(MeldLinkPostForm form) {
+                MeldLinkPost post = new MeldLinkPost();
+
+                processPostSave(edit, post);
+
+                post.setLink(form.getLink());
+
+                try {
+                    Map<String, String> environment = System.getenv();
+
+                    String phantomjsDirectory = environment.get("PHANTOMJS");
+
+                    Runtime runtime = Runtime.getRuntime();
+
+                    File phantomJSExecutable = new File(phantomjsDirectory + File.separator + "bin" + File.separator + "phantomjs");
+
+                    String home = System.getProperty("user.home");
+                    File meld = new File(home + File.separator + ".meld");
+                    File screenCaptureWorkingDir = new File(meld.getCanonicalPath() + File.separator + UUID.randomUUID().toString());
+
+                    FileUtils.forceMkdir(screenCaptureWorkingDir);
+
+                    File scriptFile = new File(home + File.separator + ".meld" + File.separator + "screenCapture.js");
+
+                    String command = phantomJSExecutable.getCanonicalPath() + " " + scriptFile.toString() + " " + form.getLink().toString();
+
+                    Process exec = runtime.exec(command, new String[0], screenCaptureWorkingDir);
+
+                    exec.waitFor();
+
+                    File screenCaptureFile = new File(screenCaptureWorkingDir.getCanonicalFile() + File.separator + "screenShot.png");
+
+                    byte[] bytes = FileUtils.readFileToByteArray(screenCaptureFile);
+
+                    MeldImage image = new MeldImage();
+
+                    image.setFileName(screenCaptureFile.getName());
+                    image.setLastModified(LocalDateTime.now());
+                    image.setImage(bytes);
+                    image.setThumbnail(ImageUtils.thumnail(screenCaptureFile.getName(), bytes, 200));
+
+                    post.setImage(image);
+
+                    service.savePost(post);
+
+                } catch (IOException | InterruptedException e) {
+                    log.error(e.getMessage(), e);
+                }
+
+
                 return read(post.getId());
             }
         });
@@ -328,6 +364,40 @@ public class MeldPostFormController {
         if (post.getUser().equals(user)) {
             service.deletePost(post);
         }
+    }
+
+    private void processPostRead(MeldPost post, AbstractPostForm response) {
+        response.setId(post.getId());
+        response.setText(post.getText());
+        Category category = post.getCategory();
+        if (category != null) {
+            response.setCategory(category.getId());
+        }
+
+        linkUpdate(post, builderFactory)
+                .buildSecured(response::addLink);
+        linkDelete(post, builderFactory)
+                .buildSecured(response::addLink);
+    }
+
+    private void processPostUpdate(AbstractPostForm form, MeldPost post) {
+        final User user = service.currentUser();
+        if (form.getCategory() != null) {
+            Category category = service.findCategory(form.getCategory());
+            post.setCategory(category);
+        }
+        post.setUser(user);
+        post.setText(form.getText());
+    }
+
+    private void processPostSave(AbstractPostForm form, MeldPost post) {
+        final User user = service.currentUser();
+        if (form.getCategory() != null) {
+            Category category = service.findCategory(form.getCategory());
+            post.setCategory(category);
+        }
+        post.setUser(user);
+        post.setText(form.getText());
     }
 
 

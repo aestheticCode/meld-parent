@@ -1,18 +1,16 @@
 package net.portrix.meld.usercontrol.user.table;
 
+import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.meta.MetaResponseType;
 import net.portrix.generic.rest.api.meta.Property;
-import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.generic.rest.Secured;
 import net.portrix.meld.usercontrol.Gender;
-import net.portrix.meld.usercontrol.user.form.UserFormController;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.user.image.UserImageController;
+import net.portrix.meld.usercontrol.user.form.UserFormController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -36,7 +34,7 @@ public class UserTableController {
     private final UserTableService service;
 
     private final URLBuilderFactory builderFactory;
-    
+
     private final EntityManager entityManager;
 
     @Inject
@@ -58,7 +56,7 @@ public class UserTableController {
     public Container<UserItem> list(Search search) {
         List<User> users;
         long count = 0;
-        if(search.getLimit() == 0) {
+        if (search.getLimit() == 0) {
             users = new ArrayList<>();
         } else {
             users = service.find(search);

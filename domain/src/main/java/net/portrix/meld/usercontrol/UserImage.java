@@ -1,7 +1,7 @@
 package net.portrix.meld.usercontrol;
 
 import net.portrix.generic.ddd.AbstractEntity;
-import net.portrix.meld.UserControlModule;
+import net.portrix.generic.image.ImageUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -91,7 +91,7 @@ public class UserImage extends AbstractEntity {
     }
 
     private static void save(UUID id, String fileName, byte[] image, byte[] thumbnail) throws IOException {
-        File imageWorkingDir = UserControlModule.workingDirectory(id);
+        File imageWorkingDir = ImageUtils.workingDirectory(id);
         String extension = FilenameUtils.getExtension(fileName);
         File imageFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "image." + extension);
         File thumbnailFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "thumbnail." + extension);
@@ -100,14 +100,14 @@ public class UserImage extends AbstractEntity {
     }
 
     private static byte[] loadImage(UUID id, String fileName) throws IOException {
-        File imageWorkingDir = UserControlModule.workingDirectory(id);
+        File imageWorkingDir = ImageUtils.workingDirectory(id);
         String extension = FilenameUtils.getExtension(fileName);
         File imageFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "image." + extension);
         return IOUtils.toByteArray(imageFile.toURI());
     }
 
     private static byte[] loadThumbnail(UUID id, String fileName) throws IOException {
-        File imageWorkingDir = UserControlModule.workingDirectory(id);
+        File imageWorkingDir = ImageUtils.workingDirectory(id);
         String extension = FilenameUtils.getExtension(fileName);
         File thumbnailFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "thumbnail." + extension);
         return IOUtils.toByteArray(thumbnailFile.toURI());

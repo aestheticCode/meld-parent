@@ -4,8 +4,10 @@ import net.portrix.generic.image.ImageUtils;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.meld.channel.meld.list.MeldListController;
+import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.media.photos.grid.PhotoGridController;
 import net.portrix.meld.social.people.category.table.CategoryTableController;
+import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.social.profile.ProfileController;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.group.table.GroupTableController;
@@ -26,6 +28,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.time.LocalDateTime;
 
 /**
@@ -104,12 +107,18 @@ public class ApplicationController {
 
             final User current = service.current();
 
+            Profile profile = service.findProfile(current);
+
+            URI uri = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                    .generateUri();
+
+            user.setAvatar(uri);
+
             user.setId(current.getId());
             user.setEmail(current.getName());
             user.setFirstName(current.getFirstName());
             user.setLastName(current.getLastName());
             user.setBirthday(current.getBirthdate());
-
 
             LogoutFormController.linkLogout(builderFactory)
                     .build(application::addLink);

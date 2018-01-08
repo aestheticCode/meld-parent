@@ -36,6 +36,7 @@ import {MeldEnumModule} from './pipe/meld-enum/meld-enum.module';
 import {MeldRouterService} from './service/meld-router/meld-router.service';
 import {MeldTouchWheelModule} from './directive/meld-touch-wheel/meld-touch-wheel.module';
 import {MeldGoogleMapsMarkerModule} from './component/meld-google-maps-marker/meld-google-maps-marker.module';
+import {MeldDebounceModule} from './directive/meld-debounce/meld-debounce.module';
 
 
 @NgModule({
@@ -90,6 +91,7 @@ import {MeldGoogleMapsMarkerModule} from './component/meld-google-maps-marker/me
     MeldDimensionsModule,
     MeldInitModule,
     MeldTouchWheelModule,
+    MeldDebounceModule,
 
     MeldBinaryImageModule,
     MeldEnumModule,
@@ -148,6 +150,7 @@ import {MeldGoogleMapsMarkerModule} from './component/meld-google-maps-marker/me
     MeldDimensionsModule,
     MeldInitModule,
     MeldTouchWheelModule,
+    MeldDebounceModule,
 
     MeldBinaryImageModule,
     MeldEnumModule,

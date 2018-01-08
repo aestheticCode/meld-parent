@@ -11,6 +11,8 @@ import {MeldYoutubeFormComponent} from './meld/form/meld-form/meld-youtube-form/
 import {MeldPhotoCreateGuard, MeldPhotoFormGuard} from './meld/form/meld-form/meld-photo-form/meld-photo-form.guard';
 import {MeldTextCreateGuard, MeldTextFormGuard} from './meld/form/meld-form/meld-text-form/meld-text-form.guard';
 import {MeldYoutubeCreateGuard, MeldYoutubeFormGuard} from './meld/form/meld-form/meld-youtube-form/meld-youtube-form.guard';
+import {MeldLinkCreateGuard, MeldLinkFormGuard} from './meld/form/meld-form/meld-link-form/meld-link-form.guard';
+import {MeldLinkFormComponent} from './meld/form/meld-form/meld-link-form/meld-link-form.component';
 
 const appRoutes: Routes = [
   {path: 'meld/posts', component: MeldListComponent, resolve: {posts: MeldListGuard}},
@@ -25,7 +27,11 @@ const appRoutes: Routes = [
   {path: 'meld/post/text', component: MeldTextFormComponent, resolve: {post: MeldTextCreateGuard}},
 
   {path: 'meld/post/:id/youtube', component: MeldYoutubeFormComponent, resolve: {post: MeldYoutubeFormGuard}},
-  {path: 'meld/post/youtube', component: MeldYoutubeFormComponent, resolve: {post: MeldYoutubeCreateGuard}}
+  {path: 'meld/post/youtube', component: MeldYoutubeFormComponent, resolve: {post: MeldYoutubeCreateGuard}},
+
+  {path: 'meld/post/:id/link', component: MeldLinkFormComponent, resolve: {post: MeldLinkFormGuard}},
+  {path: 'meld/post/link', component: MeldLinkFormComponent, resolve: {post: MeldLinkCreateGuard}}
+
 ];
 export const appRoutingProviders: any[] = [
   MeldListGuard,
@@ -36,6 +42,8 @@ export const appRoutingProviders: any[] = [
   MeldTextFormGuard,
   MeldTextCreateGuard,
   MeldYoutubeFormGuard,
-  MeldYoutubeCreateGuard
+  MeldYoutubeCreateGuard,
+  MeldLinkFormGuard,
+  MeldLinkCreateGuard
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(appRoutes);

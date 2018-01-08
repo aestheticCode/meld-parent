@@ -12,7 +12,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "so_education")
-@NamedQuery(name = "findEducation", query = "select e from Education e where e.user = :user")
+@NamedQueries({
+        @NamedQuery(name = "findEducation", query = "select e from Education e where e.user = :user")
+})
 public class Education extends AbstractAggregate {
 
     @OneToOne

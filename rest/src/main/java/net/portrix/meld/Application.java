@@ -3,6 +3,7 @@ package net.portrix.meld;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -50,9 +51,7 @@ public class Application implements LinksContainer {
 
         private LocalDate birthday;
 
-        private Link avatar;
-
-        private Link image;
+        private URI avatar;
 
         public UUID getId() {
             return id;
@@ -94,20 +93,12 @@ public class Application implements LinksContainer {
             this.birthday = birthday;
         }
 
-        public Link getAvatar() {
+        public URI getAvatar() {
             return avatar;
         }
 
-        public void setAvatar(Link avatar) {
+        public void setAvatar(URI avatar) {
             this.avatar = avatar;
-        }
-
-        public Link getImage() {
-            return image;
-        }
-
-        public void setImage(Link image) {
-            this.image = image;
         }
     }
 }

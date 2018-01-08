@@ -1,27 +1,37 @@
 
-    alter table public.so_company 
-       add column place_country varchar(255);
+    alter table public.so_school 
+       add column yearEndSemester varchar(255);
 
-    alter table public.so_company 
-       add column place_id varchar(255);
+    alter table public.so_school 
+       add column yearEndYear int4;
 
-    alter table public.so_company 
-       add column place_lat float8;
+    alter table public.so_school 
+       add column yearStartSemester varchar(255);
 
-    alter table public.so_company 
-       add column place_lng float8;
+    alter table public.so_school 
+       add column yearStartYear int4;
 
-    alter table public.so_company 
-       add column place_name varchar(255);
+    alter table public.so_school 
+       add column visitEndSemester varchar(255);
 
-    alter table public.so_company 
-       add column place_state varchar(255);
+    alter table public.so_school 
+       add column visitEndYear int4;
 
-    alter table public.so_company 
-       add column place_street varchar(255);
+    alter table public.so_school 
+       add column visitStartSemester varchar(255);
 
-    alter table public.so_company 
-       add column place_street_number varchar(255);
+    alter table public.so_school 
+       add column visitStartYear int4;
 
-    alter table public.so_company 
-       add column place_zipCode varchar(255);
+
+    alter table so_school
+      drop COLUMN endsemester;
+
+    alter table so_school
+      drop COLUMN endyear;
+
+    alter table so_school
+      drop COLUMN startsemester;
+
+    alter table so_school
+      drop COLUMN startyear;

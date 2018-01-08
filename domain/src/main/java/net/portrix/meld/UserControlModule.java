@@ -45,15 +45,6 @@ public class UserControlModule {
         this(null, null);
     }
 
-    public static File workingDirectory(UUID id) throws IOException {
-        String home = System.getProperty("user.home");
-        File meld = new File(home + File.separator + ".meld");
-        FileUtils.forceMkdir(meld);
-        File imageWorkingDir = new File(meld.getCanonicalPath() + File.separator + id.toString());
-        FileUtils.forceMkdir(imageWorkingDir);
-        return imageWorkingDir;
-    }
-
     public void onSecurityAction(@Observes SecurityAction securityAction) {
 
         final List<Permission> permissions = permissionManager.findAll();

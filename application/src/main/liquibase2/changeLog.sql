@@ -184,3 +184,55 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce
 
 --changeset patrick:15
 update uc_permission set path = 'social/user/current/contact/create' where path = 'social/user/{id}/contact/create';
+
+--changeset patrick:16
+    alter table public.cn_post
+       add column link varchar(255);
+
+--changeset patrick:17
+
+
+    alter table public.so_school
+       add column yearEndSemester varchar(255);
+
+    alter table public.so_school
+       add column yearEndYear int4;
+
+    alter table public.so_school
+       add column yearStartSemester varchar(255);
+
+    alter table public.so_school
+       add column yearStartYear int4;
+
+    alter table public.so_school
+       add column visitEndSemester varchar(255);
+
+    alter table public.so_school
+       add column visitEndYear int4;
+
+    alter table public.so_school
+       add column visitStartSemester varchar(255);
+
+    alter table public.so_school
+       add column visitStartYear int4;
+
+    alter table so_school
+      drop COLUMN endsemester;
+
+    alter table so_school
+      drop COLUMN endyear;
+
+    alter table so_school
+      drop COLUMN startsemester;
+
+    alter table so_school
+      drop COLUMN startyear;
+
+INSERT INTO public.uc_permission (id, method, name, path) VALUES ('1bca4d8c-ef07-4099-95ea-69da41c58421', 'GET', 'Social Education Name', 'social/education/name');
+
+--changeset patrick:18
+
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', '1bca4d8c-ef07-4099-95ea-69da41c58421');
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', '1bca4d8c-ef07-4099-95ea-69da41c58421');
+
+

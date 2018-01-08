@@ -102,5 +102,7 @@ public abstract class MeldPost extends AbstractAggregate {
         Object visit(MeldYouTubePost post);
 
         Object visit(MeldPhotoPost post);
+
+        Object visit(MeldLinkPost post);
     }
 }

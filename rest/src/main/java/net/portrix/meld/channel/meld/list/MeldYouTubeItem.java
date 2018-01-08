@@ -3,7 +3,7 @@ package net.portrix.meld.channel.meld.list;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("youtube")
-public class MeldYouTubeItem extends MeldItem {
+public class MeldYouTubeItem extends AbstractMeldItem {
 
     private String videoId;
 

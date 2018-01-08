@@ -1,0 +1,10 @@
+<app-meld-form [post]="post">
+  <form>
+    <fieldset>
+      <app-meld-editor [(ngModel)]="post.text" name="text" placeholder="Write something here..."></app-meld-editor>
+      <mat-form-field style="width: 100%;">
+        <input matInput name="link" type="url" [(ngModel)]="post.link" placeholder="Link">
+      </mat-form-field>
+    </fieldset>
+  </form>
+</app-meld-form>

@@ -19,6 +19,8 @@ import {MeldYoutubeItemComponent} from './meld/list/meld-list/meld-item/meld-you
 import {MeldImageItemComponent} from './meld/list/meld-list/meld-item/meld-image-item/meld-image-item.component';
 import {MeldPhotoFormComponent} from './meld/form/meld-form/meld-photo-form/meld-photo-form.component';
 import {MeldPhotoItemComponent} from './meld/list/meld-list/meld-item/meld-photo-item/meld-photo-item.component';
+import { MeldLinkFormComponent } from './meld/form/meld-form/meld-link-form/meld-link-form.component';
+import { MeldLinkItemComponent } from './meld/list/meld-list/meld-item/meld-link-item/meld-link-item.component';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import {MeldPhotoItemComponent} from './meld/list/meld-list/meld-item/meld-photo
     MeldYoutubeItemComponent,
     MeldImageItemComponent,
     MeldPhotoFormComponent,
-    MeldPhotoItemComponent
+    MeldPhotoItemComponent,
+    MeldLinkFormComponent,
+    MeldLinkItemComponent
   ],
   providers: [
     appRoutingProviders

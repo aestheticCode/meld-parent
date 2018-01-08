@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "so_profile")
+@NamedQuery(name = "findProfileByUser", query = "select p from Profile p where p.user = :user")
 public class Profile extends AbstractAggregate {
 
     @ManyToOne

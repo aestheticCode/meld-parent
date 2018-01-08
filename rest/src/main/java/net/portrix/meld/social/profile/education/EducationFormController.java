@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,18 +34,14 @@ public class EducationFormController {
 
     private final URLBuilderFactory factory;
 
-    private final Identity identity;
-
-
     @Inject
-    public EducationFormController(EducationFormService service, URLBuilderFactory factory, Identity identity) {
+    public EducationFormController(EducationFormService service, URLBuilderFactory factory) {
         this.service = service;
         this.factory = factory;
-        this.identity = identity;
     }
 
     public EducationFormController() {
-        this(null, null, null);
+        this(null, null);
     }
 
     @GET
@@ -94,6 +91,8 @@ public class EducationFormController {
             schoolFormType.setCourse(school.getCourse());
             schoolFormType.setDescription(school.getDescription());
             schoolFormType.setId(school.getId());
+            schoolFormType.setName(school.getName());
+            schoolFormType.setTillNow(school.isTillNow());
 
             LocationDetailForm locationForm = new LocationDetailForm();
             locationForm.setId(school.getPlace().getId());
@@ -108,31 +107,25 @@ public class EducationFormController {
 
             schoolFormType.setLocation(locationForm);
 
-            schoolFormType.setTillNow(school.isTillNow());
-
             SchoolDateForm start = new SchoolDateForm();
-            switch (school.getStart().getSemester()) {
-                case SUMMER:
-                    start.setSemester(SchoolDateForm.Semester.SUMMER);
-                    break;
-                case WINTER:
-                    start.setSemester(SchoolDateForm.Semester.WINTER);
-                    break;
-            }
-            start.setYear(school.getStart().getYear());
-            schoolFormType.setStart(start);
+            start.setSemester(school.getStartYear().getSemester());
+            start.setYear(school.getStartYear().getYear());
+            schoolFormType.setStartYear(start);
 
             SchoolDateForm end = new SchoolDateForm();
-            switch (school.getEnd().getSemester()) {
-                case SUMMER:
-                    end.setSemester(SchoolDateForm.Semester.SUMMER);
-                    break;
-                case WINTER:
-                    end.setSemester(SchoolDateForm.Semester.WINTER);
-                    break;
-            }
-            end.setYear(school.getEnd().getYear());
-            schoolFormType.setEnd(end);
+            end.setSemester(school.getEndYear().getSemester());
+            end.setYear(school.getEndYear().getYear());
+            schoolFormType.setEndYear(end);
+
+            SchoolDateForm visitStart = new SchoolDateForm();
+            visitStart.setSemester(school.getVisitStart().getSemester());
+            visitStart.setYear(school.getVisitStart().getYear());
+            schoolFormType.setVisitStart(visitStart);
+
+            SchoolDateForm visitEnd = new SchoolDateForm();
+            visitEnd.setSemester(school.getVisitEnd().getSemester());
+            visitEnd.setYear(school.getVisitEnd().getYear());
+            schoolFormType.setVisitEnd(visitEnd);
 
 
             form.addSchool(schoolFormType);
@@ -165,6 +158,8 @@ public class EducationFormController {
             School school = new School();
             school.setCourse(schoolType.getCourse());
             school.setDescription(schoolType.getDescription());
+            school.setName(schoolType.getName());
+            school.setTillNow(schoolType.isTillNow());
 
             Place place = new Place();
             place.setId(schoolType.getLocation().getId());
@@ -180,31 +175,26 @@ public class EducationFormController {
             place.setLng(schoolType.getLocation().getLng());
 
             school.setPlace(place);
-            school.setTillNow(schoolType.isTillNow());
 
             SchoolDate start = new SchoolDate();
-            start.setYear(schoolType.getStart().getYear());
-            switch (schoolType.getStart().getSemester()) {
-                case SUMMER:
-                    start.setSemester(SchoolDate.Semester.SUMMER);
-                    break;
-                case WINTER:
-                    start.setSemester(SchoolDate.Semester.WINTER);
-                    break;
-            }
-            school.setStart(start);
+            start.setYear(schoolType.getStartYear().getYear());
+            start.setSemester(schoolType.getStartYear().getSemester());
+            school.setStartYear(start);
 
             SchoolDate end = new SchoolDate();
-            end.setYear(schoolType.getEnd().getYear());
-            switch (schoolType.getEnd().getSemester()) {
-                case SUMMER:
-                    end.setSemester(SchoolDate.Semester.SUMMER);
-                    break;
-                case WINTER:
-                    end.setSemester(SchoolDate.Semester.WINTER);
-                    break;
-            }
-            school.setEnd(end);
+            end.setYear(schoolType.getEndYear().getYear());
+            end.setSemester(schoolType.getEndYear().getSemester());
+            school.setEndYear(end);
+
+            SchoolDate visitStart = new SchoolDate();
+            visitStart.setSemester(schoolType.getVisitStart().getSemester());
+            visitStart.setYear(schoolType.getVisitStart().getYear());
+            school.setVisitStart(visitStart);
+
+            SchoolDate visitEnd = new SchoolDate();
+            visitEnd.setSemester(schoolType.getVisitEnd().getSemester());
+            visitEnd.setYear(schoolType.getVisitEnd().getYear());
+            school.setVisitEnd(visitEnd);
 
             education.addSchool(school);
         }
@@ -229,6 +219,8 @@ public class EducationFormController {
             School school = new School();
             school.setCourse(schoolType.getCourse());
             school.setDescription(schoolType.getDescription());
+            school.setName(schoolType.getName());
+            school.setTillNow(schoolType.isTillNow());
 
             Place place = new Place();
             place.setId(schoolType.getLocation().getId());
@@ -243,31 +235,26 @@ public class EducationFormController {
             place.setLat(schoolType.getLocation().getLat());
             place.setLng(schoolType.getLocation().getLng());
             school.setPlace(place);
-            school.setTillNow(schoolType.isTillNow());
 
             SchoolDate start = new SchoolDate();
-            start.setYear(schoolType.getStart().getYear());
-            switch (schoolType.getStart().getSemester()) {
-                case SUMMER:
-                    start.setSemester(SchoolDate.Semester.SUMMER);
-                    break;
-                case WINTER:
-                    start.setSemester(SchoolDate.Semester.WINTER);
-                    break;
-            }
-            school.setStart(start);
+            start.setYear(schoolType.getStartYear().getYear());
+            start.setSemester(schoolType.getStartYear().getSemester());
+            school.setStartYear(start);
 
             SchoolDate end = new SchoolDate();
-            end.setYear(schoolType.getEnd().getYear());
-            switch (schoolType.getEnd().getSemester()) {
-                case SUMMER:
-                    end.setSemester(SchoolDate.Semester.SUMMER);
-                    break;
-                case WINTER:
-                    end.setSemester(SchoolDate.Semester.WINTER);
-                    break;
-            }
-            school.setEnd(end);
+            end.setYear(schoolType.getEndYear().getYear());
+            end.setSemester(schoolType.getEndYear().getSemester());
+            school.setEndYear(end);
+
+            SchoolDate visitStart = new SchoolDate();
+            visitStart.setSemester(schoolType.getVisitStart().getSemester());
+            visitStart.setYear(schoolType.getVisitStart().getYear());
+            school.setVisitStart(visitStart);
+
+            SchoolDate visitEnd = new SchoolDate();
+            visitEnd.setSemester(schoolType.getVisitEnd().getSemester());
+            visitEnd.setYear(schoolType.getVisitEnd().getYear());
+            school.setVisitEnd(visitEnd);
 
             education.addSchool(school);
         }
@@ -285,6 +272,14 @@ public class EducationFormController {
 
         Education education = service.findEducation(user);
         service.deleteEducation(education);
+    }
+
+    @GET
+    @Path("education/name")
+    @Name("Education Name")
+    @Secured
+    public List<String> query(@QueryParam("name") String name) {
+        return service.findEducationNames(name);
     }
 
     public static URLBuilder<EducationFormController> linkCreate(URLBuilderFactory builderFactory) {

@@ -11,13 +11,19 @@ public class SchoolForm {
 
     private UUID id;
 
+    private String name;
+
     private LocationDetailForm location;
 
     private String course;
 
-    private SchoolDateForm start;
+    private SchoolDateForm startYear;
 
-    private SchoolDateForm end;
+    private SchoolDateForm endYear;
+
+    private SchoolDateForm visitStart;
+
+    private SchoolDateForm visitEnd;
 
     private boolean tillNow;
 
@@ -29,6 +35,14 @@ public class SchoolForm {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocationDetailForm getLocation() {
@@ -47,20 +61,36 @@ public class SchoolForm {
         this.course = course;
     }
 
-    public SchoolDateForm getStart() {
-        return start;
+    public SchoolDateForm getStartYear() {
+        return startYear;
     }
 
-    public void setStart(SchoolDateForm start) {
-        this.start = start;
+    public void setStartYear(SchoolDateForm startYear) {
+        this.startYear = startYear;
     }
 
-    public SchoolDateForm getEnd() {
-        return end;
+    public SchoolDateForm getEndYear() {
+        return endYear;
     }
 
-    public void setEnd(SchoolDateForm end) {
-        this.end = end;
+    public void setEndYear(SchoolDateForm endYear) {
+        this.endYear = endYear;
+    }
+
+    public SchoolDateForm getVisitStart() {
+        return visitStart;
+    }
+
+    public void setVisitStart(SchoolDateForm visitStart) {
+        this.visitStart = visitStart;
+    }
+
+    public SchoolDateForm getVisitEnd() {
+        return visitEnd;
+    }
+
+    public void setVisitEnd(SchoolDateForm visitEnd) {
+        this.visitEnd = visitEnd;
     }
 
     public boolean isTillNow() {

@@ -1,15 +1,12 @@
 package net.portrix.meld.social.profile.education;
 
-public class SchoolDateForm {
+import net.portrix.meld.social.profile.SchoolDate;
 
-    public enum Semester {
-        WINTER,
-        SUMMER
-    }
+public class SchoolDateForm {
 
     private int year;
 
-    private Semester semester;
+    private SchoolDate.Semester semester;
 
     public int getYear() {
         return year;
@@ -19,11 +16,11 @@ public class SchoolDateForm {
         this.year = year;
     }
 
-    public Semester getSemester() {
+    public SchoolDate.Semester getSemester() {
         return semester;
     }
 
-    public void setSemester(Semester semester) {
+    public void setSemester(SchoolDate.Semester semester) {
         this.semester = semester;
     }
 }

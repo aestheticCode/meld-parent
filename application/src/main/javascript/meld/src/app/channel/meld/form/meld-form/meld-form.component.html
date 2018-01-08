@@ -4,7 +4,7 @@
     <div class="col-md-5">
       <mat-card>
         <mat-card-header>
-          <img mat-card-avatar style="width: 48px; height: 48px;" [src]="user.avatar.url">
+          <img mat-card-avatar style="width: 48px; height: 48px;" [src]="user.avatar || 'assets/user.png'">
           <mat-card-title style="white-space: nowrap;">{{user.firstName}} {{user.lastName}}</mat-card-title>
           <mat-card-subtitle>
             <app-categories-select (onClickChange)="open(post)" [(ngModel)]="post.category"></app-categories-select>
@@ -15,6 +15,7 @@
             <button mat-menu-item [routerLink]="['/channel','meld','post','image']"> Image </button>
             <button mat-menu-item [routerLink]="['/channel','meld','post','youtube']"> YouTube </button>
             <button mat-menu-item [routerLink]="['/channel','meld','post','photo']"> Photo </button>
+            <button mat-menu-item [routerLink]="['/channel','meld','post','link']"> Link </button>
           </mat-menu>
 
           <button *ngIf="! post.id" mat-icon-button [matMenuTriggerFor]="appMenu">

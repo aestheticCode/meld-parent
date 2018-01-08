@@ -9,7 +9,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "so_school")
+@NamedQuery(name = "findSchoolNames", query = "select distinct s.name from School s where lower(s.name) like :name order by s.name asc")
 public class School extends AbstractEntity {
+
+    private String name;
 
     @Embedded
     @AttributeOverrides({
@@ -30,21 +33,44 @@ public class School extends AbstractEntity {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="semester", column=@Column(name = "startSemester")),
-            @AttributeOverride(name="year", column=@Column(name = "startYear"))
+            @AttributeOverride(name="semester", column=@Column(name = "yearStartSemester")),
+            @AttributeOverride(name="year", column=@Column(name = "yearStartYear"))
     })
-    private SchoolDate start;
+    private SchoolDate startYear;
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="semester", column=@Column(name = "endSemester")),
-            @AttributeOverride(name="year", column=@Column(name = "endYear"))
+            @AttributeOverride(name="semester", column=@Column(name = "yearEndSemester")),
+            @AttributeOverride(name="year", column=@Column(name = "yearEndYear"))
     })
-    private SchoolDate end;
+    private SchoolDate endYear;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="semester", column=@Column(name = "visitStartSemester")),
+            @AttributeOverride(name="year", column=@Column(name = "visitStartYear"))
+    })
+    private SchoolDate visitStart;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="semester", column=@Column(name = "visitEndSemester")),
+            @AttributeOverride(name="year", column=@Column(name = "visitEndYear"))
+    })
+    private SchoolDate visitEnd;
+
 
     private boolean tillNow;
 
     private String description;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Place getPlace() {
         return place;
@@ -62,20 +88,36 @@ public class School extends AbstractEntity {
         this.course = course;
     }
 
-    public SchoolDate getStart() {
-        return start;
+    public SchoolDate getStartYear() {
+        return startYear;
     }
 
-    public void setStart(SchoolDate start) {
-        this.start = start;
+    public void setStartYear(SchoolDate start) {
+        this.startYear = start;
     }
 
-    public SchoolDate getEnd() {
-        return end;
+    public SchoolDate getEndYear() {
+        return endYear;
     }
 
-    public void setEnd(SchoolDate end) {
-        this.end = end;
+    public void setEndYear(SchoolDate end) {
+        this.endYear = end;
+    }
+
+    public SchoolDate getVisitStart() {
+        return visitStart;
+    }
+
+    public void setVisitStart(SchoolDate visitStart) {
+        this.visitStart = visitStart;
+    }
+
+    public SchoolDate getVisitEnd() {
+        return visitEnd;
+    }
+
+    public void setVisitEnd(SchoolDate visitEnd) {
+        this.visitEnd = visitEnd;
     }
 
     public boolean isTillNow() {

@@ -13,12 +13,12 @@
           </button>
         </mat-card-header>
 
-
         <div [ngSwitch]="post.type">
           <app-meld-text-item *ngSwitchCase="'text'" [post]="post"></app-meld-text-item>
           <app-meld-image-item *ngSwitchCase="'image'" [post]="post"></app-meld-image-item>
           <app-meld-youtube-item *ngSwitchCase="'youtube'" [post]="post"></app-meld-youtube-item>
           <app-meld-photo-item *ngSwitchCase="'photo'" [post]="post"></app-meld-photo-item>
+          <app-meld-link-item *ngSwitchCase="'link'" [post]="post"></app-meld-link-item>
         </div>
 
         <mat-card-content>

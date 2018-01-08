@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 
 import {AppComponent} from 'app/app.component';
 import {LibModule} from "lib/lib.module";
@@ -7,6 +7,7 @@ import {appRoutingProviders, routing} from "./app.routing";
 import {AppHome} from "app/app.home";
 import {AppService} from "app/app.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AppErrorHandler} from './app.errorhandler';
 
 export function initConfiguration(configService: AppService): Function {
   return () => configService.load();
@@ -32,6 +33,10 @@ export function initConfiguration(configService: AppService): Function {
       useFactory: initConfiguration,
       deps: [AppService],
       multi: true
+    },
+    {
+      provide: ErrorHandler,
+      useClass: AppErrorHandler
     }
 
   ],

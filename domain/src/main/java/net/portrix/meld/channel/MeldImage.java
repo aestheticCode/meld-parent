@@ -1,7 +1,7 @@
 package net.portrix.meld.channel;
 
 import net.portrix.generic.ddd.AbstractEntity;
-import net.portrix.meld.UserControlModule;
+import net.portrix.generic.image.ImageUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -31,18 +31,23 @@ public class MeldImage extends AbstractEntity {
 
     @PostLoad
     void postLoad() throws IOException {
-        image = loadImage(getId(), fileName);
-        thumbnail = loadThumbnail(getId(), fileName);
+        image = ImageUtils.loadImageFromWorkingDirectory(getId(), fileName);
+        thumbnail = ImageUtils.loadThumbnailFromWorkingDirectory(getId(), fileName);
     }
 
     @PostPersist
     void postPersist() throws IOException {
-        save(getId(), fileName, image, thumbnail);
+        ImageUtils.saveToWorkingDirectory(getId(), fileName, image, thumbnail);
     }
 
     @PostUpdate
     void postUpdate() throws IOException {
-        save(getId(), fileName, image, thumbnail);
+        ImageUtils.saveToWorkingDirectory(getId(), fileName, image, thumbnail);
+    }
+
+    @PostRemove
+    void postDelete() throws IOException {
+        ImageUtils.deleteFromWorkingDirectory(getId());
     }
 
     public String getFileName() {
@@ -78,7 +83,7 @@ public class MeldImage extends AbstractEntity {
     }
 
     private static void save(UUID id, String fileName, byte[] image, byte[] thumbnail) throws IOException {
-        File imageWorkingDir = UserControlModule.workingDirectory(id);
+        File imageWorkingDir = ImageUtils.workingDirectory(id);
         String extension = FilenameUtils.getExtension(fileName);
         File imageFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "image." + extension);
         File thumbnailFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "thumbnail." + extension);
@@ -87,14 +92,14 @@ public class MeldImage extends AbstractEntity {
     }
 
     private static byte[] loadImage(UUID id, String fileName) throws IOException {
-        File imageWorkingDir = UserControlModule.workingDirectory(id);
+        File imageWorkingDir = ImageUtils.workingDirectory(id);
         String extension = FilenameUtils.getExtension(fileName);
         File imageFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "image." + extension);
         return IOUtils.toByteArray(imageFile.toURI());
     }
 
     private static byte[] loadThumbnail(UUID id, String fileName) throws IOException {
-        File imageWorkingDir = UserControlModule.workingDirectory(id);
+        File imageWorkingDir = ImageUtils.workingDirectory(id);
         String extension = FilenameUtils.getExtension(fileName);
         File thumbnailFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "thumbnail." + extension);
         return IOUtils.toByteArray(thumbnailFile.toURI());

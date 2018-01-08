@@ -5,12 +5,9 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.Link;
-import net.portrix.generic.rest.api.query.Query;
 import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
-import net.portrix.meld.ApplicationController;
 import net.portrix.meld.channel.*;
 import net.portrix.meld.channel.meld.comment.MeldCommentFormController;
 import net.portrix.meld.channel.meld.comment.MeldCommentResponse;
@@ -21,7 +18,6 @@ import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.user.image.UserImageController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -64,111 +60,35 @@ public class MeldListController {
     @Path("meld/posts")
     @Name("Meld Posts")
     @Transactional
-    public Container<MeldItem> list(Search search) {
+    public Container<AbstractMeldItem> list(Search search) {
 
         final User currentUser = service.currentUser();
 
         final List<MeldPost> posts = service.find(search);
         final long countAll = service.count(search);
 
-        final List<MeldItem> items = new ArrayList<>();
+        final List<AbstractMeldItem> items = new ArrayList<>();
 
         for (MeldPost post : posts) {
 
-            MeldItem response = (MeldItem) post.accept(new MeldPost.Visitor() {
+            AbstractMeldItem response = (AbstractMeldItem) post.accept(new MeldPost.Visitor() {
                 @Override
                 public Object visit(MeldImagePost post) {
                     MeldImageItem item = new MeldImageItem();
-                    item.setId(post.getId());
-                    item.setName(post.getUser().getFirstName() + " " + post.getUser().getLastName());
-                    item.setText(post.getText());
-                    item.setTime(TimeUtils.format(post.getCreated()));
-                    Category category = post.getCategory();
-                    if (category == null) {
-                        item.setCategory("public");
-                    } else {
-                        item.setCategory(category.getName());
-                    }
-                    for (User user : post.getLikes()) {
-
-                        Profile profile = service.findProfile(user);
-
-                        URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                                .generateUri();
-
-                        MeldLikeResponse likeResponse = new MeldLikeResponse();
-                        likeResponse.setCurrent(currentUser.equals(user));
-                        likeResponse.setAvatar(avatar);
-
-                        item.addLike(likeResponse);
-                    }
-                    if (post.getUser().equals(currentUser)) {
-                        MeldPostFormController.linkRead(post, builderFactory)
-                                .buildSecured(item::addLink);
-                    }
-                    createComments(currentUser, post.getComments(), item.getComments());
-
+                    processPost(item, post, currentUser);
                     final MeldImage image = post.getImage();
-
                     Blob blob = new Blob();
-
                     blob.setName(image.getFileName());
                     blob.setData(image.getImage());
                     blob.setLastModified(image.getLastModified());
-
                     item.setImage(blob);
-
-                    Profile profile = service.findProfile(post.getUser());
-                    if (profile != null) {
-                        URI avatarPost = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                                .generateUri();
-                        item.setAvatar(avatarPost);
-                    }
-
-
                     return item;
                 }
 
                 @Override
                 public Object visit(MeldTextPost post) {
                     MeldTextItem item = new MeldTextItem();
-                    item.setId(post.getId());
-                    item.setName(post.getUser().getFirstName() + " " + post.getUser().getLastName());
-                    item.setText(post.getText());
-                    item.setTime(TimeUtils.format(post.getCreated()));
-                    Category category = post.getCategory();
-                    if (category == null) {
-                        item.setCategory("public");
-                    } else {
-                        item.setCategory(category.getName());
-                    }
-                    for (User user : post.getLikes()) {
-
-                        Profile profile = service.findProfile(user);
-
-                        URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                                .generateUri();
-
-                        MeldLikeResponse likeResponse = new MeldLikeResponse();
-                        likeResponse.setCurrent(currentUser.equals(user));
-                        likeResponse.setAvatar(avatar);
-
-                        item.addLike(likeResponse);
-                    }
-                    if (post.getUser().equals(currentUser)) {
-                        MeldPostFormController.linkRead(post, builderFactory)
-                                .buildSecured(item::addLink);
-                    }
-                    createComments(currentUser, post.getComments(), item.getComments());
-
-                    Profile profile = service.findProfile(post.getUser());
-                    if (profile != null) {
-                        URI avatarPost = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                                .generateUri();
-                        item.setAvatar(avatarPost);
-                    }
-
-
+                    processPost(item, post, currentUser);
                     return item;
 
                 }
@@ -176,44 +96,8 @@ public class MeldListController {
                 @Override
                 public Object visit(MeldYouTubePost post) {
                     MeldYouTubeItem item = new MeldYouTubeItem();
-                    item.setId(post.getId());
-                    item.setName(post.getUser().getFirstName() + " " + post.getUser().getLastName());
-                    item.setText(post.getText());
+                    processPost(item, post, currentUser);
                     item.setVideoId(post.getVideoId());
-                    item.setTime(TimeUtils.format(post.getCreated()));
-                    Category category = post.getCategory();
-                    if (category == null) {
-                        item.setCategory("public");
-                    } else {
-                        item.setCategory(category.getName());
-                    }
-                    for (User user : post.getLikes()) {
-
-                        Profile profile = service.findProfile(user);
-
-                        URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                                .generateUri();
-
-                        MeldLikeResponse likeResponse = new MeldLikeResponse();
-                        likeResponse.setCurrent(currentUser.equals(user));
-                        likeResponse.setAvatar(avatar);
-
-                        item.addLike(likeResponse);
-                    }
-                    if (post.getUser().equals(currentUser)) {
-                        MeldPostFormController.linkRead(post, builderFactory)
-                                .buildSecured(item::addLink);
-                    }
-                    createComments(currentUser, post.getComments(), item.getComments());
-
-                    Profile profile = service.findProfile(post.getUser());
-                    if (profile != null) {
-                        URI avatarPost = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                                .generateUri();
-                        item.setAvatar(avatarPost);
-                    }
-
-
                     return item;
 
                 }
@@ -221,49 +105,27 @@ public class MeldListController {
                 @Override
                 public Object visit(MeldPhotoPost post) {
                     MeldPhotoItem item = new MeldPhotoItem();
-                    item.setId(post.getId());
-                    item.setName(post.getUser().getFirstName() + " " + post.getUser().getLastName());
-                    item.setText(post.getText());
+                    processPost(item, post, currentUser);
                     Photo photo = post.getPhoto();
-
                     URI photoPost = PhotoFormController.linkPhoto(photo, builderFactory)
                             .generateUri();
                     item.setPhoto(photoPost);
-
-                    item.setTime(TimeUtils.format(post.getCreated()));
-                    Category category = post.getCategory();
-                    if (category == null) {
-                        item.setCategory("public");
-                    } else {
-                        item.setCategory(category.getName());
-                    }
-                    for (User user : post.getLikes()) {
-
-                        Profile profile = service.findProfile(user);
-
-                        URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                                .generateUri();
-
-                        MeldLikeResponse likeResponse = new MeldLikeResponse();
-                        likeResponse.setCurrent(currentUser.equals(user));
-                        likeResponse.setAvatar(avatar);
-
-                        item.addLike(likeResponse);
-                    }
-                    if (post.getUser().equals(currentUser)) {
-                        MeldPostFormController.linkRead(post, builderFactory)
-                                .buildSecured(item::addLink);
-                    }
-                    createComments(currentUser, post.getComments(), item.getComments());
-
-                    Profile profile = service.findProfile(post.getUser());
-                    if (profile != null) {
-                        URI avatarPost = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                                .generateUri();
-                        item.setAvatar(avatarPost);
-                    }
-
                     return item;
+                }
+
+                @Override
+                public Object visit(MeldLinkPost post) {
+                    MeldLinkItem item = new MeldLinkItem();
+                    processPost(item, post, currentUser);
+                    final MeldImage image = post.getImage();
+                    Blob blob = new Blob();
+                    blob.setName(image.getFileName());
+                    blob.setData(image.getImage());
+                    blob.setLastModified(image.getLastModified());
+                    item.setImage(blob);
+                    item.setLink(post.getLink());
+                    return item;
+
                 }
             });
 
@@ -272,6 +134,44 @@ public class MeldListController {
         }
 
         return new Container<>(items, (int) countAll);
+    }
+
+    private void processPost(AbstractMeldItem item, MeldPost post, User currentUser) {
+        item.setId(post.getId());
+        item.setName(post.getUser().getFirstName() + " " + post.getUser().getLastName());
+        item.setText(post.getText());
+        item.setTime(TimeUtils.format(post.getCreated()));
+        Category category = post.getCategory();
+        if (category == null) {
+            item.setCategory("public");
+        } else {
+            item.setCategory(category.getName());
+        }
+        for (User user : post.getLikes()) {
+
+            Profile profile = service.findProfile(user);
+
+            URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                    .generateUri();
+
+            MeldLikeResponse likeResponse = new MeldLikeResponse();
+            likeResponse.setCurrent(currentUser.equals(user));
+            likeResponse.setAvatar(avatar);
+
+            item.addLike(likeResponse);
+        }
+        if (post.getUser().equals(currentUser)) {
+            MeldPostFormController.linkRead(post, builderFactory)
+                    .buildSecured(item::addLink);
+        }
+        createComments(currentUser, post.getComments(), item.getComments());
+
+        Profile profile = service.findProfile(post.getUser());
+        if (profile != null) {
+            URI avatarPost = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                    .generateUri();
+            item.setAvatar(avatarPost);
+        }
     }
 
     private void createComments(User currentUser, List<MeldComment> comments, List<MeldCommentResponse> commentResponses) {

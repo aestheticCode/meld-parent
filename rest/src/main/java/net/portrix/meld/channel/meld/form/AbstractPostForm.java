@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Sets;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
+import net.portrix.meld.channel.MeldLinkPost;
 
 import java.util.Set;
 import java.util.UUID;
@@ -14,7 +15,8 @@ import java.util.UUID;
         @JsonSubTypes.Type(MeldTextPostForm.class),
         @JsonSubTypes.Type(MeldImagePostForm.class),
         @JsonSubTypes.Type(MeldYouTubePostForm.class),
-        @JsonSubTypes.Type(MeldPhotoPostForm.class)
+        @JsonSubTypes.Type(MeldPhotoPostForm.class),
+        @JsonSubTypes.Type(MeldLinkPostForm.class)
 })
 public abstract class AbstractPostForm implements LinksContainer {
 
@@ -71,5 +73,7 @@ public abstract class AbstractPostForm implements LinksContainer {
         AbstractPostForm visit(MeldYouTubePostForm form);
 
         AbstractPostForm visit(MeldPhotoPostForm form);
+
+        AbstractPostForm visit(MeldLinkPostForm form);
     }
 }

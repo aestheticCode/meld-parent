@@ -2,12 +2,11 @@ package net.portrix.meld.channel.meld.list;
 
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import net.portrix.generic.rest.api.Blob;
 
 import java.net.URI;
 
 @JsonTypeName("photo")
-public class MeldPhotoItem extends MeldItem {
+public class MeldPhotoItem extends AbstractMeldItem {
 
     private URI photo;
 

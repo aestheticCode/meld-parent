@@ -8,6 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -52,5 +53,11 @@ public class EducationFormService {
 
     public void deleteEducation(Education education) {
         entityManager.remove(education);
+    }
+
+    public List<String> findEducationNames(String name) {
+        return entityManager.createNamedQuery("findSchoolNames", String.class)
+                .setParameter("name", "%" + name.toLowerCase() + "%")
+                .getResultList();
     }
 }

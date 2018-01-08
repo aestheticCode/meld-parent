@@ -20,9 +20,10 @@ import java.util.*;
         @JsonSubTypes.Type(MeldImageItem.class),
         @JsonSubTypes.Type(MeldTextItem.class),
         @JsonSubTypes.Type(MeldYouTubeItem.class),
-        @JsonSubTypes.Type(MeldPhotoItem.class)
+        @JsonSubTypes.Type(MeldPhotoItem.class),
+        @JsonSubTypes.Type(MeldLinkItem.class)
 })
-public class MeldItem implements LinksContainer {
+public abstract class AbstractMeldItem implements LinksContainer {
 
     private UUID id;
 

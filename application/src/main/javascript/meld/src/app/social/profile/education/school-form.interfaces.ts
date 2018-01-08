@@ -4,13 +4,19 @@ export interface School {
 
   id : string
 
-  location : Place
+  name : string;
+
+  location : Place;
 
   course : string
 
-  start : SchoolDate
+  startYear : SchoolDate
 
-  end : SchoolDate
+  endYear : SchoolDate
+
+  visitStart : SchoolDate
+
+  visitEnd : SchoolDate
 
   tillNow : boolean
 

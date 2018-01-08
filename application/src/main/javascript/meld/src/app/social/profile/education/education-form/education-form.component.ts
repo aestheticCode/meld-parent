@@ -63,10 +63,14 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
   public preRequest() {
     this.education.schools
       = this.education.schools.filter((school) => {
-      return Objects.isNotNull(school.location)
+      return Objects.isNotNull(school.name)
         || Strings.isNotEmpty(school.course)
-        || Objects.isNotNull(school.start)
-        || Objects.isNotNull(school.end);
+        || Objects.isNotNull(school.startYear)
+        || Objects.isNotNull(school.endYear)
+        || Objects.isNotNull(school.visitStart)
+        || Objects.isNotNull(school.visitEnd)
+        || Objects.isNotNull(school.visitStart)
+        || Objects.isNotNull(school.visitEnd);
     });
   }
 
