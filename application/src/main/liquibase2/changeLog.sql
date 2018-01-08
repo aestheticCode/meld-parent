@@ -50,6 +50,7 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a
       drop COLUMN place_address;
 
 
+/*
 
 --changeset patrick:7
       alter table public.so_address
@@ -90,6 +91,7 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a
 
     ALTER  TABLE so_address
       DROP COLUMN street;
+*/
 
 
 --changeset patrick:8
