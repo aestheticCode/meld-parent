@@ -109,10 +109,12 @@ public class ApplicationController {
 
             Profile profile = service.findProfile(current);
 
-            URI uri = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                    .generateUri();
+            if (profile != null) {
+                URI uri = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                        .generateUri();
 
-            user.setAvatar(uri);
+                user.setAvatar(uri);
+            }
 
             user.setId(current.getId());
             user.setEmail(current.getName());

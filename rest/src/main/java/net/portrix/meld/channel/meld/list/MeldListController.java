@@ -149,14 +149,17 @@ public class MeldListController {
         }
         for (User user : post.getLikes()) {
 
-            Profile profile = service.findProfile(user);
-
-            URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                    .generateUri();
 
             MeldLikeResponse likeResponse = new MeldLikeResponse();
             likeResponse.setCurrent(currentUser.equals(user));
-            likeResponse.setAvatar(avatar);
+
+            Profile profile = service.findProfile(user);
+
+            if (profile != null) {
+                URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                        .generateUri();
+                likeResponse.setAvatar(avatar);
+            }
 
             item.addLike(likeResponse);
         }
@@ -194,12 +197,15 @@ public class MeldListController {
 
                 Profile profile = service.findProfile(user);
 
-                URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                        .generateUri();
-
                 MeldLikeResponse likeResponse = new MeldLikeResponse();
                 likeResponse.setCurrent(currentUser.equals(user));
-                likeResponse.setAvatar(avatar);
+
+                if (profile != null) {
+                    URI avatar = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                            .generateUri();
+                    likeResponse.setAvatar(avatar);
+                }
+
 
                 commentResponse.addLike(likeResponse);
             }

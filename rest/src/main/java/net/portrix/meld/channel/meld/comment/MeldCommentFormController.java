@@ -148,10 +148,12 @@ public class MeldCommentFormController {
         }
 
         Profile profile = service.findProfile(current);
-        URI avatarLink = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
-                .generateUri();
+        if (profile != null) {
+            URI avatarLink = PhotoFormController.linkThumbnail(profile.getUserPhoto(), builderFactory)
+                    .generateUri();
 
-        response.setAvatar(avatarLink);
+            response.setAvatar(avatarLink);
+        }
 
         return response;
 
