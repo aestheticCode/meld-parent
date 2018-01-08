@@ -48,8 +48,6 @@ public class TokenFilter implements ContainerRequestFilter {
                 } else {
                     requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
                 }
-            } else {
-                requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
             }
         }
 
