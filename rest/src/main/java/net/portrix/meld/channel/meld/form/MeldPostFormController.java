@@ -192,7 +192,7 @@ public class MeldPostFormController {
 
             @Override
             public AbstractPostForm visit(MeldTextPostForm form) {
-                final MeldImagePost post = (MeldImagePost) service.findPost(id);
+                final MeldTextPost post = (MeldTextPost) service.findPost(id);
                 processPostUpdate(form, post);
                 return read(post.getId());
             }
@@ -221,7 +221,7 @@ public class MeldPostFormController {
 
             @Override
             public AbstractPostForm visit(MeldLinkPostForm form) {
-                final MeldLinkPost post = new MeldLinkPost();
+                final MeldLinkPost post = (MeldLinkPost) service.findPost(id);
 
                 processPostUpdate(edit, post);
 

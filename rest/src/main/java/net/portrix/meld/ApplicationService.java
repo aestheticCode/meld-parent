@@ -9,6 +9,7 @@ import org.picketlink.Identity;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
  * @author Patrick Bittner on 28.07.17.
@@ -42,14 +43,22 @@ public class ApplicationService {
     }
 
     public UserImage findUserImage(User current) {
-        return entityManager.createNamedQuery("findUserImage", UserImage.class)
-                .setParameter("user", current)
-                .getSingleResult();
+        try {
+            return entityManager.createNamedQuery("findUserImage", UserImage.class)
+                    .setParameter("user", current)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public Profile findProfile(User current) {
-        return entityManager.createNamedQuery("findProfileByUser", Profile.class)
-                .setParameter("user", current)
-                .getSingleResult();
+        try {
+            return entityManager.createNamedQuery("findProfileByUser", Profile.class)
+                    .setParameter("user", current)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

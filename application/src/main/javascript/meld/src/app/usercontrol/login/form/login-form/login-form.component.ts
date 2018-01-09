@@ -1,35 +1,46 @@
-import {Component} from '@angular/core';
-import {Http, Response} from "@angular/http";
-import {Router} from "@angular/router";
-import {LoginForm} from "./login-form.interfaces";
-import {LoginFormModel} from "./login-form.classes";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {LoginForm} from './login-form.interfaces';
+import {LoginFormModel} from './login-form.classes';
 import {AppService} from '../../../../app.service';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: 'login-form.component.html',
   styleUrls: ['login-form.component.css']
 })
-export class LoginFormComponent {
-
+export class LoginFormComponent implements OnInit {
 
   public login: LoginForm = new LoginFormModel();
 
-  constructor(private http: Http,
+  public loginError : boolean = false;
+
+  @ViewChild("form")
+  private form : NgForm;
+
+  constructor(private http: HttpClient,
               private router: Router,
               private appService: AppService) {
   }
 
+  ngOnInit(): void {
+    this.form.valueChanges.subscribe((value) => {
+      this.loginError = false;
+    })
+  }
+
   onSubmit() {
     const appService = this.appService;
-    this.http.post('service/usercontrol/login/form', this.login)
-      .subscribe((res: Response) => {
-        if (res.status == 200) {
-          this.login = res.json() as LoginForm;
-          this.appService.load().then((() => {
-            this.router.navigate([appService.redirectUrl]);
-          }));
-        }
+    this.http.post<LoginForm>('service/usercontrol/login/form', this.login)
+      .subscribe((res: LoginForm) => {
+        this.login = res;
+        this.appService.load().then((() => {
+          this.router.navigate([appService.redirectUrl]);
+        }));
+      }, (error : HttpResponse<LoginForm>) => {
+        this.loginError = true;
       });
 
   }

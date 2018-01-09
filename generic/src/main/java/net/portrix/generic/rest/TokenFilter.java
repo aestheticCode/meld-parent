@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
@@ -41,13 +42,7 @@ public class TokenFilter implements ContainerRequestFilter {
             if (rememberMe != null) {
                 String[] split = rememberMe.getValue().split("\\.");
                 credentials.setCredential(new TokenCredential(new LoginToken(split[0], split[1])));
-                Identity.AuthenticationResult authenticationResult = identity.login();
-
-                if (authenticationResult.equals(Identity.AuthenticationResult.SUCCESS)) {
-                    filter(requestContext);
-                } else {
-                    requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
-                }
+                identity.login();
             }
         }
 
