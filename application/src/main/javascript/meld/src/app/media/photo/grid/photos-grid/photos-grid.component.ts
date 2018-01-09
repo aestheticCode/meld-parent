@@ -6,6 +6,8 @@ import {Photo} from '../grid.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {PhotoFormComponent} from '../../form/photo-form/photo-form.component';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
+import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
+import {AppService} from '../../../../app.service';
 
 @Component({
   selector: 'app-photos-grid',
@@ -20,9 +22,11 @@ export class PhotosGridComponent {
   private grid : MeldGridComponent;
 
   constructor(private http: HttpClient,
+              private service : AppService,
               private dialog : MatDialog) {}
 
   photos: Items<Photo> = (query, callback) => {
+    query.expression = QueryBuilder.path("user.id", QueryBuilder.equal(this.service.configuration.user.id));
     this.http.post<Container<Photo>>('service/media/photos/grid', query)
       .subscribe((res) => {
         callback(res.rows, res.size);
