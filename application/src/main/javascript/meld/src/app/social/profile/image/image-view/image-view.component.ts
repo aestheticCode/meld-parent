@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {MatDialog} from '@angular/material';
 import {Photo} from '../../../../media/photo/form/photo.interfaces';
 import {PhotoDialogComponent} from '../../../../media/photo/grid/photo-dialog/photo-dialog.component';
@@ -17,7 +16,7 @@ export class ImageViewComponent implements OnInit {
   profile: Profile;
 
   constructor(private http: HttpClient,
-              private router : MeldRouterService,
+              private router: MeldRouterService,
               private dialog: MatDialog) {
   }
 
@@ -29,7 +28,7 @@ export class ImageViewComponent implements OnInit {
     let matDialogRef = this.dialog.open(PhotoDialogComponent, {width: '400px'});
 
     matDialogRef.afterClosed().subscribe((result: Photo) => {
-      this.http.post<any>('service/social/profile/user', {photoId: result.id})
+      this.http.post<any>('service/social/user/current/profile/user', {photoId: result.id})
         .subscribe((result) => {
           this.profile = result;
         });

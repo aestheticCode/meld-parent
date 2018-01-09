@@ -1,5 +1,5 @@
 
-<img style="display : block; max-width: 400px; max-height: 400px;" [src]="photo.image | meldBinaryImage">
+<img *ngIf="photo.image" style="display : block; max-width: 400px; max-height: 400px;" [src]="photo.image | meldBinaryImage">
 <mat-form-field style="display : block; width: 100%">
   <meld-file-container [placeholder]="'Image'">
     <input #image="InputDirective" type="file" name="image" [(ngModel)]="photo.image">

@@ -7,7 +7,7 @@
             <img style="width: 100%;" [src]="profile.image || 'assets/user.png'"/>
           </mat-card-content>
           <mat-card-actions>
-            <button *ngIf="profile.links | meldLink:'save'" mat-button (click)="onEdit()">Edit</button>
+            <button *ngIf="profile.links | meldLink:'update'" mat-button (click)="onEdit()">Edit</button>
           </mat-card-actions>
         </mat-card>
       </div>

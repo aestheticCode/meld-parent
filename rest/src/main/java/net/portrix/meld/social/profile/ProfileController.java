@@ -85,6 +85,8 @@ public class ProfileController {
         if (user.equals(currentUser)) {
             linkProfileBackgroundUpdate(factory)
                     .buildSecured(response::addLink);
+            linkProfileUserUpdate(factory)
+                    .buildSecured(response::addLink);
         }
 
         PersonalContact contact = service.findContact(user);
