@@ -70,15 +70,13 @@ public class ProfileController {
 
         Profile profile = service.find(user);
 
-        if (profile == null) {
-            return new ProfileResponse();
-        }
+        if (profile != null) {
+            response.setImage(PhotoFormController.linkPhoto(profile.getUserPhoto(), factory)
+                    .generateUri());
 
-        response.setImage(PhotoFormController.linkPhoto(profile.getUserPhoto(), factory)
-                .generateUri());
-
-        response.setBackground(PhotoFormController.linkPhoto(profile.getBackgroundPhoto(), factory)
-                .generateUri());
+            response.setBackground(PhotoFormController.linkPhoto(profile.getBackgroundPhoto(), factory)
+                    .generateUri());
+            }
 
         User currentUser = service.currentUser();
 
