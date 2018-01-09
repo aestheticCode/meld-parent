@@ -54,9 +54,6 @@ export class MeldGridComponent implements OnInit, ControlValueAccessor {
   @ContentChild(TemplateRef)
   public template: TemplateRef<any>;
 
-  constructor() {
-  }
-
   private calculateColumns() {
     let element: HTMLDivElement = this.viewPort.nativeElement;
     return Math.round(element.offsetWidth / this.columnWidth);
