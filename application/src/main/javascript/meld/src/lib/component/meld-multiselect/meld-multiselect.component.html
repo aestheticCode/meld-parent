@@ -1,12 +1,14 @@
 <div style="width: 100%;">
   <mat-form-field style="width: 100%;">
-    <meld-combobox *ngIf="! hideComboBox" [readonly]="readonly" [disabled]="disabled" #comboBox [items]="parentItems"
-                   (selectItemChange)="onSelectItemChange($event)" [placeholder]="placeholder">
+    <input matInput [meldComboboxInput]="comboBox" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" >
+    <meld-combobox [disabled]="disabled" #comboBox [items]="parentItems"
+                   (selectItemChange)="onSelectItemChange($event)">
       <ng-template let-item>
         <ng-template *ngTemplateOutlet="template; context: {$implicit: item}"></ng-template>
       </ng-template>
     </meld-combobox>
   </mat-form-field>
+
 
   <div class="box" (mouseenter)="showInfo = true" (mouseleave)="showInfo = false">
     <meld-table #table [items]="selectedItems" [unbordered]="true" [rowHeight]="47">
