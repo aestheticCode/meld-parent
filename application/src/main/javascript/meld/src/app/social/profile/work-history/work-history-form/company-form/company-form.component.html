@@ -1,38 +1,51 @@
-<form>
-  <fieldset>
-    <meld-google-maps-autocomplete name="name" [(ngModel)]="company.location" placeholder="Name"></meld-google-maps-autocomplete>
+<fieldset [formGroup]="company">
+  <legend>
+    <div style="display: flex">
+      <span>Company</span>
+      <div style=" flex: 1;"></div>
+      <button (click)="onDelete()"  mat-icon-button><mat-icon>delete</mat-icon></button>
+    </div>
+  </legend>
 
-    <mat-form-field style="width: 100%;">
-      <input placeholder="Title" [(ngModel)]="company.title" name="title" type="text"
-             matInput>
-    </mat-form-field>
+  <meld-google-maps-autocomplete required formControlName="location" placeholder="Name"></meld-google-maps-autocomplete>
 
-    <mat-form-field style="width: 100%;">
-      <input placeholder="Description" [(ngModel)]="company.description" name="description" type="text"
-             matInput>
-    </mat-form-field>
+  <mat-form-field style="width: 100%;">
+    <input required placeholder="Title" formControlName="title" type="text"
+           matInput>
+  </mat-form-field>
 
-    <div style="display: flex; width: 100%">
-      <div style="width: 50%">
-        <mat-form-field style="width: 100%">
-          <meld-date #datePickerStart placeholder="Start" [(ngModel)]="company.start" name="start"></meld-date>
-          <button matSuffix mat-icon-button (click)="datePickerStart.clear()"><mat-icon>delete</mat-icon></button>
-          <button matSuffix mat-icon-button (click)="datePickerStart.open()"><mat-icon >today</mat-icon></button>
-        </mat-form-field>
-      </div>
+  <mat-form-field style="width: 100%;">
+    <input placeholder="Description" formControlName="description" type="text"
+           matInput>
+  </mat-form-field>
 
-      <div style="width: 50%">
-        <mat-form-field style="width: 100%" *ngIf="! company.tillNow">
-          <meld-date #datePickerEnd placeholder="End" [(ngModel)]="company.end" name="end"></meld-date>
-          <button matSuffix mat-icon-button (click)="datePickerEnd.clear()"><mat-icon>delete</mat-icon></button>
-          <button matSuffix mat-icon-button (click)="datePickerEnd.open()"><mat-icon >today</mat-icon></button>
-        </mat-form-field>
-      </div>
-
+  <div style="display: flex; width: 100%">
+    <div style="width: 50%">
+      <mat-form-field style="width: 100%">
+        <meld-date required #datePickerStart placeholder="Start" formControlName="start"></meld-date>
+        <button matSuffix mat-icon-button (click)="datePickerStart.clear()">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button matSuffix mat-icon-button (click)="datePickerStart.open()">
+          <mat-icon>today</mat-icon>
+        </button>
+      </mat-form-field>
     </div>
 
-    <mat-checkbox [(ngModel)]="company.tillNow" name="tillNow">Till Now</mat-checkbox>
+    <div style="width: 50%">
+      <mat-form-field style="width: 100%" *ngIf="! company.controls.tillNow.value">
+        <meld-date required #datePickerEnd placeholder="End" formControlName="end"></meld-date>
+        <button matSuffix mat-icon-button (click)="datePickerEnd.clear()">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button matSuffix mat-icon-button (click)="datePickerEnd.open()">
+          <mat-icon>today</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
 
+  </div>
 
-  </fieldset>
-</form>
+  <mat-checkbox formControlName="tillNow" >Till Now</mat-checkbox>
+
+</fieldset>

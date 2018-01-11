@@ -15,8 +15,8 @@ export class CategoryFormComponent extends AbstractForm<Category> implements OnI
   category: Category;
 
   constructor(private router: MeldRouterService,
-              http: HttpClient) {
-    super(http);
+              private http: HttpClient) {
+    super();
   }
 
   ngOnInit() {

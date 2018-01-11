@@ -1,32 +1,30 @@
-<form #form="ngForm">
-  <fieldset [disabled]="readonly">
-    <div style="display: flex; align-items: baseline;">
-      <div style="vertical-align: bottom">
-        <i class="material-icons">phone</i>
-      </div>
-
-      <mat-menu #appMenu="matMenu">
-        <button mat-menu-item (click)="phone.type = 'HOME'"> Home </button>
-        <button mat-menu-item (click)="phone.type = 'MOBILE'"> Mobile </button>
-        <button mat-menu-item (click)="phone.type = 'WORK'"> Work </button>
-      </mat-menu>
-
-      <mat-form-field style="margin-left: 6px; flex: 1;">
-        <input required placeholder="Number" [(ngModel)]="phone.number" name="number" type="tel"
-               matInput>
-        <button matSuffix mat-icon-button (click)="onDelete()">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button matSuffix mat-icon-button (click)="onAdd()">
-          <mat-icon>add</mat-icon>
-        </button>
-        <button matSuffix mat-icon-button [matMenuTriggerFor]="appMenu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-
-        <mat-hint>{{phone.type}}</mat-hint>
-
-      </mat-form-field>
+<fieldset [formGroup]="phone">
+  <div style="display: flex; align-items: baseline;">
+    <div style="vertical-align: bottom">
+      <i class="material-icons">phone</i>
     </div>
-  </fieldset>
-</form>
+
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item (click)="phone.type = 'HOME'"> Home </button>
+      <button mat-menu-item (click)="phone.type = 'MOBILE'"> Mobile </button>
+      <button mat-menu-item (click)="phone.type = 'WORK'"> Work </button>
+    </mat-menu>
+
+    <mat-form-field style="margin-left: 6px; flex: 1;">
+      <input required placeholder="Number" formControlName="number" type="tel"
+             matInput>
+      <button matSuffix mat-icon-button (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button matSuffix mat-icon-button (click)="onAdd()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button matSuffix mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-hint>{{phone.type}}</mat-hint>
+
+    </mat-form-field>
+  </div>
+</fieldset>

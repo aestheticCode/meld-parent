@@ -1,6 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MeldScrollbarVerticalModule} from './component/meld-scrollbar-vertical/meld-scrollbar-vertical.module';
 import {MeldScrollbarHorizontalModule} from './component/meld-scrollbar-horizontal/meld-scrollbar-horizontal.module';
 import {MeldTableModule} from './component/meld-table/meld-table.module';
@@ -43,6 +43,7 @@ import {MeldDebounceModule} from './directive/meld-debounce/meld-debounce.module
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
 
@@ -102,6 +103,7 @@ import {MeldDebounceModule} from './directive/meld-debounce/meld-debounce.module
   exports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
 

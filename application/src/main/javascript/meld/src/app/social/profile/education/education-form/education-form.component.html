@@ -2,41 +2,38 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-md-5">
-        <mat-card>
-          <mat-card-content>
-            <fieldset>
-              <legend>
-                <div style="display: flex">
-                  <div style="flex: 1">Education</div>
-                  <button mat-icon-button (click)="onCreateSchool()">
-                    <mat-icon>add</mat-icon>
-                  </button>
+        <form [formGroup]="education">
+          <mat-card>
+            <mat-card-content>
+              <fieldset>
+                <legend>
+                  <div style="display: flex">
+                    <div style="flex: 1">Education</div>
+                    <button mat-icon-button (click)="onCreateSchool()">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                </legend>
+                <div formArrayName="schools">
+                  <div *ngFor="let school of schools.controls | schoolSort; let index = index" style="margin-bottom: 12px;">
+                    <app-social-school-form [school]="school"
+                                            (delete)="onDeleteSchool(index)"></app-social-school-form>
+                    <hr/>
+                  </div>
+                  <div *ngIf="schools.length === 0" style="line-height: 48px; text-align: center;">
+                    No Education.
+                  </div>
                 </div>
-              </legend>
-
-              <div *ngFor="let school of education.schools | schoolSort" style="margin-bottom: 12px;">
-                <app-social-school-form [school]="school" #schools
-                                        (addClick)="onCreateSchool()"></app-social-school-form>
-                <mat-card-actions>
-                  <button mat-button (click)="onDeleteSchool(school)">Delete</button>
-                </mat-card-actions>
-                <hr/>
-              </div>
-              <div *ngIf="education.schools.length === 0" style="line-height: 48px; text-align: center;">
-                No Education.
-              </div>
-
-            </fieldset>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button (click)="onSave()" *ngIf="education.links | meldLink:'save'">Save</button>
-            <button mat-button (click)="onUpdate()" *ngIf="education.links | meldLink:'update'">Update</button>
-            <button mat-button (click)="onDelete()" *ngIf="education.links | meldLink:'delete'">Delete All</button>
-            <button mat-button (click)="onCancel()">Cancel</button>
-          </mat-card-actions>
-        </mat-card>
-
-
+              </fieldset>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button (click)="onSave()" *ngIf="links | meldLink:'save'">Save</button>
+              <button mat-button (click)="onUpdate()" *ngIf="links | meldLink:'update'">Update</button>
+              <button mat-button (click)="onDelete()" *ngIf="links | meldLink:'delete'">Delete All</button>
+              <button mat-button (click)="onCancel()">Cancel</button>
+            </mat-card-actions>
+          </mat-card>
+        </form>
       </div>
     </div>
   </div>

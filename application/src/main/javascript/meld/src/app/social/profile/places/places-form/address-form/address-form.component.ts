@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NgModel} from "@angular/forms";
+import {FormGroup, NgForm, NgModel} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {MatAutocompleteSelectedEvent} from "@angular/material";
 import {Address} from '../../address.interfaces';
@@ -12,6 +12,13 @@ import {Address} from '../../address.interfaces';
 export class AddressFormComponent {
 
   @Input("address")
-  public address: Address;
+  public address: FormGroup;
+
+  @Output("delete")
+  private delete : EventEmitter<any> = new EventEmitter<any>();
+
+  onDelete() {
+    this.delete.emit();
+  }
 
 }

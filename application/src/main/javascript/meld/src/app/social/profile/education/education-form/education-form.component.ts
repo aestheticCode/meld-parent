@@ -1,14 +1,11 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {Strings} from 'lib/common/utils/Strings';
+import {Component, OnInit} from '@angular/core';
 import {Education} from '../education.interfaces';
-import {School} from '../school-form.interfaces';
-import {Objects} from 'lib/common/utils/Objects';
 import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
-import {SchoolFormModel} from '../school-form.classes';
 import {AbstractForm} from '../../../../../lib/common/forms/AbstractForm';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {SchoolFormComponent} from './school-form/school-form.component';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {Link} from '../../../../../lib/common/rest/Link';
 
 @Component({
   selector: 'app-social-education-form',
@@ -17,59 +14,86 @@ import {SchoolFormComponent} from './school-form/school-form.component';
 })
 export class EducationFormComponent extends AbstractForm<Education> implements OnInit {
 
-  @ViewChildren("schools")
-  public schools : QueryList<SchoolFormComponent>;
+  public education: FormGroup;
 
-  public education: Education;
+  public links: Link[];
 
-  private router: MeldRouterService;
-
-  constructor(http: HttpClient,
-              router: MeldRouterService) {
-    super(http);
-    this.router = router;
+  constructor(private http: HttpClient,
+              private builder: FormBuilder,
+              private router: MeldRouterService) {
+    super();
   }
 
   ngOnInit() {
-    this.education = this.router.data.education;
+    let education: Education = this.router.data.education;
+
+    this.links = education.links;
+
+    this.education = this.builder.group({
+      schools: this.builder.array(education.schools.map((school) => {
+        return this.builder.group({
+          id: this.builder.control(school.id),
+          name: this.builder.control(school.name),
+          location: this.builder.control(school.location),
+          course: this.builder.control(school.course),
+          startYear: this.builder.group(school.startYear),
+          endYear: this.builder.group(school.endYear),
+          visitStart: this.builder.group(school.visitStart),
+          visitEnd: this.builder.group(school.visitEnd),
+          tillNow: this.builder.control(school.tillNow)
+        })
+      }))
+    });
+  }
+
+  get schools() {
+    return this.education.get('schools') as FormArray;
   }
 
   onCreateSchool() {
-    this.education.schools.push(new SchoolFormModel());
+    this.schools.push(this.builder.group({
+      id: this.builder.control(''),
+      name: this.builder.control(''),
+      location: this.builder.control(null),
+      course: this.builder.control(''),
+      startYear: this.builder.group({
+        year: this.builder.control(null),
+        semester: this.builder.control('')
+      }),
+      endYear: this.builder.group({
+        year: this.builder.control(null),
+        semester: this.builder.control('')
+      }),
+      visitStart: this.builder.group({
+        year: this.builder.control(null),
+        semester: this.builder.control('')
+      }),
+      visitEnd: this.builder.group({
+        year: this.builder.control(null),
+        semester: this.builder.control('')
+      }),
+      tillNow: this.builder.control(false)
+    }));
   }
 
-  onDeleteSchool(school: School) {
-    if (this.education.schools.length > 0) {
-      let indexOf = this.education.schools.indexOf(school);
-      this.education.schools.splice(indexOf, 1);
-    }
+  onDeleteSchool(index: number) {
+    this.schools.removeAt(index);
   }
 
-  onEdit() {
-    if (this.education.schools.length === 0) {
-      this.education.schools.push(new SchoolFormModel());
-    }
+  public preRequest(): boolean {
+    return this.validateAllFields(this.education);
   }
 
   public saveRequest(): Observable<Education> {
-    return this.http.post<Education>('service/social/user/current/education', this.education);
+    return this.http.post<Education>('service/social/user/current/education', this.education.getRawValue());
   }
 
   public updateRequest(): Observable<Education> {
-    return this.http.put<Education>('service/social/user/current/education', this.education);
+    return this.http.put<Education>('service/social/user/current/education', this.education.getRawValue());
   }
 
   public deleteRequest(): Observable<Education> {
     return this.http.delete<Education>('service/social/user/current/education');
-  }
-
-  public preRequest() {
-    return this.schools.filter((schoolComponent) => {
-      for (let property in schoolComponent.form.controls) {
-        schoolComponent.form.controls[property].markAsTouched();
-      }
-      return ! schoolComponent.form.valid
-    }).length === 0
   }
 
   public postRequest() {

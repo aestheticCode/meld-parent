@@ -25,12 +25,9 @@ export class GroupFormComponent extends AbstractForm<GroupForm> implements OnIni
   @ViewChild('input')
   public input: any;
 
-  private router: MeldRouterService;
-
-  constructor(http: HttpClient,
-              router: MeldRouterService) {
-    super(http);
-    this.router = router;
+  constructor(private http: HttpClient,
+              private router: MeldRouterService) {
+    super();
   }
 
   ngOnInit() {

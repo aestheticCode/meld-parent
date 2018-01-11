@@ -1,12 +1,19 @@
-import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import {ViewChild} from '@angular/core';
+import {FormArray, FormControl, FormGroup, NgForm} from '@angular/forms';
 
 export abstract class AbstractForm<F> {
 
-  constructor(public http: HttpClient) {
-  }
+  @ViewChild('form')
+  public ngForm: NgForm;
 
   public preRequest(): boolean {
+    if (this.ngForm) {
+      for (let property in this.ngForm.controls) {
+        this.ngForm.controls[property].markAsTouched();
+      }
+      return this.ngForm.valid;
+    }
     return true;
   }
 
@@ -50,6 +57,22 @@ export abstract class AbstractForm<F> {
         });
     }
   }
+
+  public validateAllFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({onlySelf: true});
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
+      } else if (control instanceof FormArray) {
+        control.controls.forEach((control) => this.validateAllFields(control as FormGroup));
+      }
+    });
+    return formGroup.valid;
+  }
+
+
 
 
 }

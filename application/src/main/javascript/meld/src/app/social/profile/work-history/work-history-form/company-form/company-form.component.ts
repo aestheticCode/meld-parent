@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Company} from '../../company.interfaces';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-social-company-form',
@@ -9,6 +10,13 @@ import {Company} from '../../company.interfaces';
 export class CompanyFormComponent {
 
   @Input("company")
-  public company: Company;
+  public company: FormGroup;
+
+  @Output("delete")
+  private delete : EventEmitter<any> = new EventEmitter<any>();
+
+  onDelete() {
+    this.delete.emit();
+  }
 
 }

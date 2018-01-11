@@ -1,25 +1,22 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Chat} from "./chat-form.interfaces";
 import {TypeModel} from "./chat-form.classes";
-import {NgForm} from '@angular/forms';
+import {FormGroup, NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-social-chat-form',
   templateUrl: 'chat-form.component.html',
   styleUrls: ['chat-form.component.css']
 })
-export class ChatFormComponent implements OnInit {
+export class ChatFormComponent {
 
   @Input("chat")
-  public chat : Chat;
+  public chat : FormGroup;
 
   public types : TypeModel[] = [];
 
-  @ViewChild("form")
-  public form : NgForm;
-
   @Output("deleteClick")
-  private deleteClick : EventEmitter<Chat> = new EventEmitter();
+  private deleteClick : EventEmitter<any> = new EventEmitter();
 
   @Output("addClick")
   private addClick : EventEmitter<any> = new EventEmitter();
@@ -30,13 +27,8 @@ export class ChatFormComponent implements OnInit {
     this.types.push(new TypeModel("AIM", "AIM"));
   }
 
-  ngOnInit() {
-  }
-
   onDelete() {
-    this.chat.type = undefined;
-    this.chat.name = undefined;
-    this.deleteClick.emit(this.chat);
+    this.deleteClick.emit();
   }
 
   onAdd() {

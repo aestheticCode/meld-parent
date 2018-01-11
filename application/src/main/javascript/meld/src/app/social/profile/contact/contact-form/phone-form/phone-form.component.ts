@@ -1,28 +1,22 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Phone} from "./phone-form.interfaces";
 import {TypeModel} from "./phone-form.classes";
-import {NgForm} from '@angular/forms';
+import {FormGroup, NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-social-phone-form',
   templateUrl: 'phone-form.component.html',
   styleUrls: ['phone-form.component.css']
 })
-export class PhoneFormComponent implements OnInit {
+export class PhoneFormComponent {
 
   @Input("phone")
-  public phone: Phone;
-
-  @ViewChild("form")
-  public form : NgForm;
+  public phone: FormGroup;
 
   public types : TypeModel[] = [];
 
-  @Input("readonly")
-  public readonly : boolean = false;
-
   @Output("deleteClick")
-  private deleteClick : EventEmitter<Phone> = new EventEmitter();
+  private deleteClick : EventEmitter<any> = new EventEmitter();
 
   @Output("addClick")
   private addClick : EventEmitter<any> = new EventEmitter();
@@ -33,13 +27,8 @@ export class PhoneFormComponent implements OnInit {
     this.types.push(new TypeModel("MOBILE", "Mobile"));
   }
 
-  ngOnInit() {
-  }
-
   onDelete() {
-    this.phone.type = undefined;
-    this.phone.number = undefined;
-    this.deleteClick.emit(this.phone);
+    this.deleteClick.emit();
   }
 
   onAdd() {

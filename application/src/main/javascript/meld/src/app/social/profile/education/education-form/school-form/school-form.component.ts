@@ -4,7 +4,7 @@ import {Enum} from '../../../../../../lib/pipe/meld-enum/meld-enum.interfaces';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Strings} from '../../../../../../lib/common/utils/Strings';
-import {NgForm} from '@angular/forms';
+import {FormGroup, NgForm} from '@angular/forms';
 
 
 @Component({
@@ -14,11 +14,11 @@ import {NgForm} from '@angular/forms';
 })
 export class SchoolFormComponent {
 
-  @ViewChild("form")
-  public form : NgForm;
-
   @Input("school")
-  public school : School;
+  public school : FormGroup;
+
+  @Output("delete")
+  private delete : EventEmitter<any> = new EventEmitter<any>();
 
   public semesters : Enum[] = [
     {
@@ -46,6 +46,10 @@ export class SchoolFormComponent {
       return Observable.of(null);
     }
     this.names = this.http.get<any>("service/social/education/name", {params : {name : value}})
+  }
+
+  onDelete() {
+    this.delete.emit();
   }
 
 }

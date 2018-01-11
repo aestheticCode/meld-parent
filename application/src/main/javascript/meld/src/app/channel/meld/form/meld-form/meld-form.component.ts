@@ -24,12 +24,12 @@ export class MeldFormComponent extends AbstractForm<MeldPost> implements OnInit 
   @Input('post')
   post : MeldPost;
 
-  constructor(http: HttpClient,
+  constructor(private http: HttpClient,
               private route: ActivatedRoute,
               private service: AppService,
               private dialog: MatDialog,
               private router: Router) {
-    super(http);
+    super();
   }
 
   ngOnInit(): void {

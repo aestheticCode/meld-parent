@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {Places} from '../places.interfaces';
 import {PlacesModel} from '../places.classes';
 import {AddressModel} from '../address.classes';
@@ -8,7 +8,10 @@ import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 import {AbstractForm} from 'lib/common/forms/AbstractForm';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {GroupForm} from '../../../../usercontrol/group/form/group-form/group-form.interfaces';
+import {AddressFormComponent} from './address-form/address-form.component';
+import {Link} from '../../../../../lib/common/rest/Link';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {Place} from '../../../../../lib/component/meld-google-maps-autocomplete/meld-google-maps-autocomplete.interfaces';
 
 @Component({
   selector: 'app-social-places-form',
@@ -17,65 +20,63 @@ import {GroupForm} from '../../../../usercontrol/group/form/group-form/group-for
 })
 export class PlacesFormComponent extends AbstractForm<Places> implements OnInit {
 
-  public places: Places;
-  private router: MeldRouterService;
+  public places: FormGroup;
 
-  constructor(http: HttpClient,
-              router: MeldRouterService) {
-    super(http);
-    this.router = router;
+  public links : Link[];
+
+  constructor(private http: HttpClient,
+              private builder : FormBuilder,
+              private router: MeldRouterService) {
+    super();
   }
 
   ngOnInit() {
-    this.places = this.router.data.places || new PlacesModel();
+    let places: Places = this.router.data.places;
+
+    this.links = places.links;
+
+    this.places = this.builder.group({
+      addresses : this.builder.array(places.addresses.map((place) => {return this.builder.group(place)}))
+    });
+  }
+
+  get addresses() {
+    return this.places.get("addresses") as FormArray
   }
 
   onCreateAddress() {
-    this.places.addresses.push(new AddressModel());
+    this.addresses.push(this.builder.group({
+      location : this.builder.control(null),
+      start : this.builder.control(null),
+      end : this.builder.control(null),
+      tillNow : this.builder.control(false)
+    }))
   }
 
-  onDeleteAddress(address: Address) {
-    if (this.places.addresses.length > 0) {
-      let indexOf = this.places.addresses.indexOf(address);
-      this.places.addresses.splice(indexOf, 1);
-    }
+  onDeleteAddress(index : number) {
+    this.addresses.removeAt(index);
   }
 
-  onEdit() {
-    if (this.places.addresses.length === 0) {
-      this.places.addresses.push(new AddressModel());
-    }
+  public preRequest(): boolean {
+    return this.validateAllFields(this.places);
   }
 
   public saveRequest(): Observable<Places> {
-    return this.http.post<Places>( 'service/social/user/current/places', this.places)
+    return this.http.post<Places>('service/social/user/current/places', this.places.getRawValue());
   }
 
   public updateRequest(): Observable<Places> {
-    return this.http.put<Places>('service/social/user/current/places', this.places)
+    return this.http.put<Places>('service/social/user/current/places', this.places.getRawValue());
   }
 
   public deleteRequest(): Observable<Places> {
-    return this.http.delete<Places>('service/social/user/current/places')
-  }
-
-  public preRequest() {
-    this.filterEmptyAddress();
+    return this.http.delete<Places>('service/social/user/current/places');
   }
 
   public postRequest() {
     this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['places', 'view']}}]);
   }
 
-  private filterEmptyAddress() {
-    this.places.addresses
-      = this.places.addresses.filter((address) => {
-      return Strings.isNotEmpty(address.location.street)
-        || Strings.isNotEmpty(address.location.zipCode)
-        || Strings.isNotEmpty(address.location.state)
-        || Strings.isNotEmpty(address.location.streetNumber)
-        || Strings.isNotEmpty(address.location.country);
-    });
-  }
+
 
 }

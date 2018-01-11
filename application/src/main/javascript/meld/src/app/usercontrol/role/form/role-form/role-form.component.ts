@@ -24,12 +24,9 @@ export class RoleFormComponent extends AbstractForm<RoleForm> implements OnInit 
   @ViewChild('input')
   private input: ElementRef;
 
-  private router: MeldRouterService;
-
-  constructor(http: HttpClient,
-              router: MeldRouterService) {
-    super(http);
-    this.router = router;
+  constructor(private http: HttpClient,
+              private router: MeldRouterService) {
+    super();
   }
 
   ngOnInit() {

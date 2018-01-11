@@ -1,81 +1,91 @@
-<form #form="ngForm">
-  <fieldset>
-    <mat-form-field style="width: 100%;">
-      <input required name="name" matInput placeholder="Name" aria-label="Name" [matAutocomplete]="auto" [(ngModel)]="school.name" [meldDebounce]="300" (meldModelChange)="findNames($event)">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let name of names | async" [value]="name">
-          <span>{{ name }}</span>
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+<fieldset [formGroup]="school">
+  <legend>
+    <div style="display: flex">
+      <span>School</span>
+      <div style=" flex: 1;"></div>
+      <button (click)="onDelete()"  mat-icon-button><mat-icon>delete</mat-icon></button>
+    </div>
+   </legend>
+  <mat-form-field style="width: 100%;">
+    <input required matInput placeholder="Name" [matAutocomplete]="auto"
+           formControlName="name" >
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let name of names | async" [value]="name">
+        <span>{{ name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
-    <meld-google-maps-autocomplete required placeholder="Location" name="location" [(ngModel)]="school.location"></meld-google-maps-autocomplete>
+ <meld-google-maps-autocomplete required placeholder="Location" formControlName="location"></meld-google-maps-autocomplete>
 
-    <mat-form-field style="width: 100%;">
-      <input required placeholder="Course" [(ngModel)]="school.course" name="course" type="text"
-             matInput>
-    </mat-form-field>
+  <mat-form-field style="width: 100%;">
+    <input required placeholder="Course" formControlName="course" type="text"
+           matInput>
+  </mat-form-field>
 
-    <div style="display: flex; width: 100%">
-      <div style="width: 50%">
-        <mat-form-field style="width: 100%;">
-          <mat-select required name="startSemester" placeholder="Start Semester" [(ngModel)]="school.startYear.semester">
-            <mat-option *ngFor="let semester of semesters" [value]="semester.value">
-              {{ semester.label }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field style="width: 100%;">
-          <input required matInput type="number" name="startYear" placeholder="Start Year" [(ngModel)]="school.startYear.year">
-        </mat-form-field>
-      </div>
-
-      <div style="width: 50%">
-        <mat-form-field style="width: 100%;">
-          <mat-select required name="endSemester" placeholder="End Semester" [(ngModel)]="school.endYear.semester">
-            <mat-option *ngFor="let semester of semesters" [value]="semester.value">
-              {{ semester.label }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field style="width: 100%;">
-          <input required matInput type="number" name="endYear" placeholder="End Year" [(ngModel)]="school.endYear.year">
-        </mat-form-field>
-      </div>
+  <div style="display: flex; width: 100%">
+    <div style="width: 50%" formGroupName="startYear">
+      <mat-form-field style="width: 100%;">
+        <mat-select required placeholder="Start Semester" formControlName="semester">
+          <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+            {{ semester.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <input required matInput type="number" placeholder="Start Year"
+               formControlName="year">
+      </mat-form-field>
     </div>
 
+    <div style="width: 50%" formGroupName="endYear">
+      <mat-form-field style="width: 100%;">
+        <mat-select required placeholder="End Semester" formControlName="semester">
+          <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+            {{ semester.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <input required matInput type="number" placeholder="End Year" formControlName="year">
+      </mat-form-field>
+    </div>
+  </div>
 
-    <div style="display: flex; width: 100%">
-      <div style="width: 50%">
-        <mat-form-field style="width: 100%;">
-          <mat-select required name="visitStartSemester" placeholder="Visit Since Semester" [(ngModel)]="school.visitStart.semester">
-            <mat-option *ngFor="let semester of semesters" [value]="semester.value">
-              {{ semester.label }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field style="width: 100%;">
-          <input required matInput type="number" name="visitStartYear" placeholder="Visit Since Year" [(ngModel)]="school.visitStart.year">
-        </mat-form-field>
-      </div>
 
-      <div style="width: 50%">
-        <mat-form-field style="width: 100%;">
-          <mat-select required name="visitEndSemester" placeholder="Departed On Semester" [(ngModel)]="school.visitEnd.semester">
-            <mat-option *ngFor="let semester of semesters" [value]="semester.value">
-              {{ semester.label }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field style="width: 100%;">
-          <input required matInput type="number" name="visitEndYear" placeholder="Departed On Year" [(ngModel)]="school.visitEnd.year">
-        </mat-form-field>
-      </div>
-
+  <div style="display: flex; width: 100%">
+    <div style="width: 50%" formGroupName="visitStart">
+      <mat-form-field style="width: 100%;" >
+        <mat-select required placeholder="Visit Since Semester"
+                    formControlName="semester">
+          <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+            {{ semester.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <input required matInput type="number" placeholder="Visit Since Year"
+               formControlName="year">
+      </mat-form-field>
     </div>
 
-    <mat-checkbox [(ngModel)]="school.tillNow" name="tillNow">Till Now</mat-checkbox>
+    <div style="width: 50%" formGroupName="visitEnd">
+      <mat-form-field style="width: 100%;">
+        <mat-select required placeholder="Departed On Semester"
+                    formControlName="semester">
+          <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+            {{ semester.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <input required matInput type="number" placeholder="Departed On Year"
+               formControlName="year">
+      </mat-form-field>
+    </div>
 
+  </div>
 
-  </fieldset>
-</form>
+  <mat-checkbox formControlName="tillNow">Till Now</mat-checkbox>
+
+</fieldset>

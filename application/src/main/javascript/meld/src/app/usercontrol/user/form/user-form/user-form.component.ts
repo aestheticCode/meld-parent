@@ -24,12 +24,9 @@ export class UserFormComponent extends AbstractForm<UserForm> implements OnInit 
 
   public genders : Enum[] = [{value : 'MALE', label : 'Male'}, {value : 'FEMALE', label : 'Female'}];
 
-  private router: MeldRouterService;
-
-  constructor(http: HttpClient,
-              router : MeldRouterService) {
-    super(http);
-    this.router = router;
+  constructor(private http: HttpClient,
+              private router : MeldRouterService) {
+    super();
   }
 
   ngOnInit() {

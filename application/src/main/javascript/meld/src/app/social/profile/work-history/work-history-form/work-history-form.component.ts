@@ -9,6 +9,9 @@ import {HttpClient} from '@angular/common/http';
 import {Places} from '../../places/places.interfaces';
 import {Observable} from 'rxjs/Observable';
 import {Objects} from '../../../../../lib/common/utils/Objects';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {Link} from '../../../../../lib/common/rest/Link';
+import {Place} from '../../../../../lib/component/meld-google-maps-autocomplete/meld-google-maps-autocomplete.interfaces';
 
 @Component({
   selector: 'app-work-history-form',
@@ -17,64 +20,64 @@ import {Objects} from '../../../../../lib/common/utils/Objects';
 })
 export class WorkHistoryFormComponent extends AbstractForm<WorkHistory> implements OnInit {
 
-  public workHistory: WorkHistory;
-  private router: MeldRouterService;
+  public workHistory: FormGroup;
 
-  constructor(http: HttpClient,
-              router: MeldRouterService) {
-    super(http);
-    this.router = router;
+  public links : Link[];
+
+  constructor(private http: HttpClient,
+              private builder : FormBuilder,
+              private router: MeldRouterService) {
+    super();
   }
 
   ngOnInit() {
-    this.workHistory = this.router.data.workHistory;
+    let workHistory : WorkHistory = this.router.data.workHistory;
+
+    this.links = workHistory.links;
+
+    this.workHistory = this.builder.group({
+      companies : this.builder.array(workHistory.companies.map((company) => this.builder.group(company)))
+    });
+  }
+
+  get companies() {
+    return this.workHistory.get("companies") as FormArray
   }
 
   onCreateAddress() {
-    this.workHistory.companies.push(new CompanyModel());
+    this.companies.push(this.builder.group({
+      id : this.builder.control(""),
+      location : this.builder.control(null),
+      title : this.builder.control(""),
+      description : this.builder.control(""),
+      start : this.builder.control(null),
+      end : this.builder.control(null),
+      tillNow : this.builder.control(false),
+    }))
   }
 
-  onDeleteAddress(address: Company) {
-    if (this.workHistory.companies.length > 0) {
-      let indexOf = this.workHistory.companies.indexOf(address);
-      this.workHistory.companies.splice(indexOf, 1);
-    }
+  onDeleteAddress(index : number) {
+    this.companies.removeAt(index);
   }
 
-  onEdit() {
-    if (this.workHistory.companies.length === 0) {
-      this.workHistory.companies.push(new CompanyModel());
-    }
+  public preRequest(): boolean {
+    return this.validateAllFields(this.workHistory);
   }
 
   public saveRequest(): Observable<WorkHistory> {
-    return this.http.post<WorkHistory>( 'service/social/user/current/work/history', this.workHistory)
+    return this.http.post<WorkHistory>( 'service/social/user/current/work/history', this.workHistory.getRawValue())
   }
 
   public updateRequest(): Observable<WorkHistory> {
-    return this.http.put<WorkHistory>('service/social/user/current/work/history', this.workHistory)
+    return this.http.put<WorkHistory>('service/social/user/current/work/history', this.workHistory.getRawValue())
   }
 
   public deleteRequest(): Observable<WorkHistory> {
     return this.http.delete<WorkHistory>('service/social/user/current/work/history')
   }
 
-  public preRequest() {
-    this.filterEmpty();
-  }
-
   public postRequest() {
     this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['work', 'history', 'view']}}]);
-  }
-
-  private filterEmpty() {
-    this.workHistory.companies
-      = this.workHistory.companies.filter((company) => {
-      return Objects.isNotNull(company.location)
-        || Strings.isNotEmpty(company.description)
-        || Strings.isNotEmpty(company.start)
-        || Strings.isNotEmpty(company.end);
-    });
   }
 
 }
