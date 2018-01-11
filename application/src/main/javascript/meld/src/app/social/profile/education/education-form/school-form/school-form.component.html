@@ -1,7 +1,7 @@
-<form>
+<form #form="ngForm">
   <fieldset>
     <mat-form-field style="width: 100%;">
-      <input name="name" matInput placeholder="Name" aria-label="Name" [matAutocomplete]="auto" [(ngModel)]="school.name" [meldDebounce]="300" (meldModelChange)="findNames($event)">
+      <input required name="name" matInput placeholder="Name" aria-label="Name" [matAutocomplete]="auto" [(ngModel)]="school.name" [meldDebounce]="300" (meldModelChange)="findNames($event)">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let name of names | async" [value]="name">
           <span>{{ name }}</span>
@@ -9,37 +9,37 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <meld-google-maps-autocomplete placeholder="Location" name="location" [(ngModel)]="school.location"></meld-google-maps-autocomplete>
+    <meld-google-maps-autocomplete required placeholder="Location" name="location" [(ngModel)]="school.location"></meld-google-maps-autocomplete>
 
     <mat-form-field style="width: 100%;">
-      <input placeholder="Course" [(ngModel)]="school.course" name="course" type="text"
+      <input required placeholder="Course" [(ngModel)]="school.course" name="course" type="text"
              matInput>
     </mat-form-field>
 
     <div style="display: flex; width: 100%">
       <div style="width: 50%">
         <mat-form-field style="width: 100%;">
-          <mat-select name="startSemester" placeholder="Start Semester" [(ngModel)]="school.startYear.semester">
+          <mat-select required name="startSemester" placeholder="Start Semester" [(ngModel)]="school.startYear.semester">
             <mat-option *ngFor="let semester of semesters" [value]="semester.value">
               {{ semester.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field style="width: 100%;">
-          <input matInput type="number" name="startYear" placeholder="Start Year" [(ngModel)]="school.startYear.year">
+          <input required matInput type="number" name="startYear" placeholder="Start Year" [(ngModel)]="school.startYear.year">
         </mat-form-field>
       </div>
 
       <div style="width: 50%">
         <mat-form-field style="width: 100%;">
-          <mat-select name="endSemester" placeholder="End Semester" [(ngModel)]="school.endYear.semester">
+          <mat-select required name="endSemester" placeholder="End Semester" [(ngModel)]="school.endYear.semester">
             <mat-option *ngFor="let semester of semesters" [value]="semester.value">
               {{ semester.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field style="width: 100%;">
-          <input matInput type="number" name="endYear" placeholder="End Year" [(ngModel)]="school.endYear.year">
+          <input required matInput type="number" name="endYear" placeholder="End Year" [(ngModel)]="school.endYear.year">
         </mat-form-field>
       </div>
     </div>
@@ -48,27 +48,27 @@
     <div style="display: flex; width: 100%">
       <div style="width: 50%">
         <mat-form-field style="width: 100%;">
-          <mat-select name="visitStartSemester" placeholder="Visit Since Semester" [(ngModel)]="school.visitStart.semester">
+          <mat-select required name="visitStartSemester" placeholder="Visit Since Semester" [(ngModel)]="school.visitStart.semester">
             <mat-option *ngFor="let semester of semesters" [value]="semester.value">
               {{ semester.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field style="width: 100%;">
-          <input matInput type="number" name="visitStartYear" placeholder="Visit Since Year" [(ngModel)]="school.visitStart.year">
+          <input required matInput type="number" name="visitStartYear" placeholder="Visit Since Year" [(ngModel)]="school.visitStart.year">
         </mat-form-field>
       </div>
 
       <div style="width: 50%">
         <mat-form-field style="width: 100%;">
-          <mat-select name="visitEndSemester" placeholder="Departed On Semester" [(ngModel)]="school.visitEnd.semester">
+          <mat-select required name="visitEndSemester" placeholder="Departed On Semester" [(ngModel)]="school.visitEnd.semester">
             <mat-option *ngFor="let semester of semesters" [value]="semester.value">
               {{ semester.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field style="width: 100%;">
-          <input matInput type="number" name="visitEndYear" placeholder="Departed On Year" [(ngModel)]="school.visitEnd.year">
+          <input required matInput type="number" name="visitEndYear" placeholder="Departed On Year" [(ngModel)]="school.visitEnd.year">
         </mat-form-field>
       </div>
 

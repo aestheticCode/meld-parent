@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {School} from '../../school-form.interfaces';
 import {Enum} from '../../../../../../lib/pipe/meld-enum/meld-enum.interfaces';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Strings} from '../../../../../../lib/common/utils/Strings';
+import {NgForm} from '@angular/forms';
 
 
 @Component({
@@ -13,14 +14,11 @@ import {Strings} from '../../../../../../lib/common/utils/Strings';
 })
 export class SchoolFormComponent {
 
+  @ViewChild("form")
+  public form : NgForm;
+
   @Input("school")
   public school : School;
-
-  @Input("readonly")
-  public readonly : boolean = true;
-
-  @Output("deleteClick")
-  private deleteClick : EventEmitter<School> = new EventEmitter();
 
   public semesters : Enum[] = [
     {
@@ -48,16 +46,6 @@ export class SchoolFormComponent {
       return Observable.of(null);
     }
     this.names = this.http.get<any>("service/social/education/name", {params : {name : value}})
-  }
-
-  onDelete() {
-    this.school.name = undefined;
-    this.school.course = undefined;
-    this.school.startYear = undefined;
-    this.school.endYear = undefined;
-    this.school.visitStart = undefined;
-    this.school.visitEnd = undefined;
-    this.deleteClick.emit(this.school);
   }
 
 }

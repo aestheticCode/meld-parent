@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Chat} from "./chat-form.interfaces";
 import {TypeModel} from "./chat-form.classes";
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-social-chat-form',
@@ -14,8 +15,8 @@ export class ChatFormComponent implements OnInit {
 
   public types : TypeModel[] = [];
 
-  @Input("readonly")
-  public readonly : boolean = false;
+  @ViewChild("form")
+  public form : NgForm;
 
   @Output("deleteClick")
   private deleteClick : EventEmitter<Chat> = new EventEmitter();

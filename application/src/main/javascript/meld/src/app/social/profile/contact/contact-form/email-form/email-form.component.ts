@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Email} from "./email-form.interfaces";
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-social-email-form',
@@ -11,8 +12,8 @@ export class EmailFormComponent implements OnInit {
   @Input("email")
   public email : Email;
 
-  @Input("readonly")
-  public readonly : boolean = false;
+  @ViewChild("form")
+  public form : NgForm;
 
   @Output("deleteClick")
   private deleteClick : EventEmitter<Email> = new EventEmitter();

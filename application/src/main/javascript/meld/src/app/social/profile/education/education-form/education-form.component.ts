@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {Strings} from 'lib/common/utils/Strings';
 import {Education} from '../education.interfaces';
 import {School} from '../school-form.interfaces';
@@ -8,6 +8,7 @@ import {SchoolFormModel} from '../school-form.classes';
 import {AbstractForm} from '../../../../../lib/common/forms/AbstractForm';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import {SchoolFormComponent} from './school-form/school-form.component';
 
 @Component({
   selector: 'app-social-education-form',
@@ -15,6 +16,9 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['education-form.component.css']
 })
 export class EducationFormComponent extends AbstractForm<Education> implements OnInit {
+
+  @ViewChildren("schools")
+  public schools : QueryList<SchoolFormComponent>;
 
   public education: Education;
 
@@ -59,19 +63,13 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
     return this.http.delete<Education>('service/social/user/current/education');
   }
 
-
   public preRequest() {
-    this.education.schools
-      = this.education.schools.filter((school) => {
-      return Objects.isNotNull(school.name)
-        || Strings.isNotEmpty(school.course)
-        || Objects.isNotNull(school.startYear)
-        || Objects.isNotNull(school.endYear)
-        || Objects.isNotNull(school.visitStart)
-        || Objects.isNotNull(school.visitEnd)
-        || Objects.isNotNull(school.visitStart)
-        || Objects.isNotNull(school.visitEnd);
-    });
+    return this.schools.filter((schoolComponent) => {
+      for (let property in schoolComponent.form.controls) {
+        schoolComponent.form.controls[property].markAsTouched();
+      }
+      return ! schoolComponent.form.valid
+    }).length === 0
   }
 
   public postRequest() {

@@ -38,6 +38,9 @@ export class MeldGoogleMapsAutocompleteComponent implements ControlValueAccessor
   @Input('firstPartOnly')
   public firstPartOnly: boolean = false;
 
+  @Input("required")
+  public required : boolean = false;
+
   constructor(private http: HttpClient) {
   }
 

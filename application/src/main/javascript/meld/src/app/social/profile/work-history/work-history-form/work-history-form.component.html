@@ -15,8 +15,10 @@
               </legend>
 
               <div *ngFor="let company of workHistory.companies | companySort" style="margin-bottom: 12px;">
-                <app-social-company-form [company]="company"
-                                         (deleteClick)="onDeleteAddress($event)"></app-social-company-form>
+                <app-social-company-form [company]="company"></app-social-company-form>
+                <mat-card-actions>
+                  <button mat-button (click)="onDeleteAddress(address)">Delete</button>
+                </mat-card-actions>
                 <hr/>
               </div>
               <div *ngIf="workHistory.companies.length === 0" style="line-height: 48px; text-align: center;">
@@ -30,7 +32,7 @@
           <mat-card-actions>
             <button mat-button *ngIf="workHistory.links | meldLink:'save'" (click)="onSave()">Save</button>
             <button mat-button *ngIf="workHistory.links | meldLink:'update'" (click)="onUpdate()">Update</button>
-            <button mat-button *ngIf="workHistory.links | meldLink:'delete'" (click)="onUpdate()">Delete</button>
+            <button mat-button *ngIf="workHistory.links | meldLink:'delete'" (click)="onUpdate()">Delete All</button>
             <button mat-button (click)="onCancel()">Cancel</button>
           </mat-card-actions>
         </mat-card>

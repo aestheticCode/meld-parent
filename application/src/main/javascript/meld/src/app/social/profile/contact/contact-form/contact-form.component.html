@@ -11,7 +11,7 @@
 
 
               <div *ngFor="let phone of contact.phones">
-                <app-social-phone-form [phone]="phone"
+                <app-social-phone-form [phone]="phone" #phones
                                        (deleteClick)="onDeletePhone($event)"
                                        (addClick)="onCreatePhone()"></app-social-phone-form>
               </div>
@@ -20,7 +20,7 @@
               </div>
 
               <div *ngFor="let email of contact.emails">
-                <app-social-email-form [email]="email"
+                <app-social-email-form [email]="email" #emails
                                        (deleteClick)="onDeleteEmail($event)"
                                        (addClick)="onCreateEmail()"></app-social-email-form>
               </div>
@@ -29,7 +29,7 @@
               </div>
 
               <div *ngFor="let chat of contact.chats">
-                <app-social-chat-form [chat]="chat"
+                <app-social-chat-form [chat]="chat" #chats
                                       (deleteClick)="onDeleteChat($event)"
                                       (addClick)="onCreateChat()"></app-social-chat-form>
               </div>

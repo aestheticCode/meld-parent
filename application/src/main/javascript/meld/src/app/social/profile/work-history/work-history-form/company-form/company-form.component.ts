@@ -11,20 +11,4 @@ export class CompanyFormComponent {
   @Input("company")
   public company: Company;
 
-  @Input("readonly")
-  public readonly: boolean = true;
-
-  @Output("deleteClick")
-  private deleteClick: EventEmitter<Company> = new EventEmitter();
-
-  onDelete() {
-    this.company.location = undefined;
-    this.company.description = undefined;
-    this.company.start = undefined;
-    this.company.end = undefined;
-    this.company.title = undefined;
-
-    this.deleteClick.emit(this.company);
-  }
-
 }

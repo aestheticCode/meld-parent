@@ -1,16 +1,16 @@
-<form>
+<form #form="ngForm">
   <fieldset [disabled]="readonly">
     <div style="display: flex; align-items: baseline;">
       <div style="vertical-align: bottom">
         <i class="material-icons">chat</i>
       </div>
 
-      <mat-select style="width: 64px;"  placeholder="Type" [(ngModel)]="chat.type" name="type">
+      <mat-select required style="width: 64px;"  placeholder="Type" [(ngModel)]="chat.type" name="type">
         <mat-option *ngFor="let type of types" [value]="type.code">{{ type.name }}</mat-option>
       </mat-select>
 
       <mat-form-field style="margin-left: 6px; flex: 1">
-        <input placeholder="Name" [(ngModel)]="chat.name" name="name" type="text"
+        <input required placeholder="Name" [(ngModel)]="chat.name" name="name" type="text"
                matInput>
         <button *ngIf="! readonly" matSuffix mat-icon-button (click)="onDelete()">
           <mat-icon>delete</mat-icon>

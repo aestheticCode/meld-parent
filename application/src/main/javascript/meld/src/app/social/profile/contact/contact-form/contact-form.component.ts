@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {Chat} from './chat-form/chat-form.interfaces';
 import {PhoneModel} from './phone-form/phone-form.classes';
 import {Phone} from './phone-form/phone-form.interfaces';
@@ -11,6 +11,9 @@ import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 import {AbstractForm} from 'lib/common/forms/AbstractForm';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import {PhoneFormComponent} from './phone-form/phone-form.component';
+import {EmailFormComponent} from './email-form/email-form.component';
+import {ChatFormComponent} from './chat-form/chat-form.component';
 
 @Component({
   selector: 'app-social-contact-form',
@@ -19,7 +22,17 @@ import {Observable} from 'rxjs/Observable';
 })
 export class ContactFormComponent extends AbstractForm<Contact> implements OnInit {
 
+  @ViewChildren("phones")
+  public phones : QueryList<PhoneFormComponent>;
+
+  @ViewChildren("emails")
+  public emails : QueryList<EmailFormComponent>;
+
+  @ViewChildren("chats")
+  public chats : QueryList<ChatFormComponent>;
+
   public contact: Contact;
+
   private router: MeldRouterService;
 
   constructor(http: HttpClient,
@@ -81,9 +94,28 @@ export class ContactFormComponent extends AbstractForm<Contact> implements OnIni
   }
 
   public preRequest() {
-    this.filterEmptyPhones();
-    this.filterEmptyEmails();
-    this.filterEmptyChats();
+    let phones = this.phones.filter((component) => {
+      for (let property in component.form.controls) {
+        component.form.controls[property].markAsTouched();
+      }
+      return ! component.form.valid;
+    }).length;
+
+    let emails = this.emails.filter((component) => {
+      for (let property in component.form.controls) {
+        component.form.controls[property].markAsTouched();
+      }
+      return ! component.form.valid;
+    }).length;
+
+    let chats = this.chats.filter((component) => {
+      for (let property in component.form.controls) {
+        component.form.controls[property].markAsTouched();
+      }
+      return ! component.form.valid;
+    }).length;
+
+    return phones + emails + chats === 0;
   }
 
   public postRequest(form : Contact) {
@@ -102,16 +134,5 @@ export class ContactFormComponent extends AbstractForm<Contact> implements OnIni
     return this.http.delete<Contact>('service/social/user/current/contact')
   }
 
-  private filterEmptyPhones() {
-    this.contact.phones = this.contact.phones.filter((phone) => Strings.isNotEmpty(phone.number));
-  }
-
-  private filterEmptyEmails() {
-    this.contact.emails = this.contact.emails.filter((email) => Strings.isNotEmpty(email.email));
-  }
-
-  private filterEmptyChats() {
-    this.contact.chats = this.contact.chats.filter((chat) => Strings.isNotEmpty(chat.type) && Strings.isNotEmpty(chat.name));
-  }
 
 }

@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Phone} from "./phone-form.interfaces";
 import {TypeModel} from "./phone-form.classes";
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-social-phone-form',
@@ -11,6 +12,9 @@ export class PhoneFormComponent implements OnInit {
 
   @Input("phone")
   public phone: Phone;
+
+  @ViewChild("form")
+  public form : NgForm;
 
   public types : TypeModel[] = [];
 

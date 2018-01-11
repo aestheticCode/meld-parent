@@ -9,32 +9,9 @@ import {Address} from '../../address.interfaces';
   templateUrl: 'address-form.component.html',
   styleUrls: ['address-form.component.css']
 })
-export class AddressFormComponent implements OnInit {
+export class AddressFormComponent {
 
   @Input("address")
   public address: Address;
-
-  @Input("readonly")
-  public readonly: boolean = true;
-
-  @Output("deleteClick")
-  private deleteClick: EventEmitter<Address> = new EventEmitter();
-
-  @ViewChild("street")
-  private street: NgModel;
-
-  constructor(private http: HttpClient) {}
-
-  ngOnInit(): void {}
-
-  onDelete() {
-    this.address.location.streetNumber = undefined;
-    this.address.location.country = undefined;
-    this.address.location.state = undefined;
-    this.address.location.street = undefined;
-    this.address.location.zipCode = undefined;
-
-    this.deleteClick.emit(this.address);
-  }
 
 }

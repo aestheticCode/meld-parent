@@ -3,32 +3,38 @@ import {Observable} from 'rxjs/Observable';
 
 export abstract class AbstractForm<F> {
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) {
+  }
 
-  public preRequest() {}
+  public preRequest(): boolean {
+    return true;
+  }
 
-  public postRequest(form : F) {}
+  public postRequest(form: F) {
+  }
 
-  public abstract saveRequest() : Observable<F>;
+  public abstract saveRequest(): Observable<F>;
 
-  public abstract updateRequest() : Observable<F>
+  public abstract updateRequest(): Observable<F>
 
-  public abstract deleteRequest() : Observable<F>
+  public abstract deleteRequest(): Observable<F>
 
   onSave() {
-    this.preRequest();
-    this.saveRequest()
-      .subscribe((res: F) => {
-        this.postRequest(res);
-      });
+    if (this.preRequest()) {
+      this.saveRequest()
+        .subscribe((res: F) => {
+          this.postRequest(res);
+        });
+    }
   }
 
   onUpdate() {
-    this.preRequest();
-    this.updateRequest()
-      .subscribe((res: F) => {
-        this.postRequest(res);
-      });
+    if (this.preRequest()) {
+      this.updateRequest()
+        .subscribe((res: F) => {
+          this.postRequest(res);
+        });
+    }
   }
 
   onCancel() {
@@ -37,11 +43,12 @@ export abstract class AbstractForm<F> {
   }
 
   onDelete() {
-    this.preRequest();
-    this.deleteRequest()
-      .subscribe(() => {
-        this.postRequest(null);
-      });
+    if (this.preRequest()) {
+      this.deleteRequest()
+        .subscribe(() => {
+          this.postRequest(null);
+        });
+    }
   }
 
 
