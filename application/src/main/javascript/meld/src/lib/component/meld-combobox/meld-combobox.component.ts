@@ -1,35 +1,44 @@
 import {
-  Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnChanges, Output, SimpleChanges, TemplateRef,
-  ViewChild
+  Component, ContentChild, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnChanges, Optional, Output, Self,
+  SimpleChanges, TemplateRef, ViewChild
 } from '@angular/core';
-import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, NgControl} from '@angular/forms';
 import {MeldTableComponent} from '../meld-table/meld-table.component';
 import {Subject} from 'rxjs/Subject';
 import {Items} from '../../common/search/search.interfaces';
 import {Search, Selects} from './meld-combobox.interfaces';
+import {Objects} from '../../common/utils/Objects';
+import {MatFormFieldControl} from '@angular/material';
+import {AbstractControl} from '../../common/forms/AbstractControl';
 
 const noop = () => {
-};
-
-export const CUSTOM_INPUT_NG_VALIDATORS: any = {
-  provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => MeldComboBoxComponent),
-  multi: true
-};
-
-export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => MeldComboBoxComponent),
-  multi: true
 };
 
 @Component({
   selector: 'meld-combobox',
   templateUrl: 'meld-combobox.component.html',
   styleUrls: ['meld-combobox.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_NG_VALIDATORS]
+  providers: [{provide: MatFormFieldControl, useExisting: MeldComboBoxComponent}]
 })
-export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
+export class MeldComboBoxComponent extends AbstractControl<any> implements OnChanges {
+
+  static nextId = 0;
+
+  @HostBinding()
+  id = `meld-combobox-${MeldComboBoxComponent.nextId++}`;
+
+  get focused() {
+    return document.activeElement === this.input.nativeElement;
+  }
+
+  onContainerClick(event: MouseEvent): void {
+    this.input.nativeElement.focus();
+  }
+
+  get empty() {
+    return Objects.isNull(this.value);
+  }
+
 
   public value: any;
 
@@ -39,14 +48,11 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
 
   public showOverlay: boolean = false;
 
-  @Input()
-  public required: any = false;
-
   @Input('filter')
   public filter: string = '';
 
-  @Output("filterChange")
-  public filterChange : EventEmitter<string> = new EventEmitter<string>();
+  @Output('filterChange')
+  public filterChange: EventEmitter<string> = new EventEmitter<string>();
 
   @Input('placeholder')
   public placeholder: string = '';
@@ -72,13 +78,18 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
   @Input('rowHeight')
   public rowHeight: number = 28;
 
+  @ViewChild("input")
+  public input : ElementRef;
+
   private filterChanges = new Subject<string>();
 
   private onTouchedCallback: () => void = noop;
 
   private onChangeCallback: (value: any) => void = noop;
 
-  constructor(private elRef: ElementRef) {
+  constructor(private elRef: ElementRef,
+              @Self() public ngControl: NgControl) {
+    super(ngControl);
     this.filterChanges
       .debounceTime(300)
       .distinctUntilChanged()
@@ -89,20 +100,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
         this.table.refreshItems();
         this.value = null;
       });
-  }
 
-  validate(control: FormControl) {
-    if (this.required || this.required === "") {
-      if (control.pristine) {
-        return null;
-      }
-
-      if (control.value && control.value.length > 0) {
-        return null;
-      } else {
-        return {required: true}
-      }
-    }
   }
 
   public parentItems: Items<any> = (query, callback) => {
@@ -146,7 +144,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
   public onSelectItemChange(event) {
     this.value = this.itemValue(event);
     this.filter = this.itemName(event);
-    this.filterChange.emit(this.filter)
+    this.filterChange.emit(this.filter);
     this.onChangeCallback(this.value);
     this.showOverlay = false;
     this.selectItemChange.emit(event);
@@ -160,13 +158,17 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
     this.onSelectItemChange(null);
   }
 
+  public onOverlayClick(event: MouseEvent) {
+    event.stopPropagation();
+    return false;
+  }
+
   onShowOverlay() {
     window.setTimeout(() => {
       if (this.disabled || this.readonly) {
         this.showOverlay = false;
       } else {
         this.showOverlay = true;
-        this.table.refreshItems();
       }
     }, 300);
   }
@@ -193,6 +195,7 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
         this.onChangeCallback(this.value);
         this.showOverlay = false;
         this.selectItemChange.emit(item);
+        this.table.refreshItems();
       }
         break;
     }

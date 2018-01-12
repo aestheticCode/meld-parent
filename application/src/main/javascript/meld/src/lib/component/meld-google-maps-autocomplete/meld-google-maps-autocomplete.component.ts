@@ -1,47 +1,53 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, HostBinding, Input, Self} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
 import {Place} from './meld-google-maps-autocomplete.interfaces';
 import {Container} from '../../common/rest/Container';
 import {Selects} from '../meld-combobox/meld-combobox.interfaces';
 import {Objects} from '../../common/utils/Objects';
+import {AbstractControl} from '../../common/forms/AbstractControl';
+import {MeldComboBoxComponent} from '../meld-combobox/meld-combobox.component';
+import {MatFormFieldControl} from '@angular/material';
 
 const noop = () => {
 };
-
-export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => MeldGoogleMapsAutocompleteComponent),
-  multi: true
-};
-
 
 @Component({
   selector: 'meld-google-maps-autocomplete',
   templateUrl: 'meld-google-maps-autocomplete.component.html',
   styleUrls: ['meld-google-maps-autocomplete.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [{provide: MatFormFieldControl, useExisting: MeldGoogleMapsAutocompleteComponent}]
 })
-export class MeldGoogleMapsAutocompleteComponent implements ControlValueAccessor {
+export class MeldGoogleMapsAutocompleteComponent extends AbstractControl<Place> implements ControlValueAccessor {
 
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (value: any) => void = noop;
 
+  static nextId = 0;
+
+  @HostBinding()
+  id = `meld-google-maps-autocomplete-${MeldComboBoxComponent.nextId++}`;
+
+  get focused() {
+    return false;
+  }
+
+  onContainerClick(event: MouseEvent): void {
+    //this.input.nativeElement.focus();
+  }
+
+  get empty() {
+    return Objects.isNull(this.value);
+  }
+
   public value: Place;
-
-  @Input('name')
-  public name: string;
-
-  @Input('placeholder')
-  public placeholder: string;
 
   @Input('firstPartOnly')
   public firstPartOnly: boolean = false;
 
-  @Input("required")
-  public required : boolean = false;
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              @Self() public ngControl: NgControl) {
+    super(ngControl);
   }
 
   places: Selects<Place> = (search, callback) => {

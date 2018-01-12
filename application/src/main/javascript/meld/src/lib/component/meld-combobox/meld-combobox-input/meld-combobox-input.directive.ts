@@ -1,5 +1,6 @@
-import {Directive, ElementRef, HostListener, Input, OnInit} from '@angular/core';
+import {Directive, ElementRef, HostListener, Input, OnInit, Optional, Self} from '@angular/core';
 import {MeldComboBoxComponent} from '../meld-combobox.component';
+import {NgControl} from '@angular/forms';
 
 @Directive({
   selector: 'input[meldComboboxInput]'
@@ -9,7 +10,8 @@ export class MeldComboboxInputDirective implements OnInit {
   @Input('meldComboboxInput')
   private comboBox: MeldComboBoxComponent;
 
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef,
+              @Self() @Optional() public ngControl: NgControl) {
   }
 
   ngOnInit(): void {
@@ -26,8 +28,8 @@ export class MeldComboboxInputDirective implements OnInit {
 
   @HostListener('click', ['$event'])
   public onOverlayClick(event: MouseEvent) {
-    event.stopPropagation();
-    return false;
+    //event.stopPropagation();
+    //return false;
   }
 
   @HostListener("keyup", ['$event'])

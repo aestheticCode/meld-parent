@@ -1,18 +1,20 @@
 import {
-  Component, ComponentFactoryResolver, ElementRef, forwardRef, HostListener, Injector, Input, OnInit, Optional,
-  Self, ViewChild, ViewContainerRef
+  Component, ComponentFactoryResolver, ElementRef, forwardRef, HostBinding, HostListener, Injector, Input, Optional, Self, ViewChild,
+  ViewContainerRef
 } from '@angular/core';
-import {MatFormFieldControl, MatDialog} from "@angular/material";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
-import {Strings} from "../../common/utils/Strings";
-import {Subject} from "rxjs/Subject";
-import {MeldDigitComponent} from "./meld-digit/meld-digit.component";
-import {MeldMonthComponent} from "./meld-month/meld-month.component";
-import {MeldSeparatorComponent} from "./meld-separator/meld-separator.component";
+import {MatDialog, MatFormFieldControl} from '@angular/material';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
+import {Strings} from '../../common/utils/Strings';
+import {Subject} from 'rxjs/Subject';
+import {MeldDigitComponent} from './meld-digit/meld-digit.component';
+import {MeldMonthComponent} from './meld-month/meld-month.component';
+import {MeldSeparatorComponent} from './meld-separator/meld-separator.component';
 import * as moment from 'moment';
-import {MeldDatePickerComponent} from "../meld-datepicker/meld-datepicker.component";
+import {MeldDatePickerComponent} from '../meld-datepicker/meld-datepicker.component';
+import {AbstractControl} from '../../common/forms/AbstractControl';
 
-const noop = () => {};
+const noop = () => {
+};
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -25,88 +27,59 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   templateUrl: 'meld-date.component.html',
   styleUrls: ['meld-date.component.css'],
   providers: [
-    CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR,
     {provide: MatFormFieldControl, useExisting: MeldDateComponent}
   ]
 })
-export class MeldDateComponent implements MatFormFieldControl<string>, ControlValueAccessor {
+export class MeldDateComponent extends AbstractControl<string>  {
+
+  static nextId = 0;
 
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (value: any) => void = noop;
 
-  private _value: string;
+  value: string;
 
-  stateChanges: Subject<void> = new Subject<void>();
+  @HostBinding()
+  id = `meld-date-${MeldDateComponent.nextId++}`;
 
-  id: string;
-
-  @Input("placeholder")
-  placeholder: string;
-
-  @Input("format")
-  format : string = "YYYYMMMdd";
-
-  focused: boolean = false;
-
-  empty: boolean = false;
-
-  @Input("required")
-  required: boolean = false;
-
-  @Input("disabled")
-  disabled: boolean = false;
-
-  @Input("readonly")
-  readonly : boolean = false;
-
-  errorState: boolean = false;
-
-  controlType: string = 'meld-date';
-
-  @ViewChild('container', { read: ViewContainerRef })
-  container : ViewContainerRef;
-
-  @Optional() @Self() public ngControl: NgControl;
-
-  constructor(private elementRef : ElementRef,
-              private resolver : ComponentFactoryResolver,
-              private injector : Injector,
-              public dialog: MatDialog) {
-    this.empty = Strings.isEmpty(this.value);
+  get focused(): boolean {
+    return false;
   }
 
-
-
-  get shouldPlaceholderFloat() {
-    return this.focused || !this.empty;
-  }
-
-
-  get value(): string {
-    return this._value;
-  }
-
-  set value(value: string) {
-    this._value = value;
-    this.empty = false;
-    this.onChangeCallback(this.value);
-  }
-
-  setDescribedByIds(ids: string[]): void {
+  get empty(): boolean {
+    return Strings.isEmpty(this.value);
   }
 
   onContainerClick(event: MouseEvent): void {
+    this.open();
   }
 
-  readFormat() : string[] {
-    const result : string[] = [];
+
+  @ViewChild('container', {read: ViewContainerRef})
+  container: ViewContainerRef;
+
+  @Input('format')
+  format: string = 'YYYYMMMdd';
+
+
+  constructor(private elementRef: ElementRef,
+              private resolver: ComponentFactoryResolver,
+              @Self() @Optional() ngControl: NgControl,
+              private injector: Injector,
+              public dialog: MatDialog) {
+    super(ngControl);
+  }
+
+
+  readFormat(): string[] {
+    const result: string[] = [];
     let index = 0;
     let lastChar = this.format.charAt(0);
     for (let i = 0; i < this.format.length; i++) {
       const char = this.format.charAt(i);
       if (lastChar != char) {
         result.push(char);
-        index ++;
+        index++;
       } else {
         if (result.length < index + 1) {
           result.push(char);
@@ -119,20 +92,13 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
     return result;
   }
 
-  focus(): void {
-    this.focused = true;
-    this.stateChanges.next();
-  }
-
   onSpanClick(event: MouseEvent): boolean {
     event.stopPropagation();
-    this.focus();
     return false;
   }
 
-  @HostListener("window:click")
+  @HostListener('window:click')
   blur(): void {
-    this.focused = false;
     this.stateChanges.next();
   }
 
@@ -155,11 +121,12 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
           componentRef.instance.readonly = this.readonly;
           componentRef.instance.valueChange.subscribe((value) => {
             momentDate.date(value);
-            this.value = momentDate.format("YYYY-MM-DD");
+            this.value = momentDate.format('YYYY-MM-DD');
             this.onChangeCallback(this.value);
           });
           this.container.insert(componentRef.hostView);
-        } break;
+        }
+          break;
         case 'MM' : {
           const componentFactory = this.resolver.resolveComponentFactory(MeldDigitComponent);
           const componentRef = componentFactory.create(this.injector);
@@ -168,11 +135,12 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
           componentRef.instance.readonly = this.readonly;
           componentRef.instance.valueChange.subscribe((value) => {
             momentDate.month(value);
-            this.value = momentDate.format("YYYY-MM-DD");
+            this.value = momentDate.format('YYYY-MM-DD');
             this.onChangeCallback(this.value);
           });
           this.container.insert(componentRef.hostView);
-        } break;
+        }
+          break;
         case 'MMM' : {
           const componentFactory = this.resolver.resolveComponentFactory(MeldMonthComponent);
           const componentRef = componentFactory.create(this.injector);
@@ -180,11 +148,12 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
           componentRef.instance.readonly = this.readonly;
           componentRef.instance.valueChange.subscribe((value) => {
             momentDate.month(value);
-            this.value = momentDate.format("YYYY-MM-DD");
+            this.value = momentDate.format('YYYY-MM-DD');
             this.onChangeCallback(this.value);
           });
           this.container.insert(componentRef.hostView);
-        } break;
+        }
+          break;
         case 'YY' : {
           const componentFactory = this.resolver.resolveComponentFactory(MeldDigitComponent);
           const componentRef = componentFactory.create(this.injector);
@@ -193,11 +162,12 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
           componentRef.instance.readonly = this.readonly;
           componentRef.instance.valueChange.subscribe((value) => {
             momentDate.year(value);
-            this.value = momentDate.format("YYYY-MM-DD");
+            this.value = momentDate.format('YYYY-MM-DD');
             this.onChangeCallback(this.value);
           });
           this.container.insert(componentRef.hostView);
-        } break;
+        }
+          break;
         case 'YYYY' : {
           const componentFactory = this.resolver.resolveComponentFactory(MeldDigitComponent);
           const componentRef = componentFactory.create(this.injector);
@@ -207,11 +177,12 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
           componentRef.instance.readonly = this.readonly;
           componentRef.instance.valueChange.subscribe((value) => {
             momentDate.year(value);
-            this.value = momentDate.format("YYYY-MM-DD");
+            this.value = momentDate.format('YYYY-MM-DD');
             this.onChangeCallback(this.value);
           });
           this.container.insert(componentRef.hostView);
-        } break;
+        }
+          break;
         default : {
           const componentFactory = this.resolver.resolveComponentFactory(MeldSeparatorComponent);
           const componentRef = componentFactory.create(this.injector);
@@ -219,28 +190,27 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
           this.container.insert(componentRef.hostView);
         }
       }
-    })
+    });
   }
 
   clear() {
     this.value = undefined;
     this.onChangeCallback(this.value);
     this.container.clear();
-    this.empty = true;
   }
 
   open() {
-    let element : HTMLElement = this.nativeElement;
+    let element: HTMLElement = this.nativeElement;
     let clientRect = element.getBoundingClientRect();
     let config = {
-      hasBackdrop : true,
-      data : {date : this.value}
+      hasBackdrop: true,
+      data: {date: this.value}
     };
     let dialogRef = this.dialog.open(MeldDatePickerComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const format = moment(result).format("YYYY-MM-DD");
+        const format = moment(result).format('YYYY-MM-DD');
         this.value = format;
         this.processDate();
       }
@@ -261,6 +231,10 @@ export class MeldDateComponent implements MatFormFieldControl<string>, ControlVa
 
   registerOnTouched(fn: any): void {
     this.onTouchedCallback = fn;
+  }
+
+  ngOnDestroy() {
+    this.stateChanges.complete();
   }
 
 }

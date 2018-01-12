@@ -6,7 +6,10 @@
       <button type="button"  (click)="onDelete()"  mat-icon-button><mat-icon>delete</mat-icon></button>
     </div>
   </legend>
-  <meld-google-maps-autocomplete required placeholder="Address" formControlName="location"></meld-google-maps-autocomplete>
+
+  <mat-form-field style="width: 100%;">
+    <meld-google-maps-autocomplete required placeholder="Address" formControlName="location"></meld-google-maps-autocomplete>
+  </mat-form-field>
 
   <div style="display: flex; width: 100%">
     <div style="width: 50%">
