@@ -6,7 +6,7 @@
     <span style="margin-left: 5px;" *ngIf="comment.likes.length > 0">+{{comment.likes.length}}</span>
     <span style="flex-grow: 1;"></span>
     <span style="text-align: right;">{{comment.time}}</span>
-    <button (click)="onClick()" mat-icon-button>
+    <button type="button"  (click)="onClick()" mat-icon-button>
       <mat-icon>more_vert</mat-icon>
     </button>
   </div>
@@ -17,8 +17,8 @@
     <app-meld-editor #editor [(ngModel)]="comment.text" style="min-height: 40px;" placeholder="Write Text here..."></app-meld-editor>
     <div style="display: flex">
       <span style="flex-grow: 1"></span>
-      <button mat-button (click)="onCancelClick($event)">Cancel</button>
-      <button mat-button (click)="onUpdateClick(comment)">Update</button>
+      <button type="button"  mat-button (click)="onCancelClick($event)">Cancel</button>
+      <button type="button"  mat-button (click)="onUpdateClick(comment)">Update</button>
     </div>
   </div>
 

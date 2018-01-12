@@ -24,7 +24,7 @@
           <meld-td>
             <ng-template let-item>
               <div style="text-align: right;">
-                <button mat-icon-button [disabled]="disabled || readonly" (click)="onRemoveSelectedItem(item)">
+                <button type="button"  mat-icon-button [disabled]="disabled || readonly" (click)="onRemoveSelectedItem(item)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>

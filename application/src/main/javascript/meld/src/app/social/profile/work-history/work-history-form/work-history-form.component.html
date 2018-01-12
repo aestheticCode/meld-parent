@@ -9,7 +9,7 @@
                 <legend>
                   <div style="display: flex">
                     <div style="flex: 1">Work History</div>
-                    <button matSuffix mat-icon-button (click)="onCreateAddress()">
+                    <button type="button"  matSuffix mat-icon-button (click)="onCreateAddress()">
                       <mat-icon>add</mat-icon>
                     </button>
                   </div>
@@ -29,10 +29,10 @@
 
             </mat-card-content>
             <mat-card-actions>
-              <button mat-button *ngIf="links | meldLink:'save'" (click)="onSave()">Save</button>
-              <button mat-button *ngIf="links | meldLink:'update'" (click)="onUpdate()">Update</button>
-              <button mat-button *ngIf="links | meldLink:'delete'" (click)="onUpdate()">Delete All</button>
-              <button mat-button (click)="onCancel()">Cancel</button>
+              <button type="button"  mat-button *ngIf="links | meldLink:'save'" (click)="onSave()">Save</button>
+              <button type="button"  mat-button *ngIf="links | meldLink:'update'" (click)="onUpdate()">Update</button>
+              <button type="button"  mat-button *ngIf="links | meldLink:'delete'" (click)="onUpdate()">Delete All</button>
+              <button type="button"  mat-button (click)="onCancel()">Cancel</button>
             </mat-card-actions>
           </mat-card>
         </form>

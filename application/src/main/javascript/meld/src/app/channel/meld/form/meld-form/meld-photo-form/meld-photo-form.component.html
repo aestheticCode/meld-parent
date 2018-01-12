@@ -4,7 +4,7 @@
       <app-photo-view *ngIf="photo" [id]="photo.id"></app-photo-view>
       <app-meld-editor [(ngModel)]="post.text" name="text" placeholder="Write something here..."></app-meld-editor>
     </fieldset>
-    <button mat-icon-button style="color: dimgrey;" (click)="open()">
+    <button type="button"  mat-icon-button style="color: dimgrey;" (click)="open()">
       <mat-icon>photo_camera</mat-icon>
     </button>
   </form>

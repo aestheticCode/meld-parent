@@ -2,7 +2,7 @@
   <strong>{{school.visitStart.year}} {{school.visitStart.semester | meldEnum:semesters}} - </strong>
   <strong *ngIf="! school.tillNow">{{school.visitEnd.year}} {{school.visitEnd.semester | meldEnum:semesters}}</strong>
   <strong *ngIf="school.tillNow">Till Now</strong>
-  <button mat-icon-button style="margin-top: -12px" (click)="open()">
+  <button type="button"  mat-icon-button style="margin-top: -12px" (click)="open()">
     <mat-icon>room</mat-icon>
   </button>
 </div>

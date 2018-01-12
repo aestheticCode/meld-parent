@@ -20,10 +20,10 @@
               <td *ngIf="multiSelect" ><mat-checkbox [checked]="allSelected" (change)="selectAll($event)" ></mat-checkbox></td>
               <td style="line-height: 40px;" *ngFor="let column of row.columns | meldTableSorter:columnConfiguration" (click)="onSortClick(column)" >
                 <ng-container *ngTemplateOutlet="column.content"></ng-container>
-                <button *ngIf="column.asc === true" mat-icon-button>
+                <button type="button"  *ngIf="column.asc === true" mat-icon-button>
                   <mat-icon>expand_less</mat-icon>
                 </button>
-                <button *ngIf="column.asc === false" mat-icon-button>
+                <button type="button"  *ngIf="column.asc === false" mat-icon-button>
                   <mat-icon>expand_more</mat-icon>
                 </button>
               </td>

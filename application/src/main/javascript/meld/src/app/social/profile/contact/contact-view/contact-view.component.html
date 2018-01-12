@@ -40,8 +40,8 @@
             </fieldset>
           </mat-card-content>
           <mat-card-actions>
-            <button *ngIf="contact.links | meldLink:'update,save'" mat-button (click)="onEdit()">Edit</button>
-            <button mat-button (click)="onCancel()">Cancel</button>
+            <button type="button"  *ngIf="contact.links | meldLink:'update,save'" mat-button (click)="onEdit()">Edit</button>
+            <button type="button"  mat-button (click)="onCancel()">Cancel</button>
           </mat-card-actions>
         </mat-card>
 

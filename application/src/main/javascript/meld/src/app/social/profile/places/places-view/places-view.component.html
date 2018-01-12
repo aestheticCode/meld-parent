@@ -18,8 +18,8 @@
           </mat-card-content>
 
           <mat-card-actions>
-            <button *ngIf="places.links | meldLink:'update,save'" mat-button (click)="onEdit()">Edit</button>
-            <button mat-button (click)="onCancel()">Chancel</button>
+            <button type="button"  *ngIf="places.links | meldLink:'update,save'" mat-button (click)="onEdit()">Edit</button>
+            <button type="button"  mat-button (click)="onCancel()">Chancel</button>
           </mat-card-actions>
 
         </mat-card>

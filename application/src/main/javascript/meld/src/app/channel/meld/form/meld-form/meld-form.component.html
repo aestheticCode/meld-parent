@@ -11,14 +11,14 @@
           </mat-card-subtitle>
           <div style="width: 100%"></div>
           <mat-menu #appMenu="matMenu">
-            <button mat-menu-item [routerLink]="['/channel','meld','post','text']"> Text </button>
-            <button mat-menu-item [routerLink]="['/channel','meld','post','image']"> Image </button>
-            <button mat-menu-item [routerLink]="['/channel','meld','post','youtube']"> YouTube </button>
-            <button mat-menu-item [routerLink]="['/channel','meld','post','photo']"> Photo </button>
-            <button mat-menu-item [routerLink]="['/channel','meld','post','link']"> Link </button>
+            <button type="button"  mat-menu-item [routerLink]="['/channel','meld','post','text']"> Text </button>
+            <button type="button"  mat-menu-item [routerLink]="['/channel','meld','post','image']"> Image </button>
+            <button type="button"  mat-menu-item [routerLink]="['/channel','meld','post','youtube']"> YouTube </button>
+            <button type="button"  mat-menu-item [routerLink]="['/channel','meld','post','photo']"> Photo </button>
+            <button type="button"  mat-menu-item [routerLink]="['/channel','meld','post','link']"> Link </button>
           </mat-menu>
 
-          <button *ngIf="! post.id" mat-icon-button [matMenuTriggerFor]="appMenu">
+          <button type="button"  *ngIf="! post.id" mat-icon-button [matMenuTriggerFor]="appMenu">
             <mat-icon>more_vert</mat-icon>
           </button>
         </mat-card-header>
@@ -28,10 +28,10 @@
         </mat-card-content>
 
         <mat-card-actions>
-          <button mat-button *ngIf="post.links | meldLink:'save'" (click)="onSave()">Post</button>
-          <button mat-button *ngIf="post.links | meldLink:'update'" (click)="onUpdate()">Update</button>
-          <button mat-button *ngIf="post.links | meldLink:'delete'" (click)="onDelete()">Delete</button>
-          <button mat-button (click)="onCancel()">Cancel</button>
+          <button type="button"  mat-button *ngIf="post.links | meldLink:'save'" (click)="onSave()">Post</button>
+          <button type="button"  mat-button *ngIf="post.links | meldLink:'update'" (click)="onUpdate()">Update</button>
+          <button type="button"  mat-button *ngIf="post.links | meldLink:'delete'" (click)="onDelete()">Delete</button>
+          <button type="button"  mat-button (click)="onCancel()">Cancel</button>
         </mat-card-actions>
       </mat-card>
     </div>

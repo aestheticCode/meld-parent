@@ -4,7 +4,7 @@
     <mat-input-container style="width: 100%;">
       <input matInput placeholder="Search" ngModel #searchBox="ngModel">
     </mat-input-container>
-    <button mat-raised-button *ngIf="links | meldLink:'save'" style="width: 100px;" (click)="onCreate()">Create</button>
+    <button type="button"  mat-raised-button *ngIf="links | meldLink:'save'" style="width: 100px;" (click)="onCreate()">Create</button>
   </div>
   <meld-table [items]="roles" (selectItemChange)="onSelection($event)">
     <meld-colgroup>

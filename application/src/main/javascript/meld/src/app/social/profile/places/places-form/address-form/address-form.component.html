@@ -3,7 +3,7 @@
     <div style="display: flex">
       <span>Address</span>
       <div style=" flex: 1;"></div>
-      <button (click)="onDelete()"  mat-icon-button><mat-icon>delete</mat-icon></button>
+      <button type="button"  (click)="onDelete()"  mat-icon-button><mat-icon>delete</mat-icon></button>
     </div>
   </legend>
   <meld-google-maps-autocomplete required placeholder="Address" formControlName="location"></meld-google-maps-autocomplete>
@@ -12,10 +12,10 @@
     <div style="width: 50%">
       <mat-form-field style="width: 100%">
         <meld-date required #datePickerStart placeholder="Start" formControlName="start"></meld-date>
-        <button matSuffix mat-icon-button (click)="datePickerStart.clear()">
+        <button type="button"  matSuffix mat-icon-button (click)="datePickerStart.clear()">
           <mat-icon>delete</mat-icon>
         </button>
-        <button matSuffix mat-icon-button (click)="datePickerStart.open()">
+        <button type="button"  matSuffix mat-icon-button (click)="datePickerStart.open()">
           <mat-icon>today</mat-icon>
         </button>
       </mat-form-field>
@@ -24,10 +24,10 @@
     <div style="width: 50%">
       <mat-form-field style="width: 100%" *ngIf="! address.controls.tillNow.value">
         <meld-date required #datePickerEnd placeholder="End" formControlName="end"></meld-date>
-        <button matSuffix mat-icon-button (click)="datePickerEnd.clear()">
+        <button type="button"  matSuffix mat-icon-button (click)="datePickerEnd.clear()">
           <mat-icon>delete</mat-icon>
         </button>
-        <button matSuffix mat-icon-button (click)="datePickerEnd.open()">
+        <button type="button"  matSuffix mat-icon-button (click)="datePickerEnd.open()">
           <mat-icon>today</mat-icon>
         </button>
       </mat-form-field>

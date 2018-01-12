@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <div style="height: 100vh;">
   <mat-toolbar>
-    <button mat-icon-button (click)="toggleSideNav()">
+    <button type="button"  mat-icon-button (click)="toggleSideNav()">
       <mat-icon>list</mat-icon>
     </button>
     <span class="title" style="flex: 1 1 auto;">Meld</span>
-    <button mat-icon-button *ngIf="links | meldLink:'login';" routerLink="usercontrol/login">
+    <button type="button"  mat-icon-button *ngIf="links | meldLink:'login';" routerLink="usercontrol/login">
       <mat-icon>lock_open</mat-icon>
     </button>
-    <button mat-icon-button *ngIf="links | meldLink:'logout';" routerLink="usercontrol/logout">
+    <button type="button"  mat-icon-button *ngIf="links | meldLink:'logout';" routerLink="usercontrol/logout">
       <mat-icon>lock</mat-icon>
     </button>
   </mat-toolbar>

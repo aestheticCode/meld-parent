@@ -4,7 +4,7 @@
     <strong *ngIf="! company.tillNow">{{company.end | date:'ddMMMyyyy'}}</strong>
     <strong *ngIf="company.tillNow">Till Now</strong>
 
-    <button mat-icon-button style="margin-top: -12px" (click)="open()">
+    <button type="button"  mat-icon-button style="margin-top: -12px" (click)="open()">
       <mat-icon>room</mat-icon>
     </button>
   </div>

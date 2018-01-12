@@ -4,7 +4,7 @@
     <mat-input-container style="width: 100%;">
       <input matInput placeholder="Search" ngModel #searchBox="ngModel">
     </mat-input-container>
-    <button mat-raised-button *ngIf="links | meldLink:'save'" (click)="onCreate()">Create</button>
+    <button type="button"  mat-raised-button *ngIf="links | meldLink:'save'" (click)="onCreate()">Create</button>
   </div>
   <meld-table #table [items]="users" (selectItemChange)="onSelectionChange($event)" [menu]="true">
     <meld-filter>
@@ -24,8 +24,8 @@
             <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
             <mat-datepicker #datepicker></mat-datepicker>
           </mat-form-field>
-          <button mat-button (click)="onSearchClick()">Search</button>
-          <button mat-button (click)="onCancelClick()">Reset</button>
+          <button type="button"  mat-button (click)="onSearchClick()">Search</button>
+          <button type="button"  mat-button (click)="onCancelClick()">Reset</button>
         </form>
       </ng-template>
     </meld-filter>

@@ -29,8 +29,8 @@
 
                     <mat-form-field style="width: 100%">
                       <meld-date  #datePicker placeholder="Birthday" [(ngModel)]="user.birthday" name="birthday"></meld-date>
-                      <button matSuffix mat-icon-button (click)="datePicker.clear()"><mat-icon>delete</mat-icon></button>
-                      <button matSuffix mat-icon-button (click)="datePicker.open()"><mat-icon >today</mat-icon></button>
+                      <button type="button"  matSuffix mat-icon-button (click)="datePicker.clear()"><mat-icon>delete</mat-icon></button>
+                      <button type="button"  matSuffix mat-icon-button (click)="datePicker.open()"><mat-icon >today</mat-icon></button>
                     </mat-form-field>
 
 
@@ -70,8 +70,8 @@
                     <meld-file-container [placeholder]="'Image'">
                       <input #image="InputDirective" type="file" name="image" [(ngModel)]="user.image">
                     </meld-file-container>
-                    <button matSuffix mat-icon-button (click)="image.clear()"><mat-icon>backspace</mat-icon></button>
-                    <button matSuffix mat-icon-button (click)="image.click()"><mat-icon>present_to_all</mat-icon></button>
+                    <button type="button"  matSuffix mat-icon-button (click)="image.clear()"><mat-icon>backspace</mat-icon></button>
+                    <button type="button"  matSuffix mat-icon-button (click)="image.click()"><mat-icon>present_to_all</mat-icon></button>
                   </mat-form-field>
                 </div>
               </div>
@@ -83,10 +83,10 @@
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button (click)="onSave()" *ngIf="user.links | meldLink:'save'">Save</button>
-      <button mat-button (click)="onUpdate()" *ngIf="user.links | meldLink:'update'">Update</button>
-      <button mat-button (click)="onDelete()" *ngIf="user.links | meldLink:'delete'">Delete</button>
-      <button mat-button (click)="onCancel()">Cancel</button>
+      <button type="button"  mat-button (click)="onSave()" *ngIf="user.links | meldLink:'save'">Save</button>
+      <button type="button"  mat-button (click)="onUpdate()" *ngIf="user.links | meldLink:'update'">Update</button>
+      <button type="button"  mat-button (click)="onDelete()" *ngIf="user.links | meldLink:'delete'">Delete</button>
+      <button type="button"  mat-button (click)="onCancel()">Cancel</button>
     </mat-card-actions>
   </mat-card>
 </div>

@@ -1,12 +1,12 @@
 <div>
   <div style="display: flex; align-items: center">
-    <button [disabled]="monthView" mat-icon-button (click)="previous()" ><mat-icon>keyboard_arrow_left</mat-icon></button>
+    <button type="button"  [disabled]="monthView" mat-icon-button (click)="previous()" ><mat-icon>keyboard_arrow_left</mat-icon></button>
     <div style="flex: 1; text-align: center" class="month">
-      <button mat-button style="margin: auto" (click)="dayView = false; yearView = true">
+      <button type="button"  mat-button style="margin: auto" (click)="dayView = false; yearView = true">
         <h6 style="margin: 0;">{{monthAndYear()}}</h6>
       </button>
     </div>
-    <button [disabled]="monthView" mat-icon-button (click)="next()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+    <button type="button"  [disabled]="monthView" mat-icon-button (click)="next()"><mat-icon>keyboard_arrow_right</mat-icon></button>
   </div>
   <meld-day-view *ngIf="dayView" (dayChange)="onDayChange($event)" [date]="date"></meld-day-view>
   <meld-year-view *ngIf="yearView" (yearChange)="onYearChange($event)"  [date]="date"></meld-year-view>
