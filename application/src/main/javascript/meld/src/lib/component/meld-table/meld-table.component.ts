@@ -17,7 +17,7 @@ import {MeldTheadDirective} from "./meld-thead/meld-thead.directive";
 import {MeldTbodyDirective} from "./meld-tbody/meld-tbody.directive";
 import {MeldTfooterDirective} from "./meld-tfooter/meld-tfooter.directive";
 import {MeldTableFilterDialogComponent} from "./meld-filter-dialog/meld-table-filter-dialog.component";
-import {LoadWindow} from "../meld-window/LoadWindow";
+import {LoadWindow, ViewPort} from '../meld-window/meld.window.classes';
 import {TableColumn} from "./TableColumn";
 import {MeldTdDirective} from './meld-td/meld-td.directive';
 import {Items} from '../../common/search/search.interfaces';
@@ -38,7 +38,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   styleUrls: ['meld-table.component.css'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class MeldTableComponent implements OnInit, AfterContentInit, ControlValueAccessor {
+export class MeldTableComponent implements AfterContentInit, ControlValueAccessor {
 
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (value: any) => void = noop;
@@ -70,7 +70,9 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
 
   public itemsSize: number;
 
-  public scrollWindowChange: LoadWindow = new LoadWindow(0, 75, 0, 5);
+  public scrollWindowChange: LoadWindow = new LoadWindow(0, 20);
+
+  public viewPortChange : ViewPort = new ViewPort(0, 5);
 
   @Input('items')
   private items: Items<any>;
@@ -106,22 +108,8 @@ export class MeldTableComponent implements OnInit, AfterContentInit, ControlValu
   constructor(public dialog: MatDialog) {
   }
 
-  ngOnInit(): void {
-    if (this.initialize) {
-      this.refreshItems();
-    }
-  }
-
   public refreshItems() {
-    if (this.items instanceof Function) {
-      let query = QueryBuilder.query();
-      query.index = 0;
-      query.limit = 75;
-      this.items(query, (data: any[], size: number) => {
-        this.itemsWindow = data;
-        this.itemsSize = size;
-      });
-    }
+    this.onWindowScroll(new LoadWindow(0, 20))
   }
 
   onWindowScroll(event: LoadWindow) {

@@ -3,7 +3,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {LoadWindow} from '../meld-window/LoadWindow';
+import {LoadWindow} from '../meld-window/meld.window.classes';
 import {MatCheckboxChange} from '@angular/material';
 import {Items} from '../../common/search/search.interfaces';
 import {QueryBuilder} from '../../common/search/search.classes';

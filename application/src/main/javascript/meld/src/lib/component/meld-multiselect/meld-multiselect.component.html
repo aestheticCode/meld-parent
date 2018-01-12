@@ -1,6 +1,6 @@
 <div style="width: 100%;">
   <mat-form-field style="width: 100%;">
-    <input matInput [meldComboboxInput]="comboBox" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" >
+    <input autocomplete="false" matInput [meldComboboxInput]="comboBox" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" >
     <meld-combobox [disabled]="disabled" #comboBox [items]="parentItems"
                    (selectItemChange)="onSelectItemChange($event)">
       <ng-template let-item>

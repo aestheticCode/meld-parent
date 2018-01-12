@@ -2,13 +2,19 @@ import {
   Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnChanges, Output, SimpleChanges, TemplateRef,
   ViewChild
 } from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MeldTableComponent} from '../meld-table/meld-table.component';
 import {Subject} from 'rxjs/Subject';
 import {Items} from '../../common/search/search.interfaces';
 import {Search, Selects} from './meld-combobox.interfaces';
 
 const noop = () => {
+};
+
+export const CUSTOM_INPUT_NG_VALIDATORS: any = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => MeldComboBoxComponent),
+  multi: true
 };
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -21,7 +27,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'meld-combobox',
   templateUrl: 'meld-combobox.component.html',
   styleUrls: ['meld-combobox.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_NG_VALIDATORS]
 })
 export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
 
@@ -32,6 +38,9 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
   public showInfo: boolean = false;
 
   public showOverlay: boolean = false;
+
+  @Input()
+  public required: any = false;
 
   @Input('filter')
   public filter: string = '';
@@ -82,6 +91,19 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
       });
   }
 
+  validate(control: FormControl) {
+    if (this.required || this.required === "") {
+      if (control.pristine) {
+        return null;
+      }
+
+      if (control.value && control.value.length > 0) {
+        return null;
+      } else {
+        return {required: true}
+      }
+    }
+  }
 
   public parentItems: Items<any> = (query, callback) => {
     const search: Search = {
@@ -162,12 +184,22 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
     const table = this.table;
 
     switch (event.keyCode) {
+      case 13 : {
+        let item = this.table.itemsWindow[table.hoveredIndex];
+        let itemValue = this.itemValue(item);
+        let itemName = this.itemName(item);
+        this.value = itemValue;
+        this.filter = itemName;
+        this.filterChange.emit(itemName);
+        this.onChangeCallback(this.value);
+        this.showOverlay = false;
+        this.selectItemChange.emit(item);
+      }
+        break;
       // Arrow Up
       case 38 : {
-        if (table.hoveredIndex > 0) {
+        if (table.hoveredIndex > table.viewPortChange.startIndex) {
           table.hoveredIndex--;
-        } else {
-
         }
       }
         break;
@@ -175,12 +207,12 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
       // Arrow Down
       case 40 : {
         if (table.hoveredIndex === undefined) {
-          table.hoveredIndex = table.scrollWindowChange.startIndex;
+          table.hoveredIndex = table.viewPortChange.startIndex;
         } else {
-          if (table.hoveredIndex < table.scrollWindowChange.startIndex) {
-            table.hoveredIndex = table.scrollWindowChange.startIndex;
-          } else {
-            table.hoveredIndex++;
+          table.hoveredIndex++;
+
+          if (table.hoveredIndex >= table.viewPortChange.endIndex) {
+            table.hoveredIndex = table.viewPortChange.endIndex;
           }
         }
       }

@@ -30,6 +30,11 @@ export class MeldComboboxInputDirective implements OnInit {
     return false;
   }
 
+  @HostListener("keyup", ['$event'])
+  public onKeyUp(event : KeyboardEvent) {
+    this.comboBox.onKeyUp(event)
+  }
+
   @HostListener('focus')
   public onFocus() {
     this.comboBox.onShowOverlay();

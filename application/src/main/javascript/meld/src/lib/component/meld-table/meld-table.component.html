@@ -1,4 +1,4 @@
-<div style="display: flex; width: 100%">
+<div style="display: flex; width: 100%" >
 
   <div style="position: absolute; right: 10px;">
     <a (click)="openMenu()" *ngIf="menuSymbol"><mat-icon>toc</mat-icon></a>
@@ -7,7 +7,7 @@
 
   <div style="display: flex; width: 100%;">
 
-    <meld-window [rowsSize]="itemsSize" (windowScrollChange)="onWindowScroll($event)" [rowHeight]="rowHeight">
+    <meld-window [rowsSize]="itemsSize" (windowScrollChange)="onWindowScroll($event)" (viewPortChange)="viewPortChange = $event"  [rowHeight]="rowHeight">
       <meld-window-header *ngIf="head">
         <ng-template>
           <table class="table" style="table-layout: fixed;" [ngClass]="{'table-unbordered': unbordered}">
