@@ -112,6 +112,33 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
     this.onWindowScroll(new LoadWindow(0, 20))
   }
 
+  onKeyUp(event: KeyboardEvent) {
+    switch (event.keyCode) {
+      // Arrow Up
+      case 38 : {
+        if (this.hoveredIndex > this.viewPortChange.startIndex) {
+          this.hoveredIndex--;
+        }
+      }
+        break;
+
+      // Arrow Down
+      case 40 : {
+        if (this.hoveredIndex === undefined) {
+          this.hoveredIndex = this.viewPortChange.startIndex;
+        } else {
+          this.hoveredIndex++;
+
+          if (this.hoveredIndex >= this.viewPortChange.endIndex) {
+            this.hoveredIndex = this.viewPortChange.endIndex;
+          }
+        }
+      }
+        break;
+    }
+  }
+
+
   onWindowScroll(event: LoadWindow) {
     this.scrollWindowChange = event;
     if (this.items instanceof Function) {

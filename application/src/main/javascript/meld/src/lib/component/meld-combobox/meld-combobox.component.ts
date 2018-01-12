@@ -181,11 +181,10 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
   }
 
   onKeyUp(event: KeyboardEvent) {
-    const table = this.table;
 
     switch (event.keyCode) {
       case 13 : {
-        let item = this.table.itemsWindow[table.hoveredIndex];
+        let item = this.table.itemsWindow[this.table.hoveredIndex];
         let itemValue = this.itemValue(item);
         let itemName = this.itemName(item);
         this.value = itemValue;
@@ -196,28 +195,9 @@ export class MeldComboBoxComponent implements OnChanges, ControlValueAccessor {
         this.selectItemChange.emit(item);
       }
         break;
-      // Arrow Up
-      case 38 : {
-        if (table.hoveredIndex > table.viewPortChange.startIndex) {
-          table.hoveredIndex--;
-        }
-      }
-        break;
-
-      // Arrow Down
-      case 40 : {
-        if (table.hoveredIndex === undefined) {
-          table.hoveredIndex = table.viewPortChange.startIndex;
-        } else {
-          table.hoveredIndex++;
-
-          if (table.hoveredIndex >= table.viewPortChange.endIndex) {
-            table.hoveredIndex = table.viewPortChange.endIndex;
-          }
-        }
-      }
-        break;
     }
+
+    this.table.onKeyUp(event);
   }
 
   writeValue(obj: any): void {

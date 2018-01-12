@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div [hidden]="! showOverlay" class="overlay" (mouseenter)="showInfo = true" (mouseleave)="showInfo = false">
+  <div *ngIf="showOverlay" class="overlay" (mouseenter)="showInfo = true" (mouseleave)="showInfo = false">
     <meld-table #table [items]="parentItems" [unbordered]="true" (selectItemChange)="onSelectItemChange($event)"
                 [rowHeight]="rowHeight" [initialize]="false">
       <meld-tbody>
