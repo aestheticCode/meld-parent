@@ -309,7 +309,6 @@
                                         <argument>ng</argument>
                                         <argument>build</argument>
                                         <argument>--prod</argument>
-                                        <argument>--aot=false</argument>
                                     </arguments>
                                     <workingDirectory>src/main/javascript/meld</workingDirectory>
                                 </configuration>
