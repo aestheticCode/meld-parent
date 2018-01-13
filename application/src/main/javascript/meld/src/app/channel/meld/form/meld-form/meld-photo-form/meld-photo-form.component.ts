@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MeldPhotoPost} from './meld-photo-form.interfaces';
 import {MatDialog} from '@angular/material';
 import {Objects} from '../../../../../../lib/common/utils/Objects';
@@ -11,7 +11,8 @@ import {MeldRouterService} from '../../../../../../lib/service/meld-router/meld-
 @Component({
   selector: 'app-meld-photo-form',
   templateUrl: 'meld-photo-form.component.html',
-  styleUrls: ['meld-photo-form.component.css']
+  styleUrls: ['meld-photo-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldPhotoFormComponent extends MeldFormPostComponent implements OnInit {
 

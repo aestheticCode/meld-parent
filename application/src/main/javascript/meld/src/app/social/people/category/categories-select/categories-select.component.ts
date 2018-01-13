@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, forwardRef, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Category} from '../categories.interfaces';
@@ -19,7 +19,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'app-categories-select',
   templateUrl: 'categories-select.component.html',
   styleUrls: ['categories-select.component.css'],
-  providers : [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers : [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+  encapsulation : ViewEncapsulation.None
 })
 export class CategoriesSelectComponent implements ControlValueAccessor {
 

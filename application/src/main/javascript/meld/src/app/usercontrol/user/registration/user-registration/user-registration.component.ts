@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Router} from '@angular/router';
 import {AppService} from '../../../../app.service';
@@ -9,7 +9,8 @@ import {Strings} from 'lib/common/utils/Strings';
 @Component({
   selector: 'app-user-registration',
   templateUrl: 'user-registration.component.html',
-  styleUrls: ['user-registration.component.css']
+  styleUrls: ['user-registration.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class UserRegistrationComponent {
 

@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, forwardRef, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {GroupSelect} from "./group-multiselect.interfaces";
@@ -18,7 +18,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'app-group-multiselect',
   templateUrl: 'group-multiselect.component.html',
   styleUrls: ['group-multiselect.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+  encapsulation : ViewEncapsulation.None
 })
 export class GroupMultiselectComponent implements ControlValueAccessor, OnChanges {
 

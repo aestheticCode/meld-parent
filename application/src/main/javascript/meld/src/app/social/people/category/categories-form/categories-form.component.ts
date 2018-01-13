@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Container, ContainerModel} from 'lib/common/rest/Container';
@@ -7,7 +7,8 @@ import {Category} from '../categories.interfaces';
 @Component({
   selector: 'app-categories-form',
   templateUrl: 'categories-form.component.html',
-  styleUrls: ['categories-form.component.css']
+  styleUrls: ['categories-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class CategoriesFormComponent implements OnInit {
 

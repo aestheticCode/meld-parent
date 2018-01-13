@@ -1,10 +1,11 @@
-import {ChangeDetectorRef, Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, ViewEncapsulation} from '@angular/core';
 import {Link} from "../../common/rest/Link";
 
 @Component({
   selector: 'meld-image',
   templateUrl: 'meld-image.component.html',
-  styleUrls: ['meld-image.component.css']
+  styleUrls: ['meld-image.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldImageComponent {
 

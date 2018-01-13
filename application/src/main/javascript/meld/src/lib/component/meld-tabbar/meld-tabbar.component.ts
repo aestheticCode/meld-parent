@@ -1,10 +1,14 @@
-import {AfterContentInit, Component, ContentChildren, ElementRef, HostListener, QueryList, ViewChild} from '@angular/core';
+import {
+  AfterContentInit, Component, ContentChildren, ElementRef, HostListener, QueryList, ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {MeldTabComponent} from './meld-tab/meld-tab.component';
 
 @Component({
   selector: 'meld-tabbar',
   templateUrl: 'meld-tabbar.component.html',
-  styleUrls: ['meld-tabbar.component.css']
+  styleUrls: ['meld-tabbar.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldTabBarComponent implements AfterContentInit {
 

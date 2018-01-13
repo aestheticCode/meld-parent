@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Contact} from '../contact.interfaces';
 import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 import {AbstractForm} from 'lib/common/forms/AbstractForm';
@@ -10,7 +10,8 @@ import {Link} from '../../../../../lib/common/rest/Link';
 @Component({
   selector: 'app-social-contact-form',
   templateUrl: 'contact-form.component.html',
-  styleUrls: ['contact-form.component.css']
+  styleUrls: ['contact-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class ContactFormComponent extends AbstractForm<Contact> implements OnInit {
 

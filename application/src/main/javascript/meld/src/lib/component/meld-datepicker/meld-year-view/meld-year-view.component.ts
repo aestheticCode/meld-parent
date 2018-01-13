@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
   selector: 'meld-year-view',
   templateUrl: 'meld-year-view.component.html',
-  styleUrls: ['meld-year-view.component.css']
+  styleUrls: ['meld-year-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldYearViewComponent implements OnInit, OnChanges {
 

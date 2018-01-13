@@ -1,4 +1,4 @@
-import {Component, forwardRef, HostBinding, Input, Self} from '@angular/core';
+import {Component, forwardRef, HostBinding, Input, Optional, Self, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
 import {Place} from './meld-google-maps-autocomplete.interfaces';
@@ -16,7 +16,8 @@ const noop = () => {
   selector: 'meld-google-maps-autocomplete',
   templateUrl: 'meld-google-maps-autocomplete.component.html',
   styleUrls: ['meld-google-maps-autocomplete.component.css'],
-  providers: [{provide: MatFormFieldControl, useExisting: MeldGoogleMapsAutocompleteComponent}]
+  providers: [{provide: MatFormFieldControl, useExisting: MeldGoogleMapsAutocompleteComponent}],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldGoogleMapsAutocompleteComponent extends AbstractControl<Place> implements ControlValueAccessor {
 
@@ -45,8 +46,11 @@ export class MeldGoogleMapsAutocompleteComponent extends AbstractControl<Place> 
   @Input('firstPartOnly')
   public firstPartOnly: boolean = false;
 
+  @Input("name")
+  public name : string;
+
   constructor(private http: HttpClient,
-              @Self() public ngControl: NgControl) {
+              @Optional() @Self() public ngControl: NgControl) {
     super(ngControl);
   }
 

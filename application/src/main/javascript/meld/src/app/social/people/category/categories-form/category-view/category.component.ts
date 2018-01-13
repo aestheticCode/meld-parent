@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {UserRow} from "./category.interfaces";
 import {MatDialog} from "@angular/material";
@@ -10,7 +10,8 @@ import {Items} from '../../../../../../lib/common/search/search.interfaces';
 @Component({
   selector: 'app-social-category',
   templateUrl: 'category.component.html',
-  styleUrls: ['category.component.css']
+  styleUrls: ['category.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class CategoryComponent {
 

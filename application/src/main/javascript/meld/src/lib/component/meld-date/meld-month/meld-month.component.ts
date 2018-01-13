@@ -1,10 +1,11 @@
-import {Component, EventEmitter, HostListener} from '@angular/core';
+import {Component, EventEmitter, HostListener, ViewEncapsulation} from '@angular/core';
 import * as moment from "moment";
 
 @Component({
   selector: 'meld-month',
   templateUrl: 'meld-month.component.html',
-  styleUrls: ['meld-month.component.css']
+  styleUrls: ['meld-month.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldMonthComponent {
 

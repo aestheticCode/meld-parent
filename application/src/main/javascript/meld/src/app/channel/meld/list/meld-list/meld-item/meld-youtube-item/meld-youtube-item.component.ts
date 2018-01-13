@@ -1,11 +1,12 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {YouTubeItem} from './meld-youtube-item.interfaces';
 
 @Component({
   selector: 'app-meld-youtube-item',
   templateUrl: 'meld-youtube-item.component.html',
-  styleUrls: ['meld-youtube-item.component.css']
+  styleUrls: ['meld-youtube-item.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldYoutubeItemComponent implements OnChanges {
 

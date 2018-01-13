@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {School} from '../../school-form.interfaces';
 import {Enum} from '../../../../../../lib/pipe/meld-enum/meld-enum.interfaces';
 import {HttpClient} from '@angular/common/http';
@@ -10,7 +10,8 @@ import {FormGroup, NgForm} from '@angular/forms';
 @Component({
   selector: 'app-social-school-form',
   templateUrl: 'school-form.component.html',
-  styleUrls: ['school-form.component.css']
+  styleUrls: ['school-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class SchoolFormComponent {
 

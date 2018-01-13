@@ -1,9 +1,13 @@
-import { Component, Input, Output, HostListener, ViewChild, EventEmitter, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
+import {
+  Component, Input, Output, HostListener, ViewChild, EventEmitter, OnChanges, SimpleChanges, ElementRef,
+  ViewEncapsulation
+} from '@angular/core';
 
 @Component({
   selector: 'meld-scrollbar-horizontal',
   templateUrl: 'meld-scrollbar-horizontal.component.html',
-  styleUrls: ['meld-scrollbar-horizontal.component.css']
+  styleUrls: ['meld-scrollbar-horizontal.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldScrollbarHorizontalComponent implements OnChanges {
 

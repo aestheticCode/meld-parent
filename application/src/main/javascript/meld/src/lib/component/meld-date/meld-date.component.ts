@@ -1,6 +1,6 @@
 import {
   Component, ComponentFactoryResolver, ElementRef, forwardRef, HostBinding, HostListener, Injector, Input, Optional, Self, ViewChild,
-  ViewContainerRef
+  ViewContainerRef, ViewEncapsulation
 } from '@angular/core';
 import {MatDialog, MatFormFieldControl} from '@angular/material';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
@@ -16,19 +16,14 @@ import {AbstractControl} from '../../common/forms/AbstractControl';
 const noop = () => {
 };
 
-export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => MeldDateComponent),
-  multi: true
-};
-
 @Component({
   selector: 'meld-date',
   templateUrl: 'meld-date.component.html',
   styleUrls: ['meld-date.component.css'],
   providers: [
     {provide: MatFormFieldControl, useExisting: MeldDateComponent}
-  ]
+  ],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldDateComponent extends AbstractControl<string>  {
 
@@ -51,7 +46,7 @@ export class MeldDateComponent extends AbstractControl<string>  {
   }
 
   onContainerClick(event: MouseEvent): void {
-    this.open();
+    //this.open();
   }
 
 
@@ -212,6 +207,7 @@ export class MeldDateComponent extends AbstractControl<string>  {
       if (result) {
         const format = moment(result).format('YYYY-MM-DD');
         this.value = format;
+        this.onChangeCallback(this.value);
         this.processDate();
       }
     });

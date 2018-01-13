@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Category} from '../categories.interfaces';
@@ -11,7 +11,8 @@ import {AppService} from '../../../../app.service';
 @Component({
   selector: 'app-category-dialog',
   templateUrl: 'category-dialog.component.html',
-  styleUrls: ['category-dialog.component.css']
+  styleUrls: ['category-dialog.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class CategoryDialogComponent {
 

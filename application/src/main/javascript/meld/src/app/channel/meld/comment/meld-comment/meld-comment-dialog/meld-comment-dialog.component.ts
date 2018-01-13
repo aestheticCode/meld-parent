@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {HttpClient} from '@angular/common/http';
@@ -6,7 +6,8 @@ import {HttpClient} from '@angular/common/http';
 @Component({
   selector: 'app-meld-comment-dialog',
   templateUrl: 'meld-comment-dialog.component.html',
-  styleUrls: ['meld-comment-dialog.component.css']
+  styleUrls: ['meld-comment-dialog.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldCommentDialogComponent {
 

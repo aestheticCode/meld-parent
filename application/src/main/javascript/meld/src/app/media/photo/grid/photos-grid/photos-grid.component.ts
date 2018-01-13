@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material';
 import {MeldGridComponent} from '../../../../../lib/component/meld-grid/meld-grid.component';
@@ -12,7 +12,8 @@ import {AppService} from '../../../../app.service';
 @Component({
   selector: 'app-photos-grid',
   templateUrl: 'photos-grid.component.html',
-  styleUrls: ['photos-grid.component.css']
+  styleUrls: ['photos-grid.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class PhotosGridComponent {
 

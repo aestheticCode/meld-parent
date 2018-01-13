@@ -10,10 +10,10 @@
                    minlength="3" maxlength="100" required #name="ngModel" #input>
           </mat-input-container>
         </fieldset>
-        <fieldset style="max-height: 400px;">
+        <fieldset>
           <legend>Permissions</legend>
           <meld-table name="permissions" [items]="permissions" [(ngModel)]="role.permissions" [menu]="true"
-                      itemValuePath="id" style="max-height: 380px;" [multiSelect]="true">
+                      itemValuePath="id" style="max-height: 360px;" [multiSelect]="true" [rowHeight]="36">
             <meld-colgroup>
               <meld-col [width]="300" [path]="'name'"></meld-col>
               <meld-col [width]="300" [path]="'path'"></meld-col>

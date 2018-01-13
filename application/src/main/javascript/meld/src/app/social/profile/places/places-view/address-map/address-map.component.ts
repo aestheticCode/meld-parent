@@ -1,10 +1,11 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Address} from '../../address.interfaces';
 
 @Component({
   selector: 'app-social-address-map',
   templateUrl: 'address-map.component.html',
-  styleUrls: ['address-map.component.css']
+  styleUrls: ['address-map.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class AddressMapComponent implements OnInit {
 

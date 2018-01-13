@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Chat} from "./chat-form.interfaces";
 import {TypeModel} from "./chat-form.classes";
 import {FormGroup, NgForm} from '@angular/forms';
@@ -6,7 +6,8 @@ import {FormGroup, NgForm} from '@angular/forms';
 @Component({
   selector: 'app-social-chat-form',
   templateUrl: 'chat-form.component.html',
-  styleUrls: ['chat-form.component.css']
+  styleUrls: ['chat-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class ChatFormComponent {
 

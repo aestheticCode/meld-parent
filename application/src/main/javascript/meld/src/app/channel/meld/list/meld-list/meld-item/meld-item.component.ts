@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {AppService} from "../../../../../app.service";
 import {Item} from './meld-item.interfaces';
@@ -6,7 +6,8 @@ import {Item} from './meld-item.interfaces';
 @Component({
   selector: 'app-meld-item',
   templateUrl: 'meld-item.component.html',
-  styleUrls: ['meld-item.component.css']
+  styleUrls: ['meld-item.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldItemComponent implements OnInit {
 

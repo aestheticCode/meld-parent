@@ -1,11 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Email} from "./email-form.interfaces";
 import {FormGroup, NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-social-email-form',
   templateUrl: 'email-form.component.html',
-  styleUrls: ['email-form.component.css']
+  styleUrls: ['email-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class EmailFormComponent {
 

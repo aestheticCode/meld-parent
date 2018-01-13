@@ -1,6 +1,6 @@
 import {
   Component, ContentChild, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnChanges, Optional, Output, Self,
-  SimpleChanges, TemplateRef, ViewChild
+  SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
 import {MeldTableComponent} from '../meld-table/meld-table.component';
@@ -18,7 +18,8 @@ const noop = () => {
   selector: 'meld-combobox',
   templateUrl: 'meld-combobox.component.html',
   styleUrls: ['meld-combobox.component.css'],
-  providers: [{provide: MatFormFieldControl, useExisting: MeldComboBoxComponent}]
+  providers: [{provide: MatFormFieldControl, useExisting: MeldComboBoxComponent}],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldComboBoxComponent extends AbstractControl<any> implements OnChanges {
 
@@ -88,7 +89,7 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
   private onChangeCallback: (value: any) => void = noop;
 
   constructor(private elRef: ElementRef,
-              @Self() public ngControl: NgControl) {
+              @Optional() @Self() public ngControl: NgControl) {
     super(ngControl);
     this.filterChanges
       .debounceTime(300)

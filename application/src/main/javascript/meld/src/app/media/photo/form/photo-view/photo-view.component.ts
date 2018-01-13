@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Photo} from '../photo.interfaces';
 
 @Component({
   selector: 'app-photo-view',
   templateUrl: 'photo-view.component.html',
-  styleUrls: ['photo-view.component.css']
+  styleUrls: ['photo-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class PhotoViewComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Company} from '../../company.interfaces';
 import {MatDialog} from '@angular/material';
 import {MeldGoogleMapsMarkerComponent} from 'lib/component/meld-google-maps-marker/meld-google-maps-marker.component';
@@ -6,7 +6,8 @@ import {MeldGoogleMapsMarkerComponent} from 'lib/component/meld-google-maps-mark
 @Component({
   selector: 'app-social-company-view',
   templateUrl: 'company-view.component.html',
-  styleUrls: ['company-view.component.css']
+  styleUrls: ['company-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class CompanyViewComponent {
 

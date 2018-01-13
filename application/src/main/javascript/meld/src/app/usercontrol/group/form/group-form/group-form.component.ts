@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Response} from '@angular/http';
 import {GroupForm} from './group-form.interfaces';
 import {NgModel} from '@angular/forms';
@@ -13,7 +13,8 @@ import {Items} from 'lib/common/search/search.interfaces';
 @Component({
   selector: 'app-group-form',
   templateUrl: 'group-form.component.html',
-  styleUrls: ['group-form.component.css']
+  styleUrls: ['group-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class GroupFormComponent extends AbstractForm<GroupForm> implements OnInit {
 

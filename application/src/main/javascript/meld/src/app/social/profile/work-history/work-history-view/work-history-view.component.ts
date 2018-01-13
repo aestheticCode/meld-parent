@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {WorkHistory} from '../work-history.interfaces';
 import {WorkHistoryModel} from '../work-history.classes';
@@ -7,7 +7,8 @@ import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-rou
 @Component({
   selector: 'app-work-history-view',
   templateUrl: 'work-history-view.component.html',
-  styleUrls: ['work-history-view.component.css']
+  styleUrls: ['work-history-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class WorkHistoryViewComponent implements OnInit {
 

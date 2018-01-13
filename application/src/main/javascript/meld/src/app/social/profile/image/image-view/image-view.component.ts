@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Photo} from '../../../../media/photo/form/photo.interfaces';
 import {PhotoDialogComponent} from '../../../../media/photo/grid/photo-dialog/photo-dialog.component';
@@ -9,7 +9,8 @@ import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-rou
 @Component({
   selector: 'app-image-view',
   templateUrl: 'image-view.component.html',
-  styleUrls: ['image-view.component.css']
+  styleUrls: ['image-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class ImageViewComponent implements OnInit {
 

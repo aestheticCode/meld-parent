@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {AppService} from '../../../../app.service';
 import {HttpClient} from '@angular/common/http';
@@ -11,7 +11,8 @@ import {Items} from '../../../../../lib/common/search/search.interfaces';
 @Component({
   selector: 'app-following-view',
   templateUrl: 'following-view.component.html',
-  styleUrls: ['following-view.component.css']
+  styleUrls: ['following-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class FollowingViewComponent {
 

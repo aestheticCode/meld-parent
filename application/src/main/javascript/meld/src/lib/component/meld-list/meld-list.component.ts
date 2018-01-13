@@ -7,15 +7,16 @@ import {
   ContentChild,
   ViewChild,
   ViewChildren,
-  ElementRef, Output, EventEmitter
-} from "@angular/core";
+  ElementRef, Output, EventEmitter, ViewEncapsulation
+} from '@angular/core';
 import {Items} from '../../common/search/search.interfaces';
 import {QueryBuilder} from '../../common/search/search.classes';
 
 @Component({
   selector: 'meld-list',
   templateUrl: 'meld-list.component.html',
-  styleUrls: ['meld-list.component.css']
+  styleUrls: ['meld-list.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldListComponent implements OnInit {
 

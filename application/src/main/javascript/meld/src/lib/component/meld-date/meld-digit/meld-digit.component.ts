@@ -1,9 +1,10 @@
-import {Component, EventEmitter, HostListener} from '@angular/core';
+import {Component, EventEmitter, HostListener, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'meld-digit',
   templateUrl: 'meld-digit.component.html',
-  styleUrls: ['meld-digit.component.css']
+  styleUrls: ['meld-digit.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldDigitComponent {
 

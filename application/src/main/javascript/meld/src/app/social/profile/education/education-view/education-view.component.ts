@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Http} from '@angular/http';
 import {Education} from '../education.interfaces';
 import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
@@ -6,7 +6,8 @@ import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 @Component({
   selector: 'app-social-education-view',
   templateUrl: 'education-view.component.html',
-  styleUrls: ['education-view.component.css']
+  styleUrls: ['education-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class EducationViewComponent implements OnInit {
 

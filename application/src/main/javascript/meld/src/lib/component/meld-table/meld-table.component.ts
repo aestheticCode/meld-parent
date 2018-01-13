@@ -6,7 +6,7 @@ import {
   forwardRef,
   Input,
   OnInit,
-  Output
+  Output, ViewEncapsulation
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {MatCheckboxChange, MatDialog} from '@angular/material';
@@ -36,7 +36,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'meld-table',
   templateUrl: 'meld-table.component.html',
   styleUrls: ['meld-table.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldTableComponent implements AfterContentInit, ControlValueAccessor {
 

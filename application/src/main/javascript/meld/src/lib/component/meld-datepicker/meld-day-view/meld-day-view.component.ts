@@ -1,11 +1,12 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import * as moment from 'moment';
 import {Moment} from "moment";
 
 @Component({
   selector: 'meld-day-view',
   templateUrl: 'meld-day-view.component.html',
-  styleUrls: ['meld-day-view.component.css']
+  styleUrls: ['meld-day-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldDayViewComponent implements OnInit, OnChanges {
 

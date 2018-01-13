@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, NgModel} from "@angular/forms";
 import {Http, Response} from "@angular/http";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -13,7 +13,8 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   selector: 'app-user-form',
   templateUrl: 'user-form.component.html',
-  styleUrls: ['user-form.component.css']
+  styleUrls: ['user-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class UserFormComponent extends AbstractForm<UserForm> implements OnInit {
 

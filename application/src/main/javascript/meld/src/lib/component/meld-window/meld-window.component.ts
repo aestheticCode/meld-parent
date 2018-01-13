@@ -1,6 +1,6 @@
 import {
   Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges,
-  ViewChild
+  ViewChild, ViewEncapsulation
 } from '@angular/core';
 import {Subject} from "rxjs";
 import {MeldWindowHeaderDirective} from "./meld-window-head/meld-window-header.directive";
@@ -12,7 +12,8 @@ import {TouchWheelEvent} from '../../directive/meld-touch-wheel/meld-touch-wheel
 @Component({
   selector: 'meld-window',
   templateUrl: 'meld-window.component.html',
-  styleUrls: ['meld-window.component.css']
+  styleUrls: ['meld-window.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldWindowComponent implements OnChanges, OnInit {
 
@@ -157,6 +158,8 @@ export class MeldWindowComponent implements OnChanges, OnInit {
   }
 
   onWindowWheel(event: WheelEvent) {
+    event.preventDefault();
+    event.stopPropagation();
     const windowElement: HTMLElement = this.window.nativeElement;
     const deltaY = this.normalizeWheelY(event) * - 120;
     const deltaX = this.normalizeWheelX(event) * - 10;
@@ -238,7 +241,7 @@ export class MeldWindowComponent implements OnChanges, OnInit {
     this.marginBottom = this.computeMarginBottom();
 
     windowContentElement.style.marginTop = this.marginTop + 'px';
-    //windowContentElement.style.marginBottom = 10000 + 'px';
+    windowContentElement.style.marginBottom = 10000 + 'px';
 
     let higherRowIndex = this.computeHigherRowIndex(this.rowIndex, this.rowsToLoad());
     let lowerRowIndex = this.computeLowerRowIndex(this.rowIndex, this.rowsToLoad());

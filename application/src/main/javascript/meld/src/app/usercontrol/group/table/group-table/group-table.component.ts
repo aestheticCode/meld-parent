@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgModel} from '@angular/forms';
 import {Http, Response} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -11,7 +11,8 @@ import {Items} from '../../../../../lib/common/search/search.interfaces';
 @Component({
   selector: 'app-group-table',
   templateUrl: 'group-table.component.html',
-  styleUrls: ['group-table.component.css']
+  styleUrls: ['group-table.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class GroupTableComponent implements OnInit {
 

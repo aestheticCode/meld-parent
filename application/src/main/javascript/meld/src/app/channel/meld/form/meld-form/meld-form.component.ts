@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppService} from '../../../../app.service';
 import {Configuration} from '../../../../Configuration';
@@ -13,7 +13,8 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   selector: 'app-meld-form',
   templateUrl: 'meld-form.component.html',
-  styleUrls: ['meld-form.component.css']
+  styleUrls: ['meld-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldFormComponent extends AbstractForm<MeldPost> implements OnInit {
 

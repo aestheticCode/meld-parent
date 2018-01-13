@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MeldImagePost} from './meld-image-form.interfaces';
 import {MeldFormPostComponent} from '../meld-form.classes';
 import {HttpClient} from '@angular/common/http';
@@ -7,7 +7,8 @@ import {MeldRouterService} from '../../../../../../lib/service/meld-router/meld-
 @Component({
   selector: 'app-meld-image-form',
   templateUrl: 'meld-image-form.component.html',
-  styleUrls: ['meld-image-form.component.css']
+  styleUrls: ['meld-image-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldImageFormComponent extends MeldFormPostComponent implements OnInit {
 

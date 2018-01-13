@@ -1,6 +1,6 @@
 import {
   Component, ContentChild, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit, Output, TemplateRef,
-  ViewChild
+  ViewChild, ViewEncapsulation
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {LoadWindow} from '../meld-window/meld.window.classes';
@@ -21,7 +21,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'meld-grid',
   templateUrl: 'meld-grid.component.html',
   styleUrls: ['meld-grid.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldGridComponent implements OnInit, ControlValueAccessor {
 

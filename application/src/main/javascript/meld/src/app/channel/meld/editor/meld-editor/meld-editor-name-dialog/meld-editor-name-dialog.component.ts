@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatDialogRef} from "@angular/material";
 import {Http, Response} from "@angular/http";
 import {MeldListComponent} from "../../../../../../lib/component/meld-list/meld-list.component";
@@ -9,7 +9,8 @@ import {QueryBuilder} from '../../../../../../lib/common/search/search.classes';
 @Component({
   selector: 'app-meld-editor-name-dialog',
   templateUrl: 'meld-editor-name-dialog.component.html',
-  styleUrls: ['meld-editor-name-dialog.component.css']
+  styleUrls: ['meld-editor-name-dialog.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldEditorNameDialogComponent {
 

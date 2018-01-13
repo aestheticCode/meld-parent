@@ -1,10 +1,11 @@
-import {Component, ContentChildren, ElementRef, EventEmitter, Input, Output, QueryList} from '@angular/core';
+import {Component, ContentChildren, ElementRef, EventEmitter, Input, Output, QueryList, ViewEncapsulation} from '@angular/core';
 import {Router, RouterLink, RouterLinkWithHref} from '@angular/router';
 
 @Component({
   selector: 'meld-tab',
   templateUrl: 'meld-tab.component.html',
-  styleUrls: ['meld-tab.component.css']
+  styleUrls: ['meld-tab.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldTabComponent {
 

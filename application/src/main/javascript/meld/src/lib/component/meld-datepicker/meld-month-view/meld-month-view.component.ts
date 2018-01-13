@@ -1,10 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
   selector: 'meld-month-view',
   templateUrl: 'meld-month-view.component.html',
-  styleUrls: ['meld-month-view.component.css']
+  styleUrls: ['meld-month-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldMonthViewComponent implements OnInit {
 

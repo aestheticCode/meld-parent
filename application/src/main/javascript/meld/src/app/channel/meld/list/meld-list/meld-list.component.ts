@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
 import {Http, Response} from '@angular/http';
 import {Item} from './meld-item/meld-item.interfaces';
@@ -9,7 +9,8 @@ import {Items} from '../../../../../lib/common/search/search.interfaces';
 @Component({
   selector: 'app-meld-list',
   templateUrl: 'meld-list.component.html',
-  styleUrls: ['meld-list.component.css']
+  styleUrls: ['meld-list.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldListComponent {
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Education} from '../education.interfaces';
 import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 import {AbstractForm} from '../../../../../lib/common/forms/AbstractForm';
@@ -10,7 +10,8 @@ import {Link} from '../../../../../lib/common/rest/Link';
 @Component({
   selector: 'app-social-education-form',
   templateUrl: 'education-form.component.html',
-  styleUrls: ['education-form.component.css']
+  styleUrls: ['education-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class EducationFormComponent extends AbstractForm<Education> implements OnInit {
 

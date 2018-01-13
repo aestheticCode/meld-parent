@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Optional} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Optional, ViewEncapsulation} from '@angular/core';
 import * as moment from "moment";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {Moment} from "moment";
@@ -6,7 +6,8 @@ import {Moment} from "moment";
 @Component({
   selector: 'meld-datepicker',
   templateUrl: 'meld-datepicker.component.html',
-  styleUrls: ['meld-datepicker.component.css']
+  styleUrls: ['meld-datepicker.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldDatePickerComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {WorkHistory} from '../work-history.interfaces';
 import {CompanyModel} from '../company.classes';
 import {Company} from '../company.interfaces';
@@ -16,7 +16,8 @@ import {Place} from '../../../../../lib/component/meld-google-maps-autocomplete/
 @Component({
   selector: 'app-work-history-form',
   templateUrl: 'work-history-form.component.html',
-  styleUrls: ['work-history-form.component.css']
+  styleUrls: ['work-history-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class WorkHistoryFormComponent extends AbstractForm<WorkHistory> implements OnInit {
 

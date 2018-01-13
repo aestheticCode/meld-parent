@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren, ViewEncapsulation} from '@angular/core';
 import {Places} from '../places.interfaces';
 import {PlacesModel} from '../places.classes';
 import {AddressModel} from '../address.classes';
@@ -16,7 +16,8 @@ import {Place} from '../../../../../lib/component/meld-google-maps-autocomplete/
 @Component({
   selector: 'app-social-places-form',
   templateUrl: 'places-form.component.html',
-  styleUrls: ['places-form.component.css']
+  styleUrls: ['places-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class PlacesFormComponent extends AbstractForm<Places> implements OnInit {
 

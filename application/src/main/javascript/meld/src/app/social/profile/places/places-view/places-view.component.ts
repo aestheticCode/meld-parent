@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Places} from '../places.interfaces';
 import {PlacesModel} from '../places.classes';
@@ -7,7 +7,8 @@ import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-rou
 @Component({
   selector: 'app-social-places-view',
   templateUrl: 'places-view.component.html',
-  styleUrls: ['places-view.component.css']
+  styleUrls: ['places-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class PlacesViewComponent implements OnInit {
 

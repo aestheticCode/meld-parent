@@ -1,4 +1,4 @@
-import {Component, ContentChild, forwardRef, Input, TemplateRef} from '@angular/core';
+import {Component, ContentChild, forwardRef, Input, TemplateRef, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Objects} from '../../common/utils/Objects';
 import {QueryBuilder} from '../../common/search/search.classes';
@@ -17,7 +17,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'meld-select-view',
   templateUrl: 'meld-select-view.component.html',
   styleUrls: ['meld-select-view.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldSelectViewComponent implements ControlValueAccessor {
 

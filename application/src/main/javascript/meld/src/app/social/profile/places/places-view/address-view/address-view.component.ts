@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Address} from '../../address.interfaces';
 import {MatDialog} from '@angular/material';
 import {MeldGoogleMapsMarkerComponent} from '../../../../../../lib/component/meld-google-maps-marker/meld-google-maps-marker.component';
@@ -6,7 +6,8 @@ import {MeldGoogleMapsMarkerComponent} from '../../../../../../lib/component/mel
 @Component({
   selector: 'app-social-address-view',
   templateUrl: 'address-view.component.html',
-  styleUrls: ['address-view.component.css']
+  styleUrls: ['address-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class AddressViewComponent  {
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgModel} from '@angular/forms';
 import {UserForm} from '../user.interfaces';
 import {Enum} from '../../../../../lib/pipe/meld-enum/meld-enum.interfaces';
@@ -10,7 +10,8 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   selector: 'app-user-form',
   templateUrl: 'user-form.component.html',
-  styleUrls: ['user-form.component.css']
+  styleUrls: ['user-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class UserFormComponent extends AbstractForm<UserForm> implements OnInit {
 

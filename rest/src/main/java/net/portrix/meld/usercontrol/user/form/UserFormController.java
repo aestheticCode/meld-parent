@@ -78,7 +78,6 @@ public class UserFormController {
     public UserForm read(@PathParam("id") UUID id) {
 
         final User user = service.findUser(id);
-        final Profile profile = service.findProfile(user);
 
         UserForm response = new UserForm();
         response.setId(user.getId());
@@ -88,7 +87,8 @@ public class UserFormController {
         response.setBirthday(user.getBirthdate());
         response.setGender(user.getGender());
 
-        if (profile.getUserPhoto() != null) {
+        final Profile profile = service.findProfile(user);
+        if (profile != null && profile.getUserPhoto() != null) {
             final Blob image = new Blob();
             image.setData(profile.getUserPhoto().getImage());
             image.setName(profile.getUserPhoto().getFileName());

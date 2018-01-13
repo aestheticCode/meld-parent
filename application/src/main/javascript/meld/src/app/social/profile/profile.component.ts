@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {AppService} from '../../app.service';
 import {Configuration} from '../../Configuration';
@@ -11,7 +11,8 @@ import {ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-profile',
   templateUrl: 'profile.component.html',
-  styleUrls: ['profile.component.css']
+  styleUrls: ['profile.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class ProfileComponent implements OnInit {
 

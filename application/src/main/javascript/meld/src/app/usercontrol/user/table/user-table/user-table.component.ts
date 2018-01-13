@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {FilterTemplate, UserRow} from './user-table.interfaces';
 import {FilterTemplateModel} from './user-table.classes';
@@ -16,7 +16,8 @@ import {Items, SortExpression} from '../../../../../lib/common/search/search.int
 @Component({
   selector: 'app-user-table',
   templateUrl: 'user-table.component.html',
-  styleUrls: ['user-table.component.css']
+  styleUrls: ['user-table.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class UserTableComponent implements OnInit {
 

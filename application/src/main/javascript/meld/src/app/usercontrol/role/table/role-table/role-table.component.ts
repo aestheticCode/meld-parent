@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgModel} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Http, Response} from "@angular/http";
@@ -11,7 +11,8 @@ import {Items} from '../../../../../lib/common/search/search.interfaces';
 @Component({
   selector: 'app-role-table',
   templateUrl: 'role-table.component.html',
-  styleUrls: ['role-table.component.css']
+  styleUrls: ['role-table.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class RoleTableComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {PermissionRow, RoleForm} from './role-form.interfaces';
 import {Response} from '@angular/http';
 import {NgModel} from '@angular/forms';
@@ -12,7 +12,8 @@ import {Items} from '../../../../../lib/common/search/search.interfaces';
 @Component({
   selector: 'app-role-form',
   templateUrl: 'role-form.component.html',
-  styleUrls: ['role-form.component.css']
+  styleUrls: ['role-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class RoleFormComponent extends AbstractForm<RoleForm> implements OnInit {
 

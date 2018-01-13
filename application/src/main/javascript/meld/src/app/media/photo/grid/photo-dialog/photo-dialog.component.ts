@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
 import {MeldGridComponent} from '../../../../../lib/component/meld-grid/meld-grid.component';
 import {HttpClient} from '@angular/common/http';
@@ -9,7 +9,8 @@ import {Items} from '../../../../../lib/common/search/search.interfaces';
 @Component({
   selector: 'app-photo-dialog',
   templateUrl: 'photo-dialog.component.html',
-  styleUrls: ['photo-dialog.component.css']
+  styleUrls: ['photo-dialog.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class PhotoDialogComponent {
 

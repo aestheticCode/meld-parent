@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from '@angular/material';
 import {UserRow} from '../find.interfaces';
@@ -9,7 +9,8 @@ import {Items} from '../../../../../lib/common/search/search.interfaces';
 @Component({
   selector: 'app-social-find-view',
   templateUrl: 'find-view.component.html',
-  styleUrls: ['find-view.component.css']
+  styleUrls: ['find-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class FindViewComponent {
 

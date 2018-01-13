@@ -1,4 +1,4 @@
-import {Component, ElementRef, forwardRef, HostListener, Inject, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, forwardRef, HostListener, Inject, Input, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DOCUMENT} from '@angular/common';
 import {EditorCommand} from './meld-editor.interfaces';
@@ -16,7 +16,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'meld-editor',
   templateUrl: 'meld-editor.component.html',
   styleUrls: ['meld-editor.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldEditorComponent implements ControlValueAccessor {
 

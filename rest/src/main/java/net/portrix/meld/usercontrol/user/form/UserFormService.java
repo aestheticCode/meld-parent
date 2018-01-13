@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -94,10 +95,14 @@ public class UserFormService {
     }
 
     public Profile findProfile(User user) {
-        return entityManager
-                .createQuery("select u from Profile u where u.user = :user", Profile.class)
-                .setParameter("user", user)
-                .getSingleResult();
+        try {
+            return entityManager
+                    .createNamedQuery("findProfileByUser", Profile.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public void save(User user) {

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginForm} from './login-form.interfaces';
 import {LoginFormModel} from './login-form.classes';
@@ -9,7 +9,8 @@ import {NgForm} from '@angular/forms';
 @Component({
   selector: 'app-login-form',
   templateUrl: 'login-form.component.html',
-  styleUrls: ['login-form.component.css']
+  styleUrls: ['login-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class LoginFormComponent implements OnInit {
 

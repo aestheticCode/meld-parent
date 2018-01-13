@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {MeldYouTubePost} from './meld-youtube-form.interfaces';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
@@ -7,7 +7,8 @@ import {MeldRouterService} from '../../../../../../lib/service/meld-router/meld-
 @Component({
   selector: 'app-meld-youtube-form',
   templateUrl: 'meld-youtube-form.component.html',
-  styleUrls: ['meld-youtube-form.component.css']
+  styleUrls: ['meld-youtube-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldYoutubeFormComponent {
 

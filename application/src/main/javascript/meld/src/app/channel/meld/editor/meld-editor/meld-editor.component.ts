@@ -1,4 +1,4 @@
-import {Component, forwardRef, HostListener, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, forwardRef, HostListener, Inject, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material";
 import {DOCUMENT} from "@angular/common";
@@ -19,7 +19,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'app-meld-editor',
   templateUrl: 'meld-editor.component.html',
   styleUrls: ['meld-editor.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldEditorComponent implements OnInit, ControlValueAccessor {
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Category} from '../../categories.interfaces';
 import {HttpClient} from '@angular/common/http';
 import {AbstractForm} from '../../../../../../lib/common/forms/AbstractForm';
@@ -8,7 +8,8 @@ import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 @Component({
   selector: 'app-category-form',
   templateUrl: 'category-form.component.html',
-  styleUrls: ['category-form.component.css']
+  styleUrls: ['category-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class CategoryFormComponent extends AbstractForm<Category> implements OnInit {
 

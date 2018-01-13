@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Http} from "@angular/http";
 import {UserForm} from '../user.interfaces';
@@ -8,7 +8,8 @@ import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-rou
 @Component({
   selector: 'app-user-view',
   templateUrl: 'user-view.component.html',
-  styleUrls: ['user-view.component.css']
+  styleUrls: ['user-view.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class UserViewComponent implements OnInit {
 

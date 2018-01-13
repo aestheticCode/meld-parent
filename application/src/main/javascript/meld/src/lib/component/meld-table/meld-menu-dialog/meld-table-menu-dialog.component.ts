@@ -1,10 +1,11 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material";
 
 @Component({
   selector: 'meld-table-menu-dialog',
   templateUrl: 'meld-table-menu-dialog.component.html',
-  styleUrls: ['meld-table-menu-dialog.component.css']
+  styleUrls: ['meld-table-menu-dialog.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldTableMenuDialogComponent {
 

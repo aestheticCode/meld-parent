@@ -8,10 +8,10 @@
       <input required placeholder="Email" formControlName="email" type="email"
              pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$"
              matInput>
-      <button type="button"  *ngIf="! readonly" matSuffix mat-icon-button (click)="onDelete()">
+      <button type="button" matSuffix mat-icon-button (click)="onDelete()">
         <mat-icon>delete</mat-icon>
       </button>
-      <button type="button"  *ngIf="! readonly" matSuffix mat-icon-button (click)="onAdd()">
+      <button type="button" matSuffix mat-icon-button (click)="onAdd()">
         <mat-icon>add</mat-icon>
       </button>
     </mat-form-field>

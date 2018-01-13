@@ -1,10 +1,11 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'meld-google-maps-marker',
   templateUrl: 'meld-google-maps-marker.component.html',
-  styleUrls: ['meld-google-maps-marker.component.css']
+  styleUrls: ['meld-google-maps-marker.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldGoogleMapsMarkerComponent implements OnInit {
 

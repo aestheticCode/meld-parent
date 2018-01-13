@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {Router} from "@angular/router";
 import {Http, Response} from "@angular/http";
 import {AppService} from '../../../../app.service';
@@ -6,7 +6,8 @@ import {AppService} from '../../../../app.service';
 @Component({
   selector: 'app-logout-form',
   templateUrl: 'logout-form.component.html',
-  styleUrls: ['logout-form.component.css']
+  styleUrls: ['logout-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class LogoutFormComponent {
 

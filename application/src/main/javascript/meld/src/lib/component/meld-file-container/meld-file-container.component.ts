@@ -1,4 +1,4 @@
-import {Component, ContentChild, ElementRef, Input} from '@angular/core';
+import {Component, ContentChild, ElementRef, Input, ViewEncapsulation} from '@angular/core';
 import {InputDirective} from './input/input.directive';
 import {MatFormFieldControl} from '@angular/material';
 import {BinaryFile} from '../../common/rest/BinaryFile';
@@ -10,7 +10,8 @@ import {Objects} from '../../common/utils/Objects';
   selector: 'meld-file-container',
   templateUrl: 'meld-file-container.component.html',
   styleUrls: ['meld-file-container.component.css'],
-  providers: [{provide: MatFormFieldControl, useExisting: MeldFileContainerComponent}]
+  providers: [{provide: MatFormFieldControl, useExisting: MeldFileContainerComponent}],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldFileContainerComponent implements MatFormFieldControl<BinaryFile> {
 

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Phone} from "./phone-form.interfaces";
 import {TypeModel} from "./phone-form.classes";
 import {FormGroup, NgForm} from '@angular/forms';
@@ -6,7 +6,8 @@ import {FormGroup, NgForm} from '@angular/forms';
 @Component({
   selector: 'app-social-phone-form',
   templateUrl: 'phone-form.component.html',
-  styleUrls: ['phone-form.component.css']
+  styleUrls: ['phone-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class PhoneFormComponent {
 

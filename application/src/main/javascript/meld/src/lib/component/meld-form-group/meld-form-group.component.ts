@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Strings} from "../../common/utils/Strings";
 
@@ -14,7 +14,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'meld-form-group',
   templateUrl: 'meld-form-group.component.html',
   styleUrls: ['meld-form-group.component.css'],
-  providers : [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers : [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldFormGroupComponent implements ControlValueAccessor {
 

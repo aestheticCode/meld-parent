@@ -9,7 +9,7 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
-  ViewChild
+  ViewChild, ViewEncapsulation
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {MeldComboBoxComponent} from "../meld-combobox/meld-combobox.component";
@@ -31,7 +31,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'meld-multiselect',
   templateUrl: 'meld-multiselect.component.html',
   styleUrls: ['meld-multiselect.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor {
 

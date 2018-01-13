@@ -1,10 +1,11 @@
-import {Component, ContentChild, Input, TemplateRef} from '@angular/core';
+import {Component, ContentChild, Input, TemplateRef, ViewEncapsulation} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 
 @Component({
   selector: 'meld-dialog',
   templateUrl: 'meld-dialog.component.html',
-  styleUrls: ['meld-dialog.component.css']
+  styleUrls: ['meld-dialog.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class MeldDialogComponent {
 
