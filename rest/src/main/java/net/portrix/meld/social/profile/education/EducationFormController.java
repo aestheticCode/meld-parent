@@ -10,7 +10,6 @@ import net.portrix.meld.social.profile.Place;
 import net.portrix.meld.social.profile.School;
 import net.portrix.meld.social.profile.SchoolDate;
 import net.portrix.meld.usercontrol.User;
-import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -279,7 +278,7 @@ public class EducationFormController {
     @Name("Education Name")
     @Secured
     public List<String> query(@QueryParam("name") String name) {
-        return service.findEducationNames(name);
+        return service.findSchoolNames(name);
     }
 
     public static URLBuilder<EducationFormController> linkCreate(URLBuilderFactory builderFactory) {

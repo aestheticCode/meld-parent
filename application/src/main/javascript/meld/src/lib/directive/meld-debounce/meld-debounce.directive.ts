@@ -2,7 +2,7 @@ import {Directive, EventEmitter, Input, Output} from '@angular/core';
 import {NgControl} from '@angular/forms';
 
 @Directive({
-  selector: '[ngModel][meldDebounce]'
+  selector: '[meldDebounce]'
 })
 export class MeldDebounceDirective {
 

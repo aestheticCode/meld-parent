@@ -31,6 +31,7 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
     this.links = education.links;
 
     this.education = this.builder.group({
+      id : this.builder.control(education.id),
       schools: this.builder.array(education.schools.map((school) => {
         return this.builder.group({
           id: this.builder.control(school.id),

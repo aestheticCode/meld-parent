@@ -12,6 +12,8 @@ public class CompanyForm {
 
     private UUID id;
 
+    private String name;
+
     private LocationDetailForm location;
 
     private String title;
@@ -30,6 +32,14 @@ public class CompanyForm {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocationDetailForm getLocation() {

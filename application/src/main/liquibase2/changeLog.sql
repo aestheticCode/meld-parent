@@ -237,4 +237,14 @@ INSERT INTO public.uc_permission (id, method, name, path) VALUES ('1bca4d8c-ef07
 insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', '1bca4d8c-ef07-4099-95ea-69da41c58421');
 insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', '1bca4d8c-ef07-4099-95ea-69da41c58421');
 
+--changeset patrick:19
 
+  alter table public.so_company
+       add column name varchar(255);
+
+  INSERT INTO public.uc_permission (id, method, name, path) VALUES ('fe02ff30-2120-4131-a21b-09c91c6097d4', 'GET', 'Social Work History Name', 'social/work/history/name');
+
+--changeset patrick:20
+
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', 'fe02ff30-2120-4131-a21b-09c91c6097d4');
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', 'fe02ff30-2120-4131-a21b-09c91c6097d4');

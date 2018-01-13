@@ -10,7 +10,7 @@
   </legend>
   <mat-form-field style="width: 100%;">
     <input required matInput placeholder="Name" [matAutocomplete]="auto"
-           formControlName="name">
+           formControlName="name" [meldDebounce]="300" (meldModelChange)="findNames($event)">
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let name of names | async" [value]="name">
         <span>{{ name }}</span>

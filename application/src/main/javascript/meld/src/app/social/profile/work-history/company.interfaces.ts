@@ -3,6 +3,7 @@ import {Place} from 'lib/component/meld-google-maps-autocomplete/meld-google-map
 export interface Company {
 
   id : string
+  name : string
   location : Place
   title : string
   description : string

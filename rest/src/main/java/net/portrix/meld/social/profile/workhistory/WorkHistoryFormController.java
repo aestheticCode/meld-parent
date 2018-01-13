@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -95,6 +96,7 @@ public class WorkHistoryFormController {
             companyForm.setDescription(company.getDescription());
             companyForm.setEnd(company.getEnd());
             companyForm.setId(company.getId());
+            companyForm.setName(company.getName());
 
             LocationDetailForm location = new LocationDetailForm();
             location.setId(company.getPlace().getId());
@@ -146,6 +148,7 @@ public class WorkHistoryFormController {
             Company company = new Company();
             company.setDescription(companyType.getDescription());
             company.setEnd(companyType.getEnd());
+            company.setName(companyType.getName());
 
             Place place = new Place();
             place.setId(companyType.getLocation().getId());
@@ -188,6 +191,7 @@ public class WorkHistoryFormController {
             Company company = new Company();
             company.setDescription(companyType.getDescription());
             company.setEnd(companyType.getEnd());
+            company.setName(companyType.getName());
 
             Place place = new Place();
             place.setId(companyType.getLocation().getId());
@@ -208,7 +212,7 @@ public class WorkHistoryFormController {
             workHistory.addCompany(company);
         }
 
-        return read(workHistory.getId());
+        return current();
     }
 
     @DELETE
@@ -223,6 +227,15 @@ public class WorkHistoryFormController {
 
         service.deleteWorkHistory(workHistory);
     }
+
+    @GET
+    @Path("work/history/name")
+    @Name("Work History Name")
+    @Secured
+    public List<String> query(@QueryParam("name") String name) {
+        return service.findCompanyNames(name);
+    }
+
 
     public static URLBuilder<WorkHistoryFormController> linkCreate(URLBuilderFactory builderFactory) {
         return builderFactory

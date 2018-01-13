@@ -8,7 +8,17 @@
   </legend>
 
   <mat-form-field style="width: 100%;">
-    <meld-google-maps-autocomplete required formControlName="location" placeholder="Name"></meld-google-maps-autocomplete>
+    <input required matInput placeholder="Name" [matAutocomplete]="auto"
+           formControlName="name" [meldDebounce]="300" (meldModelChange)="findNames($event)">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let name of names | async" [value]="name">
+        <span>{{ name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;">
+    <meld-google-maps-autocomplete required formControlName="location" placeholder="Location"></meld-google-maps-autocomplete>
   </mat-form-field>
 
   <mat-form-field style="width: 100%;">

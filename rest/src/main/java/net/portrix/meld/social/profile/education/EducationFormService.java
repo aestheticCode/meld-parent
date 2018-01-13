@@ -55,9 +55,10 @@ public class EducationFormService {
         entityManager.remove(education);
     }
 
-    public List<String> findEducationNames(String name) {
+    public List<String> findSchoolNames(String name) {
         return entityManager.createNamedQuery("findSchoolNames", String.class)
                 .setParameter("name", "%" + name.toLowerCase() + "%")
+                .setMaxResults(5)
                 .getResultList();
     }
 }

@@ -10,7 +10,10 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "so_company")
+@NamedQuery(name = "findCompanyNameByName", query = "select c.name from Company c where lower(c.name) like :name order by c.name asc")
 public class Company extends AbstractEntity {
+
+    private String name;
 
     @AttributeOverrides({
             @AttributeOverride(name="id", column=@Column(name = "place_id")),
@@ -38,6 +41,14 @@ public class Company extends AbstractEntity {
     private boolean tillNow;
 
     private String description;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Place getPlace() {
         return place;
