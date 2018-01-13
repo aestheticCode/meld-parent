@@ -12,20 +12,26 @@
         <ng-template>
           <table class="table" style="table-layout: fixed;" [ngClass]="{'table-unbordered': unbordered}">
             <colgroup *ngIf="colgroup">
-              <col *ngIf="multiSelect" style="width: 20px;">
+              <col *ngIf="multiSelect" style="width: 32px;">
               <col *ngFor="let column of colgroup.columns  | meldTableSorter:columnConfiguration" [style.width.px]="column.width">
             </colgroup>
             <thead>
             <tr *ngFor="let row of head.rows">
-              <td *ngIf="multiSelect" ><mat-checkbox [checked]="allSelected" (change)="selectAll($event)" ></mat-checkbox></td>
-              <td style="line-height: 40px;" *ngFor="let column of row.columns | meldTableSorter:columnConfiguration" (click)="onSortClick(column)" >
-                <ng-container *ngTemplateOutlet="column.content"></ng-container>
-                <button type="button"  *ngIf="column.asc === true" mat-icon-button>
-                  <mat-icon>expand_less</mat-icon>
-                </button>
-                <button type="button"  *ngIf="column.asc === false" mat-icon-button>
-                  <mat-icon>expand_more</mat-icon>
-                </button>
+              <td *ngIf="multiSelect" >
+                <div>
+                  <mat-checkbox [checked]="allSelected" (change)="selectAll($event)" ></mat-checkbox>
+                </div>
+              </td>
+              <td *ngFor="let column of row.columns | meldTableSorter:columnConfiguration" (click)="onSortClick(column)" >
+                <div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
+                  <ng-container *ngTemplateOutlet="column.content"></ng-container>
+                  <button type="button"  *ngIf="column.asc === true" mat-icon-button>
+                    <mat-icon>expand_less</mat-icon>
+                  </button>
+                  <button type="button"  *ngIf="column.asc === false" mat-icon-button>
+                    <mat-icon>expand_more</mat-icon>
+                  </button>
+                </div>
               </td>
             </tr>
             </thead>
@@ -37,7 +43,7 @@
         <ng-template>
           <table class="table" style="table-layout: fixed;" [ngClass]="{'table-unbordered': unbordered}">
             <colgroup *ngIf="colgroup">
-              <col *ngIf="multiSelect"  style="width: 20px;">
+              <col *ngIf="multiSelect"  style="width: 32px;">
               <col *ngFor="let column of colgroup.columns  | meldTableSorter:columnConfiguration" [style.width.px]="column.width">
             </colgroup>
             <tbody>
