@@ -22,10 +22,7 @@ import net.portrix.meld.usercontrol.User;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
 import java.util.ArrayList;
@@ -228,7 +225,7 @@ public class MeldListController {
     public static URLBuilder<MeldListController> linkMeld(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(MeldListController.class)
-                .record(method -> method.list(null))
+                .record(method -> method.list(new Search()))
                 .rel("meld");
     }
 

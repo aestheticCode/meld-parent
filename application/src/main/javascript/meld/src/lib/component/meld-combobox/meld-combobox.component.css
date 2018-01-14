@@ -1,6 +1,8 @@
 meld-combobox {
   display: flex;
   width: 100%;
+  height: 15px;
+  background-color: white;
 }
 
 meld-combobox .overlay {

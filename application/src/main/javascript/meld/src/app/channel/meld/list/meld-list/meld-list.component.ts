@@ -5,6 +5,12 @@ import {Item} from './meld-item/meld-item.interfaces';
 import {AppService} from '../../../../app.service';
 import {NormalSort, QueryBuilder} from '../../../../../lib/common/search/search.classes';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
+import {MeldChannel} from './meld-list.interfaces';
+import {Selects} from '../../../../../lib/component/meld-combobox/meld-combobox.interfaces';
+import {HttpClient} from '@angular/common/http';
+import {Container} from '../../../../../lib/common/rest/Container';
+import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
+import {RestExpression} from '../../../../../lib/common/search/expression.interfaces';
 
 @Component({
   selector: 'app-meld-list',
@@ -14,30 +20,38 @@ import {Items} from '../../../../../lib/common/search/search.interfaces';
 })
 export class MeldListComponent {
 
-  constructor(private http: Http,
+  private expression : RestExpression;
+
+  constructor(private http: HttpClient,
               private service: AppService,
-              private router: Router) {
+              private router: MeldRouterService) {
+
+    if (router.queryParam.home) {
+      let subQueryPredicate = this.subQueryForRelations(this.service.configuration.user.id);
+      let equalPredicate = this.equalForUser(this.service.configuration.user.id);
+
+      this.expression = QueryBuilder.or([
+        subQueryPredicate,
+        equalPredicate
+      ]);
+    }
+
+    if (router.queryParam.profile) {
+      this.expression = this.equalForUser(router.queryParam.id);
+    }
+
   }
 
   posts: Items<Item> = (query, callback) => {
-    let subQueryPredicate = this.subQueryForRelations(this.service.configuration.user.id);
-    let equalPredicate = this.equalForCurrentUser(this.service.configuration.user.id);
-
-    query.expression = QueryBuilder.or([
-      subQueryPredicate,
-      equalPredicate
-    ]);
-
+    query.expression = this.expression;
     query.sorting = [new NormalSort("created", false)];
-
-    this.http.post('service/channel/meld/posts/', query)
-      .subscribe((res: Response) => {
-        let rows: [any] = res.json().rows;
-        callback(rows, null);
+    this.http.post<Container<Item>>('service/channel/meld/posts/', query)
+      .subscribe((res: Container<Item>) => {
+        callback(res.rows, null);
       });
   };
 
-  private equalForCurrentUser(id: string) {
+  private equalForUser(id: string) {
     return QueryBuilder.path('user.id', QueryBuilder.equal(id));
   }
 

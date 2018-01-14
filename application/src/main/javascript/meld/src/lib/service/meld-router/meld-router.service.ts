@@ -14,6 +14,12 @@ export class MeldRouterService {
     return object;
   }
 
+  get queryParam() : any {
+    let object = {};
+    this.extractedQueryParams(this.route, object);
+    return object;
+  }
+
   get data() : any {
     let object = {};
     this.extractedData(this.route, object);
@@ -26,6 +32,16 @@ export class MeldRouterService {
     });
     if (route.firstChild instanceof ActivatedRoute) {
       this.extractedData(route.firstChild, dataObject);
+    }
+  }
+
+
+  private extractedQueryParams(route: ActivatedRoute, paramObject: any) {
+    route.queryParams.forEach((param) => {
+      Object.assign(paramObject, param);
+    });
+    if (route.firstChild instanceof ActivatedRoute) {
+      this.extractedQueryParams(route.firstChild, paramObject);
     }
   }
 
