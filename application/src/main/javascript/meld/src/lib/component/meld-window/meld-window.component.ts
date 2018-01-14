@@ -105,7 +105,7 @@ export class MeldWindowComponent implements OnChanges, OnInit {
   }
 
   private calculatePosition(position: number): number {
-    let positionStep: number = 0;
+/*    let positionStep: number = 0;
     for (let i = 0; i < this.rowsSteps.length; i++) {
       let rowsStep = this.rowsSteps[i];
       if (position > rowsStep) {
@@ -115,7 +115,8 @@ export class MeldWindowComponent implements OnChanges, OnInit {
     if (positionStep > 1) {
       positionStep = 1;
     }
-    return positionStep;
+    return positionStep;*/
+    return position;
   }
 
   vScrollBarChange(position: number) {
