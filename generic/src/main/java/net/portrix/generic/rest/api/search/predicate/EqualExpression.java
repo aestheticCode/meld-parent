@@ -1,5 +1,7 @@
 package net.portrix.generic.rest.api.search.predicate;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import net.portrix.generic.rest.api.search.PredicateVisitor;
 
@@ -9,14 +11,15 @@ import java.util.UUID;
 @JsonTypeName("equal")
 public class EqualExpression implements RestExpression {
 
-    private UUID value;
+    private final UUID value;
+
+    @JsonCreator
+    public EqualExpression(@JsonProperty("value") UUID value) {
+        this.value = value;
+    }
 
     public UUID getValue() {
         return value;
-    }
-
-    public void setValue(UUID value) {
-        this.value = value;
     }
 
     @Override

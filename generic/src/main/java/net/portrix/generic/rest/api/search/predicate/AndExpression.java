@@ -1,5 +1,7 @@
 package net.portrix.generic.rest.api.search.predicate;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import net.portrix.generic.rest.api.search.PredicateVisitor;
 
@@ -9,14 +11,15 @@ import java.util.Set;
 @JsonTypeName("and")
 public class AndExpression implements RestExpression {
 
-    private Set<RestExpression> expressions;
+    private final Set<RestExpression> expressions;
+
+    @JsonCreator
+    public AndExpression(@JsonProperty("expressions") Set<RestExpression> expressions) {
+        this.expressions = expressions;
+    }
 
     public Set<RestExpression> getExpressions() {
         return expressions;
-    }
-
-    public void setExpressions(Set<RestExpression> expressions) {
-        this.expressions = expressions;
     }
 
     @Override

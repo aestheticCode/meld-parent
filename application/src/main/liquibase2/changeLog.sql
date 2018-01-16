@@ -248,3 +248,12 @@ insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce
 
 insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', 'fe02ff30-2120-4131-a21b-09c91c6097d4');
 insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', 'fe02ff30-2120-4131-a21b-09c91c6097d4');
+
+--changeset patrick:23
+
+INSERT INTO public.uc_permission (id, method, name, path) VALUES ('b4991f35-0ab7-400c-8f5d-f398e0c82c83', 'GET', 'Social Find User Read Meta', 'social/people/find/meta');
+
+--changeset patrick:24
+
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', 'b4991f35-0ab7-400c-8f5d-f398e0c82c83');
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', 'b4991f35-0ab7-400c-8f5d-f398e0c82c83');

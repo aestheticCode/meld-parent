@@ -51,7 +51,7 @@
               <td *ngIf="multiSelect"><mat-checkbox [checked]="isItemSelected(item)" (change)="itemSelected(item, $event)"></mat-checkbox></td>
               <td [style.height.px]="rowHeight" *ngFor="let column of body.rows.first.columns | meldTableSorter:columnConfiguration"
                   (click)="selectItemChange.emit(item)">
-                <div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
+                <div style="height : 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
                   <ng-container *ngTemplateOutlet="column.content; context: {$implicit: item}"></ng-container>
                 </div>
               </td>

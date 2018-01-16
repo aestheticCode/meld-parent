@@ -1,5 +1,7 @@
 package net.portrix.generic.rest.api.search.predicate;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import net.portrix.generic.rest.api.search.PredicateVisitor;
 
@@ -8,24 +10,23 @@ import javax.persistence.criteria.Expression;
 @JsonTypeName("levensthein")
 public class LevenstheinExpression implements RestExpression {
 
-    private String value;
+    private final String value;
 
-    private RestExpression expression;
+    private final RestExpression expression;
+
+    @JsonCreator
+    public LevenstheinExpression(@JsonProperty("value") String value,
+                                 @JsonProperty("expression") RestExpression expression) {
+        this.value = value;
+        this.expression = expression;
+    }
 
     public String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     public RestExpression getExpression() {
         return expression;
-    }
-
-    public void setExpression(RestExpression expression) {
-        this.expression = expression;
     }
 
     @Override

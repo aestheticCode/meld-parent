@@ -1,10 +1,16 @@
 package net.portrix.meld.social.people.find.table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Sets;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.search.Search;
+import net.portrix.generic.rest.api.search.predicate.LikeExpression;
+import net.portrix.generic.rest.api.search.predicate.OrExpression;
+import net.portrix.generic.rest.api.search.predicate.PathExpression;
+import net.portrix.generic.rest.api.search.predicate.RestExpression;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.social.people.Category;
@@ -19,6 +25,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +41,12 @@ public class FindTableController {
     private final UserManager userManager;
 
     private final URLBuilderFactory factory;
+
+    private final List<RestExpression> queries = Arrays.asList(
+            new OrExpression(
+                    new PathExpression("firstName", new LikeExpression("")),
+                    new PathExpression("lastName", new LikeExpression("")))
+    );
 
     @Inject
     public FindTableController(FindTableService service, UserManager userManager, URLBuilderFactory factory) {
@@ -121,6 +134,16 @@ public class FindTableController {
 
         return form;
 
+    }
+
+
+    @GET
+    @Path("find/meta")
+    @Name("Find User Read Meta")
+    @Secured
+    @Transactional
+    public List<RestExpression> list() {
+        return queries;
     }
 
 
