@@ -5,7 +5,9 @@ import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Patrick Bittner on 21/12/2016.
@@ -20,9 +22,8 @@ public class Education extends AbstractAggregate {
     @OneToOne
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @OrderColumn
-    private final List<School> schools = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "education")
+    private final Set<School> schools = new HashSet<>();
 
     public User getUser() {
         return user;
@@ -32,11 +33,12 @@ public class Education extends AbstractAggregate {
         this.user = user;
     }
 
-    public List<School> getSchools() {
+    public Set<School> getSchools() {
         return schools;
     }
 
     public void addSchool(final School school) {
+        school.setEducation(this);
         schools.add(school);
     }
 

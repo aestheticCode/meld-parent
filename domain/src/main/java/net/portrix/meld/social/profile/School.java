@@ -59,10 +59,12 @@ public class School extends AbstractEntity {
     })
     private SchoolDate visitEnd;
 
-
     private boolean tillNow;
 
     private String description;
+
+    @ManyToOne
+    private Education education;
 
     public String getName() {
         return name;
@@ -134,5 +136,13 @@ public class School extends AbstractEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Education getEducation() {
+        return education;
+    }
+
+    public void setEducation(Education education) {
+        this.education = education;
     }
 }

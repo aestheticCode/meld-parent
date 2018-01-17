@@ -1,5 +1,6 @@
 package net.portrix.meld.social.profile.places;
 
+import net.portrix.meld.social.profile.Address;
 import net.portrix.meld.social.profile.Places;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
@@ -55,5 +56,9 @@ public class PlacesFormService {
 
     public void deletePlaces(Places places) {
         entityManager.remove(places);
+    }
+
+    public void removeAddress(Address address) {
+        entityManager.remove(address);
     }
 }

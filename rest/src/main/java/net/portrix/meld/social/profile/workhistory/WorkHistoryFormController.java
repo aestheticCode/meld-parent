@@ -142,6 +142,7 @@ public class WorkHistoryFormController {
         User user = service.currentUser();
 
         WorkHistory workHistory = new WorkHistory();
+
         workHistory.setUser(user);
 
         for (CompanyForm companyType : type.getCompanies()) {
@@ -185,6 +186,11 @@ public class WorkHistoryFormController {
         User user = service.currentUser();
 
         WorkHistory workHistory = service.findWorkHistory(user);
+
+        for (Company company : workHistory.getCompanies()) {
+            service.removeCompany(company);
+        }
+
         workHistory.clearCompanies();
 
         for (CompanyForm companyType : type.getCompanies()) {

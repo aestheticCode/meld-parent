@@ -61,4 +61,8 @@ public class WorkHistoryFormService {
                 .setMaxResults(5)
                 .getResultList();
     }
+
+    public void removeCompany(Company company) {
+        entityManager.remove(company);
+    }
 }

@@ -3,23 +3,33 @@ package net.portrix.generic.rest.api.search.predicate;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.search.PredicateVisitor;
 
 import javax.persistence.criteria.Expression;
 import java.util.UUID;
 
 @JsonTypeName("equal")
-public class EqualExpression implements RestExpression {
+public class EqualExpression extends AbstractExpression {
 
     private final UUID value;
+    private final String name;
 
     @JsonCreator
-    public EqualExpression(@JsonProperty("value") UUID value) {
+    public EqualExpression(@JsonProperty("value") UUID value,
+                           @JsonProperty("name") String name,
+                           @JsonProperty("links") Link... links) {
+        super(links);
         this.value = value;
+        this.name = name;
     }
 
     public UUID getValue() {
         return value;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

@@ -179,6 +179,11 @@ public class PlacesFormController {
         User user = service.currentUser();
 
         final Places places = service.findPlaces(user);
+
+        for (Address address : places.getAddresses()) {
+            service.removeAddress(address);
+        }
+
         places.clearAddresses();
 
         for (AddressForm addressType : form.getAddresses()) {

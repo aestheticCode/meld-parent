@@ -257,3 +257,29 @@ INSERT INTO public.uc_permission (id, method, name, path) VALUES ('b4991f35-0ab7
 
 insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', 'b4991f35-0ab7-400c-8f5d-f398e0c82c83');
 insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', 'b4991f35-0ab7-400c-8f5d-f398e0c82c83');
+
+--changeset patrick:25
+
+INSERT INTO public.uc_permission (id, method, name, path) VALUES ('4d01aaa5-3f25-4611-a217-70297a25b67d', 'POST', 'Social', 'social/education/find/meta');
+INSERT INTO public.uc_permission (id, method, name, path) VALUES ('65d6dd7e-3de0-4c95-8aa3-aaa943c36f5f', 'POST', 'Social', 'social/education/find');
+
+--changeset patrick:26
+
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', '65d6dd7e-3de0-4c95-8aa3-aaa943c36f5f');
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('b6498b48-ce14-418e-947a-d06dfe87e73d', '4d01aaa5-3f25-4611-a217-70297a25b67d');
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', '65d6dd7e-3de0-4c95-8aa3-aaa943c36f5f');
+insert into uc_role_uc_permission (Role_id, permissions_id) values ('a0b1574d-2a08-4d54-a34a-d9ca8f4a1022', '4d01aaa5-3f25-4611-a217-70297a25b67d');
+
+--changeset patrick:27
+
+update uc_permission set method = 'GET' WHERE path = 'social/education/find/meta';
+
+--changeset patrick:28
+
+    alter table public.so_school
+       add column education_id uuid;
+
+    alter table so_school
+       add constraint FKt59rn73yotb85se1fl5q0bpvr
+       foreign key (education_id)
+       references so_education;

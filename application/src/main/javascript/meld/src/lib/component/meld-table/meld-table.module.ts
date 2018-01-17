@@ -4,8 +4,6 @@ import {FormsModule} from "@angular/forms";
 import {MeldTableComponent} from "./meld-table.component";
 import {MeldColDirective} from "./meld-col/meld-col.directive";
 import {MeldColgroupDirective} from "./meld-colgroup/meld-colgroup.directive";
-import {MeldFilterDirective} from "./meld-filter/meld-filter.directive";
-import {MeldTableFilterDialogComponent} from "./meld-filter-dialog/meld-table-filter-dialog.component";
 import {MeldTableMenuDialogComponent} from "./meld-menu-dialog/meld-table-menu-dialog.component";
 import {MeldTbodyDirective} from "./meld-tbody/meld-tbody.directive";
 import {MeldTdDirective} from "./meld-td/meld-td.directive";
@@ -30,8 +28,6 @@ import {MeldTableSorterPipe} from "./meld-table-sorter.pipe";
     MeldTableComponent,
     MeldColDirective,
     MeldColgroupDirective,
-    MeldFilterDirective,
-    MeldTableFilterDialogComponent,
     MeldTableMenuDialogComponent,
     MeldTbodyDirective,
     MeldTdDirective,
@@ -44,8 +40,6 @@ import {MeldTableSorterPipe} from "./meld-table-sorter.pipe";
     MeldTableComponent,
     MeldColDirective,
     MeldColgroupDirective,
-    MeldFilterDirective,
-    MeldTableFilterDialogComponent,
     MeldTableMenuDialogComponent,
     MeldTbodyDirective,
     MeldTdDirective,
@@ -55,7 +49,6 @@ import {MeldTableSorterPipe} from "./meld-table-sorter.pipe";
     MeldTableSorterPipe
   ],
   entryComponents : [
-    MeldTableFilterDialogComponent,
     MeldTableMenuDialogComponent
   ]
 })

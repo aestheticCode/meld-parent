@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.education;
+package net.portrix.meld.social.profile.education.form;
 
 import net.portrix.generic.rest.google.details.LocationDetailForm;
 

@@ -42,7 +42,8 @@ export abstract class AbstractControl<V> implements ControlValueAccessor, MatFor
   }
 
   get required() {
-    return this._required || this._required == '';
+    return this._required === true || this._required === '';
+    //return false;
   }
 
   setDescribedByIds(ids: string[]) {

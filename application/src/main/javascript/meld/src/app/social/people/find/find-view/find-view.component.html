@@ -9,11 +9,13 @@
                 <mat-expansion-panel-header>
                   Search
                 </mat-expansion-panel-header>
+                <div *ngFor="let query of queries">
+                  <meld-filter [filter]="query" (filterChange)="table.refreshItems()"></meld-filter>
+                </div>
               </mat-expansion-panel>
-
             </mat-accordion>
 
-            <meld-table [items]="users" [rowHeight]="100" style="height: calc(100% - 48px);">
+            <meld-table #table [items]="users" [rowHeight]="100" style="height: calc(100% - 48px);">
               <meld-colgroup>
                 <meld-col [width]="100"></meld-col>
                 <meld-col [width]="200"></meld-col>

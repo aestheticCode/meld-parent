@@ -38,6 +38,7 @@ import {MeldTouchWheelModule} from './directive/meld-touch-wheel/meld-touch-whee
 import {MeldGoogleMapsMarkerModule} from './component/meld-google-maps-marker/meld-google-maps-marker.module';
 import {MeldDebounceModule} from './directive/meld-debounce/meld-debounce.module';
 import {MeldControlValueModule} from './pipe/meld-control-value/meld-control-value.module';
+import {MeldFilterModule} from './component/meld-filter/meld-filter.module';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import {MeldControlValueModule} from './pipe/meld-control-value/meld-control-val
     MeldDialogModule,
     MeldEditorModule,
     MeldFileContainerModule,
+    MeldFilterModule,
     MeldFormGroupModule,
     MeldGoogleMapsAutocompleteModule,
     MeldGoogleMapsMarkerModule,
@@ -136,6 +138,7 @@ import {MeldControlValueModule} from './pipe/meld-control-value/meld-control-val
     MeldDialogModule,
     MeldEditorModule,
     MeldFileContainerModule,
+    MeldFilterModule,
     MeldFormGroupModule,
     MeldGoogleMapsAutocompleteModule,
     MeldGoogleMapsMarkerModule,
