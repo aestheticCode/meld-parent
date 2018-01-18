@@ -9,6 +9,13 @@
 
   <mat-form-field style="width: 100%;">
     <meld-google-maps-autocomplete required placeholder="Address" formControlName="location"></meld-google-maps-autocomplete>
+    <mat-hint *ngIf="address.get('location').value">
+      <span *ngIf="address.get('location').value.street">{{address.get('location').value.street}},</span>
+      <span *ngIf="address.get('location').value.streetNumber">{{address.get('location').value.streetNumber}},</span>
+      <span *ngIf="address.get('location').value.zipCode">{{address.get('location').value.zipCode}},</span>
+      <span *ngIf="address.get('location').value.state">{{address.get('location').value.state}},</span>
+      <span *ngIf="address.get('location').value.country">{{address.get('location').value.country}}</span>
+    </mat-hint>
   </mat-form-field>
 
   <div style="display: flex; width: 100%">

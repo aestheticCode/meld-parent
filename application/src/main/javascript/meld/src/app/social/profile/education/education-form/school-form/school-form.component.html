@@ -21,12 +21,13 @@
   <mat-form-field style="width: 100%;">
     <meld-google-maps-autocomplete required placeholder="Location"
                                    formControlName="location"></meld-google-maps-autocomplete>
-    <mat-hint>
+    <mat-hint *ngIf="school.get('location').value">
       <span *ngIf="school.get('location').value.street">{{school.get('location').value.street}},</span>
       <span *ngIf="school.get('location').value.streetNumber">{{school.get('location').value.streetNumber}},</span>
       <span *ngIf="school.get('location').value.zipCode">{{school.get('location').value.zipCode}},</span>
       <span *ngIf="school.get('location').value.state">{{school.get('location').value.state}},</span>
-      <span *ngIf="school.get('location').value.country">{{school.get('location').value.country}}</span></mat-hint>
+      <span *ngIf="school.get('location').value.country">{{school.get('location').value.country}}</span>
+    </mat-hint>
   </mat-form-field>
 
   <mat-form-field style="width: 100%;">

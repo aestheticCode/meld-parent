@@ -56,7 +56,7 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
     this.schools.push(this.builder.group({
       id: this.builder.control(''),
       name: this.builder.control(''),
-      location: this.builder.control({}),
+      location: this.builder.control(null),
       course: this.builder.control(''),
       startYear: this.builder.group({
         year: this.builder.control(null),
