@@ -31,10 +31,8 @@ export class QueryBuilder {
     return new InSelectExpression(subQuery);
   }
 
-  public
-
-  static levensthein(value: string, expression: RestExpression) {
-    return new LevenstheinExpression(value, expression);
+  static levensthein(value: string) {
+    return new LevenstheinExpression(value);
   }
 
   static like(value: string) {

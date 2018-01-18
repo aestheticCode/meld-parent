@@ -3,12 +3,13 @@ package net.portrix.generic.rest.api.search.predicate;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.search.PredicateVisitor;
 
 import javax.persistence.criteria.Expression;
 
 @JsonTypeName("path")
-public class PathExpression implements RestExpression {
+public class PathExpression extends AbstractExpression {
 
     private final RestExpression expression;
 
@@ -16,7 +17,9 @@ public class PathExpression implements RestExpression {
 
     @JsonCreator
     public PathExpression(@JsonProperty("path") String path,
-                          @JsonProperty("expression") RestExpression expression) {
+                          @JsonProperty("expression") RestExpression expression,
+                          @JsonProperty("links") Link... links) {
+        super(links);
         this.expression = expression;
         this.path = path;
     }

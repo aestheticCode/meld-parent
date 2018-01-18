@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.education;
+package net.portrix.meld.social.profile.education.form;
 
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
@@ -212,6 +212,11 @@ public class EducationFormController {
         User user = service.currentUser();
 
         Education education = service.findEducation(user);
+
+        for (School school : education.getSchools()) {
+            service.removeSchool(school);
+        }
+
         education.clearSchools();
 
         for (SchoolForm schoolType : form.getSchools()) {

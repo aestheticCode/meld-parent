@@ -6,6 +6,7 @@ import net.portrix.generic.rest.api.query.Query;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
 import net.portrix.meld.social.profile.Profile;
+import net.portrix.meld.social.profile.School;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.User_;
 
@@ -76,6 +77,7 @@ public class FindTableService extends AbstractQueryService<User> {
         Map<String, Class<?>> tables = Maps.newHashMap();
         tables.put("relationShip", RelationShip.class);
         tables.put("user", User.class);
+        tables.put("school", School.class);
         return tables;
     }
 }

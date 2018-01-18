@@ -1,6 +1,7 @@
-package net.portrix.meld.social.profile.education;
+package net.portrix.meld.social.profile.education.form;
 
 import net.portrix.meld.social.profile.Education;
+import net.portrix.meld.social.profile.School;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 
@@ -60,5 +61,9 @@ public class EducationFormService {
                 .setParameter("name", "%" + name.toLowerCase() + "%")
                 .setMaxResults(5)
                 .getResultList();
+    }
+
+    public void removeSchool(School school) {
+        entityManager.remove(school);
     }
 }

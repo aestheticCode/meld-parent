@@ -6,7 +6,7 @@ import net.portrix.generic.rest.api.search.PredicateVisitor;
 import javax.persistence.criteria.Expression;
 
 @JsonTypeName("isNull")
-public class IsNullExpression implements RestExpression {
+public class IsNullExpression extends AbstractExpression {
     @Override
     public Expression<?> accept(PredicateVisitor visitor) {
         return visitor.visitIsNull(this);

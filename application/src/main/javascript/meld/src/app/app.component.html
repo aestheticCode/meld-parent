@@ -68,7 +68,11 @@
 
     </mat-sidenav>
 
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="! loading"></router-outlet>
+
+    <div *ngIf="loading" style="height: 100%; width: 100%; display: flex; align-items: center; animation: opacity ease-in 1s">
+      <mat-spinner style="margin : auto"></mat-spinner>
+    </div>
 
   </mat-sidenav-container>
 </div>

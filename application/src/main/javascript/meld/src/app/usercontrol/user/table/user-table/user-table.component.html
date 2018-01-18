@@ -7,28 +7,6 @@
     <button type="button"  mat-raised-button *ngIf="links | meldLink:'save'" (click)="onCreate()">Create</button>
   </div>
   <meld-table #table [items]="users" (selectItemChange)="onSelectionChange($event)" [menu]="true">
-    <meld-filter>
-      <ng-template>
-        <form>
-          <mat-form-field style="width: 100%;">
-            <input matInput type="text" placeholder="eMail" name="name" [(ngModel)]="filterTemplate.name">
-          </mat-form-field>
-          <mat-form-field style="width: 100%;">
-            <input matInput type="text" placeholder="First Name" name="firstName" [(ngModel)]="filterTemplate.firstName">
-          </mat-form-field>
-          <mat-form-field style="width: 100%;">
-            <input matInput type="text" placeholder="Last Name" name="lastName" [(ngModel)]="filterTemplate.lastName">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [matDatepicker]="datepicker" [(ngModel)]="filterTemplate.birthdate">
-            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-            <mat-datepicker #datepicker></mat-datepicker>
-          </mat-form-field>
-          <button type="button"  mat-button (click)="onSearchClick()">Search</button>
-          <button type="button"  mat-button (click)="onCancelClick()">Reset</button>
-        </form>
-      </ng-template>
-    </meld-filter>
     <meld-colgroup>
       <meld-col [width]="100" [path]="'gender'"></meld-col>
       <meld-col [width]="100" [path]="'firstName'"></meld-col>

@@ -3,13 +3,14 @@ package net.portrix.generic.rest.api.search.predicate;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.search.PredicateVisitor;
 
 import javax.persistence.criteria.Expression;
 import java.util.List;
 
 @JsonTypeName("concat")
-public class ConcatExpression implements RestExpression {
+public class ConcatExpression extends AbstractExpression {
 
     private final RestExpression expression;
 
@@ -17,7 +18,9 @@ public class ConcatExpression implements RestExpression {
 
     @JsonCreator
     public ConcatExpression(@JsonProperty("expression") RestExpression expression,
-                            @JsonProperty("paths") List<String> paths) {
+                            @JsonProperty("paths") List<String> paths,
+                            @JsonProperty("links") Link... links) {
+        super(links);
         this.expression = expression;
         this.paths = paths;
     }

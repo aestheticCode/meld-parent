@@ -1,3 +1,8 @@
-<p>
-  meld-filter works!
-</p>
+<div *ngFor="let expression of expressions">
+
+  <div [ngSwitch]="expression.type">
+    <meld-like-filter *ngSwitchCase="'like'" [like]="expression" (filterChange)="onFilterChange($event)"></meld-like-filter>
+    <meld-equal-filter *ngSwitchCase="'equal'" [equal]="expression" (filterChange)="onFilterChange($event)"></meld-equal-filter>
+  </div>
+
+</div>

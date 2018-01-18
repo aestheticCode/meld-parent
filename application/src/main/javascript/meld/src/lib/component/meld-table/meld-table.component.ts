@@ -1,27 +1,16 @@
-import {
-  AfterContentInit,
-  Component,
-  ContentChild,
-  EventEmitter,
-  forwardRef,
-  Input,
-  OnInit,
-  Output, ViewEncapsulation
-} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {AfterContentInit, Component, ContentChild, EventEmitter, forwardRef, Input, Output, ViewEncapsulation} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatCheckboxChange, MatDialog} from '@angular/material';
-import {MeldTableMenuDialogComponent} from "./meld-menu-dialog/meld-table-menu-dialog.component";
-import {MeldFilterDirective} from "./meld-filter/meld-filter.directive";
-import {MeldColgroupDirective} from "./meld-colgroup/meld-colgroup.directive";
-import {MeldTheadDirective} from "./meld-thead/meld-thead.directive";
-import {MeldTbodyDirective} from "./meld-tbody/meld-tbody.directive";
-import {MeldTfooterDirective} from "./meld-tfooter/meld-tfooter.directive";
-import {MeldTableFilterDialogComponent} from "./meld-filter-dialog/meld-table-filter-dialog.component";
+import {MeldTableMenuDialogComponent} from './meld-menu-dialog/meld-table-menu-dialog.component';
+import {MeldColgroupDirective} from './meld-colgroup/meld-colgroup.directive';
+import {MeldTheadDirective} from './meld-thead/meld-thead.directive';
+import {MeldTbodyDirective} from './meld-tbody/meld-tbody.directive';
+import {MeldTfooterDirective} from './meld-tfooter/meld-tfooter.directive';
 import {LoadWindow, ViewPort} from '../meld-window/meld.window.classes';
-import {TableColumn} from "./TableColumn";
+import {TableColumn} from './TableColumn';
 import {MeldTdDirective} from './meld-td/meld-td.directive';
 import {Items} from '../../common/search/search.interfaces';
-import {QueryBuilder, NormalSort} from '../../common/search/search.classes';
+import {NormalSort, QueryBuilder} from '../../common/search/search.classes';
 
 const noop = () => {
 };
@@ -37,7 +26,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   templateUrl: 'meld-table.component.html',
   styleUrls: ['meld-table.component.css'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class MeldTableComponent implements AfterContentInit, ControlValueAccessor {
 
@@ -55,12 +44,9 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
   @Input('menu')
   public menuSymbol: boolean = false;
 
-  @Input('filter')
-  public filterSymbol: boolean = false;
-
   public allSelected: boolean = false;
 
-  @Input("unbordered")
+  @Input('unbordered')
   public unbordered: boolean = false;
 
   public hoveredIndex: number = undefined;
@@ -73,7 +59,7 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
 
   public scrollWindowChange: LoadWindow = new LoadWindow(0, 20);
 
-  public viewPortChange : ViewPort = new ViewPort(0, 5);
+  public viewPortChange: ViewPort = new ViewPort(0, 5);
 
   @Input('items')
   private items: Items<any>;
@@ -81,13 +67,10 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
   @Input('rowHeight')
   public rowHeight: number = 37;
 
-  public sorting: NormalSort[];
+  public sorting: NormalSort[] = [];
 
   @Input('initialize')
-  public initialize : boolean = true;
-
-  @ContentChild(MeldFilterDirective)
-  public filter: MeldFilterDirective;
+  public initialize: boolean = true;
 
   @ContentChild(MeldColgroupDirective)
   public colgroup: MeldColgroupDirective;
@@ -110,7 +93,7 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
   }
 
   public refreshItems() {
-    this.onWindowScroll(new LoadWindow(0, 20))
+    this.onWindowScroll(new LoadWindow(0, 20));
   }
 
   onKeyUp(event: KeyboardEvent) {
@@ -163,8 +146,8 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
         if (this.head) {
           this.head.rows.first.columns.toArray()[index].path = col.path;
         }
-        return new TableColumn(index, col.visible, col.width, col.path)
-      })
+        return new TableColumn(index, col.visible, col.width, col.path);
+      });
     } else {
       if (this.body) {
         let rows = this.body.rows;
@@ -174,8 +157,8 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
             let columns = firstRow.columns;
             if (columns) {
               this.columnConfiguration = columns.map((col, index) => {
-                return new TableColumn(index, true, 100, "");
-              })
+                return new TableColumn(index, true, 100, '');
+              });
             }
           }
         }
@@ -183,15 +166,13 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
     }
   }
 
-  onSortClick(column : MeldTdDirective) {
+  onSortClick(column: MeldTdDirective) {
 
     if (column.asc === true) {
       column.asc = false;
-    } else
-    if (column.asc === false) {
+    } else if (column.asc === false) {
       column.asc = undefined;
-    } else
-    if (column.asc === undefined) {
+    } else if (column.asc === undefined) {
       column.asc = true;
     }
 
@@ -270,13 +251,6 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
 
   openMenu() {
     let dialogRef = this.dialog.open(MeldTableMenuDialogComponent, {data: this});
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
-  }
-
-  openFilter() {
-    let dialogRef = this.dialog.open(MeldTableFilterDialogComponent,{data: this.filter});
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
     });

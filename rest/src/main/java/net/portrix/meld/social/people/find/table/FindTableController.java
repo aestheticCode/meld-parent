@@ -1,24 +1,23 @@
 package net.portrix.meld.social.people.find.table;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Sets;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
+import net.portrix.generic.rest.api.search.Filter;
 import net.portrix.generic.rest.api.search.Search;
-import net.portrix.generic.rest.api.search.predicate.LikeExpression;
-import net.portrix.generic.rest.api.search.predicate.OrExpression;
-import net.portrix.generic.rest.api.search.predicate.PathExpression;
-import net.portrix.generic.rest.api.search.predicate.RestExpression;
+import net.portrix.generic.rest.api.search.predicate.*;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
 import net.portrix.meld.social.profile.Profile;
+import net.portrix.meld.social.profile.education.table.SchoolTableController;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -42,11 +41,7 @@ public class FindTableController {
 
     private final URLBuilderFactory factory;
 
-    private final List<RestExpression> queries = Arrays.asList(
-            new OrExpression(
-                    new PathExpression("firstName", new LikeExpression("")),
-                    new PathExpression("lastName", new LikeExpression("")))
-    );
+    private List<Filter> queries;
 
     @Inject
     public FindTableController(FindTableService service, UserManager userManager, URLBuilderFactory factory) {
@@ -57,6 +52,19 @@ public class FindTableController {
 
     public FindTableController() {
         this(null, null, null);
+    }
+
+    @PostConstruct
+    public void postContruct() {
+        queries = Arrays.asList(
+                new Filter("name", new AndExpression(Sets.newHashSet(
+                        new PathExpression("firstName", new LikeExpression("", "First Name")),
+                        new PathExpression("lastName", new LikeExpression("", "Last Name"))
+                ))),
+                new Filter("school", new InSelectExpression(
+                        new SubQueryExpression("school", "education.user", new PathExpression("id", new EqualExpression(null, "School", SchoolTableController.linkMeta("name", factory).generate())))
+                ))
+        );
     }
 
     @POST
@@ -142,7 +150,7 @@ public class FindTableController {
     @Name("Find User Read Meta")
     @Secured
     @Transactional
-    public List<RestExpression> list() {
+    public List<Filter> list() {
         return queries;
     }
 

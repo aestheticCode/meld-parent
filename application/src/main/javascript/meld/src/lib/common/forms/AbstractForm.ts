@@ -1,6 +1,9 @@
 import {Observable} from 'rxjs/Observable';
-import {ViewChild} from '@angular/core';
+import {OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormControl, FormGroup, NgForm} from '@angular/forms';
+import {HttpResponse} from '@angular/common/http';
+import {AppService} from '../../../app/app.service';
+import {MeldRouterService} from '../../service/meld-router/meld-router.service';
 
 export abstract class AbstractForm<F> {
 
@@ -17,8 +20,7 @@ export abstract class AbstractForm<F> {
     return true;
   }
 
-  public postRequest(form: F) {
-  }
+  public postRequest(form: F) {}
 
   public abstract saveRequest(): Observable<F>;
 
