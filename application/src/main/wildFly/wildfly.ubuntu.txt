@@ -87,10 +87,9 @@ Create directory for logs:
 sudo mkdir -p /var/log/wildfly
 Add system user to run WildFly:
 
-sudo useradd --system --shell /bin/false wildfly
+sudo useradd --system --create-home wildfly
 Change the owner of WildFly directories:
 
-sudo chown -R wildfly:wildfly /opt/wildfly-9.0.2.Final/
 sudo chown -R wildfly:wildfly /opt/wildfly
 sudo chown -R wildfly:wildfly /var/log/wildfly
 Start WildFly:
