@@ -14,7 +14,7 @@
   </mat-toolbar>
 
   <mat-sidenav-container style="height: calc(100% - 56px);">
-    <mat-sidenav [mode]="sideNavOption" [opened]="sideNavShow" style="width: 200px; background-color: #4e5664">
+    <mat-sidenav [mode]="sideNavOption" [opened]="sideNavShow" style="width: 200px; background-color: #4e5664" (click)="sideNavShow = false" (backdropClick)="sideNavShow = false">
 
       <div style="padding: 12px 0 12px 0;">
 
@@ -68,9 +68,11 @@
 
     </mat-sidenav>
 
-    <router-outlet *ngIf="! loading"></router-outlet>
+    <div *ngIf="! loading" style="animation: fadein 2s;">
+      <router-outlet ></router-outlet>
+    </div>
 
-    <div *ngIf="loading" style="height: 100%; width: 100%; display: flex; align-items: center; animation: opacity ease-in 1s">
+    <div *ngIf="loading" style="height: 100%; width: 100%; display: flex; align-items: center; animation: fadein 2s;">
       <mat-spinner style="margin : auto"></mat-spinner>
     </div>
 
