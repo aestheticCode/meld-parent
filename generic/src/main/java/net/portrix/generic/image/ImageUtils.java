@@ -1,7 +1,5 @@
 package net.portrix.generic.image;
 
-import com.sun.imageio.plugins.gif.GIFImageReader;
-import com.sun.imageio.plugins.gif.GIFImageReaderSpi;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -83,15 +81,6 @@ public class ImageUtils {
         File imageWorkingDir = new File(meld.getCanonicalPath() + File.separator + id.toString());
         FileUtils.forceMkdir(imageWorkingDir);
         return imageWorkingDir;
-    }
-
-    public List<BufferedImage> frames(InputStream stream) throws IOException{
-        List<BufferedImage> frames = new ArrayList<>();
-        GIFImageReader imageReader = new GIFImageReader(new GIFImageReaderSpi());
-        imageReader.setInput(ImageIO.createImageInputStream(stream));
-        for(int i = 0; i < imageReader.getNumImages(true); i++)
-            frames.add(imageReader.getRawImageType(i).createBufferedImage(imageReader.getWidth(i), imageReader.getHeight(i)));
-        return frames;
     }
 
 

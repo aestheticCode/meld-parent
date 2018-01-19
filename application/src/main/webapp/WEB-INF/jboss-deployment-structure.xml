@@ -19,9 +19,12 @@
             <module name="org.picketlink.idm" meta-inf="import"/>
             <module name="org.picketlink.idm.api" meta-inf="import"/>
 
-            <module name="org.hibernate.search.orm" services="export" />
             <module name="org.hibernate.infinispan" services="export"/>
         </dependencies>
+
+        <exclusions>
+            <module name="org.hibernate.search.orm" />
+        </exclusions>
 
     </deployment>
 
