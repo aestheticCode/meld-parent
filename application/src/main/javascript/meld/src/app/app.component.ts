@@ -65,4 +65,10 @@ export class AppComponent {
     this.sideNavShow = !this.sideNavShow;
   }
 
+  closeSideNav() {
+    if (this.sideNavOption === "over") {
+      this.sideNavShow = false;
+    }
+  }
+
 }
