@@ -155,21 +155,10 @@
                     <artifactId>hibernate-core</artifactId>
                     <scope>provided</scope>
                 </dependency>
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-search-orm</artifactId>
-                    <scope>provided</scope>
-                </dependency>
 
                 <dependency>
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-search-infinispan</artifactId>
-                    <scope>provided</scope>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-search-backend-jms</artifactId>
                     <scope>provided</scope>
                 </dependency>
 
