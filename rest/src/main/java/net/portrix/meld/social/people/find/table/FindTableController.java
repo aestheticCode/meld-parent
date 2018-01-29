@@ -5,13 +5,14 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.search.Filter;
-import net.portrix.generic.rest.api.search.Search;
-import net.portrix.generic.rest.api.search.predicate.*;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
+import net.portrix.meld.social.people.find.table.search.Filter;
+import net.portrix.meld.social.people.find.table.search.Search;
+import net.portrix.meld.social.people.find.table.search.expression.NameExpression;
+import net.portrix.meld.social.people.find.table.search.expression.SchoolExpression;
 import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.social.profile.education.table.SchoolTableController;
 import net.portrix.meld.usercontrol.User;
@@ -57,13 +58,8 @@ public class FindTableController {
     @PostConstruct
     public void postContruct() {
         queries = Arrays.asList(
-                new Filter("name", new AndExpression(Sets.newHashSet(
-                        new PathExpression("firstName", new LikeExpression("", "First Name")),
-                        new PathExpression("lastName", new LikeExpression("", "Last Name"))
-                ))),
-                new Filter("school", new InSelectExpression(
-                        new SubQueryExpression("school", "education.user", new PathExpression("id", new EqualExpression(null, "School", SchoolTableController.linkMeta("name", factory).generate())))
-                ))
+                new Filter("name", new NameExpression("")),
+                new Filter("school", new SchoolExpression(null, SchoolTableController.linkMeta("name", factory).generate()))
         );
     }
 

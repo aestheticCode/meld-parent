@@ -1,37 +1,59 @@
 package net.portrix.meld.social.people.find.table;
 
-import com.google.common.collect.Maps;
-import net.portrix.generic.ddd.AbstractQueryService;
-import net.portrix.generic.rest.api.query.Query;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
+import net.portrix.meld.social.people.find.table.search.Search;
 import net.portrix.meld.social.profile.Profile;
-import net.portrix.meld.social.profile.School;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.User_;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import java.util.HashMap;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Root;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @ApplicationScoped
-public class FindTableService extends AbstractQueryService<User> {
-    
+public class FindTableService {
+
+    private final EntityManager entityManager;
+
     @Inject
     public FindTableService(EntityManager entityManager) {
-        super(entityManager);
+        this.entityManager = entityManager;
     }
 
     public FindTableService() {
         this(null);
     }
+
+    public List<User> find(Search search) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        Expression predicate = search.getExpression().accept(Search.visitorVisit(builder, query, root));
+        query.select(root).where(predicate).orderBy(Search.sorting(search.getSorting(), builder, root));
+        TypedQuery<User> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(search.getIndex());
+        typedQuery.setMaxResults(search.getLimit());
+        return typedQuery.getResultList();
+    }
+
+    public long count(Search search) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<User> root = query.from(User.class);
+        Expression predicate = search.getExpression().accept(Search.visitorVisit(builder, query, root));
+        query.select(builder.count(root)).where(predicate);
+        TypedQuery<Long> typedQuery = entityManager.createQuery(query);
+        return typedQuery.getSingleResult();
+    }
+
 
     public Profile findProfile(User user) {
         try {
@@ -66,18 +88,4 @@ public class FindTableService extends AbstractQueryService<User> {
         entityManager.remove(relationShip);
     }
 
-
-    @Override
-    public Class<User> getEntityClass() {
-        return User.class;
-    }
-
-    @Override
-    public Map<String, Class<?>> getTables() {
-        Map<String, Class<?>> tables = Maps.newHashMap();
-        tables.put("relationShip", RelationShip.class);
-        tables.put("user", User.class);
-        tables.put("school", School.class);
-        return tables;
-    }
 }

@@ -17,16 +17,16 @@ import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 })
 export class FindViewComponent {
 
-  public queries: Filter[];
+  public filters: Filter[];
 
   constructor(private http: HttpClient,
               private router: MeldRouterService,
               private dialog: MatDialog) {
-    this.queries = this.router.data.meta;
+    this.filters = this.router.data.meta;
   }
 
   users: Items<UserRow> = (query, response) => {
-    query.expression = QueryBuilder.and(this.queries.filter((query) => query.active).map((query) => query.expression));
+    //query.expression = QueryBuilder.and(this.queries.filter((query) => query.active).map((query) => query.expression));
     this.http.post<Container<UserRow>>('service/social/people/find', query)
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);

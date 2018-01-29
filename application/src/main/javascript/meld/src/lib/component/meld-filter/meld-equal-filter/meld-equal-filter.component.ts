@@ -1,15 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {
-  Equal, ExpressionVisitor, In, InSelect, IsNull, Levensthein, Like, Not, Or, Path,
-  SubQuery
-} from '../../../common/search/expression.interfaces';
+import {Equal, ExpressionVisitor, InSelect, Like, Not, Or, Path, SubQuery} from '../../../common/search/expression.interfaces';
 import {HttpClient} from '@angular/common/http';
-import {Filter, Items} from '../../../common/search/search.interfaces';
+import {Filter} from '../../../common/search/search.interfaces';
 import {Container} from '../../../common/rest/Container';
 import {QueryBuilder} from '../../../common/search/search.classes';
 import {Selects} from '../../meld-combobox/meld-combobox.interfaces';
 import {AndExpression, Expressions} from '../../../common/search/expression.classes';
-import {equal} from 'assert';
 
 @Component({
   selector: 'meld-equal-filter',
@@ -18,10 +14,12 @@ import {equal} from 'assert';
 })
 export class MeldEqualFilterComponent implements OnInit {
 
+  public value : any;
+
   @Input('equal')
   public equal: Equal;
 
-  public queries : Container<Filter>;
+  public queries: Container<Filter>;
 
   @Output('filterChange')
   private filterChange: EventEmitter<string> = new EventEmitter<string>();
@@ -30,9 +28,17 @@ export class MeldEqualFilterComponent implements OnInit {
     this.filterChange.emit(event);
   }
 
-  constructor(private http : HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  schools : Selects<Filter> = (search, callback) => {
+  public itemValue = (item) => {
+    if (item == null) {
+      return null;
+    }
+    return item;
+  };
+
+  schools: Selects<Filter> = (search, callback) => {
     let query = QueryBuilder.query();
     query.index = search.index;
     query.limit = search.limit;
@@ -64,8 +70,8 @@ export class MeldEqualFilterComponent implements OnInit {
 
 
     this.http.post<Container<any>>(this.queries.links[0].url, query)
-      .subscribe((result : Container<any>) => {
-        callback(result.rows, result.size)
+      .subscribe((result: Container<any>) => {
+        callback(result.rows, result.size);
       });
   };
 
@@ -73,9 +79,9 @@ export class MeldEqualFilterComponent implements OnInit {
     let link = this.equal.links[0];
 
     this.http.get<Container<Filter>>(link.url)
-      .subscribe((filter : Container<Filter>) => {
+      .subscribe((filter: Container<Filter>) => {
         this.queries = filter;
-      })
+      });
   }
 
 }

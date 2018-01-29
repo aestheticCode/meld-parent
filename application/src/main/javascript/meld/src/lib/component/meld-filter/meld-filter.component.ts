@@ -1,12 +1,21 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {
-  Equal, ExpressionVisitor, In, InSelect, IsNull, Levensthein, Like, Not, Or, Path, RestExpression,
+  Equal,
+  ExpressionVisitor,
+  In,
+  InSelect,
+  IsNull,
+  Levensthein,
+  Like,
+  Not,
+  Or,
+  Path,
+  RestExpression,
   SubQuery
 } from '../../common/search/expression.interfaces';
 import {AndExpression, Expressions} from '../../common/search/expression.classes';
 import {Filter} from '../../common/search/search.interfaces';
 import {Strings} from '../../common/utils/Strings';
-import {Objects} from '../../common/utils/Objects';
 
 @Component({
   selector: 'meld-filter',
@@ -19,12 +28,12 @@ export class MeldFilterComponent implements OnInit {
   @Input('filter')
   public filter: Filter;
 
-  public expressions : RestExpression[] = [];
+  public expressions: RestExpression[] = [];
 
-  @Output("filterChange")
-  private filterChange : EventEmitter<string> = new EventEmitter<string>();
+  @Output('filterChange')
+  private filterChange: EventEmitter<string> = new EventEmitter<string>();
 
-  onFilterChange(event : string) {
+  onFilterChange(event: string) {
     this.filter.active = Strings.isNotEmpty(event);
     this.filterChange.emit(event);
   }
