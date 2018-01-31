@@ -1,4 +1,4 @@
 ./bin/initdb -D ./data/
 ./bin/postgres -D ./data/
-./bin/createdb -h localhost meld
+./bin/createdb -U postgres -h localhost meld
 

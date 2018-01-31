@@ -1,6 +1,0 @@
- --liquibase formatted sql
-
-INSERT INTO public.uc_identity (dtype, id, version, name, birthdate, externalid, firstname, gender, lastname) VALUES ('User', 'e8194dcb-58d7-46f4-ba7c-1d00a588036f', 1, 'PatrickBittner1Apr1980', '1982-12-09', 'a54f522f-fd1c-4330-af25-303212eefa87', 'Patrick', 0, 'Bittner');
-INSERT INTO public.uc_identity (dtype, id, version, name, birthdate, externalid, firstname, gender, lastname) VALUES ('User', '54909778-8ae2-4fc2-97ec-a5548c0cce1b', 1, 'MartinDutkiewicz21Dec1979', '1981-12-09', '11992e18-8ede-49f8-aa9b-50a780084f63', 'Martin', 0, 'Dutkiewicz');
-INSERT INTO public.uc_identity (dtype, id, version, name, birthdate, externalid, firstname, gender, lastname) VALUES ('Group', 'ff7eb24d-5799-4843-be6f-23b4163121fb', 0, 'Administrators', null, null, null, null, null);
-INSERT INTO public.uc_identity (dtype, id, version, name, birthdate, externalid, firstname, gender, lastname) VALUES ('Group', '981c597f-a8b0-4658-9667-60b7acb72574', 0, 'Users', null, null, null, null, null);

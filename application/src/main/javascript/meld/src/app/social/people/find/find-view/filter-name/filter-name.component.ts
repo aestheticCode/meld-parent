@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterNameComponent implements OnInit {
 
+  expression : any;
+
   constructor() { }
 
   ngOnInit() {

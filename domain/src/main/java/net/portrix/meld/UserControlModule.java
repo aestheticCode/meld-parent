@@ -144,7 +144,7 @@ public class UserControlModule {
 
                         if (foundPermission == null) {
                             String id = UUID.randomUUID().toString();
-                            String statement = "INSERT INTO public.uc_permission (id, method, name, path) VALUES ('%s', '%s', '%s', '%s');";
+                            String statement = "INSERT INTO public.uc_permission (id, method, name, path, created, modified, version) VALUES ('%s', '%s', '%s', '%s', now(), now(), 0);";
                             log.error(String.format("Missing Permission\n" + statement, id, permission.getMethod(), permission.getName(), permission.getPath()) );
                         }
                     }

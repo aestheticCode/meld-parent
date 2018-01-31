@@ -9,12 +9,14 @@
                 <mat-expansion-panel-header>
                   Search
                 </mat-expansion-panel-header>
+<!--
                 <div *ngFor="let filter of filters">
                   <div [ngSwitch]="filter.type">
                     <meld-like-filter *ngSwitchCase="'like'" [like]="expression" (filterChange)="onFilterChange($event)"></meld-like-filter>
                     <meld-equal-filter *ngSwitchCase="'equal'" [equal]="expression" (filterChange)="onFilterChange($event)"></meld-equal-filter>
                   </div>
                 </div>
+-->
               </mat-expansion-panel>
             </mat-accordion>
 

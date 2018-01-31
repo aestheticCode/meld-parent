@@ -1,1 +1,0 @@
-update uc_permission set path = 'generic/google/place' WHERE id = '081c5003-41ab-443c-9ddd-1eb8b6624a47'

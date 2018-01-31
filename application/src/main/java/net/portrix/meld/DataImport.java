@@ -65,20 +65,6 @@ public class DataImport {
             log.error(e.getMessage(), e);
         }
 
-
-
-     /*   User patrick = entityManager.createQuery("select u from User u where u.name = :name", User.class)
-                .setParameter("name", "PatrickBittner1Apr1980")
-                .getSingleResult();
-        userManager.updateToken(patrick, "patrick");
-
-        User martin = entityManager.createQuery("select u from User u where u.name = :name", User.class)
-                .setParameter("name", "MartinDutkiewicz21Dec1979")
-                .getSingleResult();
-        userManager.updateToken(martin, "martin");
-*/
-
-
   /*
         userImport.execute();
   */
