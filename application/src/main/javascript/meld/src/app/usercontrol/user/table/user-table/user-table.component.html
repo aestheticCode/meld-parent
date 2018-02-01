@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<mat-card style="margin: 12px;">
+<mat-card style="margin: 12px; max-height: calc(100% - 24px);" >
   <div style="display: flex; align-items: center;">
     <mat-input-container style="width: 100%;">
       <input matInput placeholder="Search" ngModel #searchBox="ngModel">
     </mat-input-container>
     <button type="button"  mat-raised-button *ngIf="links | meldLink:'save'" (click)="onCreate()">Create</button>
   </div>
-  <meld-table #table [items]="users" (selectItemChange)="onSelectionChange($event)" [menu]="true">
+  <meld-table #table [items]="users" (selectItemChange)="onSelectionChange($event)" [menu]="true" style="max-height: calc(100% - 48px);">
     <meld-colgroup>
       <meld-col [width]="100" [path]="'gender'"></meld-col>
       <meld-col [width]="100" [path]="'firstName'"></meld-col>
