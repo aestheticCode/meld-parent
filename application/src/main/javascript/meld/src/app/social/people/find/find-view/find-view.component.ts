@@ -1,13 +1,14 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material';
 import {UserRow} from '../find.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {CategoryDialogComponent} from '../../category/category-dialog/category-dialog.component';
-import {Filter, Items} from '../../../../../lib/common/search/search.interfaces';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
 import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
-import {RestExpression} from '../../../../../lib/common/search/expression.interfaces';
-import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
+import {FilterFormComponent} from './filter-form/filter-form.component';
+import {Strings} from '../../../../../lib/common/utils/Strings';
+import {MeldTableComponent} from '../../../../../lib/component/meld-table/meld-table.component';
 
 @Component({
   selector: 'app-social-find-view',
@@ -17,21 +18,51 @@ import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 })
 export class FindViewComponent {
 
-  public filters: Filter[];
+  public expression: any;
+
+  @ViewChild('filter')
+  private filter: FilterFormComponent;
+
+  @ViewChild('table')
+  private table: MeldTableComponent;
 
   constructor(private http: HttpClient,
               private router: MeldRouterService,
               private dialog: MatDialog) {
-    this.filters = this.router.data.meta;
   }
 
   users: Items<UserRow> = (query, response) => {
-    //query.expression = QueryBuilder.and(this.queries.filter((query) => query.active).map((query) => query.expression));
+    query.expression = this.expression;
     this.http.post<Container<UserRow>>('service/social/people/find', query)
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);
       });
   };
+
+  onSearch() {
+    let andExpression = [];
+
+    if (Strings.isNotEmpty(this.filter.name)) {
+      andExpression.push({
+        type: 'name',
+        value: this.filter.name
+      });
+    }
+
+    if (Strings.isNotEmpty(this.filter.school)) {
+      andExpression.push({
+        type: 'school',
+        value: this.filter.school
+      });
+    }
+
+    this.expression = {
+      type: 'and',
+      value: andExpression
+    };
+
+    this.table.refreshItems();
+  }
 
   open(user: UserRow) {
     let matDialogRef = this.dialog.open(CategoryDialogComponent, {data: user});

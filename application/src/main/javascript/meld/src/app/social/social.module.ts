@@ -36,8 +36,8 @@ import {MediaModule} from '../media/media.module';
 import {SchoolFormComponent} from './profile/education/education-form/school-form/school-form.component';
 import {SchoolViewComponent} from './profile/education/education-view/school-view/school-view.component';
 import { CategoryFormComponent } from './people/category/categories-form/category-form/category-form.component';
-import { FilterNameComponent } from './people/find/find-view/filter-name/filter-name.component';
-import { FilterSchoolComponent } from './people/find/find-view/filter-school/filter-school.component';
+import { FilterFormComponent } from './people/find/find-view/filter-form/filter-form.component';
+import { SchoolSelectComponent } from './profile/education/school-select/school-select.component';
 
 @NgModule({
   imports: [
@@ -80,8 +80,8 @@ import { FilterSchoolComponent } from './people/find/find-view/filter-school/fil
     CategoriesSelectComponent,
     CategoryDialogComponent,
     CategoryFormComponent,
-    FilterNameComponent,
-    FilterSchoolComponent
+    FilterFormComponent,
+    SchoolSelectComponent,
   ],
   exports: [
     ContactFormComponent,

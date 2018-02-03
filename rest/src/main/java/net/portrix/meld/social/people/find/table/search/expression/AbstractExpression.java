@@ -10,7 +10,11 @@ public abstract class AbstractExpression implements RestExpression {
     private final Set<Link> links;
 
     public AbstractExpression(Link... links) {
-        this.links = Sets.newHashSet(links);
+        if (links == null) {
+            this.links = Sets.newHashSet();
+        } else {
+            this.links = Sets.newHashSet(links);
+        }
     }
 
     @Override

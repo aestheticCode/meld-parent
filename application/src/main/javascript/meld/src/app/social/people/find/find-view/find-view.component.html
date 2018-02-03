@@ -9,18 +9,11 @@
                 <mat-expansion-panel-header>
                   Search
                 </mat-expansion-panel-header>
-<!--
-                <div *ngFor="let filter of filters">
-                  <div [ngSwitch]="filter.type">
-                    <meld-like-filter *ngSwitchCase="'like'" [like]="expression" (filterChange)="onFilterChange($event)"></meld-like-filter>
-                    <meld-equal-filter *ngSwitchCase="'equal'" [equal]="expression" (filterChange)="onFilterChange($event)"></meld-equal-filter>
-                  </div>
-                </div>
--->
+                <app-social-find-filter-form #filter (search)="onSearch()"></app-social-find-filter-form>
               </mat-expansion-panel>
             </mat-accordion>
 
-            <meld-table #table [items]="users" [rowHeight]="100" style="height: calc(100% - 64px);">
+            <meld-table #table [items]="users" [rowHeight]="100" style="max-height: calc(100vh - 248px)">
               <meld-colgroup>
                 <meld-col [width]="100"></meld-col>
                 <meld-col [width]="200"></meld-col>

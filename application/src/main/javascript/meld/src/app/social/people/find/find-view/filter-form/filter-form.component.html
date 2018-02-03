@@ -1,0 +1,7 @@
+<mat-form-field style="width: 100%;">
+  <input name="name" matInput placeholder="Name" [(ngModel)]="name">
+</mat-form-field>
+
+<app-social-school-select name="school" placeholder="School" [(ngModel)]="school" ></app-social-school-select>
+
+<button mat-button (click)="onSearchClick()">Search</button>
