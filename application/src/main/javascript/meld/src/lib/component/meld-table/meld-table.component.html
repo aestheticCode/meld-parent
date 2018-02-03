@@ -1,10 +1,10 @@
-<div style="display: flex; width: 100%; height: 100%;" >
+<div style="display: flex; width: 100%" >
 
   <div style="position: absolute; right: 10px;">
     <a (click)="openMenu()" *ngIf="menuSymbol"><mat-icon>toc</mat-icon></a>
   </div>
 
-  <div style="display: block; width: 100%; height: 100%;">
+  <div style="display: flex; width: 100%;">
 
     <meld-window [rowsSize]="itemsSize" (windowScrollChange)="onWindowScroll($event)" (viewPortChange)="viewPortChange = $event"  [rowHeight]="rowHeight">
       <meld-window-header *ngIf="head">
