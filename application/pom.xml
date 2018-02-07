@@ -470,6 +470,49 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>cz.habarta.typescript-generator</groupId>
+                <artifactId>typescript-generator-maven-plugin</artifactId>
+                <version>2.0.400</version>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <jsonLibrary>jackson2</jsonLibrary>
+                    <outputKind>module</outputKind>
+                    <mapClasses>asClasses</mapClasses>
+                    <addTypeNameSuffix>Model</addTypeNameSuffix>
+                    <outputFileType>implementationFile</outputFileType>
+                    <classes>
+                        <class>net.portrix.meld.social.people.find.table.search.expression.AbstractExpression</class>
+                        <class>net.portrix.meld.social.people.find.table.search.expression.AndExpression</class>
+                        <class>net.portrix.meld.social.people.find.table.search.expression.NameExpression</class>
+                        <class>net.portrix.meld.social.people.find.table.search.expression.NoopExpression</class>
+                        <class>net.portrix.meld.social.people.find.table.search.expression.OrExpression</class>
+                        <class>net.portrix.meld.social.people.find.table.search.expression.RestExpression</class>
+                        <class>net.portrix.meld.social.people.find.table.search.expression.SchoolExpression</class>
+
+                        <class>net.portrix.meld.social.people.find.table.search.sort.LevenstheinExpression</class>
+                        <class>net.portrix.meld.social.people.find.table.search.sort.NormalExpression</class>
+                        <class>net.portrix.meld.social.people.find.table.search.sort.SortExpression</class>
+
+                        <class>net.portrix.meld.social.people.find.table.search.ExpressionVisitor</class>
+                        <class>net.portrix.meld.social.people.find.table.search.Filter</class>
+                        <class>net.portrix.meld.social.people.find.table.search.Search</class>
+                        <class>net.portrix.meld.social.people.find.table.search.SortVisitor</class>
+
+                    </classes>
+
+
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

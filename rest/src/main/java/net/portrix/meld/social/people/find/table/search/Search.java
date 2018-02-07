@@ -118,8 +118,8 @@ public class Search {
                     return builder.conjunction();
                 }
                 return builder.or(
-                        builder.like(builder.lower(root.get(User_.firstName)), expression.getValue().toLowerCase()),
-                        builder.like(builder.lower(root.get(User_.lastName)), expression.getValue().toLowerCase())
+                        builder.like(builder.lower(root.get(User_.firstName)), expression.getValue().toLowerCase() + "%"),
+                        builder.like(builder.lower(root.get(User_.lastName)), expression.getValue().toLowerCase() + "%")
                 );
             }
 

@@ -9,7 +9,10 @@
                 <mat-expansion-panel-header>
                   Search
                 </mat-expansion-panel-header>
-                <app-social-find-filter-form #filter (search)="onSearch()"></app-social-find-filter-form>
+                <div *ngFor="let filter of filters">
+                  <app-social-find-filter-form [filter]="filter"></app-social-find-filter-form>
+                </div>
+                <button mat-button (click)="onSearch()">Search</button>
               </mat-expansion-panel>
             </mat-accordion>
 

@@ -1,7 +1,4 @@
-<mat-form-field style="width: 100%;">
-  <input name="name" matInput placeholder="Name" [(ngModel)]="name">
-</mat-form-field>
-
-<app-social-school-select name="school" placeholder="School" [(ngModel)]="school" ></app-social-school-select>
-
-<button mat-button (click)="onSearchClick()">Search</button>
+<div [ngSwitch]="filter.expression.type">
+  <app-social-name-filter [expression]="filter.expression" *ngSwitchCase="'name'" (modelChange)="filter.active = $event"></app-social-name-filter>
+  <app-social-school-filter [expression]="filter.expression" *ngSwitchCase="'school'" (modelChange)="filter.active = $event"></app-social-school-filter>
+</div>

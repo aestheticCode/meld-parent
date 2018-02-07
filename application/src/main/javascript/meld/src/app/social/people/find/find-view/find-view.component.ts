@@ -1,14 +1,17 @@
 import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material';
-import {UserRow} from '../find.interfaces';
-import {Container} from '../../../../../lib/common/rest/Container';
+import {Container} from 'lib/common/rest/Container';
 import {CategoryDialogComponent} from '../../category/category-dialog/category-dialog.component';
-import {Items} from '../../../../../lib/common/search/search.interfaces';
-import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
-import {FilterFormComponent} from './filter-form/filter-form.component';
-import {Strings} from '../../../../../lib/common/utils/Strings';
-import {MeldTableComponent} from '../../../../../lib/component/meld-table/meld-table.component';
+import {Items} from 'lib/common/search/search.interfaces';
+import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
+import {MeldTableComponent} from 'lib/component/meld-table/meld-table.component';
+import {Filter, UserRow} from '../find.interfaces';
+import {JsonConvert} from 'json2typescript';
+import {
+  AndExpressionModel, FilterModel, NameExpressionModel, NormalExpressionModel, SchoolExpressionModel,
+  SearchModel
+} from '../find.classes';
 
 @Component({
   selector: 'app-social-find-view',
@@ -18,10 +21,7 @@ import {MeldTableComponent} from '../../../../../lib/component/meld-table/meld-t
 })
 export class FindViewComponent {
 
-  public expression: any;
-
-  @ViewChild('filter')
-  private filter: FilterFormComponent;
+  public filters: Filter[] = [];
 
   @ViewChild('table')
   private table: MeldTableComponent;
@@ -29,38 +29,28 @@ export class FindViewComponent {
   constructor(private http: HttpClient,
               private router: MeldRouterService,
               private dialog: MatDialog) {
+    this.filters = [
+      new FilterModel("name", new NameExpressionModel("")),
+      new FilterModel("school", new SchoolExpressionModel(""))
+    ]
   }
 
   users: Items<UserRow> = (query, response) => {
-    query.expression = this.expression;
-    this.http.post<Container<UserRow>>('service/social/people/find', query)
+
+    const search = new SearchModel(
+      query.index,
+      query.limit,
+      new AndExpressionModel(this.filters.filter((filter) => filter.active).map((filter) => filter.expression)),
+      [new NormalExpressionModel("firstName", true)]
+    );
+
+    this.http.post<Container<UserRow>>('service/social/people/find', search)
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);
       });
   };
 
   onSearch() {
-    let andExpression = [];
-
-    if (Strings.isNotEmpty(this.filter.name)) {
-      andExpression.push({
-        type: 'name',
-        value: this.filter.name
-      });
-    }
-
-    if (Strings.isNotEmpty(this.filter.school)) {
-      andExpression.push({
-        type: 'school',
-        value: this.filter.school
-      });
-    }
-
-    this.expression = {
-      type: 'and',
-      value: andExpression
-    };
-
     this.table.refreshItems();
   }
 

@@ -38,6 +38,8 @@ import {SchoolViewComponent} from './profile/education/education-view/school-vie
 import { CategoryFormComponent } from './people/category/categories-form/category-form/category-form.component';
 import { FilterFormComponent } from './people/find/find-view/filter-form/filter-form.component';
 import { SchoolSelectComponent } from './profile/education/school-select/school-select.component';
+import { NameFilterComponent } from './people/find/find-view/filter-form/name-filter/name-filter.component';
+import { SchoolFilterComponent } from './people/find/find-view/filter-form/school-filter/school-filter.component';
 
 @NgModule({
   imports: [
@@ -82,6 +84,8 @@ import { SchoolSelectComponent } from './profile/education/school-select/school-
     CategoryFormComponent,
     FilterFormComponent,
     SchoolSelectComponent,
+    NameFilterComponent,
+    SchoolFilterComponent,
   ],
   exports: [
     ContactFormComponent,

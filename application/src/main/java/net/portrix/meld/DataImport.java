@@ -1,9 +1,7 @@
 package net.portrix.meld;
 
 import net.portrix.generic.ddd.Module;
-import net.portrix.generic.image.ImageUtils;
 import net.portrix.meld.importer.UserImport;
-import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -19,7 +17,6 @@ import javax.persistence.EntityManager;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 /**
  * @author Patrick Bittner on 15/02/15.

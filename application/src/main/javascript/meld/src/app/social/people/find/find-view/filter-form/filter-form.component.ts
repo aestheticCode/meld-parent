@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Output, ViewEncapsulation} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Filter} from '../../find.interfaces';
 
 @Component({
   selector: 'app-social-find-filter-form',
@@ -9,17 +9,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class FilterFormComponent {
 
-  public name: string;
-
-  public school: string;
-
-  @Output("search")
-  private search : EventEmitter<void> = new EventEmitter<void>();
-
-  constructor(protected http: HttpClient) {}
-
-  onSearchClick() {
-    this.search.emit();
-  }
+  @Input("filter")
+  public filter: Filter;
 
 }

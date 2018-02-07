@@ -1,6 +1,5 @@
 package net.portrix.meld.social.people.find.table;
 
-import com.google.common.collect.Sets;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
@@ -9,23 +8,17 @@ import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
-import net.portrix.meld.social.people.find.table.search.Filter;
 import net.portrix.meld.social.people.find.table.search.Search;
-import net.portrix.meld.social.people.find.table.search.expression.NameExpression;
-import net.portrix.meld.social.people.find.table.search.expression.SchoolExpression;
 import net.portrix.meld.social.profile.Profile;
-import net.portrix.meld.social.profile.education.table.SchoolTableController;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,8 +35,6 @@ public class FindTableController {
 
     private final URLBuilderFactory factory;
 
-    private List<Filter> queries;
-
     @Inject
     public FindTableController(FindTableService service, UserManager userManager, URLBuilderFactory factory) {
         this.service = service;
@@ -53,14 +44,6 @@ public class FindTableController {
 
     public FindTableController() {
         this(null, null, null);
-    }
-
-    @PostConstruct
-    public void postContruct() {
-        queries = Arrays.asList(
-                new Filter("name", new NameExpression("")),
-                new Filter("school", new SchoolExpression(null, SchoolTableController.linkMeta("name", factory).generate()))
-        );
     }
 
     @POST
@@ -141,20 +124,10 @@ public class FindTableController {
     }
 
 
-    @GET
-    @Path("find/meta")
-    @Name("Find User Read Meta")
-    @Secured
-    @Transactional
-    public List<Filter> list() {
-        return queries;
-    }
-
-
     public static URLBuilder<FindTableController> linkList(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(FindTableController.class)
-                .record((method) -> method.list(null))
+                .record((method) -> method.list((Search) null))
                 .rel("list");
     }
 
