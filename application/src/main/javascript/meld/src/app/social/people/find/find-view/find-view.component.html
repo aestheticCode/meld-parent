@@ -10,13 +10,12 @@
                   Search
                 </mat-expansion-panel-header>
                 <div *ngFor="let filter of filters">
-                  <app-social-find-filter-form [filter]="filter"></app-social-find-filter-form>
+                  <app-social-find-filter-form [filter]="filter" (modelChange)="onSearch()" ></app-social-find-filter-form>
                 </div>
-                <button mat-button (click)="onSearch()">Search</button>
               </mat-expansion-panel>
             </mat-accordion>
 
-            <meld-table #table [items]="users" [rowHeight]="100" style="max-height: calc(100vh - 248px)">
+            <meld-table #table [items]="users" [rowHeight]="100" style="max-height: calc(100vh - 260px); margin-top: 12px;">
               <meld-colgroup>
                 <meld-col [width]="100"></meld-col>
                 <meld-col [width]="200"></meld-col>

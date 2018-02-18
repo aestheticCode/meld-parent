@@ -26,7 +26,6 @@ import {ImageGuard} from './profile/image/image.guard';
 import {ProfileGuard} from './profile/profile.guard';
 import {CategoryFormComponent} from './people/category/categories-form/category-form/category-form.component';
 import {CategoryCreateGuard, CategoryFormGuard} from './people/category/categories-form/category-form/category-form.guard';
-import {FindViewGuard} from './people/find/find-view/find-view.guard';
 
 const appRoutes: Routes = [
   {
@@ -54,10 +53,7 @@ const appRoutes: Routes = [
       {
         path: 'find',
         component: FindViewComponent,
-        outlet: 'people',
-        resolve : {
-          meta : FindViewGuard
-        }
+        outlet: 'people'
       },
       {
         path: 'following',
@@ -160,7 +156,6 @@ export const appRoutingProviders: any[] = [
   ImageGuard,
   ProfileGuard,
   CategoryFormGuard,
-  CategoryCreateGuard,
-  FindViewGuard
+  CategoryCreateGuard
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(appRoutes);

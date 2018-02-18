@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 import {Filter} from '../../find.interfaces';
 
 @Component({
@@ -11,5 +11,13 @@ export class FilterFormComponent {
 
   @Input("filter")
   public filter: Filter;
+
+  @Output("modelChange")
+  private modelChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  onModelChange(value : boolean) {
+    this.filter.active = value;
+    this.modelChange.emit(value);
+  }
 
 }

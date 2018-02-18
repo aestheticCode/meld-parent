@@ -1,4 +1,4 @@
 <div [ngSwitch]="filter.expression.type">
-  <app-social-name-filter [expression]="filter.expression" *ngSwitchCase="'name'" (modelChange)="filter.active = $event"></app-social-name-filter>
-  <app-social-school-filter [expression]="filter.expression" *ngSwitchCase="'school'" (modelChange)="filter.active = $event"></app-social-school-filter>
+  <app-social-name-filter [expression]="filter.expression" *ngSwitchCase="'name'" (modelChange)="onModelChange($event)"></app-social-name-filter>
+  <app-social-school-filter [expression]="filter.expression" *ngSwitchCase="'school'" (modelChange)="onModelChange($event)"></app-social-school-filter>
 </div>

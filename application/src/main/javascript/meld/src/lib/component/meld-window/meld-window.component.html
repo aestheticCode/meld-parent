@@ -25,10 +25,9 @@
     <ng-template *ngIf="footer" [ngTemplateOutlet]="footer.template"></ng-template>
   </div>
 
-  <div style="position: absolute; bottom: 0;height: 10px; width: 100%;">
+  <div style="position: absolute; bottom: 0;height: 10px; width: 100%;"
+       *ngIf="isScrollBarVisible && window.offsetWidth < window.children[0].offsetWidth">
 
-    <meld-scrollbar-horizontal *ngIf="isScrollBarVisible && window.offsetWidth < window.children[0].offsetWidth"
-                               [position]="hposition" (positionChange)="hScrollBarChange($event)">
-    </meld-scrollbar-horizontal>
+    <meld-scrollbar-horizontal [position]="hposition" (positionChange)="hScrollBarChange($event)"></meld-scrollbar-horizontal>
   </div>
 </div>

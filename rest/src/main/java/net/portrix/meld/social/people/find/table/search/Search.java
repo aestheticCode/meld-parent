@@ -202,6 +202,19 @@ public class Search {
 
                 return builder.and(Iterables.toArray(predicates, Predicate.class));
             }
+
+            @Override
+            public Predicate visit(FollowingExpression expression) {
+                return builder.and(
+                        builder.not(
+                                root.in(userQuery(builder, query))
+                        )
+                );
+            }
+
+            private Subquery<User> userQuery(CriteriaBuilder builder, CriteriaQuery<?> query) {
+                return null;
+            }
         };
     }
 

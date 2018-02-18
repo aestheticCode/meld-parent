@@ -1,3 +1,3 @@
 <mat-form-field style="width: 100%;">
-  <input name="name" matInput placeholder="Name" [(ngModel)]="expression.value" (ngModelChange)="onModelChange($event)">
+  <input name="name" matInput placeholder="Name" [(ngModel)]="expression.value" [meldDebounce]="300" (meldModelChange)="onModelChange($event)">
 </mat-form-field>
