@@ -11,10 +11,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -86,6 +83,29 @@ public class FindTableService {
 
     public void remove(RelationShip relationShip) {
         entityManager.remove(relationShip);
+    }
+
+    public List<User> findUsers(FindTableSearch search) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root)
+                .where(FindTables.predicate(search, builder, root, query))
+                .orderBy(FindTables.sort(search, builder, root));
+        TypedQuery<User> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(search.getIndex());
+        typedQuery.setMaxResults(search.getLimit());
+        return typedQuery.getResultList();
+    }
+
+    public long countUsers(FindTableSearch search) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<User> root = query.from(User.class);
+        query.select(builder.count(root))
+                .where(FindTables.predicate(search, builder, root, query));
+        TypedQuery<Long> typedQuery = entityManager.createQuery(query);
+        return typedQuery.getSingleResult();
     }
 
 }

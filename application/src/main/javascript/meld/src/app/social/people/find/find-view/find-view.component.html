@@ -9,8 +9,11 @@
                 <mat-expansion-panel-header>
                   Search
                 </mat-expansion-panel-header>
-                <div *ngFor="let filter of filters">
-                  <app-social-find-filter-form [filter]="filter" (modelChange)="onSearch()" ></app-social-find-filter-form>
+                <div>
+                  <mat-form-field style="width: 100%;">
+                    <input name="name" matInput placeholder="Name" [(ngModel)]="name" [meldDebounce]="300" (meldModelChange)="table.refreshItems()">
+                  </mat-form-field>
+                  <app-social-school-select name="school" placeholder="School" [(ngModel)]="school" (ngModelChange)="table.refreshItems()" ></app-social-school-select>
                 </div>
               </mat-expansion-panel>
             </mat-accordion>

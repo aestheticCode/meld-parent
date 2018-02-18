@@ -8,17 +8,20 @@ import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
-import net.portrix.meld.social.people.find.table.search.Search;
 import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
+import org.apache.commons.lang.StringUtils;
+import org.jboss.resteasy.annotations.Form;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,14 +49,15 @@ public class FindTableController {
         this(null, null, null);
     }
 
-    @POST
+    @GET
     @Path("find")
     @Name("Find User Read")
     @Secured
     @Transactional
-    public Container<FindItem> list(Search query) {
-        List<User> users = service.find(query);
-        long countUsers = service.count(query);
+    public Container<FindItem> list(@Form FindTableSearch query) {
+
+        List<User> users = service.findUsers(query);
+        long countUsers = service.countUsers(query);
         User current = userManager.current();
 
         List<FindItem> categoryFormList = users
@@ -127,7 +131,7 @@ public class FindTableController {
     public static URLBuilder<FindTableController> linkList(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(FindTableController.class)
-                .record((method) -> method.list((Search) null))
+                .record((method) -> method.list(null))
                 .rel("list");
     }
 

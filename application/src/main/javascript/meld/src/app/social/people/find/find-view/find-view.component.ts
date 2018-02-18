@@ -1,5 +1,5 @@
 import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {MatDialog} from '@angular/material';
 import {Container} from 'lib/common/rest/Container';
 import {CategoryDialogComponent} from '../../category/category-dialog/category-dialog.component';
@@ -7,11 +7,8 @@ import {Items} from 'lib/common/search/search.interfaces';
 import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 import {MeldTableComponent} from 'lib/component/meld-table/meld-table.component';
 import {Filter, UserRow} from '../find.interfaces';
-import {JsonConvert} from 'json2typescript';
-import {
-  AndExpressionModel, FilterModel, NameExpressionModel, NormalExpressionModel, SchoolExpressionModel,
-  SearchModel
-} from '../find.classes';
+import {FilterModel, NameExpressionModel, SchoolExpressionModel} from '../find.classes';
+import {URLSearchParams} from '@angular/http';
 
 @Component({
   selector: 'app-social-find-view',
@@ -22,6 +19,10 @@ import {
 export class FindViewComponent {
 
   public filters: Filter[] = [];
+
+  public name : string;
+
+  public school : string;
 
   @ViewChild('table')
   private table: MeldTableComponent;
@@ -37,14 +38,20 @@ export class FindViewComponent {
 
   users: Items<UserRow> = (query, response) => {
 
-    const search = new SearchModel(
-      query.index,
-      query.limit,
-      new AndExpressionModel(this.filters.filter((filter) => filter.active).map((filter) => filter.expression)),
-      [new NormalExpressionModel("firstName", true)]
-    );
+    const params: any = {
+      index : query.index,
+      limit : query.limit,
+    };
 
-    this.http.post<Container<UserRow>>('service/social/people/find', search)
+    if (this.school) {
+      params.school = this.school;
+    }
+
+    if (this.name) {
+      params.name = this.name;
+    }
+
+    this.http.get<Container<UserRow>>('service/social/people/find', { params : params})
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);
       });
