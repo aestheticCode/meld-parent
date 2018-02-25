@@ -5,7 +5,9 @@ import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Patrick Bittner on 21/12/2016.
@@ -18,9 +20,8 @@ public class WorkHistory extends AbstractAggregate {
     @OneToOne
     private User user;
 
-    @OrderColumn
-    @OneToMany(cascade = CascadeType.ALL)
-    private final List<Company> companies = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "history", orphanRemoval = true)
+    private final Set<Company> companies = new HashSet<>();
 
     public User getUser() {
         return user;
@@ -30,7 +31,7 @@ public class WorkHistory extends AbstractAggregate {
         this.user = user;
     }
 
-    public List<Company> getCompanies() {
+    public Set<Company> getCompanies() {
         return companies;
     }
 

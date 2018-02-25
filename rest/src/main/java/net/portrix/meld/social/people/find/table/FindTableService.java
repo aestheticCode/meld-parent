@@ -1,17 +1,21 @@
 package net.portrix.meld.social.people.find.table;
 
+import net.portrix.generic.rest.api.jaxrs.RestQuery;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
-import net.portrix.meld.social.people.find.table.search.Search;
 import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.User;
+import net.portrix.meld.usercontrol.UserManager;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,35 +24,19 @@ public class FindTableService {
 
     private final EntityManager entityManager;
 
+    private final UserManager userManager;
+
+    private final Identity identity;
+
     @Inject
-    public FindTableService(EntityManager entityManager) {
+    public FindTableService(EntityManager entityManager, UserManager userManager, Identity identity) {
         this.entityManager = entityManager;
+        this.userManager = userManager;
+        this.identity = identity;
     }
 
     public FindTableService() {
-        this(null);
-    }
-
-    public List<User> find(Search search) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-        Root<User> root = query.from(User.class);
-        Expression predicate = search.getExpression().accept(Search.visitorVisit(builder, query, root));
-        query.select(root).where(predicate).orderBy(Search.sorting(search.getSorting(), builder, root));
-        TypedQuery<User> typedQuery = entityManager.createQuery(query);
-        typedQuery.setFirstResult(search.getIndex());
-        typedQuery.setMaxResults(search.getLimit());
-        return typedQuery.getResultList();
-    }
-
-    public long count(Search search) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> query = builder.createQuery(Long.class);
-        Root<User> root = query.from(User.class);
-        Expression predicate = search.getExpression().accept(Search.visitorVisit(builder, query, root));
-        query.select(builder.count(root)).where(predicate);
-        TypedQuery<Long> typedQuery = entityManager.createQuery(query);
-        return typedQuery.getSingleResult();
+        this(null, null, null);
     }
 
 
@@ -90,8 +78,8 @@ public class FindTableService {
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<User> root = query.from(User.class);
         query.select(root)
-                .where(FindTables.predicate(search, builder, root, query))
-                .orderBy(FindTables.sort(search, builder, root));
+                .where(RestQuery.predicate(FindTableSearch.class, search, identity, entityManager, builder, root, query))
+                .orderBy(RestQuery.sort(FindTableSearch.class, search, entityManager, builder, root));
         TypedQuery<User> typedQuery = entityManager.createQuery(query);
         typedQuery.setFirstResult(search.getIndex());
         typedQuery.setMaxResults(search.getLimit());
@@ -103,7 +91,7 @@ public class FindTableService {
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<User> root = query.from(User.class);
         query.select(builder.count(root))
-                .where(FindTables.predicate(search, builder, root, query));
+                .where(RestQuery.predicate(FindTableSearch.class, search, identity, entityManager, builder, root, query));
         TypedQuery<Long> typedQuery = entityManager.createQuery(query);
         return typedQuery.getSingleResult();
     }

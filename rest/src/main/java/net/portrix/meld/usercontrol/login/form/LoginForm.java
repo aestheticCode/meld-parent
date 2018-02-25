@@ -1,7 +1,6 @@
 package net.portrix.meld.usercontrol.login.form;
 
 import net.portrix.generic.rest.api.Link;
-import net.portrix.generic.rest.api.Links;
 import net.portrix.generic.rest.api.LinksContainer;
 
 import java.time.LocalDate;

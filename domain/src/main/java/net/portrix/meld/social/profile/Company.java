@@ -42,6 +42,9 @@ public class Company extends AbstractEntity {
 
     private String description;
 
+    @ManyToOne
+    private WorkHistory history;
+
     public String getName() {
         return name;
     }
@@ -96,5 +99,13 @@ public class Company extends AbstractEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public WorkHistory getHistory() {
+        return history;
+    }
+
+    public void setHistory(WorkHistory history) {
+        this.history = history;
     }
 }

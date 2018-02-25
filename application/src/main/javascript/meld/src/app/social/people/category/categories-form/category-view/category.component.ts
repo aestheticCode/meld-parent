@@ -18,17 +18,10 @@ export class CategoryComponent {
   @Input("category")
   category: Category;
 
-
   constructor(private http: HttpClient) {}
 
   users: Items<UserRow> = (query, response) => {
-    query.expression = QueryBuilder.inSelect(
-      QueryBuilder.subQuery(
-        "relationShip",
-        "to",
-        QueryBuilder.path("category.id", QueryBuilder.equal(this.category.id)))
-    );
-    this.http.post<Container<UserRow>>('service/social/people/find', query)
+    this.http.get<Container<UserRow>>('service/social/people/find', {params : {category : this.category.id }})
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);
       });

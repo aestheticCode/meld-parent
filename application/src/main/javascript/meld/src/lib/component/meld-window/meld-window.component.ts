@@ -140,9 +140,11 @@ export class MeldWindowComponent implements OnChanges, OnInit {
     this.hposition += deltaX / windowElement.offsetWidth;
     if (this.vposition < 0) {
       this.vposition = 0;
+      this.prePosition = 0;
     }
     if (this.vposition > 1) {
       this.vposition = 1;
+      this.prePosition = 1;
     }
     if (this.hposition < 0) {
       this.hposition = 0;
@@ -170,8 +172,10 @@ export class MeldWindowComponent implements OnChanges, OnInit {
     this.hposition += deltaX / windowElement.offsetWidth;
     if (this.vposition < 0) {
       this.vposition = 0;
+      this.prePosition = 0;
     }
     if (this.vposition > 1) {
+      this.prePosition = 1;
       this.vposition = 1;
     }
     if (this.hposition < 0) {

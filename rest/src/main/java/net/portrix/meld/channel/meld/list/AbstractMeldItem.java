@@ -2,9 +2,7 @@ package net.portrix.meld.channel.meld.list;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Link;
-import net.portrix.generic.rest.api.Links;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.meld.channel.meld.comment.MeldCommentResponse;
 import net.portrix.meld.channel.meld.like.MeldLikeResponse;

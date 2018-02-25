@@ -22,7 +22,7 @@ public class Education extends AbstractAggregate {
     @OneToOne
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "education")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "education", orphanRemoval = true)
     private final Set<School> schools = new HashSet<>();
 
     public User getUser() {

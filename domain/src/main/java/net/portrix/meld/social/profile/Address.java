@@ -1,6 +1,7 @@
 package net.portrix.meld.social.profile;
 
 import net.portrix.generic.ddd.AbstractEntity;
+import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -35,6 +36,9 @@ public class Address extends AbstractEntity {
 
     private boolean tillNow;
 
+    @ManyToOne
+    private Places places;
+
     public Place getPlace() {
         return place;
     }
@@ -65,5 +69,13 @@ public class Address extends AbstractEntity {
 
     public void setTillNow(boolean tillNow) {
         this.tillNow = tillNow;
+    }
+
+    public Places getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(Places places) {
+        this.places = places;
     }
 }

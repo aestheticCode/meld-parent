@@ -40,7 +40,7 @@
 
       <meld-window-body *ngIf="body">
         <ng-template>
-          <table class="table" style="table-layout: fixed;" [ngClass]="{'table-unbordered': unbordered}">
+          <table class="table" style="table-layout: fixed; margin-bottom: 0" [ngClass]="{'table-unbordered': unbordered}">
             <colgroup *ngIf="colgroup">
               <col *ngIf="multiSelect"  style="width: 32px;">
               <col *ngFor="let column of colgroup.columns  | meldTableSorter:columnConfiguration" [style.width.px]="column.width">

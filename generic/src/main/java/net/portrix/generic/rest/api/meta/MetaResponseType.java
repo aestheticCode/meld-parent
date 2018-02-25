@@ -1,7 +1,5 @@
 package net.portrix.generic.rest.api.meta;
 
-import net.portrix.generic.rest.api.Links;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +10,6 @@ public class MetaResponseType {
 
     private List<Property> properties = new ArrayList<>();
 
-    private Links links = new Links();
-
     public List<Property> getProperties() {
         return properties;
     }
@@ -22,7 +18,4 @@ public class MetaResponseType {
         this.properties = properties;
     }
 
-    public Links getLinks() {
-        return links;
-    }
 }

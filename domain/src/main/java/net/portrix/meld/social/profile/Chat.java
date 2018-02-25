@@ -3,6 +3,7 @@ package net.portrix.meld.social.profile;
 import net.portrix.generic.ddd.AbstractEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -15,6 +16,9 @@ public class Chat extends AbstractEntity {
     private String name;
 
     private ChatCategory type;
+
+    @ManyToOne
+    private PersonalContact contact;
 
     public String getName() {
         return name;
@@ -30,5 +34,13 @@ public class Chat extends AbstractEntity {
 
     public void setType(ChatCategory type) {
         this.type = type;
+    }
+
+    public PersonalContact getContact() {
+        return contact;
+    }
+
+    public void setContact(PersonalContact contact) {
+        this.contact = contact;
     }
 }

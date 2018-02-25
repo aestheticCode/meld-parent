@@ -4,6 +4,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -13,7 +14,10 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "uc_user")
-@NamedQuery(name = "findUser", query = "select u from User u where u.name = :name")
+@NamedQueries({
+        @NamedQuery(name = "findUser", query = "select u from User u where u.name = :name"),
+        @NamedQuery(name = "findUserByExternal", query = "select u from User u where u.externalId = :id")
+})
 @Indexed
 public class User extends Identity {
 

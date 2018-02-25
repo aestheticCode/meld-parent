@@ -5,7 +5,9 @@ import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Patrick Bittner on 21/12/2016.
@@ -18,9 +20,8 @@ public class Places extends AbstractEntity {
     @OneToOne
     private User user;
 
-    @OrderColumn
-    @OneToMany(cascade = CascadeType.ALL)
-    private final List<Address> addresses = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "places", orphanRemoval = true)
+    private final Set<Address> addresses = new HashSet<>();
 
     public User getUser() {
         return user;
@@ -30,11 +31,12 @@ public class Places extends AbstractEntity {
         this.user = user;
     }
 
-    public List<Address> getAddresses() {
+    public Set<Address> getAddresses() {
         return addresses;
     }
 
     public void addAddress(Address address) {
+        address.setPlaces(this);
         addresses.add(address);
     }
 

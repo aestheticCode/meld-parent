@@ -22,23 +22,7 @@ export class FollowingViewComponent {
   }
 
   users: Items<UserRow> = (query, response) => {
-    query.expression = QueryBuilder.and([
-      QueryBuilder.not(
-        QueryBuilder.inSelect(
-          QueryBuilder.subQuery(
-            'relationShip',
-            'to',
-            QueryBuilder.path('from.id', QueryBuilder.equal(this.service.configuration.user.id)))
-        )
-      ),
-      QueryBuilder.inSelect(
-        QueryBuilder.subQuery(
-          'relationShip',
-          'from',
-          QueryBuilder.path('to.id', QueryBuilder.equal(this.service.configuration.user.id)))
-      )
-    ]);
-    this.http.post<Container<UserRow>>('service/social/people/find', query)
+    this.http.get<Container<UserRow>>('service/social/people/find', {params : { follow : 'true'}})
       .subscribe((res: Container<UserRow>) => {
         response(res.rows, res.size);
       });

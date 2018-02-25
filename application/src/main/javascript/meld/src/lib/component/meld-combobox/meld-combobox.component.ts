@@ -165,14 +165,11 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
   }
 
   onShowOverlay() {
-    window.setTimeout(() => {
-      if (this.disabled || this.readonly) {
-        this.showOverlay = false;
-      } else {
-        this.showOverlay = true;
-      }
-    }, 300);
-  }
+    if (this.disabled || this.readonly) {
+      this.showOverlay = false;
+    } else {
+      this.showOverlay = true;
+    }  }
 
   onHideOverlay() {
     this.showOverlay = false;

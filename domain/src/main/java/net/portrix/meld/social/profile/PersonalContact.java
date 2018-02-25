@@ -19,7 +19,7 @@ public class PersonalContact extends AbstractAggregate {
     private User user;
 
     @OrderColumn
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contact", orphanRemoval = true)
     private final List<Phone> phones = new ArrayList<>();
 
     @OrderColumn
@@ -27,12 +27,8 @@ public class PersonalContact extends AbstractAggregate {
     private final List<String> emails = new ArrayList<>();
 
     @OrderColumn
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contact", orphanRemoval = true)
     private final List<Chat> chats = new ArrayList<>();
-
-    @OrderColumn
-    @OneToMany(cascade = CascadeType.ALL)
-    private final List<Address> addresses = new ArrayList<>();
 
     public User getUser() {
         return user;
@@ -54,15 +50,8 @@ public class PersonalContact extends AbstractAggregate {
         return chats;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void addAddress(Address address) {
-        addresses.add(address);
-    }
-
     public void addChat(Chat chat) {
+        chat.setContact(this);
         chats.add(chat);
     }
 
@@ -70,13 +59,9 @@ public class PersonalContact extends AbstractAggregate {
         emails.add(email);
     }
 
-
     public void addPhone(Phone phone) {
+        phone.setContact(this);
         phones.add(phone);
-    }
-
-    public void clearAddresses() {
-        addresses.clear();
     }
 
     public void clearChats() {
