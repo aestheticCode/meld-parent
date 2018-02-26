@@ -14,6 +14,7 @@
                     <input name="name" matInput placeholder="Name" [(ngModel)]="name" [meldDebounce]="300" (meldModelChange)="table.refreshItems()">
                   </mat-form-field>
                   <app-social-school-select name="school" placeholder="School" [(ngModel)]="school" (ngModelChange)="table.refreshItems()" ></app-social-school-select>
+                  <app-social-address-select name="address" placeholder="Address" [(ngModel)]="address" (ngModelChange)="table.refreshItems()"></app-social-address-select>
                 </div>
               </mat-expansion-panel>
             </mat-accordion>

@@ -1,42 +1,29 @@
 package net.portrix.meld.social.people.find.table;
 
-import net.portrix.generic.rest.api.jaxrs.RestQuery;
+import net.portrix.generic.ddd.AbstractSearchService;
 import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.people.RelationShip;
-import net.portrix.meld.social.profile.Profile;
+import net.portrix.meld.social.profile.*;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.UserManager;
 import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.List;
+import javax.persistence.criteria.*;
 import java.util.UUID;
 
 @ApplicationScoped
-public class FindTableService {
-
-    private final EntityManager entityManager;
-
-    private final UserManager userManager;
-
-    private final Identity identity;
+public class FindTableService extends AbstractSearchService<User, FindTableSearch> {
 
     @Inject
-    public FindTableService(EntityManager entityManager, UserManager userManager, Identity identity) {
-        this.entityManager = entityManager;
-        this.userManager = userManager;
-        this.identity = identity;
+    public FindTableService(EntityManager entityManager, Identity identity) {
+        super(entityManager, identity);
     }
 
     public FindTableService() {
-        this(null, null, null);
+        this(null, null);
     }
 
 
@@ -73,27 +60,17 @@ public class FindTableService {
         entityManager.remove(relationShip);
     }
 
-    public List<User> findUsers(FindTableSearch search) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-        Root<User> root = query.from(User.class);
-        query.select(root)
-                .where(RestQuery.predicate(FindTableSearch.class, search, identity, entityManager, builder, root, query))
-                .orderBy(RestQuery.sort(FindTableSearch.class, search, entityManager, builder, root));
-        TypedQuery<User> typedQuery = entityManager.createQuery(query);
-        typedQuery.setFirstResult(search.getIndex());
-        typedQuery.setMaxResults(search.getLimit());
-        return typedQuery.getResultList();
+    @Override
+    public Predicate filter(CriteriaBuilder builder, Root<User> root, CriteriaQuery<?> query) {
+        final User user = entityManager.createNamedQuery("findUserByExternal", User.class)
+                .setParameter("id", identity.getAccount().getId())
+                .getSingleResult();
+
+        Root<School> from = query.from(School.class);
+        Join<School, Education> join = from.join(School_.education);
+
+        return builder.equal(join.get(Education_.user), user);
     }
 
-    public long countUsers(FindTableSearch search) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> query = builder.createQuery(Long.class);
-        Root<User> root = query.from(User.class);
-        query.select(builder.count(root))
-                .where(RestQuery.predicate(FindTableSearch.class, search, identity, entityManager, builder, root, query));
-        TypedQuery<Long> typedQuery = entityManager.createQuery(query);
-        return typedQuery.getSingleResult();
-    }
 
 }

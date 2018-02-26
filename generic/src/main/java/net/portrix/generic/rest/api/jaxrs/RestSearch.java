@@ -16,11 +16,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class RestQuery {
+public class RestSearch {
 
-    private final static Logger log = LoggerFactory.getLogger(RestQuery.class);
+    private final static Logger log = LoggerFactory.getLogger(RestSearch.class);
 
-    public static <X, Q extends AbstractRestQuery> List<Order> sort(
+    public static <X, Q extends AbstractRestSearch> List<Order> sort(
             Class<Q> queryClass,
             Q query,
             EntityManager entityManager,
@@ -49,7 +49,7 @@ public class RestQuery {
         return null;
     }
 
-    public static <X, Q extends AbstractRestQuery> Predicate predicate(
+    public static <X, Q extends AbstractRestSearch> Predicate predicate(
             Class<Q> queryClass,
             Q search,
             Identity identity,
@@ -65,7 +65,7 @@ public class RestQuery {
                 .map((beanProperty) -> {
                     RestPredicate annotation = beanProperty.getAnnotation(RestPredicate.class);
                     Object value = beanProperty.apply(search);
-                    Class<? extends AbstractRestPredicateProvider<?, ?>> providerClass = annotation.value();
+                    Class<? extends AbstractRestPredicateProvider> providerClass = annotation.value();
                     try {
                         AbstractRestPredicateProvider provider = providerClass.newInstance();
                         return provider.build(value, identity, entityManager, builder, root, query);

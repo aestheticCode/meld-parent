@@ -10,7 +10,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SortProvider<E> extends AbstractRestSortProvider<List<String>, E> {
+public class GenericSortProvider<E> extends AbstractRestSortProvider<List<String>, E> {
     @Override
     public List<Order> sort(List<String> value, EntityManager entityManager, CriteriaBuilder builder, Root<E> root) {
         List<Order> result = new ArrayList<>();

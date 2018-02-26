@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.places;
+package net.portrix.meld.social.profile.places.form;
 
 import net.portrix.meld.social.profile.Address;
 import net.portrix.meld.social.profile.Places;

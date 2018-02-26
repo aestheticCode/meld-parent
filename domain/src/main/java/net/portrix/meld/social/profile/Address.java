@@ -11,6 +11,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "so_address")
+@NamedQuery(name = "findAddress", query = "select a from Address a where id = :id")
 public class Address extends AbstractEntity {
 
     @AttributeOverrides({

@@ -12,54 +12,20 @@ import java.util.UUID;
 public class PlaceProvider extends AbstractRestPredicateProvider<UUID, User> {
     @Override
     public Predicate build(UUID value, Identity identity, EntityManager entityManager, CriteriaBuilder builder, Root<User> root, CriteriaQuery<?> query) {
+        Address address = entityManager.createNamedQuery("findAddress", Address.class)
+                .setParameter("id", value)
+                .getSingleResult();
+
         Subquery<User> subquery = query.subquery(User.class);
         Root<Address> subRoot = subquery.from(Address.class);
         Join<Address, Places> join = subRoot.join(Address_.places);
-
         subquery.select(join.get(Places_.user)).where(builder.and(
-                subRoot.get(Address_.place).get(Place_.street).in(placeStreetSubQuery(value, builder, query)),
-                subRoot.get(Address_.place).get(Place_.streetNumber).in(placeStreetNumberSubQuery(value, builder, query)),
-                subRoot.get(Address_.place).get(Place_.zipCode).in(placeZipCodeSubQuery(value, builder, query)),
-                subRoot.get(Address_.place).get(Place_.state).in(placeStateSubQuery(value, builder, query))
+                builder.greaterThan(subRoot.get(Address_.place).get(Place_.lng), address.getPlace().getLng() - 10),
+                builder.greaterThan(subRoot.get(Address_.place).get(Place_.lat), address.getPlace().getLat() - 10),
+                builder.lessThan(subRoot.get(Address_.place).get(Place_.lng), address.getPlace().getLng() + 10),
+                builder.lessThan(subRoot.get(Address_.place).get(Place_.lat), address.getPlace().getLat() + 10)
         ));
-
         return root.in(subquery);
-    }
-
-    private Subquery<String> placeStreetSubQuery(UUID id, CriteriaBuilder builder, CriteriaQuery<?> query) {
-        Subquery<String> subquery = query.subquery(String.class);
-        Root<Address> subRoot = subquery.from(Address.class);
-        subquery.select(subRoot.get(Address_.place).get(Place_.street)).where(
-                builder.equal(subRoot.get(Address_.id), id)
-        );
-        return subquery;
-    }
-
-    private Subquery<String> placeStreetNumberSubQuery(UUID id, CriteriaBuilder builder, CriteriaQuery<?> query) {
-        Subquery<String> subquery = query.subquery(String.class);
-        Root<Address> subRoot = subquery.from(Address.class);
-        subquery.select(subRoot.get(Address_.place).get(Place_.streetNumber)).where(
-                builder.equal(subRoot.get(Address_.id), id)
-        );
-        return subquery;
-    }
-
-    private Subquery<String> placeZipCodeSubQuery(UUID id, CriteriaBuilder builder, CriteriaQuery<?> query) {
-        Subquery<String> subquery = query.subquery(String.class);
-        Root<Address> subRoot = subquery.from(Address.class);
-        subquery.select(subRoot.get(Address_.place).get(Place_.zipCode)).where(
-                builder.equal(subRoot.get(Address_.id), id)
-        );
-        return subquery;
-    }
-
-    private Subquery<String> placeStateSubQuery(UUID id, CriteriaBuilder builder, CriteriaQuery<?> query) {
-        Subquery<String> subquery = query.subquery(String.class);
-        Root<Address> subRoot = subquery.from(Address.class);
-        subquery.select(subRoot.get(Address_.place).get(Place_.state)).where(
-                builder.equal(subRoot.get(Address_.id), id)
-        );
-        return subquery;
     }
 
 }

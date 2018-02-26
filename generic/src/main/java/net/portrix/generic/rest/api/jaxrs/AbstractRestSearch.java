@@ -2,7 +2,7 @@ package net.portrix.generic.rest.api.jaxrs;
 
 import javax.ws.rs.QueryParam;
 
-public abstract class AbstractRestQuery {
+public abstract class AbstractRestSearch {
 
     @QueryParam("index")
     private int index = 0;

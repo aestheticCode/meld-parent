@@ -13,6 +13,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface RestPredicate {
 
-    Class<? extends AbstractRestPredicateProvider<?, ?>> value();
+    Class<? extends AbstractRestPredicateProvider> value();
 
 }

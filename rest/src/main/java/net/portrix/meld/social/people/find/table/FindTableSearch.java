@@ -1,18 +1,18 @@
 package net.portrix.meld.social.people.find.table;
 
-import net.portrix.generic.rest.api.jaxrs.AbstractRestQuery;
+import net.portrix.generic.rest.api.jaxrs.AbstractRestSearch;
 import net.portrix.generic.rest.api.jaxrs.RestPredicate;
 import net.portrix.generic.rest.api.jaxrs.RestSort;
-import net.portrix.generic.rest.api.jaxrs.provider.SortProvider;
+import net.portrix.generic.rest.api.jaxrs.provider.GenericSortProvider;
 import net.portrix.meld.social.people.find.table.provider.*;
 
 import javax.ws.rs.QueryParam;
 import java.util.List;
 import java.util.UUID;
 
-public class FindTableSearch extends AbstractRestQuery {
+public class FindTableSearch extends AbstractRestSearch {
 
-    @RestSort(SortProvider.class)
+    @RestSort(GenericSortProvider.class)
     @QueryParam("sort")
     private List<String> sort;
 
@@ -33,8 +33,8 @@ public class FindTableSearch extends AbstractRestQuery {
     private UUID category;
 
     @RestPredicate(PlaceProvider.class)
-    @QueryParam("place")
-    private UUID place;
+    @QueryParam("address")
+    private UUID address;
 
     @RestPredicate(WorkProvider.class)
     @QueryParam("work")
@@ -80,12 +80,12 @@ public class FindTableSearch extends AbstractRestQuery {
         this.category = category;
     }
 
-    public UUID getPlace() {
-        return place;
+    public UUID getAddress() {
+        return address;
     }
 
-    public void setPlace(UUID place) {
-        this.place = place;
+    public void setAddress(UUID address) {
+        this.address = address;
     }
 
     public UUID getWork() {

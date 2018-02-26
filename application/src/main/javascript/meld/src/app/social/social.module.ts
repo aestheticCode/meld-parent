@@ -37,6 +37,7 @@ import {SchoolFormComponent} from './profile/education/education-form/school-for
 import {SchoolViewComponent} from './profile/education/education-view/school-view/school-view.component';
 import { CategoryFormComponent } from './people/category/categories-form/category-form/category-form.component';
 import { SchoolSelectComponent } from './profile/education/school-select/school-select.component';
+import { AddressSelectComponent } from './profile/places/address-select/address-select.component';
 
 @NgModule({
   imports: [
@@ -80,6 +81,7 @@ import { SchoolSelectComponent } from './profile/education/school-select/school-
     CategoryDialogComponent,
     CategoryFormComponent,
     SchoolSelectComponent,
+    AddressSelectComponent,
   ],
   exports: [
     ContactFormComponent,

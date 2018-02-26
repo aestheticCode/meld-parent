@@ -61,3 +61,10 @@ drop TABLE so_personalcontact_so_address;
 drop TABLE so_personalcontact_so_chat;
 drop table so_personalcontact_so_phone;
 
+--changeset patrick:6
+
+INSERT INTO public.uc_permission (id, method, name, path, created, modified, version) VALUES ('d42fdfcb-5c31-49e8-a1e8-b1f27e519a13', 'GET', 'Social Addresses Read', 'social/user/current/places/addresses', now(), now(), 0);
+
+delete from uc_role_uc_permission WHERE permissions_id = 'b4991f35-0ab7-400c-8f5d-f398e0c82c83';
+delete from uc_permission WHERE id = 'b4991f35-0ab7-400c-8f5d-f398e0c82c83';
+

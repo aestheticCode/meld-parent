@@ -1,9 +1,8 @@
-package net.portrix.meld.social.profile.places;
+package net.portrix.meld.social.profile.places.form;
 
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.google.autocomplete.LocationForm;
 import net.portrix.generic.rest.google.details.LocationDetailForm;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Address;

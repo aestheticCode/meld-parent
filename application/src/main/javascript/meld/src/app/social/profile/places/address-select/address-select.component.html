@@ -1,0 +1,7 @@
+<mat-form-field style="width: 100%;">
+  <meld-combobox [items]="addresses" [placeholder]="placeholder" [(ngModel)]="value" (ngModelChange)="onModelChange($event)">
+    <ng-template let-address>
+      {{address.name}}
+    </ng-template>
+  </meld-combobox>
+</mat-form-field>
