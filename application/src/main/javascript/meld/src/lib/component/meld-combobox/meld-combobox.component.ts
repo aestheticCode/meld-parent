@@ -10,6 +10,7 @@ import {Search, Selects} from './meld-combobox.interfaces';
 import {Objects} from '../../common/utils/Objects';
 import {MatFormFieldControl} from '@angular/material';
 import {AbstractControl} from '../../common/forms/AbstractControl';
+import {Strings} from '../../common/utils/Strings';
 
 const noop = () => {
 };
@@ -37,7 +38,7 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
   }
 
   get empty() {
-    return Objects.isNull(this.value);
+    return Strings.isEmpty(this.filter);
   }
 
 

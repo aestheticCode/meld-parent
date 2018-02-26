@@ -3,7 +3,7 @@
     <input autocomplete="false" #input matInput [disabled]="disabled" [readonly]="readonly" [ngModel]="filter" (ngModelChange)="onFilterChange($event)" [placeholder]="placeholder" (keyup)="onKeyUp($event)"
            (focus)="onShowOverlay()" [ngModelOptions]="{standalone : true}" style="width: 100%; flex : 1; border: 0">
     <div class="mat-form-field-suffix" style="margin-bottom: 3px;">
-      <button type="button" mat-icon-button matSuffix *ngIf="filter != ''" [disabled]="disabled || readonly" (click)="clearValue()" >
+      <button type="button" mat-icon-button matSuffix *ngIf="filter !== null && filter !== ''" [disabled]="disabled || readonly" (click)="clearValue()" >
         <i style="vertical-align: top; font-size: smaller" class="material-icons">backspace</i>
       </button>
       <button type="button" mat-icon-button matSuffix *ngIf="! showOverlay" [disabled]="disabled || readonly" (click)="onShowOverlay()">
