@@ -1,12 +1,11 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {Component, forwardRef, ViewEncapsulation} from '@angular/core';
 import {School} from '../school-form.interfaces';
 import {HttpClient} from '@angular/common/http';
 import {Selects} from 'lib/component/meld-combobox/meld-combobox.interfaces';
 import {QueryBuilder} from 'lib/common/search/search.classes';
 import {Container} from 'lib/common/rest/Container';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-
-const noop = () => {};
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {AbstractSelect} from '../../../../../lib/common/forms/AbstractSelect';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -18,22 +17,16 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'app-social-school-select',
   templateUrl: 'school-select.component.html',
   styleUrls: ['school-select.component.css'],
-  encapsulation : ViewEncapsulation.None,
-  providers : [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  encapsulation: ViewEncapsulation.None,
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class SchoolSelectComponent implements ControlValueAccessor {
+export class SchoolSelectComponent extends AbstractSelect<School> {
 
-  private onTouchedCallback: () => void = noop;
-  private onChangeCallback: (value: any) => void = noop;
+  constructor(protected http: HttpClient) {
+    super();
+  }
 
-  public value : string;
-
-  @Input("placeholder")
-  public placeholder : string;
-
-  constructor(protected http: HttpClient) {}
-
-  schools: Selects<School> = (search, response) => {
+  items: Selects<School> = (search, response) => {
 
     let query = QueryBuilder.query();
     query.index = search.index;
@@ -45,24 +38,6 @@ export class SchoolSelectComponent implements ControlValueAccessor {
         response(schools.rows, schools.size);
       });
   };
-
-  onModelChange(value : string) {
-    this.onChangeCallback(value);
-  }
-
-  writeValue(obj: any): void {
-    if (obj) {
-      this.value = obj;
-    }
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChangeCallback = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouchedCallback = fn;
-  }
 
 
 }

@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.contact;
+package net.portrix.meld.social.profile.contact.form;
 
 import net.portrix.generic.phone.PhoneNumbers;
 import net.portrix.meld.social.profile.PersonalContact;

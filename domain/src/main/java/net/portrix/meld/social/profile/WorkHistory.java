@@ -36,6 +36,7 @@ public class WorkHistory extends AbstractAggregate {
     }
 
     public void addCompany(final Company company) {
+        company.setHistory(this);
         companies.add(company);
     }
 

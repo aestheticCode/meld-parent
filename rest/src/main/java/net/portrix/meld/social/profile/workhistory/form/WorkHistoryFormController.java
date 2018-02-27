@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.workhistory;
+package net.portrix.meld.social.profile.workhistory.form;
 
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;

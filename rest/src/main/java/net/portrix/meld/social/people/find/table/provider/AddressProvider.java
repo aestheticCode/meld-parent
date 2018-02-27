@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
 import java.util.UUID;
 
-public class PlaceProvider extends AbstractRestPredicateProvider<UUID, User> {
+public class AddressProvider extends AbstractRestPredicateProvider<UUID, User> {
     @Override
     public Predicate build(UUID value, Identity identity, EntityManager entityManager, CriteriaBuilder builder, Root<User> root, CriteriaQuery<?> query) {
         Address address = entityManager.createNamedQuery("findAddress", Address.class)

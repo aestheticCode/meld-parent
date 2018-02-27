@@ -15,6 +15,7 @@
                   </mat-form-field>
                   <app-social-school-select name="school" placeholder="School" [(ngModel)]="school" (ngModelChange)="table.refreshItems()" ></app-social-school-select>
                   <app-social-address-select name="address" placeholder="Address" [(ngModel)]="address" (ngModelChange)="table.refreshItems()"></app-social-address-select>
+                  <app-social-company-select name="company" placeholder="Company" [(ngModel)]="company" (ngModelChange)="table.refreshItems()"></app-social-company-select>
                 </div>
               </mat-expansion-panel>
             </mat-accordion>

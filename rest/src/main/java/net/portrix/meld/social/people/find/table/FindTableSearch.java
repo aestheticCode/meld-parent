@@ -32,13 +32,13 @@ public class FindTableSearch extends AbstractRestSearch {
     @QueryParam("category")
     private UUID category;
 
-    @RestPredicate(PlaceProvider.class)
+    @RestPredicate(AddressProvider.class)
     @QueryParam("address")
     private UUID address;
 
-    @RestPredicate(WorkProvider.class)
-    @QueryParam("work")
-    private UUID work;
+    @RestPredicate(CompanyProvider.class)
+    @QueryParam("company")
+    private UUID company;
 
     public List<String> getSort() {
         return sort;
@@ -88,11 +88,11 @@ public class FindTableSearch extends AbstractRestSearch {
         this.address = address;
     }
 
-    public UUID getWork() {
-        return work;
+    public UUID getCompany() {
+        return company;
     }
 
-    public void setWork(UUID work) {
-        this.work = work;
+    public void setCompany(UUID company) {
+        this.company = company;
     }
 }

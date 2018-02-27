@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.contact;
+package net.portrix.meld.social.profile.contact.form;
 
 public class EmailForm {
 

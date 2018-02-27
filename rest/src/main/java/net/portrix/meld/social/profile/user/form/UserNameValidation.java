@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.user;
+package net.portrix.meld.social.profile.user.form;
 
 import java.util.UUID;
 

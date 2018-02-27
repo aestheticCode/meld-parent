@@ -25,6 +25,8 @@ export class FindViewComponent {
 
   public address : string;
 
+  public company: string;
+
   @ViewChild('table')
   private table: MeldTableComponent;
 
@@ -49,6 +51,10 @@ export class FindViewComponent {
 
     if (this.address) {
       params.address = this.address;
+    }
+
+    if (this.company) {
+      params.company = this.company;
     }
 
     this.http.get<Container<UserRow>>('service/social/people/find', {params: params})

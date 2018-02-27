@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.workhistory;
+package net.portrix.meld.social.profile.workhistory.form;
 
 import net.portrix.meld.social.profile.Company;
 import net.portrix.meld.social.profile.WorkHistory;

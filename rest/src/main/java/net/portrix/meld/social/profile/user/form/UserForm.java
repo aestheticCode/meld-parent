@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.user;
+package net.portrix.meld.social.profile.user.form;
 
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Link;

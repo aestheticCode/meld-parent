@@ -1,13 +1,10 @@
-package net.portrix.meld.social.profile.user;
+package net.portrix.meld.social.profile.user.form;
 
-import net.portrix.generic.image.ImageUtils;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
-import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.UserImage;
 import org.picketlink.Identity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

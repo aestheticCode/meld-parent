@@ -1,9 +1,9 @@
-package net.portrix.meld.social.profile.places.table;
+package net.portrix.meld.social.profile.workhistory.table;
 
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.social.profile.Address;
+import net.portrix.meld.social.profile.Company;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,32 +18,32 @@ import java.util.stream.Collectors;
 @Name("Social")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class AddressTableController {
+public class CompanyTableController {
 
-    private final AddressTableService service;
+    private final CompanyTableService service;
 
     @Inject
-    public AddressTableController(AddressTableService service) {
+    public CompanyTableController(CompanyTableService service) {
         this.service = service;
     }
 
-    public AddressTableController() {
+    public CompanyTableController() {
         this(null);
     }
 
     @GET
-    @Path("user/current/places/addresses")
-    @Name("Addresses Read")
+    @Path("user/current/work/history/companies")
+    @Name("Companies List")
     @Secured
     @Transactional
-    public Container<AddressItem> list(@BeanParam AddressSearch search) {
-        List<Address> addresses = service.find(search);
+    public Container<CompanyItem> list(@BeanParam CompanySearch search) {
+        List<Company> companies = service.find(search);
         long count = service.count(search);
 
-        List<AddressItem> addressItems = addresses.stream()
-                .map(address -> new AddressItem(address.getId(), address.getPlace().getName()))
+        List<CompanyItem> items = companies.stream()
+                .map((company) -> new CompanyItem(company.getId(), company.getName()))
                 .collect(Collectors.toList());
 
-        return new Container<>(addressItems, (int) count);
+        return new Container<>(items,(int) count);
     }
 }

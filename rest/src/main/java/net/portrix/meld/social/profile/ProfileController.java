@@ -6,10 +6,10 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.Photo;
 import net.portrix.meld.media.photos.form.PhotoFormController;
-import net.portrix.meld.social.profile.contact.ContactFormController;
+import net.portrix.meld.social.profile.contact.form.ContactFormController;
 import net.portrix.meld.social.profile.education.form.EducationFormController;
 import net.portrix.meld.social.profile.places.form.PlacesFormController;
-import net.portrix.meld.social.profile.workhistory.WorkHistoryFormController;
+import net.portrix.meld.social.profile.workhistory.form.WorkHistoryFormController;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
 

@@ -1,4 +1,4 @@
-package net.portrix.meld.social.profile.user;
+package net.portrix.meld.social.profile.user.form;
 
 import com.google.common.collect.Iterables;
 import net.portrix.meld.usercontrol.*;
