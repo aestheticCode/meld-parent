@@ -4,7 +4,7 @@ import {AppService} from '../../../../app.service';
 import {HttpClient} from '@angular/common/http';
 import {UserRow} from '../find.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
-import {CategoryDialogComponent} from '../../category/category-dialog/category-dialog.component';
+import {CategorySelectDialogComponent} from '../../category/category-select-dialog/category-select-dialog.component';
 import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
 
@@ -29,7 +29,7 @@ export class FollowingViewComponent {
   };
 
   open(user: UserRow) {
-    let matDialogRef = this.dialog.open(CategoryDialogComponent, {data: user});
+    let matDialogRef = this.dialog.open(CategorySelectDialogComponent, {data: user});
 
     matDialogRef.afterClosed().subscribe((result) => {
       this.http.put<UserRow>('service/social/people/find', result)

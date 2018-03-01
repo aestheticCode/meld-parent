@@ -1,5 +1,5 @@
 <mat-form-field style="width: 100%;">
-  <meld-combobox #comboBox [items]="categories" [itemValue]="itemValue"  [(ngModel)]="user.category">
+  <meld-combobox #comboBox [items]="categories" [(ngModel)]="user.category">
     <ng-template let-item>{{item.name}}</ng-template>
   </meld-combobox>
 </mat-form-field>

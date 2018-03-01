@@ -2,7 +2,7 @@ import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material';
 import {Container} from 'lib/common/rest/Container';
-import {CategoryDialogComponent} from '../../category/category-dialog/category-dialog.component';
+import {CategorySelectDialogComponent} from '../../category/category-select-dialog/category-select-dialog.component';
 import {Items} from 'lib/common/search/search.interfaces';
 import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 import {MeldTableComponent} from 'lib/component/meld-table/meld-table.component';
@@ -68,7 +68,7 @@ export class FindViewComponent {
   }
 
   open(user: UserRow) {
-    let matDialogRef = this.dialog.open(CategoryDialogComponent, {data: user});
+    let matDialogRef = this.dialog.open(CategorySelectDialogComponent, {data: user});
 
     matDialogRef.afterClosed().subscribe((result) => {
       if (result) {

@@ -6,7 +6,7 @@ import {MeldPost} from './meld-form.interfaces';
 import {HttpClient} from '@angular/common/http';
 import {MeldFormPostComponent} from './meld-form.classes';
 import {MatDialog} from '@angular/material';
-import {CategoryDialogComponent} from '../../../../social/people/category/category-dialog/category-dialog.component';
+import {CategorySelectDialogComponent} from '../../../../social/people/category/category-select-dialog/category-select-dialog.component';
 import {AbstractForm} from '../../../../../lib/common/forms/AbstractForm';
 import {Observable} from 'rxjs/Observable';
 
@@ -38,7 +38,7 @@ export class MeldFormComponent extends AbstractForm<MeldPost> implements OnInit 
   }
 
   open(post: MeldPost) {
-    this.dialog.open(CategoryDialogComponent, {data: post});
+    this.dialog.open(CategorySelectDialogComponent, {data: post});
   }
 
   saveRequest(): Observable<MeldPost> {

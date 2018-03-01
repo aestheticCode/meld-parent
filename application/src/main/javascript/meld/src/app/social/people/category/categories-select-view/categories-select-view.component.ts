@@ -10,19 +10,19 @@ const noop = () => {
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => CategoriesSelectComponent),
+  useExisting: forwardRef(() => CategoriesSelectViewComponent),
   multi: true
 };
 
 
 @Component({
   selector: 'app-categories-select',
-  templateUrl: 'categories-select.component.html',
-  styleUrls: ['categories-select.component.css'],
+  templateUrl: 'categories-select-view.component.html',
+  styleUrls: ['categories-select-view.component.css'],
   providers : [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
   encapsulation : ViewEncapsulation.None
 })
-export class CategoriesSelectComponent implements ControlValueAccessor {
+export class CategoriesSelectViewComponent implements ControlValueAccessor {
 
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (value: any) => void = noop;

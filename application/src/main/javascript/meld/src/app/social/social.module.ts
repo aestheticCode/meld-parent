@@ -25,8 +25,8 @@ import {FollowingViewComponent} from './people/find/following-view/following-vie
 import {CategoryComponent} from './people/category/categories-form/category-view/category.component';
 import {AddressMapComponent} from './profile/places/places-view/address-map/address-map.component';
 import {AddressViewComponent} from './profile/places/places-view/address-view/address-view.component';
-import {CategoriesSelectComponent} from './people/category/categories-select/categories-select.component';
-import {CategoryDialogComponent} from './people/category/category-dialog/category-dialog.component';
+import {CategoriesSelectViewComponent} from './people/category/categories-select-view/categories-select-view.component';
+import {CategorySelectDialogComponent} from './people/category/category-select-dialog/category-select-dialog.component';
 import {ContactFormComponent} from './profile/contact/contact-form/contact-form.component';
 import {ChatFormComponent} from './profile/contact/contact-form/chat-form/chat-form.component';
 import {EmailFormComponent} from './profile/contact/contact-form/email-form/email-form.component';
@@ -78,8 +78,8 @@ import { CompanySelectComponent } from './profile/work-history/company-select/co
     CategoryComponent,
     AddressMapComponent,
     AddressViewComponent,
-    CategoriesSelectComponent,
-    CategoryDialogComponent,
+    CategoriesSelectViewComponent,
+    CategorySelectDialogComponent,
     CategoryFormComponent,
     SchoolSelectComponent,
     AddressSelectComponent,
@@ -116,11 +116,11 @@ import { CompanySelectComponent } from './profile/work-history/company-select/co
     CategoryComponent,
     AddressMapComponent,
     AddressViewComponent,
-    CategoriesSelectComponent,
-    CategoryDialogComponent
+    CategoriesSelectViewComponent,
+    CategorySelectDialogComponent
   ],
   entryComponents: [
-    CategoryDialogComponent
+    CategorySelectDialogComponent
   ],
   providers : [
     appRoutingProviders

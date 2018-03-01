@@ -1,27 +1,26 @@
-import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Category} from '../categories.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
-import {Items} from '../../../../../lib/common/search/search.interfaces';
 import {Selects} from '../../../../../lib/component/meld-combobox/meld-combobox.interfaces';
 import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 import {AppService} from '../../../../app.service';
 
 @Component({
   selector: 'app-category-dialog',
-  templateUrl: 'category-dialog.component.html',
-  styleUrls: ['category-dialog.component.css'],
+  templateUrl: 'category-select-dialog.component.html',
+  styleUrls: ['category-select-dialog.component.css'],
   encapsulation : ViewEncapsulation.None
 })
-export class CategoryDialogComponent {
+export class CategorySelectDialogComponent {
 
   user : any;
 
   constructor(private http : HttpClient,
               @Inject(MAT_DIALOG_DATA) data: any,
               private service : AppService,
-              public dialogRef: MatDialogRef<CategoryDialogComponent>) {
+              public dialogRef: MatDialogRef<CategorySelectDialogComponent>) {
     this.user = data;
   }
 
@@ -41,10 +40,6 @@ export class CategoryDialogComponent {
       .subscribe((res: Container<Category>) => {
         response(res.rows, res.size);
       });
-  };
-
-  itemValue = (value : any) => {
-    return value;
   };
 
   onSave() {

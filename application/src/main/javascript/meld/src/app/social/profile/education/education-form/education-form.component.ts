@@ -81,6 +81,10 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
   onDeleteSchool(index: number) {
     this.schools.removeAt(index);
   }
+  
+  onVisibility() {
+    
+  }
 
   public preRequest(): boolean {
     return this.validateAllFields(this.education);
