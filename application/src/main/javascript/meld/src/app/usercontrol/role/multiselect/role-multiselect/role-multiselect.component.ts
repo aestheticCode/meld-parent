@@ -1,10 +1,13 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {Http, Response} from "@angular/http";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {RoleSelect} from "./role-multiselect.interfaces";
-import {Items} from '../../../../../lib/common/search/search.interfaces';
+import {Http, Response} from '@angular/http';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {RoleSelect} from './role-multiselect.interfaces';
+import {Selects} from '../../../../../lib/component/meld-combobox/meld-combobox.interfaces';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Container} from '../../../../../lib/common/rest/Container';
 
-const noop = () => {};
+const noop = () => {
+};
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -17,35 +20,42 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   templateUrl: 'role-multiselect.component.html',
   styleUrls: ['role-multiselect.component.css'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class RoleMultiselectComponent implements ControlValueAccessor, OnChanges {
 
   public value: any[];
 
-  @Input("placeholder")
+  @Input('placeholder')
   public placeholder: string;
 
-  @Input("readonly")
-  public readonly : boolean = false;
+  @Input('readonly')
+  public readonly: boolean = false;
 
-  @Input("disabled")
-  public disabled : boolean = false;
+  @Input('disabled')
+  public disabled: boolean = false;
 
-  @Input("hideComboBox")
-  public hideComboBox : boolean = false;
+  @Input('hideComboBox')
+  public hideComboBox: boolean = false;
 
   private onTouchedCallback: () => void = noop;
 
   private onChangeCallback: (value: any) => void = noop;
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {
+  }
 
-  roles: Items<RoleSelect> = (query, response) => {
-    this.http.post('service/usercontrol/role/multiselect', query)
-      .subscribe((res: Response) => {
-        const json = res.json();
-        response(json.rows, json.size);
+  roles: Selects<RoleSelect> = (query, response) => {
+
+    const params = {
+      index: query.index.toString(),
+      limit: query.limit.toString(),
+      name: query.filter
+    };
+
+    this.http.get<Container<RoleSelect>>('service/usercontrol/role/multiselect', {params : params})
+      .subscribe((res) => {
+        response(res.rows, res.size);
       });
   };
 

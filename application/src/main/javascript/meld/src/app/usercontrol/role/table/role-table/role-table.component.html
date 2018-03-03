@@ -6,7 +6,7 @@
     </mat-input-container>
     <button type="button"  mat-raised-button *ngIf="links | meldLink:'save'" style="width: 100px;" (click)="onCreate()">Create</button>
   </div>
-  <meld-table [items]="roles" (selectItemChange)="onSelection($event)" style="max-height: calc(100% - 48px)">
+  <meld-table #grid [items]="roles" (selectItemChange)="onSelection($event)" style="max-height: calc(100% - 48px)">
     <meld-colgroup>
       <meld-col [width]="100"></meld-col>
       <meld-col [width]="100"></meld-col>

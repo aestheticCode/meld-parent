@@ -8,6 +8,9 @@ import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 import {MeldTableComponent} from 'lib/component/meld-table/meld-table.component';
 import {Filter, UserRow} from '../find.interfaces';
 import {FilterModel, NameExpressionModel, SchoolExpressionModel} from '../find.classes';
+import {School} from '../../../profile/education/school-form.interfaces';
+import {Address} from '../../../profile/places/address.interfaces';
+import {Company} from '../../../profile/work-history/company.interfaces';
 
 @Component({
   selector: 'app-social-find-view',
@@ -21,11 +24,11 @@ export class FindViewComponent {
 
   public name: string;
 
-  public school: string;
+  public school: School;
 
-  public address : string;
+  public address : Address;
 
-  public company: string;
+  public company: Company;
 
   @ViewChild('table')
   private table: MeldTableComponent;
@@ -41,20 +44,20 @@ export class FindViewComponent {
       limit: query.limit,
     };
 
-    if (this.school) {
-      params.school = this.school;
-    }
-
     if (this.name) {
       params.name = this.name;
     }
 
+    if (this.school) {
+      params.school = this.school.id;
+    }
+
     if (this.address) {
-      params.address = this.address;
+      params.address = this.address.id;
     }
 
     if (this.company) {
-      params.company = this.company;
+      params.company = this.company.id;
     }
 
     this.http.get<Container<UserRow>>('service/social/people/find', {params: params})

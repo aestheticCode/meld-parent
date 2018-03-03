@@ -1,25 +1,16 @@
 package net.portrix.meld.usercontrol.group.multiselect;
 
+import net.portrix.generic.rest.api.AbstractRestEntity;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 
 import java.util.*;
 
-public class GroupSelect implements LinksContainer {
-
-    private UUID id;
+public class GroupSelect extends AbstractRestEntity implements LinksContainer {
 
     private String name;
 
     private Set<Link> links = new HashSet<>();
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

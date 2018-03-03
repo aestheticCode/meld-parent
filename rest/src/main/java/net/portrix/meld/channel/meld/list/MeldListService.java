@@ -1,45 +1,33 @@
 package net.portrix.meld.channel.meld.list;
 
-import com.google.common.collect.Maps;
-import net.portrix.generic.ddd.AbstractQueryService;
-import net.portrix.generic.rest.api.query.Query;
+import net.portrix.generic.ddd.AbstractSearchService;
 import net.portrix.meld.channel.MeldPost;
-import net.portrix.meld.channel.MeldPost_;
-import net.portrix.meld.social.people.RelationShip;
 import net.portrix.meld.social.profile.Profile;
-import net.portrix.meld.usercontrol.*;
+import net.portrix.meld.usercontrol.User;
+import net.portrix.meld.usercontrol.UserManager;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Patrick Bittner on 09.08.17.
  */
 @ApplicationScoped
-public class MeldListService extends AbstractQueryService<MeldPost> {
+public class MeldListService extends AbstractSearchService<MeldPost, MeldSearch> {
 
     private final UserManager userManager;
 
     @Inject
-    public MeldListService(EntityManager entityManager, UserManager userManager) {
-        super(entityManager);
+    public MeldListService(EntityManager entityManager, Identity identity, UserManager userManager) {
+        super(entityManager, identity);
         this.userManager = userManager;
     }
 
     public MeldListService() {
-        this(null, null);
-    }
-
-    public UserImage findUserImage(User user) {
-        return entityManager.createNamedQuery("findUserImage", UserImage.class)
-                .setParameter("user", user)
-                .getSingleResult();
+        this(null, null, null);
     }
 
     public User currentUser() {
@@ -55,19 +43,5 @@ public class MeldListService extends AbstractQueryService<MeldPost> {
             return null;
         }
     }
-
-    @Override
-    public Class<MeldPost> getEntityClass() {
-        return MeldPost.class;
-    }
-
-    @Override
-    public Map<String, Class<?>> getTables() {
-        Map<String, Class<?>> tables = Maps.newHashMap();
-        tables.put("relationShip", RelationShip.class);
-        tables.put("user", User.class);
-        return tables;
-    }
-
 
 }

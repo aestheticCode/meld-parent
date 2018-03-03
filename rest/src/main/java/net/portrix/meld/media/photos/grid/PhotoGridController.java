@@ -5,18 +5,13 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.query.Query;
-import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.Photo;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,12 +34,12 @@ public class PhotoGridController {
         this(null);
     }
 
-    @POST
+    @GET
     @Path("grid")
     @Name("Photos Read")
     @Secured
     @Transactional
-    public Container<PhotoItem> list(Search query) {
+    public Container<PhotoItem> list(@BeanParam PhotoSearch query) {
 
         List<Photo> photos = service.find(query);
         long count = service.count(query);
@@ -65,7 +60,7 @@ public class PhotoGridController {
                 })
                 .collect(Collectors.toList());
 
-        return new Container<>(items, (int)count);
+        return new Container<>(items, (int) count);
     }
 
     public static URLBuilder<PhotoGridController> linkList(URLBuilderFactory builderFactory) {

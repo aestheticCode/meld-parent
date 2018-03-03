@@ -4,17 +4,12 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.query.Query;
-import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.people.Category;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,11 +32,11 @@ public class CategoryTableController {
         this(null);
     }
 
-    @POST
+    @GET
     @Path("categories")
     @Name("Categories Read")
     @Secured
-    public Container<CategoryItem> list(Search query) {
+    public Container<CategoryItem> list(@BeanParam CategorySearch query) {
         List<Category> categories = service.find(query);
         long count = service.count(query);
 

@@ -8,7 +8,6 @@ import {Container} from 'lib/common/rest/Container';
 import {AbstractGuard} from '../../../../../lib/common/AbstractGuard';
 import {HttpClient} from '@angular/common/http';
 import {AppService} from '../../../../app.service';
-import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 
 @Injectable()
 export class UserTableGuard extends AbstractGuard<Container<UserRow>> {
@@ -18,7 +17,7 @@ export class UserTableGuard extends AbstractGuard<Container<UserRow>> {
   }
 
   httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Container<UserRow>> {
-    return this.http.post<Container<UserRow>>('service/usercontrol/user/table', QueryBuilder.query());
+    return this.http.get<Container<UserRow>>('service/usercontrol/user/table', {params: {index: '0', limit: '0'}});
   }
 
 }

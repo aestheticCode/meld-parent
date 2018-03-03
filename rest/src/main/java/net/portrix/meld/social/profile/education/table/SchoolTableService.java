@@ -1,33 +1,23 @@
 package net.portrix.meld.social.profile.education.table;
 
-import com.google.common.collect.Maps;
-import net.portrix.generic.ddd.AbstractQueryService;
+import net.portrix.generic.ddd.AbstractSearchService;
 import net.portrix.meld.social.profile.School;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.Map;
 
 @ApplicationScoped
-public class SchoolTableService extends AbstractQueryService<School> {
+public class SchoolTableService extends AbstractSearchService<School, SchoolSearch> {
 
     @Inject
-    public SchoolTableService(EntityManager entityManager) {
-        super(entityManager);
+    public SchoolTableService(EntityManager entityManager, Identity identity) {
+        super(entityManager, identity);
     }
 
     public SchoolTableService() {
-        this(null);
+        this(null, null);
     }
 
-    @Override
-    public Class<School> getEntityClass() {
-        return School.class;
-    }
-
-    @Override
-    public Map<String, Class<?>> getTables() {
-        return Maps.newHashMap();
-    }
 }

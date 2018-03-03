@@ -1,34 +1,22 @@
 package net.portrix.meld.usercontrol.permission.table;
 
-import net.portrix.generic.ddd.AbstractQueryService;
+import net.portrix.generic.ddd.AbstractSearchService;
 import net.portrix.meld.usercontrol.Permission;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.Map;
 
 @ApplicationScoped
-public class PermissionTableService extends AbstractQueryService<Permission> {
+public class PermissionTableService extends AbstractSearchService<Permission, PermissionSearch> {
 
     @Inject
-    public PermissionTableService(EntityManager entityManager) {
-        super(entityManager);
+    public PermissionTableService(EntityManager entityManager, Identity identity) {
+        super(entityManager, identity);
     }
 
     public PermissionTableService() {
-        this(null);
-    }
-
-
-    @Override
-    public Class<Permission> getEntityClass() {
-        return Permission.class;
-    }
-
-    @Override
-    public Map<String, Class<?>> getTables() {
-        return Collections.emptyMap();
+        this(null, null);
     }
 }

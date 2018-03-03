@@ -8,7 +8,6 @@ import {Container} from '../../../../../lib/common/rest/Container';
 import {Category} from '../categories.interfaces';
 import {AppService} from '../../../../app.service';
 import {AbstractGuard} from '../../../../../lib/common/AbstractGuard';
-import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 
 @Injectable()
 export class CategoriesFormGuard extends AbstractGuard<Container<Category>> {
@@ -18,11 +17,7 @@ export class CategoriesFormGuard extends AbstractGuard<Container<Category>> {
   }
 
   httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Container<Category>> {
-    const query = QueryBuilder.query();
-    query.index = 0;
-    query.limit = 75;
-    query.expression = QueryBuilder.path("user.id", QueryBuilder.equal(this.app.configuration.user.id));
-    return this.http.post<Container<Category>>(`service/social/people/categories`, query);
+    return this.http.get<Container<Category>>(`service/social/people/categories`);
   }
 
 

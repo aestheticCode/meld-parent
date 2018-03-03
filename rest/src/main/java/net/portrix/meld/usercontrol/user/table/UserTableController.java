@@ -6,7 +6,6 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.meta.MetaResponseType;
 import net.portrix.generic.rest.api.meta.Property;
-import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.Gender;
 import net.portrix.meld.usercontrol.User;
@@ -14,7 +13,6 @@ import net.portrix.meld.usercontrol.user.form.UserFormController;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -35,25 +33,22 @@ public class UserTableController {
 
     private final URLBuilderFactory builderFactory;
 
-    private final EntityManager entityManager;
-
     @Inject
-    public UserTableController(UserTableService service, URLBuilderFactory builderFactory, EntityManager entityManager) {
+    public UserTableController(UserTableService service, URLBuilderFactory builderFactory) {
         this.service = service;
-        this.entityManager = entityManager;
         this.builderFactory = builderFactory;
     }
 
     public UserTableController() {
-        this(null, null, null);
+        this(null, null);
     }
 
-    @POST
+    @GET
     @Path("user/table")
     @Name("User Table")
     @Secured
     @Transactional
-    public Container<UserItem> list(Search search) {
+    public Container<UserItem> list(@BeanParam UserSearch search) {
         List<User> users;
         long count = 0;
         if (search.getLimit() == 0) {

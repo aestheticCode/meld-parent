@@ -1,25 +1,16 @@
 package net.portrix.meld.usercontrol.role.multiselect;
 
+import net.portrix.generic.rest.api.AbstractRestEntity;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 
 import java.util.*;
 
-public class RoleSelect implements LinksContainer {
-
-    private UUID id;
+public class RoleSelect extends AbstractRestEntity implements LinksContainer {
 
     private String name;
 
     private Set<Link> links = new HashSet<>();
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

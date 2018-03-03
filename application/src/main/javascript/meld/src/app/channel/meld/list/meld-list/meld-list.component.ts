@@ -1,12 +1,8 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
-import {Http, Response} from '@angular/http';
 import {Item} from './meld-item/meld-item.interfaces';
 import {AppService} from '../../../../app.service';
 import {NormalSort, QueryBuilder} from '../../../../../lib/common/search/search.classes';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
-import {MeldChannel} from './meld-list.interfaces';
-import {Selects} from '../../../../../lib/component/meld-combobox/meld-combobox.interfaces';
 import {HttpClient} from '@angular/common/http';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
@@ -16,36 +12,31 @@ import {RestExpression} from '../../../../../lib/common/search/expression.interf
   selector: 'app-meld-list',
   templateUrl: 'meld-list.component.html',
   styleUrls: ['meld-list.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class MeldListComponent {
 
-  private expression : RestExpression;
-
   constructor(private http: HttpClient,
               private service: AppService,
-              private router: MeldRouterService) {
-
-    if (router.queryParam.home) {
-      let subQueryPredicate = this.subQueryForRelations(this.service.configuration.user.id);
-      let equalPredicate = this.equalForUser(this.service.configuration.user.id);
-
-      this.expression = QueryBuilder.or([
-        subQueryPredicate,
-        equalPredicate
-      ]);
-    }
-
-    if (router.queryParam.profile) {
-      this.expression = this.equalForUser(router.queryParam.id);
-    }
-
-  }
+              private router: MeldRouterService) {}
 
   posts: Items<Item> = (query, callback) => {
-    query.expression = this.expression;
-    query.sorting = [new NormalSort("created", false)];
-    this.http.post<Container<Item>>('service/channel/meld/posts/', query)
+
+    const params = {
+      index : query.index.toString(),
+      limit : query.limit.toString(),
+      sort : 'created:desc'
+    };
+
+    if (this.router.queryParam.home) {
+      params['home'] = 'true';
+    }
+
+    if (this.router.queryParam.profile) {
+      params['profile'] = 'true';
+    }
+
+    this.http.get<Container<Item>>('service/channel/meld/posts/', {params : params})
       .subscribe((res: Container<Item>) => {
         callback(res.rows, null);
       });

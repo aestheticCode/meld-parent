@@ -1,29 +1,32 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {NgModel} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Http, Response} from "@angular/http";
+import {NgModel} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Link} from '../../../../../lib/common/rest/Link';
 import {RoleRow} from './role-table.intefaces';
-import {RestExpression} from '../../../../../lib/common/search/expression.interfaces';
-import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
+import {HttpClient} from '@angular/common/http';
+import {Container} from '../../../../../lib/common/rest/Container';
+import {MeldTableComponent} from '../../../../../lib/component/meld-table/meld-table.component';
 
 @Component({
   selector: 'app-role-table',
   templateUrl: 'role-table.component.html',
   styleUrls: ['role-table.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class RoleTableComponent implements OnInit {
 
-  public filter: RestExpression;
+  public filter: string;
 
   public links: Link[] = [];
 
   @ViewChild('searchBox')
   public searchBox: NgModel;
 
-  constructor(private http : Http,
+  @ViewChild("grid")
+  public grid : MeldTableComponent
+
+  constructor(private http: HttpClient,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -38,23 +41,30 @@ export class RoleTableComponent implements OnInit {
       .valueChanges
       .debounceTime(300)
       .subscribe((event) => {
-        this.filter = QueryBuilder.path("name", QueryBuilder.like(event));
+        this.filter = event;
+        this.grid.refreshItems();
       });
 
   }
 
   roles: Items<RoleRow> = (query, response) => {
-    query.expression = this.filter;
-    this.http.post('service/usercontrol/role/table', query)
-      .subscribe((res: Response) => {
-        const json = res.json();
-        response(json.rows, json.size);
+
+    const params = {
+      index: query.index.toString(),
+      limit: query.limit.toString(),
+      name: this.filter,
+      sort: query.sort
+    };
+
+    this.http.get<Container<RoleRow>>('service/usercontrol/role/table', {params: params})
+      .subscribe((res) => {
+        response(res.rows, res.size);
       });
   };
 
 
   onSelection(role: RoleRow) {
-    if (role.links.find((link : Link) => link.rel === "read")) {
+    if (role.links.find((link: Link) => link.rel === 'read')) {
       this.router.navigate(['usercontrol/role', role.id]);
     }
   }

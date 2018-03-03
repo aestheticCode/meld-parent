@@ -5,7 +5,6 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
 import net.portrix.generic.rest.api.search.Filter;
-import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.api.search.predicate.LikeExpression;
 import net.portrix.generic.rest.api.search.predicate.PathExpression;
 import net.portrix.generic.rest.jsr339.Name;
@@ -33,8 +32,8 @@ public class SchoolTableController {
     private final URLBuilderFactory factory;
 
     private final List<Filter> queries = Arrays.asList(
-       new Filter("name", new PathExpression("name", new LikeExpression("", "Name"))
-    ));
+            new Filter("name", new PathExpression("name", new LikeExpression("", "Name"))
+            ));
 
     @Inject
     public SchoolTableController(SchoolTableService service, URLBuilderFactory factory) {
@@ -46,11 +45,11 @@ public class SchoolTableController {
         this(null, null);
     }
 
-    @POST
+    @GET
     @Path("education/find")
     @Secured
     @Transactional
-    public Container<SchoolItem> list(Search search) {
+    public Container<SchoolItem> list(@BeanParam SchoolSearch search) {
 
         List<School> schools = service.find(search);
         long count = service.count(search);
@@ -59,7 +58,7 @@ public class SchoolTableController {
                 .map((school) -> new SchoolItem(school.getId(), school.getName()))
                 .collect(Collectors.toList());
 
-        return new Container<>(items, (int)count);
+        return new Container<>(items, (int) count);
     }
 
     @GET

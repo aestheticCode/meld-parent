@@ -4,8 +4,6 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.query.Query;
-import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.group.form.GroupFormController;
@@ -13,10 +11,7 @@ import net.portrix.meld.usercontrol.group.form.GroupFormController;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +40,12 @@ public class GroupMultiSelectController {
         this(null, null);
     }
 
-    @POST
+    @GET
     @Path("group/multiselect")
     @Name("Group MultiSelect")
     @Secured
     @Transactional
-    public Container<GroupSelect> list(Search search) {
+    public Container<GroupSelect> list(@BeanParam GroupSearch search) {
         List<Group> groups;
         long count = 0;
         if (search.getLimit() == 0) {

@@ -6,6 +6,7 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
+import net.portrix.generic.rest.api.RestEntities;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.Photo;
 import net.portrix.meld.social.profile.Profile;
@@ -13,6 +14,8 @@ import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.Role;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserImage;
+import net.portrix.meld.usercontrol.group.multiselect.GroupSelect;
+import net.portrix.meld.usercontrol.role.multiselect.RoleSelect;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,20 +100,26 @@ public class UserFormController {
 
         final List<Group> groups = service.findAllGroups(user);
 
-        final List<UUID> groudIds = new ArrayList<>();
+        final List<GroupSelect> groudIds = new ArrayList<>();
 
         for (Group group : groups) {
-            groudIds.add(group.getId());
+            GroupSelect groupSelect = new GroupSelect();
+            groupSelect.setId(group.getId());
+            groupSelect.setName(group.getName());
+            groudIds.add(groupSelect);
         }
         response.setGroups(Sets.newHashSet(groudIds));
 
 
         final List<Role> roles = service.findAllRoles(user);
 
-        List<UUID> roleIds = new ArrayList<>();
+        List<RoleSelect> roleIds = new ArrayList<>();
 
         for (Role role : roles) {
-            roleIds.add(role.getId());
+            RoleSelect roleSelect = new RoleSelect();
+            roleSelect.setId(role.getId());
+            roleSelect.setName(role.getName());
+            roleIds.add(roleSelect);
         }
         response.setRoles(Sets.newHashSet(roleIds));
 
@@ -151,7 +160,7 @@ public class UserFormController {
 
         final List<Group> groups = service.findAllGroups();
         for (Group group : groups) {
-            if (form.getGroups().contains(group.getId())) {
+            if (RestEntities.toIds(form.getGroups()).contains(group.getId())) {
                 group.add(user);
             } else {
                 group.remove(user);
@@ -159,7 +168,7 @@ public class UserFormController {
         }
         final List<Role> roles = service.findAllRoles();
         for (Role role : roles) {
-            if (form.getRoles().contains(role.getId())) {
+            if (RestEntities.toIds(form.getRoles()).contains(role.getId())) {
                 role.addScope(user);
             } else {
                 role.removeScope(user);
@@ -193,7 +202,7 @@ public class UserFormController {
 
         final List<Group> groups = service.findAllGroups();
         for (Group group : groups) {
-            if (form.getGroups().contains(group.getId())) {
+            if (RestEntities.toIds(form.getGroups()).contains(group.getId())) {
                 group.add(user);
             } else {
                 group.remove(user);
@@ -201,7 +210,7 @@ public class UserFormController {
         }
         final List<Role> roles = service.findAllRoles();
         for (Role role : roles) {
-            if (form.getRoles().contains(role.getId())) {
+            if (RestEntities.toIds(form.getRoles()).contains(role.getId())) {
                 role.addScope(user);
             } else {
                 role.removeScope(user);

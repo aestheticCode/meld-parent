@@ -54,7 +54,14 @@ export class RoleFormComponent extends AbstractForm<RoleForm> implements OnInit 
   }
 
   permissions: Items<PermissionRow> = (query, response) => {
-    this.http.post<Container<PermissionRow>>('service/usercontrol/permission/table', query)
+
+    const params = {
+      index : query.index.toString(),
+      limit : query.limit.toString(),
+      sort : query.sort
+    };
+
+    this.http.get<Container<PermissionRow>>('service/usercontrol/permission/table', {params : params})
       .subscribe((res: Container<PermissionRow>) => {
         const json = res;
         response(json.rows, json.size);

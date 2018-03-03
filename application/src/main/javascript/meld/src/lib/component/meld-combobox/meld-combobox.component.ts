@@ -1,13 +1,25 @@
 import {
-  Component, ContentChild, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnChanges, Optional, Output, Self,
-  SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnChanges,
+  Optional,
+  Output,
+  Self,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
-import {ControlValueAccessor, NgControl} from '@angular/forms';
+import {NgControl} from '@angular/forms';
 import {MeldTableComponent} from '../meld-table/meld-table.component';
 import {Subject} from 'rxjs/Subject';
 import {Items} from '../../common/search/search.interfaces';
 import {Search, Selects} from './meld-combobox.interfaces';
-import {Objects} from '../../common/utils/Objects';
 import {MatFormFieldControl} from '@angular/material';
 import {AbstractControl} from '../../common/forms/AbstractControl';
 import {Strings} from '../../common/utils/Strings';
@@ -20,7 +32,7 @@ const noop = () => {
   templateUrl: 'meld-combobox.component.html',
   styleUrls: ['meld-combobox.component.css'],
   providers: [{provide: MatFormFieldControl, useExisting: MeldComboBoxComponent}],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class MeldComboBoxComponent extends AbstractControl<any> implements OnChanges {
 
@@ -80,8 +92,8 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
   @Input('rowHeight')
   public rowHeight: number = 28;
 
-  @ViewChild("input")
-  public input : ElementRef;
+  @ViewChild('input')
+  public input: ElementRef;
 
   private filterChanges = new Subject<string>();
 
@@ -144,7 +156,7 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
   }
 
   public onSelectItemChange(event) {
-    this.value = this.itemValue(event);
+    this.value = event;
     this.filter = this.itemName(event);
     this.filterChange.emit(this.filter);
     this.onChangeCallback(this.value);
@@ -170,7 +182,8 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
       this.showOverlay = false;
     } else {
       this.showOverlay = true;
-    }  }
+    }
+  }
 
   onHideOverlay() {
     this.showOverlay = false;
@@ -186,9 +199,8 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
     switch (event.keyCode) {
       case 13 : {
         let item = this.table.itemsWindow[this.table.hoveredIndex];
-        let itemValue = this.itemValue(item);
         let itemName = this.itemName(item);
-        this.value = itemValue;
+        this.value = item;
         this.filter = itemName;
         this.filterChange.emit(itemName);
         this.onChangeCallback(this.value);
@@ -210,20 +222,7 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
       if (itemName) {
         this.filter = itemName;
         this.filterChange.emit(itemName);
-      } else {
-        const search: Search = {
-          selected: obj
-        };
-
-        const callback = (data: [any], size: number) => {
-          if (this.filter.length === 0) {
-            this.filter = this.itemName(data[0]);
-            this.filterChange.emit(this.filter);
-          }
-        };
-        this.items(search, callback);
       }
-
     }
   }
 

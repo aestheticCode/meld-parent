@@ -1,28 +1,24 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {AppService} from "../../../../app.service";
+import {AppService} from '../../../../app.service';
+import {AbstractGuard} from '../../../../../lib/common/AbstractGuard';
+import {MeldLinkPost} from '../../form/meld-form/meld-link-form/meld-link-form.interfaces';
+import {Container} from '../../../../../lib/common/rest/Container';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
-export class MeldListGuard implements Resolve<any> {
+export class MeldListGuard extends AbstractGuard<Container<MeldLinkPost>> {
 
-    constructor(private http: Http,
-                private router: Router,
-                private app: AppService) {
-    }
+  constructor(http: HttpClient, router: Router, app: AppService) {
+    super(http, router, app);
+  }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-        return this.http.post('service/channel/meld/posts', {start: 0, limit: 0})
-            .map((res: Response) => {
-                return res.json();
-            })
-            .catch((error: Response) => {
-                this.app.redirectUrl = state.url;
-                this.router.navigate(['usercontrol/login']);
-                return Observable.of(false);
-            })
-    }
+  httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Container<MeldLinkPost>> {
+    return this.http.get<Container<MeldLinkPost>>('service/channel/meld/posts', {params: {index: '0', limit: '0'}});
+  }
+
+
 }

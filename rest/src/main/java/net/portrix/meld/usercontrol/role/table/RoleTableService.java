@@ -1,33 +1,23 @@
 package net.portrix.meld.usercontrol.role.table;
 
-import net.portrix.generic.ddd.AbstractQueryService;
+import net.portrix.generic.ddd.AbstractSearchService;
 import net.portrix.meld.usercontrol.Role;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.Map;
 
 @ApplicationScoped
-public class RoleTableService extends AbstractQueryService<Role> {
+public class RoleTableService extends AbstractSearchService<Role, RoleSearch> {
 
     @Inject
-    public RoleTableService(EntityManager entityManager) {
-        super(entityManager);
+    public RoleTableService(EntityManager entityManager, Identity identity) {
+        super(entityManager, identity);
     }
 
     public RoleTableService() {
-        this(null);
+        this(null, null);
     }
 
-    @Override
-    public Class<Role> getEntityClass() {
-        return Role.class;
-    }
-
-    @Override
-    public Map<String, Class<?>> getTables() {
-        return Collections.emptyMap();
-    }
 }

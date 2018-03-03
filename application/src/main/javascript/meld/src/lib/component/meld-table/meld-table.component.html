@@ -9,7 +9,7 @@
     <meld-window [rowsSize]="itemsSize" (windowScrollChange)="onWindowScroll($event)" (viewPortChange)="viewPortChange = $event"  [rowHeight]="rowHeight">
       <meld-window-header *ngIf="head">
         <ng-template>
-          <table class="table" style="table-layout: fixed; margin-bottom:0" [ngClass]="{'table-unbordered': unbordered}">
+          <table class="table" style="table-layout: fixed;" [ngClass]="{'table-unbordered': unbordered}">
             <colgroup *ngIf="colgroup">
               <col *ngIf="multiSelect" style="width: 32px;">
               <col *ngFor="let column of colgroup.columns  | meldTableSorter:columnConfiguration" [style.width.px]="column.width">
@@ -24,10 +24,10 @@
               <td *ngFor="let column of row.columns | meldTableSorter:columnConfiguration" (click)="onSortClick(column)" >
                 <div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
                   <ng-container *ngTemplateOutlet="column.content"></ng-container>
-                  <button type="button"  *ngIf="column.asc === true" mat-icon-button>
+                  <button type="button"  *ngIf="column.asc === true" mat-icon-button style="line-height: 20px; height: 20px;">
                     <mat-icon>expand_less</mat-icon>
                   </button>
-                  <button type="button"  *ngIf="column.asc === false" mat-icon-button>
+                  <button type="button"  *ngIf="column.asc === false" mat-icon-button style="line-height: 20px; height: 20px;">
                     <mat-icon>expand_more</mat-icon>
                   </button>
                 </div>

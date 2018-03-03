@@ -7,6 +7,9 @@ import {Link} from '../../../../../lib/common/rest/Link';
 import {RestExpression} from '../../../../../lib/common/search/expression.interfaces';
 import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
+import {Container} from '../../../../../lib/common/rest/Container';
+import {HttpClient} from '@angular/common/http';
+import {MeldTableComponent} from '../../../../../lib/component/meld-table/meld-table.component';
 
 @Component({
   selector: 'app-group-table',
@@ -16,13 +19,17 @@ import {Items} from '../../../../../lib/common/search/search.interfaces';
 })
 export class GroupTableComponent implements OnInit {
 
-  filter: RestExpression;
+  filter: string;
 
   links: Link[] = [];
 
-  @ViewChild('searchBox') searchBox: NgModel;
+  @ViewChild('searchBox')
+  searchBox: NgModel;
 
-  constructor(private http: Http,
+  @ViewChild("grid")
+  grid : MeldTableComponent
+
+  constructor(private http: HttpClient,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -37,16 +44,26 @@ export class GroupTableComponent implements OnInit {
       .valueChanges
       .debounceTime(300)
       .subscribe((event) => {
-        this.filter = QueryBuilder.path('name', QueryBuilder.like(event));
+        this.filter = event;
+        this.grid.refreshItems();
       });
   }
 
   groups: Items<GroupRow> = (query, response) => {
-    query.expression = this.filter;
-    this.http.post('service/usercontrol/group/table', query)
-      .subscribe((res: Response) => {
-        const json = res.json();
-        response(json.rows, json.size);
+
+    const params = {
+      index : query.index.toString(),
+      limit : query.limit.toString(),
+      sort : query.sort
+    };
+
+    if (this.filter) {
+      params['name'] = this.filter;
+    }
+
+    this.http.get<Container<GroupRow>>('service/usercontrol/group/table', {params : params})
+      .subscribe((res) => {
+        response(res.rows, res.size);
       });
   };
 

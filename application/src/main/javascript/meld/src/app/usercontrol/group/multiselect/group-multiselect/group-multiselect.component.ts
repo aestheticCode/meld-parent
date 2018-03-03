@@ -3,6 +3,9 @@ import {Http, Response} from "@angular/http";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {GroupSelect} from "./group-multiselect.interfaces";
 import {Items} from '../../../../../lib/common/search/search.interfaces';
+import {Selects} from '../../../../../lib/component/meld-combobox/meld-combobox.interfaces';
+import {HttpClient} from '@angular/common/http';
+import {Container} from '../../../../../lib/common/rest/Container';
 
 const noop = () => {
 };
@@ -41,14 +44,19 @@ export class GroupMultiselectComponent implements ControlValueAccessor, OnChange
 
   private onChangeCallback: (value: any) => void = noop;
 
-  constructor(private http: Http) {
-  }
+  constructor(private http: HttpClient) {}
 
-  groups: Items<GroupSelect> = (query, response) => {
-    this.http.post('service/usercontrol/group/multiselect', query)
-      .subscribe((res: Response) => {
-        const json = res.json();
-        response(json.rows, json.size);
+  groups: Selects<GroupSelect> = (query, response) => {
+
+    const params = {
+      index : query.index.toString(),
+      limit : query.limit.toString(),
+      name : query.filter
+    };
+
+    this.http.get<Container<GroupSelect>>('service/usercontrol/group/multiselect', {params : params})
+      .subscribe((res: Container<GroupSelect>) => {
+        response(res.rows, res.size);
       });
   };
 

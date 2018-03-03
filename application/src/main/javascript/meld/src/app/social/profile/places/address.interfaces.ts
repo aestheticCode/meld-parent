@@ -2,6 +2,8 @@ import {Place} from '../../../../lib/component/meld-google-maps-autocomplete/mel
 
 export interface Address {
 
+  id : string;
+
   location : Place
 
   start : string

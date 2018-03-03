@@ -1,34 +1,22 @@
 package net.portrix.meld.usercontrol.user.table;
 
-import net.portrix.generic.ddd.AbstractQueryService;
+import net.portrix.generic.ddd.AbstractSearchService;
 import net.portrix.meld.usercontrol.User;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.Map;
 
 @ApplicationScoped
-public class UserTableService extends AbstractQueryService<User> {
+public class UserTableService extends AbstractSearchService<User, UserSearch> {
 
     @Inject
-    public UserTableService(EntityManager entityManager) {
-        super(entityManager);
+    public UserTableService(EntityManager entityManager, Identity identity) {
+        super(entityManager, identity);
     }
 
     public UserTableService() {
-        this(null);
+        this(null, null);
     }
-
-    @Override
-    public Class<User> getEntityClass() {
-        return User.class;
-    }
-
-    @Override
-    public Map<String, Class<?>> getTables() {
-        return Collections.emptyMap();
-    }
-
 }

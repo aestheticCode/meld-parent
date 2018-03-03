@@ -72,4 +72,16 @@ delete from uc_permission WHERE id = 'b4991f35-0ab7-400c-8f5d-f398e0c82c83';
 
 INSERT INTO public.uc_permission (id, method, name, path, created, modified, version) VALUES ('60842301-c1b1-4792-8aef-443920e89b5c', 'GET', 'Social Companies List', 'social/user/current/work/history/companies', now(), now(), 0);
 
+--changeset patrick:8
+
+update uc_permission set method = 'GET' where path = 'social/people/categories' and method = 'POST';
+update uc_permission set method = 'GET' where path = 'usercontrol/group/multiselect' and method = 'POST';
+update uc_permission set method = 'GET' where path = 'usercontrol/group/table' and method = 'POST';
+update uc_permission set method = 'GET' where path = 'channel/meld/posts' and method = 'POST';
+update uc_permission set method = 'GET' where path = 'usercontrol/permission/table' and method = 'POST';
+update uc_permission set method = 'GET' where path = 'media/photos/grid' and method = 'POST';
+update uc_permission set method = 'GET' where path = 'usercontrol/role/multiselect' and method = 'POST';
+update uc_permission set method = 'GET' where path = 'usercontrol/role/table' and method = 'POST';
+update uc_permission set method = 'GET' where path = 'social/education/find' and method = 'POST';
+update uc_permission set method = 'GET' where path = 'usercontrol/user/table' and method = 'POST';
 

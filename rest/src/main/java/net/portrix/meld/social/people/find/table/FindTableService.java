@@ -60,17 +60,5 @@ public class FindTableService extends AbstractSearchService<User, FindTableSearc
         entityManager.remove(relationShip);
     }
 
-    @Override
-    public Predicate filter(CriteriaBuilder builder, Root<User> root, CriteriaQuery<?> query) {
-        final User user = entityManager.createNamedQuery("findUserByExternal", User.class)
-                .setParameter("id", identity.getAccount().getId())
-                .getSingleResult();
-
-        Root<School> from = query.from(School.class);
-        Join<School, Education> join = from.join(School_.education);
-
-        return builder.equal(join.get(Education_.user), user);
-    }
-
 
 }

@@ -1,34 +1,23 @@
 package net.portrix.meld.usercontrol.group.table;
 
-import net.portrix.generic.ddd.AbstractQueryService;
+import net.portrix.generic.ddd.AbstractSearchService;
 import net.portrix.meld.usercontrol.Group;
+import org.picketlink.Identity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.Map;
 
 @ApplicationScoped
-public class GroupTableService extends AbstractQueryService<Group> {
+public class GroupTableService extends AbstractSearchService<Group, GroupSearch> {
 
     @Inject
-    public GroupTableService(EntityManager entityManager) {
-        super(entityManager);
+    public GroupTableService(EntityManager entityManager, Identity identity) {
+        super(entityManager, identity);
     }
 
     public GroupTableService() {
-        this(null);
-    }
-
-    @Override
-    public Class<Group> getEntityClass() {
-        return Group.class;
-    }
-
-    @Override
-    public Map<String, Class<?>> getTables() {
-        return Collections.emptyMap();
+        this(null, null);
     }
 
 }

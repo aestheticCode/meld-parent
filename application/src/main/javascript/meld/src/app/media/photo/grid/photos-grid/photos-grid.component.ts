@@ -27,8 +27,13 @@ export class PhotosGridComponent {
               private dialog : MatDialog) {}
 
   photos: Items<Photo> = (query, callback) => {
-    query.expression = QueryBuilder.path("user.id", QueryBuilder.equal(this.service.configuration.user.id));
-    this.http.post<Container<Photo>>('service/media/photos/grid', query)
+
+    const params = {
+      index : query.index.toString(),
+      limit : query.limit.toString()
+    };
+
+    this.http.get<Container<Photo>>('service/media/photos/grid', {params : params})
       .subscribe((res) => {
         callback(res.rows, res.size);
       });

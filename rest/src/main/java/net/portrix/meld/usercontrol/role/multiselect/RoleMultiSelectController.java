@@ -4,8 +4,6 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.query.Query;
-import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.usercontrol.Role;
 import net.portrix.meld.usercontrol.role.form.RoleFormController;
@@ -13,10 +11,7 @@ import net.portrix.meld.usercontrol.role.form.RoleFormController;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +40,12 @@ public class RoleMultiSelectController {
         this(null, null);
     }
 
-    @POST
+    @GET
     @Path("role/multiselect")
     @Name("Role MultiSelect")
     @Secured
     @Transactional
-    public Container<RoleSelect> list(Search search) {
+    public Container<RoleSelect> list(@BeanParam RoleSearch search) {
         List<Role> Roles;
         long count = 0;
         if (search.getLimit() == 0) {

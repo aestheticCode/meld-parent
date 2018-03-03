@@ -5,7 +5,6 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Container;
-import net.portrix.generic.rest.api.search.Search;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.generic.time.TimeUtils;
 import net.portrix.meld.channel.*;
@@ -53,11 +52,11 @@ public class MeldListController {
     }
 
     @Secured
-    @POST
+    @GET
     @Path("meld/posts")
     @Name("Meld Posts")
     @Transactional
-    public Container<AbstractMeldItem> list(Search search) {
+    public Container<AbstractMeldItem> list(@BeanParam MeldSearch search) {
 
         final User currentUser = service.currentUser();
 
@@ -225,7 +224,7 @@ public class MeldListController {
     public static URLBuilder<MeldListController> linkMeld(URLBuilderFactory builderFactory) {
         return builderFactory
                 .from(MeldListController.class)
-                .record(method -> method.list(new Search()))
+                .record(method -> method.list(null))
                 .rel("meld");
     }
 

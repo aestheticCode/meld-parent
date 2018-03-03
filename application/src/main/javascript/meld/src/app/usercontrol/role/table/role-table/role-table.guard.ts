@@ -7,7 +7,6 @@ import {AppService} from '../../../../app.service';
 import {HttpClient} from '@angular/common/http';
 import {AbstractGuard} from '../../../../../lib/common/AbstractGuard';
 import {Observable} from 'rxjs/Observable';
-import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 
 @Injectable()
 export class RoleTableGuard extends AbstractGuard<RoleRow> {
@@ -17,7 +16,7 @@ export class RoleTableGuard extends AbstractGuard<RoleRow> {
   }
 
   httpRequest(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RoleRow> {
-    return this.http.post<RoleRow>('service/usercontrol/role/table', QueryBuilder.query());
+    return this.http.get<RoleRow>('service/usercontrol/role/table', {params: {index: '0', limit: '0'}});
   }
 
 }

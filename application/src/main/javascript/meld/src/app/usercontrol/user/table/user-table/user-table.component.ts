@@ -6,26 +6,20 @@ import {NgModel} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MeldTableComponent} from 'lib/component/meld-table/meld-table.component';
 import {Link} from 'lib/common/rest/Link';
-import {Strings} from 'lib/common/utils/Strings';
-import {Objects} from 'lib/common/utils/Objects';
 import {Container} from 'lib/common/rest/Container';
-import {LevenstheinSort, QueryBuilder} from 'lib/common/search/search.classes';
-import {RestExpression} from 'lib/common/search/expression.interfaces';
-import {Items, SortExpression} from '../../../../../lib/common/search/search.interfaces';
+import {Items} from '../../../../../lib/common/search/search.interfaces';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-user-table',
   templateUrl: 'user-table.component.html',
   styleUrls: ['user-table.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class UserTableComponent implements OnInit {
 
   @Input('filter')
-  public filter: RestExpression;
-
-  @Input('sort')
-  public sort : SortExpression;
+  public filter: string;
 
   public filterTemplate: FilterTemplate = new FilterTemplateModel();
 
@@ -38,7 +32,7 @@ export class UserTableComponent implements OnInit {
   private searchBox: NgModel;
 
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -54,7 +48,7 @@ export class UserTableComponent implements OnInit {
       .debounceTime(300)
       .distinctUntilChanged()
       .subscribe((event: string) => {
-        this.sort = new LevenstheinSort(event, ['firstName', 'lastName'], false);
+        this.filter = event;
         this.table.refreshItems();
       });
 
@@ -94,39 +88,18 @@ export class UserTableComponent implements OnInit {
     this.table.refreshItems();
   }
 
-  onSearchClick() {
-    const result: RestExpression[] = [];
-
-    if (Strings.isNotEmpty(this.filterTemplate.firstName)) {
-      result.push(QueryBuilder.path('firstName', QueryBuilder.like(this.filterTemplate.firstName)));
-    }
-
-    if (Strings.isNotEmpty(this.filterTemplate.lastName)) {
-      result.push(QueryBuilder.path('lastName', QueryBuilder.like(this.filterTemplate.lastName)));
-    }
-
-    if (Objects.isNotNull(this.filterTemplate.birthdate)) {
-
-    }
-
-    if (result.length > 0) {
-      this.filter = QueryBuilder.or(result);
-    } else {
-      this.filter = undefined;
-    }
-
-    this.table.refreshItems();
-  }
-
   users: Items<UserRow> = (query, response) => {
-    query.expression = this.filter;
-    if (this.sort) {
-      query.sorting.unshift(this.sort);
-    }
-    this.http.post('service/usercontrol/user/table', query)
-      .subscribe((res: Response) => {
-        const json = res.json() as Container<UserRow>;
-        response(json.rows, json.size);
+
+    const params = {
+      index: query.index.toString(),
+      limit: query.limit.toString(),
+      name: this.filter,
+      sort: query.sort
+    };
+
+    this.http.get<Container<UserRow>>('service/usercontrol/user/table', {params: params})
+      .subscribe((res) => {
+        response(res.rows, res.size);
       });
   };
 

@@ -4,6 +4,8 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.meld.usercontrol.Gender;
+import net.portrix.meld.usercontrol.group.multiselect.GroupSelect;
+import net.portrix.meld.usercontrol.role.multiselect.RoleSelect;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -27,9 +29,9 @@ public class UserForm implements LinksContainer {
 
     private Gender gender;
 
-    private Set<UUID> roles = new HashSet<>();
+    private Set<RoleSelect> roles = new HashSet<>();
 
-    private Set<UUID> groups = new HashSet<>();
+    private Set<GroupSelect> groups = new HashSet<>();
 
     private Blob image;
 
@@ -91,19 +93,19 @@ public class UserForm implements LinksContainer {
         this.image = image;
     }
 
-    public Set<UUID> getRoles() {
+    public Set<RoleSelect> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<UUID> roles) {
+    public void setRoles(Set<RoleSelect> roles) {
         this.roles = roles;
     }
 
-    public Set<UUID> getGroups() {
+    public Set<GroupSelect> getGroups() {
         return groups;
     }
 
-    public void setGroups(Set<UUID> groups) {
+    public void setGroups(Set<GroupSelect> groups) {
         this.groups = groups;
     }
 

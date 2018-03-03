@@ -61,7 +61,8 @@ export class Query {
   constructor(public index: number = 0,
               public limit: number = 0,
               public expression: RestExpression = undefined,
-              public sorting: SortExpression[] = []) {
+              public sorting: SortExpression[] = [],
+              public sort : string[] = []) {
   }
 
 

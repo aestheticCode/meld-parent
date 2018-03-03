@@ -67,7 +67,7 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
   @Input('rowHeight')
   public rowHeight: number = 37;
 
-  public sorting: NormalSort[] = [];
+  public sorting: string[] = [];
 
   @Input('initialize')
   public initialize: boolean = true;
@@ -129,7 +129,7 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
       let query = QueryBuilder.query();
       query.index = event.loadIndex;
       query.limit = event.loadLimit * 5;
-      query.sorting = this.sorting;
+      query.sort = this.sorting;
       this.items(query, (data: any[], size: number) => {
         this.itemsWindow = data;
         this.itemsSize = size;
@@ -178,7 +178,7 @@ export class MeldTableComponent implements AfterContentInit, ControlValueAccesso
 
     this.sorting = this.head.rows.first.columns
       .filter((column) => column.asc !== undefined)
-      .map((column) => new NormalSort(column.path, column.asc));
+      .map((column) => column.path + ":" + (column.asc ? 'asc' : 'desc'));
 
     this.onWindowScroll(this.scrollWindowChange);
   }

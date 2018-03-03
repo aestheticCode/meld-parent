@@ -52,7 +52,7 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
   public placeholder: string;
 
   @Input("items")
-  public items: Items<any>;
+  public items: Selects<any>;
 
   @Input("disabled")
   public disabled : boolean = false;
@@ -73,21 +73,8 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
 
   private onChangeCallback: (value: any) => void = noop;
 
-  parentItems: Selects<any> = (search, response) => {
-    const query = QueryBuilder.query();
-    query.index = search.index;
-    query.limit = search.limit;
-    if (search.selected) {
-      query.expression = QueryBuilder.path("id", QueryBuilder.equal(search.selected));
-    } else {
-      query.expression = QueryBuilder.path("name", QueryBuilder.like(search.filter));
-    }
-    this.items(query, response);
-  };
-
-  selectedItems: Items<any> = (query, response) => {
-    query.expression = QueryBuilder.path( "id", QueryBuilder.in(this.value));
-    this.items(query, response);
+  selectedItems: Selects<any> = (query, response) => {
+    response(this.value, this.value.length);
   };
 
   constructor() {
@@ -107,9 +94,9 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
 
   onSelectItemChange(event) {
     const id = this.itemValue(event);
-    if (this.value.indexOf(id) === -1) {
-      this.value.push(id);
-      this.selectItemChange.emit(id);
+    if (this.value.find((item) => item.id === id) === undefined) {
+      this.value.push(event);
+      this.selectItemChange.emit(event);
       this.onChangeCallback(this.value);
       this.comboBox.value = null;
       this.table.refreshItems();
@@ -126,12 +113,6 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
   public itemName = (item) => {
     return item['name'];
   };
-
-
-  public onOverlayClick(event: MouseEvent) {
-    event.stopPropagation();
-    return false;
-  }
 
   @HostListener("document:click")
   private onDocumentClick() {
@@ -154,15 +135,8 @@ export class MeldMultiSelectComponent implements OnChanges, ControlValueAccessor
     this.onTouchedCallback = fn;
   }
 
-  onShowOverlay(event: MouseEvent) {
-    event.stopPropagation();
-    this.showOverlay = true;
-    return false;
-  }
-
   onRemoveSelectedItem(item) {
-    let id = this.itemValue(item);
-    let indexOf = this.value.indexOf(id);
+    let indexOf = this.value.indexOf(item);
     this.value.splice(indexOf, 1);
     this.table.refreshItems();
     this.onChangeCallback(this.value);

@@ -28,12 +28,14 @@ export class SchoolSelectComponent extends AbstractSelect<School> {
 
   items: Selects<School> = (search, response) => {
 
-    let query = QueryBuilder.query();
-    query.index = search.index;
-    query.limit = search.limit;
-    query.expression = QueryBuilder.path('name', QueryBuilder.like(search.filter));
+    const params = {
+      index : search.index.toString(),
+      limit : search.limit.toString(),
+      name : search.filter,
+      sort : 'name:asc'
+    };
 
-    this.http.post<Container<School>>('service/social/education/find', query)
+    this.http.get<Container<School>>('service/social/education/find', {params : params})
       .subscribe((schools: Container<School>) => {
         response(schools.rows, schools.size);
       });
