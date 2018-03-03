@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.meld.channel.MeldLinkPost;
+import net.portrix.meld.social.people.find.table.CategorySelect;
 
 import java.util.Set;
 import java.util.UUID;
@@ -24,7 +25,7 @@ public abstract class AbstractPostForm implements LinksContainer {
 
     private String text;
 
-    private UUID category;
+    private CategorySelect category;
 
     private Set<Link> links = Sets.newHashSet();
 
@@ -44,11 +45,11 @@ public abstract class AbstractPostForm implements LinksContainer {
         this.text = text;
     }
 
-    public UUID getCategory() {
+    public CategorySelect getCategory() {
         return category;
     }
 
-    public void setCategory(UUID category) {
+    public void setCategory(CategorySelect category) {
         this.category = category;
     }
 

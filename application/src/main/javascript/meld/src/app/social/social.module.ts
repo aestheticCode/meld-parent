@@ -25,7 +25,6 @@ import {FollowingViewComponent} from './people/find/following-view/following-vie
 import {CategoryComponent} from './people/category/categories-form/category-view/category.component';
 import {AddressMapComponent} from './profile/places/places-view/address-map/address-map.component';
 import {AddressViewComponent} from './profile/places/places-view/address-view/address-view.component';
-import {CategoriesSelectViewComponent} from './people/category/categories-select-view/categories-select-view.component';
 import {CategorySelectDialogComponent} from './people/category/category-select-dialog/category-select-dialog.component';
 import {ContactFormComponent} from './profile/contact/contact-form/contact-form.component';
 import {ChatFormComponent} from './profile/contact/contact-form/chat-form/chat-form.component';
@@ -78,7 +77,6 @@ import { CompanySelectComponent } from './profile/work-history/company-select/co
     CategoryComponent,
     AddressMapComponent,
     AddressViewComponent,
-    CategoriesSelectViewComponent,
     CategorySelectDialogComponent,
     CategoryFormComponent,
     SchoolSelectComponent,
@@ -116,7 +114,6 @@ import { CompanySelectComponent } from './profile/work-history/company-select/co
     CategoryComponent,
     AddressMapComponent,
     AddressViewComponent,
-    CategoriesSelectViewComponent,
     CategorySelectDialogComponent
   ],
   entryComponents: [

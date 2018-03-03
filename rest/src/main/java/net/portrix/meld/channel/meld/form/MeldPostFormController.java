@@ -9,6 +9,7 @@ import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.channel.*;
 import net.portrix.meld.media.photos.Photo;
 import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.people.find.table.CategorySelect;
 import net.portrix.meld.usercontrol.User;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -371,7 +372,10 @@ public class MeldPostFormController {
         response.setText(post.getText());
         Category category = post.getCategory();
         if (category != null) {
-            response.setCategory(category.getId());
+            CategorySelect categorySelect = new CategorySelect();
+            categorySelect.setId(category.getId());
+            categorySelect.setName(category.getName());
+            response.setCategory(categorySelect);
         }
 
         linkUpdate(post, builderFactory)
@@ -383,7 +387,7 @@ public class MeldPostFormController {
     private void processPostUpdate(AbstractPostForm form, MeldPost post) {
         final User user = service.currentUser();
         if (form.getCategory() != null) {
-            Category category = service.findCategory(form.getCategory());
+            Category category = service.findCategory(form.getCategory().getId());
             post.setCategory(category);
         }
         post.setUser(user);
@@ -393,7 +397,7 @@ public class MeldPostFormController {
     private void processPostSave(AbstractPostForm form, MeldPost post) {
         final User user = service.currentUser();
         if (form.getCategory() != null) {
-            Category category = service.findCategory(form.getCategory());
+            Category category = service.findCategory(form.getCategory().getId());
             post.setCategory(category);
         }
         post.setUser(user);

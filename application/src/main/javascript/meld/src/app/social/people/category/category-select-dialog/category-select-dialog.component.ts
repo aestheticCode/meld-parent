@@ -4,46 +4,35 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Category} from '../categories.interfaces';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {Selects} from '../../../../../lib/component/meld-combobox/meld-combobox.interfaces';
-import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
-import {AppService} from '../../../../app.service';
 
 @Component({
   selector: 'app-category-dialog',
   templateUrl: 'category-select-dialog.component.html',
   styleUrls: ['category-select-dialog.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class CategorySelectDialogComponent {
 
-  user : any;
-
-  constructor(private http : HttpClient,
-              @Inject(MAT_DIALOG_DATA) data: any,
-              private service : AppService,
+  constructor(private http: HttpClient,
+              @Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<CategorySelectDialogComponent>) {
-    this.user = data;
   }
 
   categories: Selects<Category> = (search, response) => {
-    let query = QueryBuilder.query();
-    query.index = search.index;
-    query.limit = search.limit;
-    if (search.selected) {
-      query.expression = QueryBuilder.path("id", QueryBuilder.equal(search.selected));
-    } else {
-      query.expression = QueryBuilder.and([
-        QueryBuilder.path("user.id", QueryBuilder.equal(this.service.configuration.user.id)),
-        QueryBuilder.path("name", QueryBuilder.like(search.filter))
-      ]);
-    }
-    this.http.post<Container<Category>>('service/social/people/categories', query)
+
+    const params = {
+      index: search.index.toString(),
+      limit: search.limit.toString()
+    };
+
+    this.http.get<Container<Category>>('service/social/people/categories', {params: params})
       .subscribe((res: Container<Category>) => {
         response(res.rows, res.size);
       });
   };
 
   onSave() {
-    this.dialogRef.close(this.user);
+    this.dialogRef.close(this.data);
   }
 
   onCancel() {

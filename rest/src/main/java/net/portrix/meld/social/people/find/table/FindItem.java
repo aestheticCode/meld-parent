@@ -1,7 +1,5 @@
 package net.portrix.meld.social.people.find.table;
 
-import net.portrix.generic.rest.api.Blob;
-
 import java.net.URI;
 import java.util.UUID;
 
