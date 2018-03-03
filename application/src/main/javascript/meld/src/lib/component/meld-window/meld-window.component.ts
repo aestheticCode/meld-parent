@@ -20,10 +20,10 @@ export class MeldWindowComponent implements OnChanges, OnInit {
   public isScrollBarVisible : boolean = false;
 
   @ViewChild('headerWrapper')
-  private headerWrapper : ElementRef;
+  private headerWrapper : ElementRef<HTMLDivElement>;
 
   @ViewChild('footerWrapper')
-  private footerWrapper : ElementRef;
+  private footerWrapper : ElementRef<HTMLDivElement>;
 
   @ContentChild(MeldWindowHeaderDirective)
   public header : MeldWindowHeaderDirective;
@@ -63,7 +63,7 @@ export class MeldWindowComponent implements OnChanges, OnInit {
   private viewPortChange : EventEmitter<ViewPort> = new EventEmitter<ViewPort>();
 
   @ViewChild('window')
-  private window: ElementRef;
+  private window: ElementRef<HTMLDivElement>;
 
   constructor() {
     this.debouncer

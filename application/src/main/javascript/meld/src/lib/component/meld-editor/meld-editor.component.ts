@@ -28,7 +28,7 @@ export class MeldEditorComponent implements ControlValueAccessor {
   public placeholder: string;
 
   @ViewChild('editor')
-  private editor: ElementRef;
+  private editor: ElementRef<HTMLDivElement>;
 
   public commands: EditorCommand[] = [];
 

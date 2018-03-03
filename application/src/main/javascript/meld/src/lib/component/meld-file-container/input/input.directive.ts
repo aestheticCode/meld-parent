@@ -19,7 +19,7 @@ export class InputDirective extends AbstractFileInput {
 
   private _value: BinaryFile;
 
-  constructor(elementRef: ElementRef) {
+  constructor(elementRef: ElementRef<HTMLInputElement>) {
     super(elementRef);
   }
 

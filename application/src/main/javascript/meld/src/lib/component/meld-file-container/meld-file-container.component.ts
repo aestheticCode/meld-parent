@@ -36,7 +36,7 @@ export class MeldFileContainerComponent implements MatFormFieldControl<BinaryFil
   @ContentChild(InputDirective)
   input: InputDirective;
 
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef<HTMLElement>) {
   }
 
   get shouldPlaceholderFloat() {

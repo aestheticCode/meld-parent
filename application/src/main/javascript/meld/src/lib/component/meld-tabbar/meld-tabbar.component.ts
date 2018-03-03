@@ -13,10 +13,10 @@ import {MeldTabComponent} from './meld-tab/meld-tab.component';
 export class MeldTabBarComponent implements AfterContentInit {
 
   @ViewChild('slider')
-  slider: ElementRef;
+  slider: ElementRef<HTMLDivElement>;
 
   @ViewChild('container')
-  container: ElementRef;
+  container: ElementRef<HTMLDivElement>;
 
   @ContentChildren(MeldTabComponent)
   tabBars: QueryList<MeldTabComponent>;
@@ -50,7 +50,7 @@ export class MeldTabBarComponent implements AfterContentInit {
         this.slider.nativeElement.style.left = index * sliderWidth + 'px';
       }
     } else {
-      this.slider.nativeElement.style.width = 0;
+      this.slider.nativeElement.style.width = 0 + "px";
     }
     tab.width = sliderWidth;
   }

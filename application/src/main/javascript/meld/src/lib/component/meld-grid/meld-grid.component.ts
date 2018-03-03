@@ -50,7 +50,7 @@ export class MeldGridComponent implements OnInit, ControlValueAccessor {
   public columns: number;
 
   @ViewChild('viewPort')
-  private viewPort: ElementRef;
+  private viewPort: ElementRef<HTMLDivElement>;
 
   @ContentChild(TemplateRef)
   public template: TemplateRef<any>;

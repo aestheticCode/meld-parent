@@ -13,7 +13,7 @@ export class AddressMapComponent implements OnInit {
   address : Address;
 
   @ViewChild("map")
-  map : ElementRef;
+  map : ElementRef<HTMLDivElement>;
 
   constructor() { }
 

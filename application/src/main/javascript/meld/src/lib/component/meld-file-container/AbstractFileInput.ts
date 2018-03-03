@@ -8,8 +8,8 @@ export abstract class AbstractFileInput implements ControlValueAccessor {
   protected onTouchedCallback: () => void = noop;
   protected onChangeCallback: (value: any) => void = noop;
 
-  constructor(protected elementRef : ElementRef) {
-    const element : HTMLInputElement = elementRef.nativeElement;
+  constructor(protected elementRef : ElementRef<HTMLInputElement>) {
+    const element = elementRef.nativeElement;
 
     element.addEventListener("change", (event : Event)=> {
       const reader = new FileReader();

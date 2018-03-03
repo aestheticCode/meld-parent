@@ -21,7 +21,7 @@ export class MeldTabComponent {
   @Input()
   routerLinkActiveOptions: {exact: boolean} = {exact: false};
 
-  constructor(private elementRef: ElementRef,
+  constructor(private elementRef: ElementRef<HTMLElement>,
               private router : Router) {
     router.events.subscribe(() => this.activeChange.emit(this.active))
   }

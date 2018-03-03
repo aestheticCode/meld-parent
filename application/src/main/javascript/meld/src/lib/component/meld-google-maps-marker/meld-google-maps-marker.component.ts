@@ -10,7 +10,7 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 export class MeldGoogleMapsMarkerComponent implements OnInit {
 
   @ViewChild('map')
-  private map: ElementRef;
+  private map: ElementRef<HTMLDivElement>;
 
   constructor(@Inject(MAT_DIALOG_DATA) private place: any) {}
 

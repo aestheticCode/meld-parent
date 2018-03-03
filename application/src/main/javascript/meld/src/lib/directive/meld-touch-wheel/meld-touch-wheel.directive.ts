@@ -12,7 +12,7 @@ export class MeldTouchWheelDirective {
   @Output('meldTouchWheelChange')
   private meldTouchWheelChange : EventEmitter<TouchWheelEvent> = new EventEmitter<TouchWheelEvent>();
 
-  constructor(private elementRef : ElementRef) {
+  constructor(private elementRef : ElementRef<HTMLElement>) {
 
     let element  : HTMLElement = elementRef.nativeElement;
 

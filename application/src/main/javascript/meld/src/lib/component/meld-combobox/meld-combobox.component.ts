@@ -93,7 +93,7 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
   public rowHeight: number = 28;
 
   @ViewChild('input')
-  public input: ElementRef;
+  public input: ElementRef<HTMLInputElement>;
 
   private filterChanges = new Subject<string>();
 

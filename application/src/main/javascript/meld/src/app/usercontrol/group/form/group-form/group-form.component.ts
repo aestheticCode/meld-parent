@@ -23,9 +23,6 @@ export class GroupFormComponent extends AbstractForm<GroupForm> implements OnIni
   @ViewChild('name')
   public name: NgModel;
 
-  @ViewChild('input')
-  public input: any;
-
   constructor(private http: HttpClient,
               private router: MeldRouterService) {
     super();
@@ -33,25 +30,6 @@ export class GroupFormComponent extends AbstractForm<GroupForm> implements OnIni
 
   ngOnInit() {
     this.group = this.router.data.group;
-
-    this.name
-      .control
-      .valueChanges
-      .debounceTime(300)
-      .subscribe((value: string) => {
-        if (value != null) {
-          const inputElement = this.input.nativeElement;
-          this.http.post('service/usercontrol/group/form/validate',
-            {name: value, id: this.group.id})
-            .subscribe((res: Response) => {
-              let isValid = res;
-              if (!isValid) {
-                inputElement.invalid = true;
-              }
-            });
-        }
-      });
-
   }
 
   roles: Items<RoleSelect> = (query, response) => {

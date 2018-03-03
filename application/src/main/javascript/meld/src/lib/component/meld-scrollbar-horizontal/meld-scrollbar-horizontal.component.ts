@@ -17,9 +17,9 @@ export class MeldScrollbarHorizontalComponent implements OnChanges {
 
   @Output() positionChange : EventEmitter<number> = new EventEmitter<number>();
 
-  @ViewChild('scrollBar') scrollBar : ElementRef;
+  @ViewChild('scrollBar') scrollBar : ElementRef<HTMLDivElement>;
 
-  @ViewChild('cursor') cursor : ElementRef;
+  @ViewChild('cursor') cursor : ElementRef<HTMLDivElement>;
 
   cursorMouseDown(event : MouseEvent) {
     this.start = event.screenX;

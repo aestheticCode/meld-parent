@@ -12,7 +12,7 @@ export class MeldDimensionsDirective implements DoCheck {
 
   @Output() dimensionsChange : EventEmitter<Dimensions> = new EventEmitter<Dimensions>();
 
-  constructor(private elementRef : ElementRef) { }
+  constructor(private elementRef : ElementRef<HTMLElement>) { }
 
   @HostListener('document:resize')
   onDocumentResize() {

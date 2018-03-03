@@ -40,9 +40,9 @@ export class MeldListComponent implements OnInit {
 
   @ContentChild(TemplateRef) templateRef: TemplateRef<any>;
 
-  @ViewChild('viewPort') viewPort: ElementRef;
+  @ViewChild('viewPort') viewPort: ElementRef<HTMLDivElement>;
 
-  @ViewChildren('windowElements') windowElements: QueryList<ElementRef>;
+  @ViewChildren('windowElements') windowElements: QueryList<ElementRef<HTMLDivElement>>;
 
   ngOnInit(): void {
     if (this.items) {
@@ -53,7 +53,7 @@ export class MeldListComponent implements OnInit {
       });
     }
 
-    const viewPort: HTMLDivElement = this.viewPort.nativeElement;
+    const viewPort = this.viewPort.nativeElement;
 
     viewPort.onscroll = (event) => {
       const element = event.srcElement;

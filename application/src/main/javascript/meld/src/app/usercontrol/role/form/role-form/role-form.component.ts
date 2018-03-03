@@ -22,9 +22,6 @@ export class RoleFormComponent extends AbstractForm<RoleForm> implements OnInit 
   @ViewChild('name')
   private name: NgModel;
 
-  @ViewChild('input')
-  private input: ElementRef;
-
   constructor(private http: HttpClient,
               private router: MeldRouterService) {
     super();
@@ -32,25 +29,6 @@ export class RoleFormComponent extends AbstractForm<RoleForm> implements OnInit 
 
   ngOnInit() {
     this.role = this.router.data.role;
-
-    this.name
-      .control
-      .valueChanges
-      .debounceTime(300)
-      .subscribe((value: string) => {
-        if (value != null) {
-          const inputElement = this.input.nativeElement;
-          this.http.post('service/usercontrol/role/form/validate',
-            {name: value, id: this.role.id})
-            .subscribe((res: Response) => {
-              let isValid = res;
-              if (!isValid) {
-                inputElement.invalid = true;
-              }
-            });
-        }
-      });
-
   }
 
   permissions: Items<PermissionRow> = (query, response) => {

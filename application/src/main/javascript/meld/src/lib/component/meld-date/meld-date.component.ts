@@ -57,7 +57,7 @@ export class MeldDateComponent extends AbstractControl<string>  {
   format: string = 'YYYYMMMdd';
 
 
-  constructor(private elementRef: ElementRef,
+  constructor(private elementRef: ElementRef<HTMLElement>,
               private resolver: ComponentFactoryResolver,
               @Self() @Optional() ngControl: NgControl,
               private injector: Injector,
