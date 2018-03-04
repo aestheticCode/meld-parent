@@ -53,7 +53,7 @@
 
     <div style="width: 50%">
       <mat-form-field style="width: 100%" *ngIf="! company.controls.tillNow.value">
-        <meld-date required #datePickerEnd placeholder="End" formControlName="end"></meld-date>
+        <meld-date #datePickerEnd placeholder="End" formControlName="end"></meld-date>
         <button type="button"  matSuffix mat-icon-button (click)="datePickerEnd.clear()">
           <mat-icon>delete</mat-icon>
         </button>

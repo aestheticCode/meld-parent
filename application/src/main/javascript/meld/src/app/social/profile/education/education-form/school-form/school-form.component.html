@@ -81,9 +81,9 @@
       </mat-form-field>
     </div>
 
-    <div style="width: 50%" formGroupName="visitEnd">
+    <div style="width: 50%" formGroupName="visitEnd" *ngIf="! school.controls.tillNow.value">
       <mat-form-field style="width: 100%;">
-        <mat-select required placeholder="Departed On Semester"
+        <mat-select placeholder="Departed On Semester"
                     formControlName="semester">
           <mat-option *ngFor="let semester of semesters" [value]="semester.value">
             {{ semester.label }}
@@ -91,7 +91,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field style="width: 100%;">
-        <input required matInput type="number" placeholder="Departed On Year"
+        <input matInput type="number" placeholder="Departed On Year"
                formControlName="year">
       </mat-form-field>
     </div>
