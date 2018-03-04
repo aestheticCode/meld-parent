@@ -64,15 +64,18 @@ public class UserManager implements Serializable {
 
     }
 
+    public void update(User user) {
+
+        org.picketlink.idm.model.basic.User picketLinkUser = findUser(user);
+        user.updateName();
+        picketLinkUser.setLoginName(user.getName());
+
+        identityManager.update(picketLinkUser);
+
+    }
+
+
     public void save(User user) {
-
-        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("dMMMuuuu")
-                .toFormatter();
-        String birthday = user.getBirthdate().format(formatter);
-        String userId = user.getFirstName() + user.getLastName() + birthday;
-
-        user.setName(userId);
 
         entityManager.persist(user);
 

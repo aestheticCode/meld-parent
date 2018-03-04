@@ -100,4 +100,10 @@ public class ProfileService {
                 .setParameter("to", user)
                 .getSingleResult();
     }
+
+    public UserProfile findUserProfile(User user) {
+        return entityManager.createNamedQuery("findUserProfileByUserId", UserProfile.class)
+                .setParameter("id", user.getId())
+                .getSingleResult();
+    }
 }

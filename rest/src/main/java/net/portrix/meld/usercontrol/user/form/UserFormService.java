@@ -112,4 +112,12 @@ public class UserFormService {
     public void savePhoto(Photo photo) {
         entityManager.persist(photo);
     }
+
+    public void updatePassword(User user, String password) {
+        userManager.updatePassword(user, password);
+    }
+
+    public void updateUser(User user) {
+        userManager.update(user);
+    }
 }

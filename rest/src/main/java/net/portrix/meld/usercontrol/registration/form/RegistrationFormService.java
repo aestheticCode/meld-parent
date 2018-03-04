@@ -38,14 +38,7 @@ public class RegistrationFormService {
 
     public Identity.AuthenticationResult register(RegistrationForm registrationForm) throws AuthenticationException  {
 
-        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("dMMMuuuu")
-                .toFormatter();
-        String birthday = registrationForm.getBirthday().format(formatter);
-        String userId = registrationForm.getFirstName() + registrationForm.getLastName() + birthday;
-
         User user = new User();
-        user.setName(userId);
         user.setFirstName(registrationForm.getFirstName());
         user.setLastName(registrationForm.getLastName());
         user.setBirthdate(registrationForm.getBirthday());
@@ -59,7 +52,7 @@ public class RegistrationFormService {
 
         userManager.updatePassword(user, registrationForm.getPassword());
 
-        credentials.setUserId(userId);
+        credentials.setUserId(user.getName());
         credentials.setPassword(registrationForm.getPassword());
 
         return identity.login();

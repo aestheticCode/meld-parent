@@ -11,6 +11,7 @@ import net.portrix.meld.social.people.RelationShip;
 import net.portrix.meld.social.profile.contact.form.ContactFormController;
 import net.portrix.meld.social.profile.education.form.EducationFormController;
 import net.portrix.meld.social.profile.places.form.PlacesFormController;
+import net.portrix.meld.social.profile.user.form.UserFormController;
 import net.portrix.meld.social.profile.workhistory.form.WorkHistoryFormController;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
@@ -64,6 +65,7 @@ public class ProfileController {
     @Path("user/{id}/profile")
     @Name("Profile Background Read")
     @Secured
+    @Transactional
     public ProfileResponse read(@PathParam("id") UUID id) {
         final ProfileResponse response = new ProfileResponse();
 
@@ -89,6 +91,8 @@ public class ProfileController {
             linkProfileUserUpdate(factory)
                     .buildSecured(response::addLink);
 
+            UserFormController.linkCurrent(factory)
+                    .buildSecured(response::addLink);
 
             ContactFormController.linkCurrent(factory)
                     .buildSecured(response::addLink);
@@ -104,6 +108,17 @@ public class ProfileController {
         } else {
 
             RelationShip relationShip = service.findRelation(user, currentUser);
+
+            UserProfile userProfile = service.findUserProfile(user);
+            if (userProfile != null) {
+                Set<Category> categories = userProfile.getCategories();
+                if (categories.contains(relationShip.getCategory())) {
+                    UserFormController.linkRead(user, factory)
+                            .buildSecured(response::addLink);
+                }
+            }
+
+
             PersonalContact contact = service.findContact(user);
             if (contact != null) {
                 Set<Category> categories = contact.getCategories();

@@ -3,6 +3,7 @@ import {Link} from "../../../../lib/common/rest/Link";
 import {UserForm} from "./user.interfaces";
 
 export class UserFormModel implements UserForm {
+  password: string;
   gender: string;
   image: BinaryFile;
   id: string;

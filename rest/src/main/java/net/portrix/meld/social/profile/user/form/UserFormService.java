@@ -91,4 +91,8 @@ public class UserFormService implements CategoryFinder {
                 .setParameter("id", id)
                 .getSingleResult();
     }
+
+    public void updateUser(User user) {
+        userManager.update(user);
+    }
 }

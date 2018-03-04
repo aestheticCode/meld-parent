@@ -15,6 +15,8 @@ export interface UserForm extends LinksContainer {
 
   gender : string;
 
+  password : string;
+
   image: BinaryFile;
 
   roles: string[];

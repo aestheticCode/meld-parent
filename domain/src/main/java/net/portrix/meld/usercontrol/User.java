@@ -1,16 +1,9 @@
 package net.portrix.meld.usercontrol;
 
-import net.portrix.meld.social.people.Category;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 /**
  * @author Patrick Bittner on 31/01/15.
@@ -32,6 +25,18 @@ public class User extends Identity {
     private Gender gender;
 
     private LocalDate birthdate;
+
+    @PrePersist
+    @PreUpdate
+    public void updateName() {
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .appendPattern("ddMMMuuuu")
+                .toFormatter();
+        String birthday = getBirthdate().format(formatter);
+        String userId = getFirstName() + getLastName() + birthday;
+
+        setName(userId);
+    }
 
     public String getExternalId() {
         return externalId;

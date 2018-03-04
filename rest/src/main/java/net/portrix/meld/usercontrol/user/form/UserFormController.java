@@ -13,10 +13,9 @@ import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.usercontrol.Group;
 import net.portrix.meld.usercontrol.Role;
 import net.portrix.meld.usercontrol.User;
-import net.portrix.meld.usercontrol.UserImage;
 import net.portrix.meld.usercontrol.group.multiselect.GroupSelect;
 import net.portrix.meld.usercontrol.role.multiselect.RoleSelect;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +25,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -84,7 +81,6 @@ public class UserFormController {
 
         UserForm response = new UserForm();
         response.setId(user.getId());
-        response.setEmail(user.getName());
         response.setFirstName(user.getFirstName());
         response.setLastName(user.getLastName());
         response.setBirthday(user.getBirthdate());
@@ -142,7 +138,7 @@ public class UserFormController {
     @Name("User Form Update")
     public UserForm update(final @PathParam("id") UUID id, final UserForm form) {
         final User user = service.findUser(id);
-        user.setName(form.getEmail());
+
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setBirthdate(form.getBirthday());
@@ -174,6 +170,13 @@ public class UserFormController {
                 role.removeScope(user);
             }
         }
+
+        if (StringUtils.isNotBlank(form.getPassword())) {
+            service.updatePassword(user, form.getPassword());
+        }
+
+        service.updateUser(user);
+
         return read(user.getId());
     }
 
@@ -184,7 +187,6 @@ public class UserFormController {
     @Name("User Form Save")
     public UserForm save(final UserForm form) {
         final User user = new User();
-        user.setName(form.getEmail());
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setBirthdate(form.getBirthday());

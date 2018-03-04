@@ -116,6 +116,8 @@ public class UserFormController {
         String userId = form.getFirstName() + form.getLastName() + birthday;
         user.getUser().setName(userId);
 
+        service.updateUser(user.getUser());
+
         return read(user.getUser().getId());
     }
 
@@ -133,13 +135,6 @@ public class UserFormController {
         user.getUser().setLastName(form.getLastName());
         user.getUser().setBirthdate(form.getBirthday());
         user.getUser().setGender(form.getGender());
-
-        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("dMMMuuuu")
-                .toFormatter();
-        String birthday = form.getBirthday().format(formatter);
-        String userId = form.getFirstName() + form.getLastName() + birthday;
-        user.getUser().setName(userId);
 
         service.save(user);
 
@@ -171,7 +166,7 @@ public class UserFormController {
         return builderFactory
                 .from(UserFormController.class)
                 .record(UserFormController::current)
-                .rel("current");
+                .rel("user");
     }
 
     public static URLBuilder<UserFormController> linkRead(User user, URLBuilderFactory builderFactory) {
