@@ -1,6 +1,5 @@
 package net.portrix.meld.social.profile;
 
-import net.portrix.generic.ddd.AbstractAggregate;
 import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.*;
@@ -13,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "so_personalContact")
 @NamedQuery(name = "findPersonalContact", query = "select p from PersonalContact p where p.user = :user")
-public class PersonalContact extends AbstractAggregate {
+public class PersonalContact extends AbstractProfileVisibility {
 
     @OneToOne
     private User user;
@@ -75,4 +74,5 @@ public class PersonalContact extends AbstractAggregate {
     public void clearPhones() {
         phones.clear();
     }
+
 }

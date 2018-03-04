@@ -4,9 +4,9 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.social.profile.Chat;
-import net.portrix.meld.social.profile.PersonalContact;
-import net.portrix.meld.social.profile.Phone;
+import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.people.find.table.CategorySelect;
+import net.portrix.meld.social.profile.*;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
 
@@ -88,6 +88,8 @@ public class ContactFormController {
         final ContactForm contactResponseType = new ContactForm();
         contactResponseType.setId(contact.getId());
 
+        ProfileVisibilities.setVisibilities(contact, contactResponseType);
+
         for (Chat chat : contact.getChats()) {
             ChatForm responseType = new ChatForm();
             responseType.setId(chat.getId());
@@ -134,6 +136,8 @@ public class ContactFormController {
         final PersonalContact contact = new PersonalContact();
         contact.setUser(user);
 
+        ProfileVisibilities.getVisibilities(type, contact, service);
+
         for (ChatForm chatType : type.getChats()) {
             final Chat chat = new Chat();
             chat.setName(chatType.getName());
@@ -167,6 +171,8 @@ public class ContactFormController {
         User user = service.currentUser();
 
         PersonalContact contact = service.findPersonalContact(user);
+
+        ProfileVisibilities.getVisibilities(type, contact, service);
 
         contact.clearChats();
         for (ChatForm chatType : type.getChats()) {

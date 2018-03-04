@@ -6,6 +6,8 @@ import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.media.photos.Photo;
 import net.portrix.meld.media.photos.form.PhotoFormController;
+import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.people.RelationShip;
 import net.portrix.meld.social.profile.contact.form.ContactFormController;
 import net.portrix.meld.social.profile.education.form.EducationFormController;
 import net.portrix.meld.social.profile.places.form.PlacesFormController;
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -80,38 +83,13 @@ public class ProfileController {
 
         User currentUser = service.currentUser();
 
-        if (user.equals(currentUser)) {
+        if (currentUser.equals(user)) {
             linkProfileBackgroundUpdate(factory)
                     .buildSecured(response::addLink);
             linkProfileUserUpdate(factory)
                     .buildSecured(response::addLink);
-        }
 
-        PersonalContact contact = service.findContact(user);
-        if (contact != null) {
-            ContactFormController.linkRead(contact, factory)
-                    .buildSecured(response::addLink);
-        }
 
-        Education education = service.findEducation(user);
-        if (education != null) {
-            EducationFormController.linkRead(education, factory)
-                    .buildSecured(response::addLink);
-        }
-
-        Places places = service.findPlaces(user);
-        if (places != null) {
-            PlacesFormController.linkRead(places, factory)
-                    .buildSecured(response::addLink);
-        }
-
-        WorkHistory workHistory = service.findWorkHistory(user);
-        if (workHistory != null) {
-            WorkHistoryFormController.linkRead(workHistory, factory)
-                    .buildSecured(response::addLink);
-        }
-
-        if (currentUser.equals(user)) {
             ContactFormController.linkCurrent(factory)
                     .buildSecured(response::addLink);
 
@@ -123,6 +101,47 @@ public class ProfileController {
 
             WorkHistoryFormController.linkCurrent(factory)
                     .buildSecured(response::addLink);
+        } else {
+
+            RelationShip relationShip = service.findRelation(user, currentUser);
+            PersonalContact contact = service.findContact(user);
+            if (contact != null) {
+                Set<Category> categories = contact.getCategories();
+                if (categories.contains(relationShip.getCategory())) {
+                    ContactFormController.linkRead(contact, factory)
+                            .buildSecured(response::addLink);
+                }
+            }
+
+            Education education = service.findEducation(user);
+            if (education != null) {
+                Set<Category> categories = education.getCategories();
+                if (categories.contains(relationShip.getCategory())) {
+                    EducationFormController.linkRead(education, factory)
+                            .buildSecured(response::addLink);
+                }
+
+            }
+
+            Places places = service.findPlaces(user);
+            if (places != null) {
+                Set<Category> categories = places.getCategories();
+                if (categories.contains(relationShip.getCategory())) {
+                    PlacesFormController.linkRead(places, factory)
+                            .buildSecured(response::addLink);
+                }
+            }
+
+            WorkHistory workHistory = service.findWorkHistory(user);
+            if (workHistory != null) {
+                Set<Category> categories = workHistory.getCategories();
+                if (categories.contains(relationShip.getCategory())) {
+                    WorkHistoryFormController.linkRead(workHistory, factory)
+                            .buildSecured(response::addLink);
+                }
+            }
+
+
         }
 
         return response;

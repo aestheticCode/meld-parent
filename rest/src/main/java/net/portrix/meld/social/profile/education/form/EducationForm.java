@@ -2,13 +2,16 @@ package net.portrix.meld.social.profile.education.form;
 
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
+import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.people.find.table.CategorySelect;
+import net.portrix.meld.social.profile.AbstractRestProfileVisibility;
 
 import java.util.*;
 
 /**
  * @author Patrick Bittner on 21/12/2016.
  */
-public class EducationForm implements LinksContainer {
+public class EducationForm extends AbstractRestProfileVisibility implements LinksContainer {
 
     private UUID id;
 

@@ -7,7 +7,12 @@
             <mat-card-content>
               <fieldset>
                 <legend>
-                  Contact
+                  <div style="display: flex">
+                    <div style="flex: 1">Contact</div>
+                    <button type="button" mat-icon-button (click)="onVisibility()">
+                      <mat-icon>people</mat-icon>
+                    </button>
+                  </div>
                 </legend>
                 <div formArrayName="phones">
                   <div *ngFor="let phone of phones.controls; let index = index">

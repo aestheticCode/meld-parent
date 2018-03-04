@@ -1,12 +1,9 @@
 package net.portrix.meld.social.profile;
 
-import net.portrix.generic.ddd.AbstractAggregate;
 import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,7 +14,7 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "findEducation", query = "select e from Education e where e.user = :user")
 })
-public class Education extends AbstractAggregate {
+public class Education extends AbstractProfileVisibility {
 
     @OneToOne
     private User user;

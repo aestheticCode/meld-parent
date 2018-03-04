@@ -5,10 +5,12 @@ import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "so_category")
+@NamedQuery(name = "findCategoryById", query = "select c from Category c where c.id = :id")
 public class Category extends AbstractEntity {
 
     @ManyToOne

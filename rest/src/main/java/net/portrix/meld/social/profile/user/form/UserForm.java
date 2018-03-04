@@ -3,6 +3,7 @@ package net.portrix.meld.social.profile.user.form;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
+import net.portrix.meld.social.profile.AbstractRestProfileVisibility;
 import net.portrix.meld.usercontrol.Gender;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.UUID;
 /**
  * @author Patrick Bittner on 30.05.2015.
  */
-public class UserForm implements LinksContainer {
+public class UserForm extends AbstractRestProfileVisibility implements LinksContainer {
 
     private UUID id;
 

@@ -31,6 +31,7 @@
         <mapping class="net.portrix.meld.social.profile.School"/>
         <mapping class="net.portrix.meld.social.profile.WorkHistory"/>
         <mapping class="net.portrix.meld.social.profile.Profile"/>
+        <mapping class="net.portrix.meld.social.profile.UserProfile"/>
 
         <mapping class="net.portrix.meld.social.people.Category"/>
         <mapping class="net.portrix.meld.social.people.RelationShip"/>

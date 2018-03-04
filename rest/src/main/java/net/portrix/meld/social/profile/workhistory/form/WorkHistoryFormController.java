@@ -7,6 +7,7 @@ import net.portrix.generic.rest.google.details.LocationDetailForm;
 import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Company;
 import net.portrix.meld.social.profile.Place;
+import net.portrix.meld.social.profile.ProfileVisibilities;
 import net.portrix.meld.social.profile.WorkHistory;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
@@ -91,6 +92,8 @@ public class WorkHistoryFormController {
         WorkHistoryForm historyResponseType = new WorkHistoryForm();
         historyResponseType.setId(workHistory.getId());
 
+        ProfileVisibilities.setVisibilities(workHistory, historyResponseType);
+
         for (Company company : workHistory.getCompanies()) {
             CompanyForm companyForm = new CompanyForm();
             companyForm.setDescription(company.getDescription());
@@ -145,6 +148,8 @@ public class WorkHistoryFormController {
 
         workHistory.setUser(user);
 
+        ProfileVisibilities.getVisibilities(type, workHistory, service);
+
         for (CompanyForm companyType : type.getCompanies()) {
             Company company = new Company();
             company.setDescription(companyType.getDescription());
@@ -187,12 +192,9 @@ public class WorkHistoryFormController {
 
         WorkHistory workHistory = service.findWorkHistory(user);
 
-        for (Company company : workHistory.getCompanies()) {
-            service.removeCompany(company);
-        }
+        ProfileVisibilities.getVisibilities(type, workHistory, service);
 
         workHistory.clearCompanies();
-
         for (CompanyForm companyType : type.getCompanies()) {
             Company company = new Company();
             company.setDescription(companyType.getDescription());

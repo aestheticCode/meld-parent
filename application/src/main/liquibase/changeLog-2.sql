@@ -85,3 +85,144 @@ update uc_permission set method = 'GET' where path = 'usercontrol/role/table' an
 update uc_permission set method = 'GET' where path = 'social/education/find' and method = 'POST';
 update uc_permission set method = 'GET' where path = 'usercontrol/user/table' and method = 'POST';
 
+
+--changeset patrick:9
+
+    create table so_education_so_category (
+       Education_id uuid not null,
+        categories_id uuid not null,
+        primary key (Education_id, categories_id)
+    );
+
+    create table so_personalContact_so_category (
+       PersonalContact_id uuid not null,
+        categories_id uuid not null,
+        primary key (PersonalContact_id, categories_id)
+    );
+
+    alter table public.so_places
+       add column created timestamp;
+
+    alter table public.so_places
+       add column modified timestamp;
+
+    alter table public.so_places
+       add column version int4 not null DEFAULT 0;
+
+    create table so_places_so_category (
+       Places_id uuid not null,
+        categories_id uuid not null,
+        primary key (Places_id, categories_id)
+    );
+
+    create table so_workHistory_so_category (
+       WorkHistory_id uuid not null,
+        categories_id uuid not null,
+        primary key (WorkHistory_id, categories_id)
+    );
+
+    alter table so_education_so_category
+       drop constraint if exists UK_hf4qew4r5yjwr0epl2qil84yh;
+
+    alter table so_education_so_category
+       add constraint UK_hf4qew4r5yjwr0epl2qil84yh unique (categories_id);
+
+    alter table so_personalContact_so_category
+       drop constraint if exists UK_hini5mcdhmkgdhdc2d9jpc2bl;
+
+    alter table so_personalContact_so_category
+       add constraint UK_hini5mcdhmkgdhdc2d9jpc2bl unique (categories_id);
+
+    alter table so_places_so_category
+       drop constraint if exists UK_nfo0q8lpc330fcameh7sokghh;
+
+    alter table so_places_so_category
+       add constraint UK_nfo0q8lpc330fcameh7sokghh unique (categories_id);
+
+    alter table so_workHistory_so_category
+       drop constraint if exists UK_67odgjfr8oq3shkpy247fo2xf;
+
+    alter table so_workHistory_so_category
+       add constraint UK_67odgjfr8oq3shkpy247fo2xf unique (categories_id);
+
+    alter table so_education_so_category
+       add constraint FKc663ghvitx8v6x7h55s4un3t1
+       foreign key (categories_id)
+       references so_category;
+
+    alter table so_education_so_category
+       add constraint FKn96npow2nty8u2fh4u0g94e06
+       foreign key (Education_id)
+       references so_education;
+
+    alter table so_personalContact_so_category
+       add constraint FKm090aouavfpqcrt02okka8pwh
+       foreign key (categories_id)
+       references so_category;
+
+    alter table so_personalContact_so_category
+       add constraint FK56ys2mheam0bc2nk8moncfftk
+       foreign key (PersonalContact_id)
+       references so_personalContact;
+
+    alter table so_places_so_category
+       add constraint FK5mpud8by51d3qxmfhhi42a8kn
+       foreign key (categories_id)
+       references so_category;
+
+    alter table so_places_so_category
+       add constraint FK1tx0eaac18b6llou2gt85y32j
+       foreign key (Places_id)
+       references so_places;
+
+    alter table so_workHistory_so_category
+       add constraint FKkxpgu568yfydpd7a038hywid7
+       foreign key (categories_id)
+       references so_category;
+
+    alter table so_workHistory_so_category
+       add constraint FKooyccy508ax2nos038dijnclc
+       foreign key (WorkHistory_id)
+       references so_workHistory;
+
+
+
+--changeset patrick:10
+
+
+    create table so_user_profile (
+       id uuid not null,
+        created timestamp,
+        modified timestamp,
+        version int4 not null,
+        user_id uuid,
+        primary key (id)
+    );
+
+    create table so_user_profile_so_category (
+       UserProfile_id uuid not null,
+        categories_id uuid not null,
+        primary key (UserProfile_id, categories_id)
+    );
+
+    alter table so_user_profile_so_category
+       drop constraint if exists UK_5q8hwxmtgv9tjeplo7bgtp9w2;
+
+    alter table so_user_profile_so_category
+       add constraint UK_5q8hwxmtgv9tjeplo7bgtp9w2 unique (categories_id);
+
+    alter table so_user_profile
+       add constraint FKdlgxa862ghisc16wva68kka41
+       foreign key (user_id)
+       references uc_identity;
+
+    alter table so_user_profile_so_category
+       add constraint FKsx83ln1ibo406qeua7xf2hkss
+       foreign key (categories_id)
+       references so_category;
+
+    alter table so_user_profile_so_category
+       add constraint FKphr2c8bmmp9261x42751qqaa8
+       foreign key (UserProfile_id)
+       references so_user_profile;
+

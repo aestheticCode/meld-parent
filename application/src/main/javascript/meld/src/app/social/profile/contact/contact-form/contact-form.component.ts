@@ -6,12 +6,14 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Link} from '../../../../../lib/common/rest/Link';
+import {ContactDialogComponent} from './contact-dialog/contact-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-social-contact-form',
   templateUrl: 'contact-form.component.html',
   styleUrls: ['contact-form.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class ContactFormComponent extends AbstractForm<Contact> implements OnInit {
 
@@ -20,6 +22,7 @@ export class ContactFormComponent extends AbstractForm<Contact> implements OnIni
   public contact: FormGroup;
 
   constructor(private http: HttpClient,
+              private dialog : MatDialog,
               private builder: FormBuilder,
               private router: MeldRouterService) {
     super();
@@ -31,6 +34,7 @@ export class ContactFormComponent extends AbstractForm<Contact> implements OnIni
     this.links = contact.links;
 
     this.contact = this.builder.group({
+      categories : this.builder.control(contact.categories),
       chats: this.builder.array(contact.chats.map((contact) => this.builder.group(contact))),
       emails: this.builder.array(contact.emails.map((email) => this.builder.group(email))),
       phones: this.builder.array(contact.phones.map((phone) => this.builder.group(phone)))
@@ -81,6 +85,10 @@ export class ContactFormComponent extends AbstractForm<Contact> implements OnIni
 
   onDeleteChat(index: number) {
     this.chats.removeAt(index);
+  }
+
+  onVisibility() {
+    this.dialog.open(ContactDialogComponent, {data: this.contact, width: 400 + 'px'});
   }
 
   public preRequest(): boolean {

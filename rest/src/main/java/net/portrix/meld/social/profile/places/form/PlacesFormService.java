@@ -1,6 +1,8 @@
 package net.portrix.meld.social.profile.places.form;
 
+import net.portrix.meld.social.people.Category;
 import net.portrix.meld.social.profile.Address;
+import net.portrix.meld.social.profile.CategoryFinder;
 import net.portrix.meld.social.profile.Places;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
@@ -14,7 +16,7 @@ import javax.persistence.NoResultException;
 import java.util.UUID;
 
 @ApplicationScoped
-public class PlacesFormService {
+public class PlacesFormService implements CategoryFinder {
 
     private final static Logger LOG = LoggerFactory.getLogger(PlacesFormService.class);
 
@@ -60,5 +62,12 @@ public class PlacesFormService {
 
     public void removeAddress(Address address) {
         entityManager.remove(address);
+    }
+
+    @Override
+    public Category findCategory(UUID id) {
+        return entityManager.createNamedQuery("findCategoryById", Category.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

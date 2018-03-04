@@ -1,12 +1,16 @@
 package net.portrix.meld.social.profile.user.form;
 
 import com.google.common.collect.Iterables;
+import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.profile.CategoryFinder;
+import net.portrix.meld.social.profile.UserProfile;
 import net.portrix.meld.usercontrol.*;
 import org.apache.commons.lang.StringUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -16,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
-public class UserFormService {
+public class UserFormService implements CategoryFinder {
 
     private final UserManager userManager;
 
@@ -40,8 +44,19 @@ public class UserFormService {
         entityManager.remove(user);
     }
 
-    public User findUser(UUID id) {
-        return entityManager.find(User.class, id);
+    public UserProfile findUser(UUID id) {
+        UserProfile userProfile = new UserProfile();
+        try {
+            userProfile = entityManager.createNamedQuery("findUserProfileByUserId", UserProfile.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            User user = entityManager.find(User.class, id);
+            userProfile.setUser(user);
+            entityManager.persist(userProfile);
+        }
+
+        return userProfile;
     }
 
 
@@ -66,8 +81,14 @@ public class UserFormService {
                 .getSingleResult() == 0;
     }
 
-    public void save(User user) {
-        userManager.save(user);
+    public void save(UserProfile user) {
+        userManager.save(user.getUser());
     }
 
+    @Override
+    public Category findCategory(UUID id) {
+        return entityManager.createNamedQuery("findCategoryById", Category.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
 }

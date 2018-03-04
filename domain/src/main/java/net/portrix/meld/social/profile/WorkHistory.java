@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @Table(name = "so_workHistory")
 @NamedQuery(name = "findWorkHistory", query = "select w from WorkHistory w where w.user = :user")
-public class WorkHistory extends AbstractAggregate {
+public class WorkHistory extends AbstractProfileVisibility {
 
     @OneToOne
     private User user;

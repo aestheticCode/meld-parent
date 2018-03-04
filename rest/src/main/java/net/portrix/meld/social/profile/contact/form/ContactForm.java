@@ -2,13 +2,14 @@ package net.portrix.meld.social.profile.contact.form;
 
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
+import net.portrix.meld.social.profile.AbstractRestProfileVisibility;
 
 import java.util.*;
 
 /**
  * @author Patrick Bittner on 21/12/2016.
  */
-public class ContactForm implements LinksContainer {
+public class ContactForm extends AbstractRestProfileVisibility implements LinksContainer {
 
     private UUID id;
 

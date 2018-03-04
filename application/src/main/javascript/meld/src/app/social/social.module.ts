@@ -38,6 +38,12 @@ import { CategoryFormComponent } from './people/category/categories-form/categor
 import { SchoolSelectComponent } from './profile/education/school-select/school-select.component';
 import { AddressSelectComponent } from './profile/places/address-select/address-select.component';
 import { CompanySelectComponent } from './profile/work-history/company-select/company-select.component';
+import { CategoryMultiSelectComponent } from './people/category/category-multi-select/category-multi-select.component';
+import {EducationDialogComponent} from './profile/education/education-form/education-dialog/education-dialog.component';
+import { ContactDialogComponent } from './profile/contact/contact-form/contact-dialog/contact-dialog.component';
+import { PlacesDialogComponent } from './profile/places/places-form/places-dialog/places-dialog.component';
+import { UserDialogComponent } from './profile/user/user-form/user-dialog/user-dialog.component';
+import { WorkHistoryDialogComponent } from './profile/work-history/work-history-form/work-history-dialog/work-history-dialog.component';
 
 @NgModule({
   imports: [
@@ -82,6 +88,12 @@ import { CompanySelectComponent } from './profile/work-history/company-select/co
     SchoolSelectComponent,
     AddressSelectComponent,
     CompanySelectComponent,
+    EducationDialogComponent,
+    CategoryMultiSelectComponent,
+    ContactDialogComponent,
+    PlacesDialogComponent,
+    UserDialogComponent,
+    WorkHistoryDialogComponent,
   ],
   exports: [
     ContactFormComponent,
@@ -114,10 +126,19 @@ import { CompanySelectComponent } from './profile/work-history/company-select/co
     CategoryComponent,
     AddressMapComponent,
     AddressViewComponent,
-    CategorySelectDialogComponent
+    CategorySelectDialogComponent,
+    ContactDialogComponent,
+    PlacesDialogComponent,
+    UserDialogComponent,
+    WorkHistoryDialogComponent
   ],
   entryComponents: [
-    CategorySelectDialogComponent
+    CategorySelectDialogComponent,
+    EducationDialogComponent,
+    ContactDialogComponent,
+    PlacesDialogComponent,
+    UserDialogComponent,
+    WorkHistoryDialogComponent
   ],
   providers : [
     appRoutingProviders

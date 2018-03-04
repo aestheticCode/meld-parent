@@ -1,17 +1,18 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {NgModel} from '@angular/forms';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {UserForm} from '../user.interfaces';
 import {Enum} from '../../../../../lib/pipe/meld-enum/meld-enum.interfaces';
 import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
 import {AbstractForm} from '../../../../../lib/common/forms/AbstractForm';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import {UserDialogComponent} from './user-dialog/user-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: 'user-form.component.html',
   styleUrls: ['user-form.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class UserFormComponent extends AbstractForm<UserForm> implements OnInit {
 
@@ -20,12 +21,17 @@ export class UserFormComponent extends AbstractForm<UserForm> implements OnInit 
   public genders: Enum[] = [{value: 'MALE', label: 'Male'}, {value: 'FEMALE', label: 'Female'}];
 
   constructor(private http: HttpClient,
+              private dialog: MatDialog,
               private router: MeldRouterService) {
     super();
   }
 
   ngOnInit() {
     this.user = this.router.data.user;
+  }
+
+  onVisibility() {
+    this.dialog.open(UserDialogComponent, {data: this.user, width: 400 + 'px'});
   }
 
   public saveRequest(): Observable<UserForm> {

@@ -1,5 +1,6 @@
 package net.portrix.meld.usercontrol;
 
+import net.portrix.meld.social.people.Category;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
@@ -8,6 +9,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Patrick Bittner on 31/01/15.
@@ -15,18 +18,15 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "uc_user")
 @NamedQueries({
-        @NamedQuery(name = "findUser", query = "select u from User u where u.name = :name"),
+        @NamedQuery(name = "findUserByName", query = "select u from User u where u.name = :name"),
         @NamedQuery(name = "findUserByExternal", query = "select u from User u where u.externalId = :id")
 })
-@Indexed
 public class User extends Identity {
 
     private String externalId;
 
-    @Field
     private String firstName;
 
-    @Field
     private String lastName;
 
     private Gender gender;

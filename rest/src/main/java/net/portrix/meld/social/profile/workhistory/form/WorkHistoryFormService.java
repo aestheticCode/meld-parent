@@ -1,5 +1,7 @@
 package net.portrix.meld.social.profile.workhistory.form;
 
+import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.profile.CategoryFinder;
 import net.portrix.meld.social.profile.Company;
 import net.portrix.meld.social.profile.WorkHistory;
 import net.portrix.meld.usercontrol.User;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
-public class WorkHistoryFormService {
+public class WorkHistoryFormService implements CategoryFinder {
 
     private final UserManager userManager;
 
@@ -64,5 +66,12 @@ public class WorkHistoryFormService {
 
     public void removeCompany(Company company) {
         entityManager.remove(company);
+    }
+
+    @Override
+    public Category findCategory(UUID id) {
+        return entityManager.createNamedQuery("findCategoryById", Category.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

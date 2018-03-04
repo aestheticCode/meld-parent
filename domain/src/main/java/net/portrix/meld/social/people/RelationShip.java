@@ -5,10 +5,12 @@ import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "so_relationship")
+@NamedQuery(name = "findRelationByFromUserAndToUser", query = "select r from RelationShip r where r.from = :from and r.to = :to")
 public class RelationShip extends AbstractEntity {
 
     @ManyToOne

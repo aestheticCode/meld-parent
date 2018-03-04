@@ -6,6 +6,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {Link} from '../../../../../lib/common/rest/Link';
+import {MatDialog} from '@angular/material';
+import {EducationDialogComponent} from './education-dialog/education-dialog.component';
 
 @Component({
   selector: 'app-social-education-form',
@@ -21,6 +23,7 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
 
   constructor(private http: HttpClient,
               private builder: FormBuilder,
+              private dialog : MatDialog,
               private router: MeldRouterService) {
     super();
   }
@@ -32,6 +35,7 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
 
     this.education = this.builder.group({
       id : this.builder.control(education.id),
+      categories : this.builder.control(education.categories),
       schools: this.builder.array(education.schools.map((school) => {
         return this.builder.group({
           id: this.builder.control(school.id),
@@ -81,9 +85,9 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
   onDeleteSchool(index: number) {
     this.schools.removeAt(index);
   }
-  
+
   onVisibility() {
-    
+    this.dialog.open(EducationDialogComponent, {data : this.education, width : 400 + 'px'});
   }
 
   public preRequest(): boolean {
@@ -105,6 +109,5 @@ export class EducationFormComponent extends AbstractForm<Education> implements O
   public postRequest() {
     this.router.navigate(['social', 'profile', this.router.param.id, {outlets: {profile: ['education', 'view']}}]);
   }
-
 
 }

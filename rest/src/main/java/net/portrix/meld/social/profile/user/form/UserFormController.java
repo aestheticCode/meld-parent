@@ -4,6 +4,8 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
+import net.portrix.meld.social.profile.ProfileVisibilities;
+import net.portrix.meld.social.profile.UserProfile;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
 import org.slf4j.Logger;
@@ -65,19 +67,21 @@ public class UserFormController {
     @Transactional
     public UserForm read(@PathParam("id") UUID id) {
 
-        final User user = service.findUser(id);
+        final UserProfile user = service.findUser(id);
 
         UserForm response = new UserForm();
-        response.setId(user.getId());
+        response.setId(user.getUser().getId());
 
-        response.setFirstName(user.getFirstName());
-        response.setLastName(user.getLastName());
-        response.setBirthday(user.getBirthdate());
-        response.setGender(user.getGender());
+        ProfileVisibilities.setVisibilities(user, response);
+
+        response.setFirstName(user.getUser().getFirstName());
+        response.setLastName(user.getUser().getLastName());
+        response.setBirthday(user.getUser().getBirthdate());
+        response.setGender(user.getUser().getGender());
 
         User currentUser = service.currentUser();
 
-        if (user.equals(currentUser)) {
+        if (user.getUser().equals(currentUser)) {
             linkUpdate(builderFactory)
                     .buildSecured(response::addLink);
             linkDelete(builderFactory)
@@ -96,20 +100,23 @@ public class UserFormController {
     @Transactional
     @Name("User Form Update")
     public UserForm update(final UserForm form) {
-        final User user = service.currentUser();
-        user.setFirstName(form.getFirstName());
-        user.setLastName(form.getLastName());
-        user.setBirthdate(form.getBirthday());
-        user.setGender(form.getGender());
+        final UserProfile user = service.findUser(service.currentUser().getId());
+
+        ProfileVisibilities.getVisibilities(form, user, service);
+
+        user.getUser().setFirstName(form.getFirstName());
+        user.getUser().setLastName(form.getLastName());
+        user.getUser().setBirthdate(form.getBirthday());
+        user.getUser().setGender(form.getGender());
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("dMMMuuuu")
                 .toFormatter();
         String birthday = form.getBirthday().format(formatter);
         String userId = form.getFirstName() + form.getLastName() + birthday;
-        user.setName(userId);
+        user.getUser().setName(userId);
 
-        return read(user.getId());
+        return read(user.getUser().getId());
     }
 
     @Secured
@@ -118,22 +125,25 @@ public class UserFormController {
     @Transactional
     @Name("User Form Save")
     public UserForm save(final UserForm form) {
-        final User user = new User();
-        user.setFirstName(form.getFirstName());
-        user.setLastName(form.getLastName());
-        user.setBirthdate(form.getBirthday());
-        user.setGender(form.getGender());
+        final UserProfile user = new UserProfile();
+
+        ProfileVisibilities.getVisibilities(form, user, service);
+
+        user.getUser().setFirstName(form.getFirstName());
+        user.getUser().setLastName(form.getLastName());
+        user.getUser().setBirthdate(form.getBirthday());
+        user.getUser().setGender(form.getGender());
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("dMMMuuuu")
                 .toFormatter();
         String birthday = form.getBirthday().format(formatter);
         String userId = form.getFirstName() + form.getLastName() + birthday;
-        user.setName(userId);
+        user.getUser().setName(userId);
 
         service.save(user);
 
-        return read(user.getId());
+        return read(user.getUser().getId());
     }
 
     @Secured

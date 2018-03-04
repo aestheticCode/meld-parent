@@ -1,6 +1,7 @@
 package net.portrix.meld.social.profile;
 
 import net.portrix.meld.media.photos.Photo;
+import net.portrix.meld.social.people.RelationShip;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
 
@@ -91,5 +92,12 @@ public class ProfileService {
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    public RelationShip findRelation(User currentUser, User user) {
+        return entityManager.createNamedQuery("findRelationByFromUserAndToUser", RelationShip.class)
+                .setParameter("from", currentUser)
+                .setParameter("to", user)
+                .getSingleResult();
     }
 }

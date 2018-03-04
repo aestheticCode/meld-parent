@@ -1,6 +1,8 @@
 package net.portrix.meld.social.profile.contact.form;
 
 import net.portrix.generic.phone.PhoneNumbers;
+import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.profile.CategoryFinder;
 import net.portrix.meld.social.profile.PersonalContact;
 import net.portrix.meld.usercontrol.User;
 import net.portrix.meld.usercontrol.UserManager;
@@ -12,7 +14,7 @@ import javax.persistence.NoResultException;
 import java.util.UUID;
 
 @ApplicationScoped
-public class ContactFormService {
+public class ContactFormService implements CategoryFinder {
 
     private final PhoneNumbers phoneNumbers;
 
@@ -59,5 +61,12 @@ public class ContactFormService {
 
     public String formatPhoneNumber(String number) {
         return phoneNumbers.format(number);
+    }
+
+    @Override
+    public Category findCategory(UUID id) {
+        return entityManager.createNamedQuery("findCategoryById", Category.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

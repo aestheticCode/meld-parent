@@ -5,10 +5,9 @@ import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.google.details.LocationDetailForm;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.social.profile.Education;
-import net.portrix.meld.social.profile.Place;
-import net.portrix.meld.social.profile.School;
-import net.portrix.meld.social.profile.SchoolDate;
+import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.people.find.table.CategorySelect;
+import net.portrix.meld.social.profile.*;
 import net.portrix.meld.usercontrol.User;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -85,6 +84,8 @@ public class EducationFormController {
         final EducationForm form = new EducationForm();
         form.setId(education.getId());
 
+        ProfileVisibilities.setVisibilities(education, form);
+
         for (School school : education.getSchools()) {
             SchoolForm schoolFormType = new SchoolForm();
             schoolFormType.setCourse(school.getCourse());
@@ -153,6 +154,8 @@ public class EducationFormController {
 
         final Education education = new Education();
 
+        ProfileVisibilities.getVisibilities(form, education, service);
+
         for (SchoolForm schoolType : form.getSchools()) {
             School school = new School();
             school.setCourse(schoolType.getCourse());
@@ -213,9 +216,7 @@ public class EducationFormController {
 
         Education education = service.findEducation(user);
 
-        for (School school : education.getSchools()) {
-            service.removeSchool(school);
-        }
+        ProfileVisibilities.getVisibilities(form, education, service);
 
         education.clearSchools();
 

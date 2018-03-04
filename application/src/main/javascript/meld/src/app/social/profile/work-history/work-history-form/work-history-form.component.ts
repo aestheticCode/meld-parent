@@ -6,6 +6,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {Link} from '../../../../../lib/common/rest/Link';
+import {WorkHistoryDialogComponent} from './work-history-dialog/work-history-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-work-history-form',
@@ -20,6 +22,7 @@ export class WorkHistoryFormComponent extends AbstractForm<WorkHistory> implemen
   public links: Link[];
 
   constructor(private http: HttpClient,
+              private dialog : MatDialog,
               private builder: FormBuilder,
               private router: MeldRouterService) {
     super();
@@ -31,7 +34,8 @@ export class WorkHistoryFormComponent extends AbstractForm<WorkHistory> implemen
     this.links = workHistory.links;
 
     this.workHistory = this.builder.group({
-      id : this.builder.control(workHistory.id),
+      id: this.builder.control(workHistory.id),
+      categories : this.builder.control(workHistory.categories),
       companies: this.builder.array(workHistory.companies.map((company) => this.builder.group(company)))
     });
   }
@@ -43,7 +47,7 @@ export class WorkHistoryFormComponent extends AbstractForm<WorkHistory> implemen
   onCreateAddress() {
     this.companies.push(this.builder.group({
       id: this.builder.control(''),
-      name : this.builder.control(""),
+      name: this.builder.control(''),
       location: this.builder.control(null),
       title: this.builder.control(''),
       description: this.builder.control(''),
@@ -55,6 +59,10 @@ export class WorkHistoryFormComponent extends AbstractForm<WorkHistory> implemen
 
   onDeleteAddress(index: number) {
     this.companies.removeAt(index);
+  }
+
+  onVisibility() {
+    this.dialog.open(WorkHistoryDialogComponent, {data: this.workHistory, width: 400 + 'px'});
   }
 
   public preRequest(): boolean {

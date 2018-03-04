@@ -1,12 +1,9 @@
 package net.portrix.meld.social.profile;
 
-import net.portrix.generic.ddd.AbstractEntity;
 import net.portrix.meld.usercontrol.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,7 +12,7 @@ import java.util.Set;
 @Entity
 @Table(name = "so_places")
 @NamedQuery(name = "findPlaces", query = "select p from Places p where p.user = :user")
-public class Places extends AbstractEntity {
+public class Places extends AbstractProfileVisibility {
 
     @OneToOne
     private User user;

@@ -6,6 +6,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Link} from '../../../../../lib/common/rest/Link';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {EducationDialogComponent} from '../../education/education-form/education-dialog/education-dialog.component';
+import {PlacesDialogComponent} from './places-dialog/places-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-social-places-form',
@@ -20,6 +23,7 @@ export class PlacesFormComponent extends AbstractForm<Places> implements OnInit 
   public links: Link[];
 
   constructor(private http: HttpClient,
+              private dialog : MatDialog,
               private builder: FormBuilder,
               private router: MeldRouterService) {
     super();
@@ -32,6 +36,7 @@ export class PlacesFormComponent extends AbstractForm<Places> implements OnInit 
 
     this.places = this.builder.group({
       id : this.builder.control(places.id),
+      categories : this.builder.control(places.categories),
       addresses: this.builder.array(places.addresses.map((place) => {
         return this.builder.group(place);
       }))
@@ -53,6 +58,10 @@ export class PlacesFormComponent extends AbstractForm<Places> implements OnInit 
 
   onDeleteAddress(index: number) {
     this.addresses.removeAt(index);
+  }
+
+  onVisibility() {
+    this.dialog.open(PlacesDialogComponent, {data : this.places, width : 400 + 'px'});
   }
 
   public preRequest(): boolean {

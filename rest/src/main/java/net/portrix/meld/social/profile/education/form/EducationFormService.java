@@ -1,5 +1,7 @@
 package net.portrix.meld.social.profile.education.form;
 
+import net.portrix.meld.social.people.Category;
+import net.portrix.meld.social.profile.CategoryFinder;
 import net.portrix.meld.social.profile.Education;
 import net.portrix.meld.social.profile.School;
 import net.portrix.meld.usercontrol.User;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
-public class EducationFormService {
+public class EducationFormService implements CategoryFinder {
 
     private final EntityManager entityManager;
 
@@ -65,5 +67,11 @@ public class EducationFormService {
 
     public void removeSchool(School school) {
         entityManager.remove(school);
+    }
+
+    public Category findCategory(UUID id) {
+        return entityManager.createNamedQuery("findCategoryById", Category.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

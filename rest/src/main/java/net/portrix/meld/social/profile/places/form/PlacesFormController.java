@@ -8,6 +8,7 @@ import net.portrix.generic.rest.jsr339.Name;
 import net.portrix.meld.social.profile.Address;
 import net.portrix.meld.social.profile.Place;
 import net.portrix.meld.social.profile.Places;
+import net.portrix.meld.social.profile.ProfileVisibilities;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;
 
@@ -88,6 +89,9 @@ public class PlacesFormController {
         PlacesForm placesForm = new PlacesForm();
         placesForm.setId(places.getId());
 
+        ProfileVisibilities.setVisibilities(places, placesForm);
+
+
         for (Address address : places.getAddresses()) {
             AddressForm responseType = new AddressForm();
 
@@ -139,6 +143,8 @@ public class PlacesFormController {
         Places places = new Places();
         places.setUser(user);
 
+        ProfileVisibilities.getVisibilities(form, places, service);
+
         for (AddressForm addressType : form.getAddresses()) {
             Address address = new Address();
 
@@ -179,9 +185,7 @@ public class PlacesFormController {
 
         final Places places = service.findPlaces(user);
 
-        for (Address address : places.getAddresses()) {
-            service.removeAddress(address);
-        }
+        ProfileVisibilities.getVisibilities(form, places, service);
 
         places.clearAddresses();
 
