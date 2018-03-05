@@ -1,4 +1,4 @@
-import {Component, forwardRef, HostBinding, Input, Optional, Self, ViewEncapsulation} from '@angular/core';
+import {Component, forwardRef, HostBinding, Input, Optional, Self, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
 import {Place} from './meld-google-maps-autocomplete.interfaces';
@@ -30,11 +30,11 @@ export class MeldGoogleMapsAutocompleteComponent extends AbstractControl<Place> 
   id = `meld-google-maps-autocomplete-${MeldComboBoxComponent.nextId++}`;
 
   get focused() {
-    return false;
+    return this.comboBox.focused;
   }
 
   onContainerClick(event: MouseEvent): void {
-    //this.input.nativeElement.focus();
+    this.comboBox.focus();
   }
 
   get empty() {
@@ -48,6 +48,9 @@ export class MeldGoogleMapsAutocompleteComponent extends AbstractControl<Place> 
 
   @Input("name")
   public name : string;
+
+  @ViewChild("comboBox")
+  private comboBox : MeldComboBoxComponent;
 
   constructor(private http: HttpClient,
               @Optional() @Self() public ngControl: NgControl) {

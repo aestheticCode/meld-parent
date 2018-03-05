@@ -145,6 +145,10 @@ export class MeldComboBoxComponent extends AbstractControl<any> implements OnCha
     return item['name'];
   };
 
+  focus() {
+    this.input.nativeElement.focus();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.table && changes['itemValuePath']) {
       this.table.itemValue = this.itemValue;

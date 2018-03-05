@@ -1,11 +1,20 @@
 import {
-  Component, ComponentFactoryResolver, ElementRef, forwardRef, HostBinding, HostListener, Injector, Input, Optional, Self, ViewChild,
-  ViewContainerRef, ViewEncapsulation
+  Component,
+  ComponentFactoryResolver,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Injector,
+  Input,
+  Optional,
+  Self,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation
 } from '@angular/core';
 import {MatDialog, MatFormFieldControl} from '@angular/material';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
+import {NgControl} from '@angular/forms';
 import {Strings} from '../../common/utils/Strings';
-import {Subject} from 'rxjs/Subject';
 import {MeldDigitComponent} from './meld-digit/meld-digit.component';
 import {MeldMonthComponent} from './meld-month/meld-month.component';
 import {MeldSeparatorComponent} from './meld-separator/meld-separator.component';
@@ -23,9 +32,9 @@ const noop = () => {
   providers: [
     {provide: MatFormFieldControl, useExisting: MeldDateComponent}
   ],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
-export class MeldDateComponent extends AbstractControl<string>  {
+export class MeldDateComponent extends AbstractControl<string> {
 
   static nextId = 0;
 
@@ -46,7 +55,7 @@ export class MeldDateComponent extends AbstractControl<string>  {
   }
 
   onContainerClick(event: MouseEvent): void {
-    //this.open();
+    this.open();
   }
 
 
@@ -195,22 +204,24 @@ export class MeldDateComponent extends AbstractControl<string>  {
   }
 
   open() {
-    let element: HTMLElement = this.nativeElement;
-    let clientRect = element.getBoundingClientRect();
-    let config = {
-      hasBackdrop: true,
-      data: {date: this.value}
-    };
-    let dialogRef = this.dialog.open(MeldDatePickerComponent, config);
+    if (this.dialog.openDialogs.length === 0) {
+      let element: HTMLElement = this.nativeElement;
+      let clientRect = element.getBoundingClientRect();
+      let config = {
+        hasBackdrop: true,
+        data: {date: this.value}
+      };
+      let dialogRef = this.dialog.open(MeldDatePickerComponent, config);
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const format = moment(result).format('YYYY-MM-DD');
-        this.value = format;
-        this.onChangeCallback(this.value);
-        this.processDate();
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          const format = moment(result).format('YYYY-MM-DD');
+          this.value = format;
+          this.onChangeCallback(this.value);
+          this.processDate();
+        }
+      });
+    }
   }
 
 
