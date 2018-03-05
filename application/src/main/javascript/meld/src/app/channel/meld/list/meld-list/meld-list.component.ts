@@ -1,12 +1,11 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {Item} from './meld-item/meld-item.interfaces';
 import {AppService} from '../../../../app.service';
-import {NormalSort, QueryBuilder} from '../../../../../lib/common/search/search.classes';
+import {QueryBuilder} from '../../../../../lib/common/search/search.classes';
 import {Items} from '../../../../../lib/common/search/search.interfaces';
 import {HttpClient} from '@angular/common/http';
 import {Container} from '../../../../../lib/common/rest/Container';
 import {MeldRouterService} from '../../../../../lib/service/meld-router/meld-router.service';
-import {RestExpression} from '../../../../../lib/common/search/expression.interfaces';
 
 @Component({
   selector: 'app-meld-list',
@@ -18,14 +17,15 @@ export class MeldListComponent {
 
   constructor(private http: HttpClient,
               private service: AppService,
-              private router: MeldRouterService) {}
+              private router: MeldRouterService) {
+  }
 
   posts: Items<Item> = (query, callback) => {
 
     const params = {
-      index : query.index.toString(),
-      limit : query.limit.toString(),
-      sort : 'created:desc'
+      index: query.index.toString(),
+      limit: query.limit.toString(),
+      sort: 'created:desc'
     };
 
     if (this.router.queryParam.home) {
@@ -33,10 +33,10 @@ export class MeldListComponent {
     }
 
     if (this.router.queryParam.profile) {
-      params['profile'] = 'true';
+      params['profile'] = this.router.queryParam.id;
     }
 
-    this.http.get<Container<Item>>('service/channel/meld/posts/', {params : params})
+    this.http.get<Container<Item>>('service/channel/meld/posts/', {params: params})
       .subscribe((res: Container<Item>) => {
         callback(res.rows, null);
       });

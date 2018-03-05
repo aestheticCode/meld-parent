@@ -9,6 +9,7 @@ import net.portrix.meld.channel.meld.list.provider.ProfileProvider;
 
 import javax.ws.rs.QueryParam;
 import java.util.List;
+import java.util.UUID;
 
 public class MeldSearch extends AbstractRestSearch {
 
@@ -22,7 +23,7 @@ public class MeldSearch extends AbstractRestSearch {
 
     @RestPredicate(ProfileProvider.class)
     @QueryParam("profile")
-    private boolean profile;
+    private UUID profile;
 
     public List<String> getSort() {
         return sort;
@@ -40,11 +41,11 @@ public class MeldSearch extends AbstractRestSearch {
         this.home = home;
     }
 
-    public boolean isProfile() {
+    public UUID getProfile() {
         return profile;
     }
 
-    public void setProfile(boolean profile) {
+    public void setProfile(UUID profile) {
         this.profile = profile;
     }
 }
