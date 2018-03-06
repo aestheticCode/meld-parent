@@ -44,6 +44,10 @@ import { ContactDialogComponent } from './profile/contact/contact-form/contact-d
 import { PlacesDialogComponent } from './profile/places/places-form/places-dialog/places-dialog.component';
 import { UserDialogComponent } from './profile/user/user-form/user-dialog/user-dialog.component';
 import { WorkHistoryDialogComponent } from './profile/work-history/work-history-form/work-history-dialog/work-history-dialog.component';
+import { CommunitiesComponent } from './communities/communities.component';
+import { FindViewComponent as FindViewComponent2 } from './communities/find/find-view/find-view.component';
+import { RecommendedViewComponent } from './communities/find/recommended-view/recommended-view.component';
+import { InvitationsViewComponent } from './communities/find/invitations-view/invitations-view.component';
 
 @NgModule({
   imports: [
@@ -94,6 +98,10 @@ import { WorkHistoryDialogComponent } from './profile/work-history/work-history-
     PlacesDialogComponent,
     UserDialogComponent,
     WorkHistoryDialogComponent,
+    CommunitiesComponent,
+    FindViewComponent2,
+    RecommendedViewComponent,
+    InvitationsViewComponent,
   ],
   exports: [
     ContactFormComponent,
@@ -130,7 +138,10 @@ import { WorkHistoryDialogComponent } from './profile/work-history/work-history-
     ContactDialogComponent,
     PlacesDialogComponent,
     UserDialogComponent,
-    WorkHistoryDialogComponent
+    WorkHistoryDialogComponent,
+    FindViewComponent2,
+    RecommendedViewComponent,
+    InvitationsViewComponent,
   ],
   entryComponents: [
     CategorySelectDialogComponent,
