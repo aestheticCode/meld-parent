@@ -4,8 +4,8 @@ import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
 import net.portrix.generic.rest.api.Blob;
 import net.portrix.meld.usercontrol.Gender;
-import net.portrix.meld.usercontrol.group.multiselect.GroupSelect;
-import net.portrix.meld.usercontrol.role.multiselect.RoleSelect;
+import net.portrix.meld.usercontrol.group.select.GroupSelect;
+import net.portrix.meld.usercontrol.role.select.RoleSelect;
 
 import java.time.LocalDate;
 import java.util.HashSet;

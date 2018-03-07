@@ -6,7 +6,7 @@ import {UserViewComponent} from './user/form/user-view/user-view.component';
 import {UserCreateGuard, UserEditGuard} from './user/form/user.guard';
 import {UserFormComponent} from './user/form/user-form/user-form.component';
 import {LoginFormComponent} from './login/form/login-form/login-form.component';
-import {UserRegistrationComponent} from './user/registration/user-registration/user-registration.component';
+import {UserRegistrationComponent} from './user/registration/form/user-registration/user-registration.component';
 import {LogoutFormComponent} from './logout/form/logout-form/logout-form.component';
 import {RoleTableComponent} from './role/table/role-table/role-table.component';
 import {RoleTableGuard} from './role/table/role-table/role-table.guard';

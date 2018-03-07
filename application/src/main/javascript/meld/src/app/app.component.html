@@ -38,6 +38,11 @@
           <span style="margin-left: 12px;"><strong>People</strong></span>
         </a>
 
+        <a class="link" *ngIf="links | meldLink:'communities';" routerLink="social/communities"  routerLinkActive="active">
+          <i style="margin-left :24px; vertical-align: middle;" class="material-icons">people_outline</i>
+          <span style="margin-left: 12px;"><strong>Communities</strong></span>
+        </a>
+
         <a class="link" *ngIf="links | meldLink:'photos';" routerLink="media/photos" routerLinkActive="active">
           <i style="margin-left :24px; vertical-align: middle;" class="material-icons">photo_camera</i>
           <span style="margin-left: 12px;"><strong>Photos</strong></span>

@@ -4,8 +4,6 @@ import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
-import net.portrix.meld.social.people.Category;
-import net.portrix.meld.social.people.find.table.CategorySelect;
 import net.portrix.meld.social.profile.*;
 import net.portrix.meld.usercontrol.User;
 import org.picketlink.Identity;

@@ -2,8 +2,6 @@ package net.portrix.meld.social.profile.education.form;
 
 import net.portrix.generic.rest.api.Link;
 import net.portrix.generic.rest.api.LinksContainer;
-import net.portrix.meld.social.people.Category;
-import net.portrix.meld.social.people.find.table.CategorySelect;
 import net.portrix.meld.social.profile.AbstractRestProfileVisibility;
 
 import java.util.*;

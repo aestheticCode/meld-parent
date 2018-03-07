@@ -3,10 +3,11 @@ package net.portrix.meld;
 import net.portrix.generic.image.ImageUtils;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.api.Blob;
-import net.portrix.meld.channel.meld.list.MeldListController;
+import net.portrix.meld.channel.meld.post.list.MeldListController;
 import net.portrix.meld.media.photos.form.PhotoFormController;
 import net.portrix.meld.media.photos.grid.PhotoGridController;
-import net.portrix.meld.social.people.category.table.CategoryTableController;
+import net.portrix.meld.social.communities.CommunitiesController;
+import net.portrix.meld.social.people.PeopleController;
 import net.portrix.meld.social.profile.Profile;
 import net.portrix.meld.social.profile.ProfileController;
 import net.portrix.meld.usercontrol.User;
@@ -99,7 +100,9 @@ public class ApplicationController {
                     .buildSecured(application::addLink);
             ProfileController.linkProfile(builderFactory)
                     .buildSecured(application::addLink);
-            CategoryTableController.linkProfile(builderFactory)
+            PeopleController.linkPeople(builderFactory)
+                    .buildSecured(application::addLink);
+            CommunitiesController.linkCommunities(builderFactory)
                     .buildSecured(application::addLink);
             PhotoGridController.linkList(builderFactory)
                     .buildSecured(application::addLink);

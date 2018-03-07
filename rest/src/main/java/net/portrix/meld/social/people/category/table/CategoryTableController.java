@@ -58,7 +58,7 @@ public class CategoryTableController {
         return builderFactory
                 .from(CategoryTableController.class)
                 .record(method -> method.list(null))
-                .rel("people");
+                .rel("categories");
     }
 
 }

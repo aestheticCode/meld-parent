@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Response} from '@angular/http';
 import {GroupForm} from './group-form.interfaces';
 import {NgModel} from '@angular/forms';
-import {RoleSelect} from '../../../role/multiselect/role-multiselect/role-multiselect.interfaces';
+import {RoleSelect} from '../../../role/select/role-multiselect/role-multiselect.interfaces';
 import {HttpClient} from '@angular/common/http';
 import {MeldRouterService} from 'lib/service/meld-router/meld-router.service';
 import {AbstractForm} from 'lib/common/forms/AbstractForm';
