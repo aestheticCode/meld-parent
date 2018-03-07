@@ -48,6 +48,18 @@
             <dependencies>
 
                 <dependency>
+                    <groupId>javax.validation</groupId>
+                    <artifactId>validation-api</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+
+                <dependency>
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
                     <version>42.1.3</version>
@@ -136,8 +148,8 @@
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
-                    <groupId>org.jboss.weld</groupId>
-                    <artifactId>weld-api</artifactId>
+                    <groupId>javax.enterprise</groupId>
+                    <artifactId>cdi-api</artifactId>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
