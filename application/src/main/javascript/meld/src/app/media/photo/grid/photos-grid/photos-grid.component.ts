@@ -30,7 +30,7 @@ export class PhotosGridComponent {
 
     const params = {
       index : query.index.toString(),
-      limit : query.limit.toString()
+      limit : "" + 75
     };
 
     this.http.get<Container<Photo>>('service/media/photos/grid', {params : params})

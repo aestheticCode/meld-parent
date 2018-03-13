@@ -1,9 +1,9 @@
-<div style="height: 100%; position: relative;">
-  <div class="container-fluid" style="margin-top: 12px; height: 100%;">
-    <div class="row justify-content-center" style="height: 100%;">
+<div style="position: relative;">
+  <div class="container-fluid" style="margin-top: 12px;">
+    <div class="row justify-content-center">
       <div class="col-md-12">
-        <mat-card style="height: calc(100% - 24px)">
-          <meld-grid style="width: 100%;" [(ngModel)]="selectedPhotos" #grid [items]="photos" [rowHeight]="162" [columnWidth]="162">
+        <mat-card>
+          <meld-grid style="max-height: calc(100vh - 200px); width: 100%;" [(ngModel)]="selectedPhotos" #grid [items]="photos" [rowHeight]="162" [columnWidth]="162">
             <ng-template let-photo>
               <img style="width: 100%; background-size: cover; background-position: center;"
                    [src]="photo.image | meldBinaryImage">
@@ -14,8 +14,8 @@
     </div>
   </div>
   <div style="position: absolute; bottom : 40px; right: 40px;">
-    <button type="button"  mat-button (click)="upload()" >Upload</button>
-    <button type="button"  *ngIf="selectedPhotos.length > 0" mat-button (click)="delete()">Delete</button>
+    <button type="button" mat-button (click)="upload()" style="background-color: white">Upload</button>
+    <button type="button" *ngIf="selectedPhotos.length > 0" mat-button (click)="delete()">Delete</button>
   </div>
 </div>
 
