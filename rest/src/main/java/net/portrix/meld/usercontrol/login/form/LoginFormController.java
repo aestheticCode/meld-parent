@@ -100,7 +100,7 @@ public class LoginFormController {
                 .build(loginForm::addLink);
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("dMMMuuuu")
+                .appendPattern("ddMMMuuuu")
                 .toFormatter();
         String birthday = loginForm.getBirthday().format(formatter);
         String userId = loginForm.getFirstName() + loginForm.getLastName() + birthday;
