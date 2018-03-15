@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<div style="margin: 12px;">
+
+  <mat-card style="width: 100%;">
+    <mat-card-content>
+      <form>
+        <fieldset>
+          <legend>Role</legend>
+          <mat-input-container style="width: 100%">
+            <input matInput placeholder="Name" [(ngModel)]="role.name" name="name"
+                   minlength="3" maxlength="100" required #name="ngModel" #input>
+          </mat-input-container>
+        </fieldset>
+        <fieldset>
+          <legend>Permissions</legend>
+          <meld-table name="permissions" [items]="permissions" [(ngModel)]="role.permissions" [menu]="true"
+                      itemValuePath="id" style="max-height: calc(100vh - 330px);" [multiSelect]="true" [rowHeight]="36">
+            <meld-colgroup>
+              <meld-col [width]="300" [path]="'name'"></meld-col>
+              <meld-col [width]="300" [path]="'path'"></meld-col>
+              <meld-col [width]="100" [path]="'method'"></meld-col>
+              <meld-col [width]="100" [path]="'created'"></meld-col>
+            </meld-colgroup>
+            <meld-thead>
+              <meld-tr>
+                <meld-td><ng-template>Name</ng-template></meld-td>
+                <meld-td><ng-template>Path</ng-template></meld-td>
+                <meld-td><ng-template>Method</ng-template></meld-td>
+                <meld-td><ng-template>Created</ng-template></meld-td>
+              </meld-tr>
+            </meld-thead>
+            <meld-tbody>
+              <meld-tr>
+                <meld-td><ng-template let-permission>{{permission.name}}</ng-template></meld-td>
+                <meld-td><ng-template let-permission>{{permission.path}}</ng-template></meld-td>
+                <meld-td><ng-template let-permission>{{permission.method}}</ng-template></meld-td>
+                <meld-td><ng-template let-permission>{{permission.created}}</ng-template></meld-td>
+              </meld-tr>
+            </meld-tbody>
+          </meld-table>
+        </fieldset>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="button"  mat-button (click)="onSave()" *ngIf="role.links | meldLink:'save'">Save</button>
+      <button type="button"  mat-button (click)="onUpdate()" *ngIf="role.links | meldLink:'update'">Update</button>
+      <button type="button"  mat-button (click)="onDelete()" *ngIf="role.links | meldLink:'delete'">Delete</button>
+      <button type="button"  mat-button (click)="onCancel()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

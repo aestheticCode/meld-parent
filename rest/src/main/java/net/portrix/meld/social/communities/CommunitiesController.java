@@ -1,5 +1,6 @@
 package net.portrix.meld.social.communities;
 
+import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
 import net.portrix.generic.rest.jsr339.Name;
@@ -32,6 +33,7 @@ public class CommunitiesController {
 
     @GET
     @Path("communities")
+    @Secured
     public CommunitiesResponse communitities() {
 
         CommunitiesResponse response = new CommunitiesResponse();

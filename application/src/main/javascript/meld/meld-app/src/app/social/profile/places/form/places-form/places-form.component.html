@@ -1,0 +1,49 @@
+<div style="margin-top: 12px; height: 100%;">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form [formGroup]="places">
+          <mat-card>
+            <mat-card-content>
+              <fieldset>
+                <legend>
+                  <div style="display: flex">
+                    <div style="flex: 1">Places</div>
+                    <button type="button" mat-icon-button (click)="onVisibility()">
+                      <mat-icon>people</mat-icon>
+                    </button>
+                    <button type="button"  matSuffix mat-icon-button (click)="onCreateAddress()">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                </legend>
+
+                <div formArrayName="addresses">
+                  <div *ngFor="let address of addresses.controls; let index = index" style="margin-bottom: 12px;">
+                    <app-social-address-form [address]="address" (delete)="onDeleteAddress(index)"></app-social-address-form>
+                    <hr/>
+                  </div>
+                  <div *ngIf="addresses.length === 0" style="line-height: 48px; text-align: center;">
+                    No Addresses.
+                  </div>
+                </div>
+              </fieldset>
+
+
+            </mat-card-content>
+            <mat-card-actions>
+              <button type="button"  mat-button *ngIf="links | meldLink:'save'" (click)="onSave()">Save</button>
+              <button type="button"  mat-button *ngIf="links | meldLink:'update'" (click)="onUpdate()">Update</button>
+              <button type="button"  mat-button *ngIf="links | meldLink:'delete'" (click)="onDelete()">Delete All</button>
+              <button type="button"  mat-button (click)="onCancel()">Chancel</button>
+            </mat-card-actions>
+          </mat-card>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

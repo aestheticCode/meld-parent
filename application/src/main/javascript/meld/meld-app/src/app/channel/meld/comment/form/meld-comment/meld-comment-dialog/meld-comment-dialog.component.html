@@ -1,0 +1,4 @@
+<p class="link" (click)="onPlusOneComment()">+1 Comment</p>
+<p class="link">Reply</p>
+<p *ngIf="comment.links | meldLink:'update'" class="link" (click)="onEditClick()">Edit</p>
+<p *ngIf="comment.links | meldLink:'delete'" class="link" (click)="onDeleteClick()">Delete</p>

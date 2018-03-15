@@ -1,0 +1,16 @@
+<div style="margin-top: 12px; height: 100%;">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <mat-card>
+          <mat-card-content>
+            <img style="width: 100%;" [src]="profile.image || 'assets/user.png'"/>
+          </mat-card-content>
+          <mat-card-actions>
+            <button type="button"  *ngIf="profile.links | meldLink:'update'" mat-button (click)="onEdit()">Edit</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

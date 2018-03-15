@@ -1,0 +1,18 @@
+meld-scrollbar-vertical {
+  display: flex;
+}
+
+meld-scrollbar-vertical .slider-bar {
+  background-color: lightgray;
+  width: 10px;
+  position: relative;
+}
+
+meld-scrollbar-vertical .cursor {
+  width: 10px;
+  height: 16px;
+  background-color: grey;
+  position: absolute;
+  cursor: all-scroll;
+  border-radius : 5px;
+}

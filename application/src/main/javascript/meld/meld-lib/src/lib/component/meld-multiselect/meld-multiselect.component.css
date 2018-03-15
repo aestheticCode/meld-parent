@@ -1,0 +1,24 @@
+meld-multiselect {
+  display: flex;
+  width: 100%;
+}
+
+meld-multiselect .box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(37px * 4);
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+meld-multiselect .info {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  font-size: xx-small;
+  color: gray;;
+}
+

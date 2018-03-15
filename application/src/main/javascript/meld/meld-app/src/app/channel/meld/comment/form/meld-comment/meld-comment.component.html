@@ -1,0 +1,26 @@
+<img class="avatar" [src]="comment.avatar || 'assets/user.png'" style="margin-right: 10px;">
+<div style="flex-grow: 1;">
+
+  <div *ngIf="! edit" style="display: flex; align-items: center">
+    <a><strong>{{comment.name}}</strong></a>
+    <span style="margin-left: 5px;" *ngIf="comment.likes.length > 0">+{{comment.likes.length}}</span>
+    <span style="flex-grow: 1;"></span>
+    <span style="text-align: right;">{{comment.time}}</span>
+    <button type="button"  (click)="onClick()" mat-icon-button>
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
+
+  <p style="word-break: break-all;" *ngIf="! edit" [innerHTML]="comment.text | meldHtml"></p>
+
+  <div *ngIf="edit">
+    <app-meld-editor #editor [(ngModel)]="comment.text" style="min-height: 40px;" placeholder="Write Text here..."></app-meld-editor>
+    <div style="display: flex">
+      <span style="flex-grow: 1"></span>
+      <button type="button"  mat-button (click)="onCancelClick($event)">Cancel</button>
+      <button type="button"  mat-button (click)="onUpdateClick(comment)">Update</button>
+    </div>
+  </div>
+
+</div>
+

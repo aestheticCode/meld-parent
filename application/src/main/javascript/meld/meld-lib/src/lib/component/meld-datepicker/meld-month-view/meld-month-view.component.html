@@ -1,0 +1,7 @@
+<table class="table table-unbordered">
+  <tr *ngFor="let tr of months">
+    <td *ngFor="let td of tr">
+      <div class="month" (click)="onClick(td)">{{monthShort(td)}}</div>
+    </td>
+  </tr>
+</table>

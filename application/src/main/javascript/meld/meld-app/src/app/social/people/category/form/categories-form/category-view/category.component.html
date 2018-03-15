@@ -1,0 +1,30 @@
+<div>
+  <meld-table [items]="users" [rowHeight]="100">
+    <meld-colgroup>
+      <meld-col [width]="100"></meld-col>
+      <meld-col [width]="100"></meld-col>
+    </meld-colgroup>
+    <meld-tbody>
+      <meld-tr>
+        <meld-td>
+          <ng-template let-user>
+            <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
+              <img style="width: 100px;" [src]="user.image || 'assets/user.png'">
+            </a>
+          </ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>
+            <div style="line-height: 100px;">
+              <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
+                <strong style="text-overflow: ellipsis; white-space: nowrap">
+                  {{user.firstName}} {{user.lastName}}
+                </strong>
+              </a>
+            </div>
+          </ng-template>
+        </meld-td>
+      </meld-tr>
+    </meld-tbody>
+  </meld-table>
+</div>

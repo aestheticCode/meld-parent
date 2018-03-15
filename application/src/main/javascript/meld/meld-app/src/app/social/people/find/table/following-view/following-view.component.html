@@ -1,0 +1,56 @@
+<div style="margin-top: 12px;">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <mat-card>
+          <mat-card-content>
+            <div>
+              <meld-table [items]="users" [rowHeight]="100" style="max-height: calc(100vh - 248px)">
+                <meld-colgroup>
+                  <meld-col [width]="100"></meld-col>
+                  <meld-col [width]="200"></meld-col>
+                </meld-colgroup>
+                <meld-tbody>
+                  <meld-tr>
+                    <meld-td>
+                      <ng-template let-user>
+                        <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
+                          <img style="width: 100px;" [src]="user.image || 'assets/user.png'">
+                        </a>
+                      </ng-template>
+                    </meld-td>
+                    <meld-td>
+                      <ng-template let-user>
+                        <div style="line-height: 100px; height: 100%; overflow: auto; text-overflow: ellipsis; white-space: nowrap">
+                          <div style="display: flex">
+                            <a [routerLink]="['/social', 'profile', user.id, { outlets: { profile: ['image', 'view'] } }]">
+                              <strong>
+                                {{user.firstName}} {{user.lastName}}
+                              </strong>
+                            </a>
+                            <span style="flex: 1"></span>
+                            <span (click)="open(user)">
+
+                              <span *ngIf="user.category; else noCategory">
+                                 {{user.category.name}}
+                              </span>
+                              <ng-template #noCategory>
+                                  none
+                              </ng-template>
+
+                            </span>
+
+                          </div>
+                        </div>
+                      </ng-template>
+                    </meld-td>
+                  </meld-tr>
+                </meld-tbody>
+              </meld-table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

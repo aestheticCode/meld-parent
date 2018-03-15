@@ -1,0 +1,103 @@
+<fieldset [formGroup]="school">
+  <legend>
+    <div style="display: flex">
+      <span>School</span>
+      <div style=" flex: 1;"></div>
+      <button type="button" (click)="onDelete()" mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </legend>
+  <mat-form-field style="width: 100%;">
+    <input required matInput placeholder="Name" [matAutocomplete]="auto"
+           formControlName="name" [meldDebounce]="300" (meldModelChange)="findNames($event)">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let name of names | async" [value]="name">
+        <span>{{ name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;">
+    <meld-google-maps-autocomplete required placeholder="Location"
+                                   formControlName="location"></meld-google-maps-autocomplete>
+    <mat-hint *ngIf="school.get('location').value">
+      <span *ngIf="school.get('location').value.street">{{school.get('location').value.street}},</span>
+      <span *ngIf="school.get('location').value.streetNumber">{{school.get('location').value.streetNumber}},</span>
+      <span *ngIf="school.get('location').value.zipCode">{{school.get('location').value.zipCode}},</span>
+      <span *ngIf="school.get('location').value.state">{{school.get('location').value.state}},</span>
+      <span *ngIf="school.get('location').value.country">{{school.get('location').value.country}}</span>
+    </mat-hint>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;">
+    <input required placeholder="Course" formControlName="course" type="text"
+           matInput>
+  </mat-form-field>
+
+  <div style="display: flex; width: 100%">
+    <div style="width: 50%" formGroupName="startYear">
+      <mat-form-field style="width: 100%;">
+        <mat-select required placeholder="Start Semester" formControlName="semester">
+          <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+            {{ semester.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <input required matInput type="number" placeholder="Start Year"
+               formControlName="year">
+      </mat-form-field>
+    </div>
+
+    <div style="width: 50%" formGroupName="endYear">
+      <mat-form-field style="width: 100%;">
+        <mat-select required placeholder="End Semester" formControlName="semester">
+          <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+            {{ semester.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <input required matInput type="number" placeholder="End Year" formControlName="year">
+      </mat-form-field>
+    </div>
+  </div>
+
+
+  <div style="display: flex; width: 100%">
+    <div style="width: 50%" formGroupName="visitStart">
+      <mat-form-field style="width: 100%;">
+        <mat-select required placeholder="Visit Since Semester"
+                    formControlName="semester">
+          <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+            {{ semester.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <input required matInput type="number" placeholder="Visit Since Year"
+               formControlName="year">
+      </mat-form-field>
+    </div>
+
+    <div style="width: 50%" formGroupName="visitEnd" *ngIf="! school.controls.tillNow.value">
+      <mat-form-field style="width: 100%;">
+        <mat-select placeholder="Departed On Semester"
+                    formControlName="semester">
+          <mat-option *ngFor="let semester of semesters" [value]="semester.value">
+            {{ semester.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <input matInput type="number" placeholder="Departed On Year"
+               formControlName="year">
+      </mat-form-field>
+    </div>
+
+  </div>
+
+  <mat-checkbox formControlName="tillNow">Till Now</mat-checkbox>
+
+</fieldset>

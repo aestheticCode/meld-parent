@@ -1,0 +1,49 @@
+<div style="margin-top: 12px; height: 100%;">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <form [formGroup]="workHistory">
+          <mat-card>
+            <mat-card-content>
+              <fieldset>
+                <legend>
+                  <div style="display: flex">
+                    <div style="flex: 1">Work History</div>
+                    <button type="button" mat-icon-button (click)="onVisibility()">
+                      <mat-icon>people</mat-icon>
+                    </button>
+                    <button type="button" mat-icon-button (click)="onCreateAddress()">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                </legend>
+
+                <div>
+                  <div *ngFor="let company of companies.controls; let index = index" style="margin-bottom: 12px;">
+                    <app-social-company-form [company]="company" (delete)="onDeleteAddress(index)"></app-social-company-form>
+                    <hr/>
+                  </div>
+                  <div *ngIf="companies.length === 0" style="line-height: 48px; text-align: center;">
+                    No Work History.
+                  </div>
+                </div>
+              </fieldset>
+
+
+            </mat-card-content>
+            <mat-card-actions>
+              <button type="button"  mat-button *ngIf="links | meldLink:'save'" (click)="onSave()">Save</button>
+              <button type="button"  mat-button *ngIf="links | meldLink:'update'" (click)="onUpdate()">Update</button>
+              <button type="button"  mat-button *ngIf="links | meldLink:'delete'" (click)="onUpdate()">Delete All</button>
+              <button type="button"  mat-button (click)="onCancel()">Cancel</button>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

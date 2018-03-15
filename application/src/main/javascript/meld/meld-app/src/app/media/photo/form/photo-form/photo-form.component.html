@@ -1,0 +1,13 @@
+
+<img *ngIf="photo.image" style="display : block; max-width: 400px; max-height: 400px;" [src]="photo.image | meldBinaryImage">
+<mat-form-field style="display : block; width: 100%">
+  <meld-file-container [placeholder]="'Image'">
+    <input #image="InputDirective" type="file" name="image" [(ngModel)]="photo.image">
+  </meld-file-container>
+  <button type="button"  matSuffix mat-icon-button (click)="image.clear()"><mat-icon>backspace</mat-icon></button>
+  <button type="button"  matSuffix mat-icon-button (click)="image.click()"><mat-icon>present_to_all</mat-icon></button>
+</mat-form-field>
+<div>
+  <button type="button"  mat-button (click)="save()">Save</button>
+  <button type="button"  mat-button (click)="close()">Cancel</button>
+</div>

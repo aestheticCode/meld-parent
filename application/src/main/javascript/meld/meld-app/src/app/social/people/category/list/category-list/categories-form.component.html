@@ -1,0 +1,33 @@
+<div style="margin-top: 12px;">
+  <div class="container-fluid" style="margin-top: 12px;">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <mat-card>
+          <mat-card-content>
+          <fieldset>
+            <legend>
+              <div style="display: flex">
+                <span style="flex: 1">Categories</span>
+                <button type="button"  mat-icon-button (click)="onCreate()"><mat-icon>add</mat-icon></button>
+              </div>
+            </legend>
+             <mat-expansion-panel *ngFor="let category of container.rows">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div style="display: flex; width: 100%">
+                      <span style="flex: 1">{{category.name}}</span>
+                      <a (click)="onEdit($event, category)">Edit</a>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <app-social-category [category]="category"></app-social-category>
+
+              </mat-expansion-panel>
+          </fieldset>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

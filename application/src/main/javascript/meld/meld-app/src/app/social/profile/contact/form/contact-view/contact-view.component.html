@@ -1,0 +1,54 @@
+<div style="margin-top: 12px; margin-bottom: 12px; height: calc(100% - 200px);">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <mat-card>
+          <mat-card-content>
+            <fieldset>
+              <legend>Contact</legend>
+
+              <div style="text-align: center;" *ngFor="let phone of contact.phones">
+                {{phone.type | meldEnum:mobiles()}} {{phone.number}}
+              </div>
+
+              <div *ngIf="contact.phones.length === 0" style="line-height: 48px; text-align: center;">
+                No Phone Numbers.
+              </div>
+
+              <hr>
+
+              <div style="text-align: center;" *ngFor="let email of contact.emails">
+                {{email.email}}
+              </div>
+
+              <div  *ngIf="contact.emails.length === 0" style="line-height: 48px; text-align: center;">
+                No Email Addresses.
+              </div>
+
+              <hr>
+
+              <div style="text-align: center;" *ngFor="let chat of contact.chats">
+                {{chat.type}} {{chat.name}}
+              </div>
+
+              <div *ngIf="contact.chats.length === 0" style="line-height: 48px; text-align: center;">
+                No Chat Clients.
+              </div>
+
+
+
+            </fieldset>
+          </mat-card-content>
+          <mat-card-actions>
+            <button type="button"  *ngIf="contact.links | meldLink:'update,save'" mat-button (click)="onEdit()">Edit</button>
+            <button type="button"  mat-button (click)="onCancel()">Cancel</button>
+          </mat-card-actions>
+        </mat-card>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+

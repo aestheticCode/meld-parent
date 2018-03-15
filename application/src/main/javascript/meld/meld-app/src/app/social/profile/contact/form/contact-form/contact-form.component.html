@@ -1,0 +1,65 @@
+<div style="margin-top: 12px; height: calc(100% - 200px);">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <form #form="ngForm">
+          <mat-card [formGroup]="contact">
+            <mat-card-content>
+              <fieldset>
+                <legend>
+                  <div style="display: flex">
+                    <div style="flex: 1">Contact</div>
+                    <button type="button" mat-icon-button (click)="onVisibility()">
+                      <mat-icon>people</mat-icon>
+                    </button>
+                  </div>
+                </legend>
+                <div formArrayName="phones">
+                  <div *ngFor="let phone of phones.controls; let index = index">
+                    <app-social-phone-form [phone]="phone"
+                                           (deleteClick)="onDeletePhone(index)"
+                                           (addClick)="onCreatePhone()"></app-social-phone-form>
+                  </div>
+                  <div *ngIf="phones.length === 0" style="line-height: 48px; text-align: center;">
+                    No Phone Numbers. <a (click)="onCreatePhone()">Add</a>
+                  </div>
+                </div>
+
+                <div formArrayName="emails">
+                  <div *ngFor="let email of emails.controls; let index = index">
+                    <app-social-email-form [email]="email"
+                                           (deleteClick)="onDeleteEmail(index)"
+                                           (addClick)="onCreateEmail()"></app-social-email-form>
+                  </div>
+                  <div *ngIf="emails.length === 0" style="line-height: 48px; text-align: center;">
+                    No Email Addresses. <a (click)="onCreateEmail()">Add</a>
+                  </div>
+                </div>
+
+                <div formArrayName="chats">
+                  <div *ngFor="let chat of chats.controls; let index = index">
+                    <app-social-chat-form [chat]="chat"
+                                          (deleteClick)="onDeleteChat(index)"
+                                          (addClick)="onCreateChat()"></app-social-chat-form>
+                  </div>
+                  <div *ngIf="chats.length === 0" style="line-height: 48px; text-align: center;">
+                    No Chat Clients. <a (click)="onCreateChat()">Add</a>
+                  </div>
+                </div>
+
+              </fieldset>
+            </mat-card-content>
+            <mat-card-actions>
+              <button type="button"  mat-button *ngIf="links | meldLink:'save'" (click)="onSave()">Save</button>
+              <button type="button"  mat-button *ngIf="links | meldLink:'update'" (click)="onUpdate()">Update</button>
+              <button type="button"  mat-button *ngIf="links | meldLink:'delete'" (click)="onDelete()">Delete</button>
+              <button type="button"  mat-button (click)="onCancel()">Chancel</button>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+

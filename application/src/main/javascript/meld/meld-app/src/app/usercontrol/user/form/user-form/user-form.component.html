@@ -1,0 +1,98 @@
+<div style="padding: 10px; height: 100%; overflow: auto">
+  <mat-card style="width: 100%;">
+    <mat-card-content>
+      <form>
+        <mat-tab-group>
+          <mat-tab label="Profile">
+            <div class="container-fluid" style="margin-top: 12px;">
+              <div class="row">
+                <div class="col-md-4">
+                  <fieldset>
+                    <legend>User</legend>
+                    <mat-form-field style="width: 100%;">
+                      <input placeholder="First Name" [(ngModel)]="user.firstName"
+                             matInput name="firstName" minlength="3" maxlength="100" required>
+                    </mat-form-field>
+                    <mat-form-field style="width: 100%;">
+                      <input placeholder="Last Name" [(ngModel)]="user.lastName"
+                             matInput name="lastName" minlength="3" maxlength="100" required>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 100%;">
+                      <mat-select name="gender" placeholder="Gender" [(ngModel)]="user.gender">
+                        <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                          {{ gender.label }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+
+                    <mat-form-field style="width: 100%">
+                      <meld-date  #datePicker placeholder="Birthday" [(ngModel)]="user.birthday" name="birthday"></meld-date>
+                      <button type="button"  matSuffix mat-icon-button (click)="datePicker.clear()"><mat-icon>delete</mat-icon></button>
+                      <button type="button"  matSuffix mat-icon-button (click)="datePicker.open()"><mat-icon >today</mat-icon></button>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 100%;">
+                      <input type="password" placeholder="Password" [(ngModel)]="user.password" matInput name="password">
+                    </mat-form-field>
+
+
+                  </fieldset>
+                </div>
+                <div class="col-md-4">
+                  <fieldset>
+                    <legend>Roles</legend>
+                    <app-role-multiselect [name]="'roles'" [(ngModel)]="user.roles" placeholder="Roles"
+                                          style="max-height: 400px;"></app-role-multiselect>
+                  </fieldset>
+                </div>
+                <div class="col-md-4">
+                  <fieldset>
+                    <legend>Groups</legend>
+                    <app-group-multiselect [name]="'groups'" [(ngModel)]="user.groups" placeholder="Groups"
+                                           style="max-height: 400px;"></app-group-multiselect>
+                  </fieldset>
+
+                </div>
+              </div>
+            </div>
+
+          </mat-tab>
+          <mat-tab label="Image">
+
+            <div class="container-fluid" style="margin-top: 12px;">
+              <div class="row justify-content-center">
+                <div class="col-md-5">
+                  <img  src="{{user.image | meldBinaryImage:''}}" style="width: 100%">
+                </div>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-md-5">
+                  <mat-form-field style="width: 100%;">
+                    <meld-file-container [placeholder]="'Image'">
+                      <input #image="InputDirective" type="file" name="image" [(ngModel)]="user.image">
+                    </meld-file-container>
+                    <button type="button"  matSuffix mat-icon-button (click)="image.clear()"><mat-icon>backspace</mat-icon></button>
+                    <button type="button"  matSuffix mat-icon-button (click)="image.click()"><mat-icon>present_to_all</mat-icon></button>
+                  </mat-form-field>
+                </div>
+              </div>
+
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="button"  mat-button (click)="onSave()" *ngIf="user.links | meldLink:'save'">Save</button>
+      <button type="button"  mat-button (click)="onUpdate()" *ngIf="user.links | meldLink:'update'">Update</button>
+      <button type="button"  mat-button (click)="onDelete()" *ngIf="user.links | meldLink:'delete'">Delete</button>
+      <button type="button"  mat-button (click)="onCancel()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+

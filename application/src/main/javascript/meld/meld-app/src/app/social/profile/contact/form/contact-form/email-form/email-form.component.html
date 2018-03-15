@@ -1,0 +1,19 @@
+<fieldset [formGroup]="email">
+  <div style="display: flex; align-items: baseline;">
+    <div style="vertical-align: bottom">
+      <i class="material-icons">email</i>
+    </div>
+
+    <mat-form-field style="margin-left: 6px; flex: 1">
+      <input required placeholder="Email" formControlName="email" type="email"
+             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$"
+             matInput>
+      <button type="button" matSuffix mat-icon-button (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button type="button" matSuffix mat-icon-button (click)="onAdd()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</fieldset>

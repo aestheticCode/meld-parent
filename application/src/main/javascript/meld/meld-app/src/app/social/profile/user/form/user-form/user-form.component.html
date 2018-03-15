@@ -1,0 +1,61 @@
+<div style="margin-top: 12px; height: 100%;">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <form #form="ngForm">
+          <mat-card>
+            <mat-card-content>
+              <fieldset>
+                <legend>
+                  <div style="display: flex">
+                    <div style="flex: 1">User</div>
+                    <button type="button" mat-icon-button (click)="onVisibility()">
+                      <mat-icon>people</mat-icon>
+                    </button>
+                  </div>
+                </legend>
+                <mat-form-field style="width: 100%;">
+                  <input placeholder="First Name" [(ngModel)]="user.firstName"
+                         matInput name="firstName" minlength="3" maxlength="100" required>
+                </mat-form-field>
+                <mat-form-field style="width: 100%;">
+                  <input placeholder="Last Name" [(ngModel)]="user.lastName"
+                         matInput name="lastName" minlength="3" maxlength="100" required>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%">
+                  <meld-date #datePicker placeholder="Birthday" [(ngModel)]="user.birthday" name="birthday"></meld-date>
+                  <button type="button"  matSuffix mat-icon-button (click)="datePicker.clear()">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button type="button"  matSuffix mat-icon-button (click)="datePicker.open()">
+                    <mat-icon>today</mat-icon>
+                  </button>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%;">
+                  <mat-select name="gender" placeholder="Gender" [(ngModel)]="user.gender">
+                    <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                      {{ gender.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+
+              </fieldset>
+            </mat-card-content>
+            <mat-card-actions>
+              <button type="button"  mat-button (click)="onSave()" *ngIf="user.links | meldLink:'save'">Save</button>
+              <button type="button"  mat-button (click)="onUpdate()" *ngIf="user.links | meldLink:'update'">Update</button>
+              <button type="button"  mat-button (click)="onDelete()" *ngIf="user.links | meldLink:'delete'">Delete</button>
+              <button type="button"  mat-button (click)="onCancel()">Cancel</button>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

@@ -226,3 +226,8 @@ update uc_permission set method = 'GET' where path = 'usercontrol/user/table' an
        foreign key (UserProfile_id)
        references so_user_profile;
 
+--changeset patrick:11
+
+INSERT INTO public.uc_permission (id, method, name, path, created, modified, version) VALUES ('1702d377-f509-483f-bff6-d7df90a5e713', 'GET', 'Social', 'social/communities', now(), now(), 0);
+
+

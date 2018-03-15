@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<mat-card style="margin: 12px; max-height: calc(100% - 24px);" >
+  <div style="display: flex; align-items: center;">
+    <mat-input-container style="width: 100%;">
+      <input matInput placeholder="Search" ngModel #searchBox="ngModel">
+    </mat-input-container>
+    <button type="button"  mat-raised-button *ngIf="links | meldLink:'save'" (click)="onCreate()">Create</button>
+  </div>
+  <meld-table #table [items]="users" (selectItemChange)="onSelectionChange($event)" [menu]="true" style="max-height: calc(100vh - 196px)">
+    <meld-colgroup>
+      <meld-col [width]="100" [path]="'gender'"></meld-col>
+      <meld-col [width]="100" [path]="'firstName'"></meld-col>
+      <meld-col [width]="100" [path]="'lastName'"></meld-col>
+      <meld-col [width]="100" [path]="'birthdate'"></meld-col>
+    </meld-colgroup>
+    <meld-thead>
+      <meld-tr>
+        <meld-td>
+          <ng-template><strong>Gender</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>First Name</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>Last Name</strong></ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template><strong>Birthday</strong></ng-template>
+        </meld-td>
+      </meld-tr>
+    </meld-thead>
+    <meld-tbody>
+      <meld-tr>
+        <meld-td>
+          <ng-template let-user>{{user.gender}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.firstName}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.lastName}}</ng-template>
+        </meld-td>
+        <meld-td>
+          <ng-template let-user>{{user.birthday}}</ng-template>
+        </meld-td>
+      </meld-tr>
+    </meld-tbody>
+  </meld-table>
+</mat-card>
