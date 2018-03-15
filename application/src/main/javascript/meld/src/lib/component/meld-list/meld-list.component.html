@@ -1,7 +1,0 @@
-<!DOCTYPE html>
-<div #viewPort style="overflow: auto; width: 100%; height: 100%;">
-    <div #windowElements *ngFor="let item of window">
-        <ng-container *ngTemplateOutlet="templateRef; context: {$implicit: item}"></ng-container>
-    </div>
-    <div [meldInit]="onRendered()"></div>
-</div>

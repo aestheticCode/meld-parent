@@ -1,9 +1,0 @@
-.slide {
-  background: #3f51b5;
-  width: 160px;
-  height: 4px;
-  position: absolute;
-  left: 0;
-  top: calc(100% - 4px);
-  transition: left 0.3s ease-out;
-}

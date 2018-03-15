@@ -1,9 +1,0 @@
-meld-table {
-  display: flex;
-  width: 100%;
-  position: relative;
-}
-
-meld-table .hover {
-  background-color: lightgray;
-}

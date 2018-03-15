@@ -1,8 +1,0 @@
-<mat-form-field style="width: 100%;">
-  <meld-combobox #comboBox [items]="categories" [(ngModel)]="data.category">
-    <ng-template let-item>{{item.name}}</ng-template>
-  </meld-combobox>
-</mat-form-field>
-
-<button type="button"  mat-button (click)="onSave()">Save</button>
-<button type="button"  mat-button (click)="onCancel()">Cancel</button>

@@ -1,8 +1,0 @@
-meld-date {
-  display: block;
-  height: 15px;
-}
-
-meld-date .disabled {
- color : rgba(0, 0, 0, 0.42)
-}
