@@ -1,5 +1,6 @@
 package net.portrix.meld.usercontrol.group.select;
 
+import com.google.common.collect.Sets;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
@@ -58,10 +59,10 @@ public class GroupMultiSelectController {
         final List<GroupSelect> selects = new ArrayList<>();
 
         for (Group group : groups) {
-            GroupSelect response = new GroupSelect();
-
-            response.setId(group.getId());
-            response.setName(group.getName());
+            GroupSelect response = new GroupSelect(
+                    group.getId(),
+                    group.getName()
+            );
 
             GroupFormController.linkRead(group, builderFactory)
                     .buildSecured(response::addLink);

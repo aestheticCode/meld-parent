@@ -82,27 +82,4 @@ public class MeldImage extends AbstractEntity {
         this.thumbnail = thumbnail;
     }
 
-    private static void save(UUID id, String fileName, byte[] image, byte[] thumbnail) throws IOException {
-        File imageWorkingDir = ImageUtils.workingDirectory(id);
-        String extension = FilenameUtils.getExtension(fileName);
-        File imageFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "image." + extension);
-        File thumbnailFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "thumbnail." + extension);
-        FileUtils.writeByteArrayToFile(imageFile, image);
-        FileUtils.writeByteArrayToFile(thumbnailFile, thumbnail);
-    }
-
-    private static byte[] loadImage(UUID id, String fileName) throws IOException {
-        File imageWorkingDir = ImageUtils.workingDirectory(id);
-        String extension = FilenameUtils.getExtension(fileName);
-        File imageFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "image." + extension);
-        return IOUtils.toByteArray(imageFile.toURI());
-    }
-
-    private static byte[] loadThumbnail(UUID id, String fileName) throws IOException {
-        File imageWorkingDir = ImageUtils.workingDirectory(id);
-        String extension = FilenameUtils.getExtension(fileName);
-        File thumbnailFile = new File(imageWorkingDir.getCanonicalPath() + File.separator + "thumbnail." + extension);
-        return IOUtils.toByteArray(thumbnailFile.toURI());
-    }
-
 }

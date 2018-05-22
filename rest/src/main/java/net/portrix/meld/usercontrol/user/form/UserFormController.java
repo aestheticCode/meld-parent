@@ -99,9 +99,10 @@ public class UserFormController {
         final List<GroupSelect> groudIds = new ArrayList<>();
 
         for (Group group : groups) {
-            GroupSelect groupSelect = new GroupSelect();
-            groupSelect.setId(group.getId());
-            groupSelect.setName(group.getName());
+            GroupSelect groupSelect = new GroupSelect(
+                    group.getId(),
+                    group.getName()
+            );
             groudIds.add(groupSelect);
         }
         response.setGroups(Sets.newHashSet(groudIds));
@@ -112,9 +113,10 @@ public class UserFormController {
         List<RoleSelect> roleIds = new ArrayList<>();
 
         for (Role role : roles) {
-            RoleSelect roleSelect = new RoleSelect();
-            roleSelect.setId(role.getId());
-            roleSelect.setName(role.getName());
+            RoleSelect roleSelect = new RoleSelect(
+                    role.getId(),
+                    role.getName()
+            );
             roleIds.add(roleSelect);
         }
         response.setRoles(Sets.newHashSet(roleIds));

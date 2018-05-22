@@ -1,5 +1,6 @@
 package net.portrix.meld.social.people.category.form;
 
+import net.portrix.generic.ddd.FormController;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @Name("Social")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class CategoryFormController {
+public class CategoryFormController implements FormController<CategoryForm> {
 
     private final CategoryService service;
 
@@ -37,6 +38,7 @@ public class CategoryFormController {
         this(null, null);
     }
 
+    @Override
     @GET
     @Path("category/create")
     @Name("Categories Read")
@@ -53,6 +55,7 @@ public class CategoryFormController {
     }
 
 
+    @Override
     @GET
     @Path("category/{id}")
     @Name("Categories Read")
@@ -75,6 +78,7 @@ public class CategoryFormController {
 
     }
 
+    @Override
     @POST
     @Path("category")
     @Name("Categories Save")
@@ -93,6 +97,7 @@ public class CategoryFormController {
         return read(category.getId());
     }
 
+    @Override
     @PUT
     @Path("category/{id}")
     @Name("Categories Update")
@@ -107,6 +112,7 @@ public class CategoryFormController {
 
     }
 
+    @Override
     @DELETE
     @Path("category/{id}")
     @Name("Categories Delete")

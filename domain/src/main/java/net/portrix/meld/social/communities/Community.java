@@ -1,24 +1,13 @@
-package net.portrix.meld.usercontrol;
+package net.portrix.meld.social.communities;
 
-import net.portrix.generic.ddd.AbstractEntity;
 import net.portrix.generic.image.ImageUtils;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
+import net.portrix.meld.social.people.Category;
 
 import javax.persistence.*;
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-/**
- * @author Patrick Bittner on 07/10/16.
- */
-@Entity
-@Table(name = "uc_image")
-@NamedQuery(name = "findUserImage", query = "select i from UserImage i where i.user = :user")
-public class UserImage extends AbstractEntity {
+public class Community extends Category {
 
     private String fileName;
 
@@ -29,9 +18,6 @@ public class UserImage extends AbstractEntity {
 
     @Transient
     private byte[] thumbnail;
-
-    @ManyToOne
-    private User user;
 
     @PostLoad
     void postLoad() throws IOException {
@@ -74,8 +60,8 @@ public class UserImage extends AbstractEntity {
         return image;
     }
 
-    public void setImage(byte[] data) {
-        this.image = data;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public byte[] getThumbnail() {
@@ -85,13 +71,4 @@ public class UserImage extends AbstractEntity {
     public void setThumbnail(byte[] thumbnail) {
         this.thumbnail = thumbnail;
     }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
 }

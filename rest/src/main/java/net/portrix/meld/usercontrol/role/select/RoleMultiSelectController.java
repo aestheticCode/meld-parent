@@ -1,5 +1,6 @@
 package net.portrix.meld.usercontrol.role.select;
 
+import com.google.common.collect.Sets;
 import net.portrix.generic.rest.Secured;
 import net.portrix.generic.rest.URLBuilder;
 import net.portrix.generic.rest.URLBuilderFactory;
@@ -59,10 +60,10 @@ public class RoleMultiSelectController {
         final List<RoleSelect> selects = new ArrayList<>();
 
         for (Role role : Roles) {
-            RoleSelect response = new RoleSelect();
-
-            response.setId(role.getId());
-            response.setName(role.getName());
+            RoleSelect response = new RoleSelect(
+                    role.getId(),
+                    role.getName()
+            );
 
             RoleFormController.linkRead(role, builderFactory)
                     .buildSecured(response::addLink);
