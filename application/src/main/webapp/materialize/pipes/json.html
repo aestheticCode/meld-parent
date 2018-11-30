@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<link href="/materialize/pipes.html" rel="imports">
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+            let transform = (value, args) => {
+                return JSON.stringify(value);
+            };
+
+            customPipes.define("json", transform);
+        })
+    }
+
+    //# sourceURL=/materialize/pipes/json.html
+
+
+</script>

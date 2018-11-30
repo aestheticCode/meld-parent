@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLElement.html" rel="imports">
+
+<style>
+    mat-input-error {
+        display: inline;
+    }
+</style>
+
+<template viewChildren>
+    <div content></div>
+</template>
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class MatInputError extends MaterializeHTMLElement {
+
+                constructor() {
+                    super(template);
+                }
+
+            }
+
+            customElements.define("mat-input-error", MatInputError);
+
+        })
+    }
+
+</script>

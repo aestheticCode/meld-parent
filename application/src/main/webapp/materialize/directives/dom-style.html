@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<script>
+    (imports, template, callbacks) => {
+        load(callbacks, imports, () => {
+
+            class DomStyle {
+                constructor(element) {
+                    this.element = element;
+
+                    Object.assign(this, {
+                        inputCallback : () => {
+                            let attribute = this.element.getAttribute("dom-style");
+                            let context = materialize.context(this.element);
+                            let classModifier;
+                            function internal() {
+                                classModifier = eval(context + attribute);
+                            }
+                            internal.call(this.element);
+                            if (classModifier) {
+                                for (let clazz of classModifier.add) {
+                                    this.element.classList.add(clazz);
+                                }
+                                for (let clazz of classModifier.delete) {
+                                    this.element.classList.remove(clazz);
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+            customDirectives.define("dom-style", DomStyle);
+
+        })
+    };
+    //# sourceURL=/materialize/directives/dom-style.html
+</script>

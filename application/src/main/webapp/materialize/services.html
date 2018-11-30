@@ -1,0 +1,27 @@
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            customServices = {};
+
+            let registry = new Map;
+
+            Object.assign(customServices, {
+                define(name, clazz) {
+                    registry.set(name, new clazz);
+                },
+
+                get(name) {
+                    return registry.get(name);
+                }
+            });
+        })
+    }
+
+    //# sourceURL=/materialize/services.html
+
+
+</script>

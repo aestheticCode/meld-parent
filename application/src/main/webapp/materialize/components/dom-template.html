@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLTemplateElement.html" rel="imports">
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class DomTemplate extends MaterializeHTMLTemplateElement {
+
+                constructor() {
+                    super();
+
+                    this.properties = {
+                        let: {
+                            source: undefined,
+                        }
+                    };
+                }
+
+                inputBinding() {
+                    let letAttribute = this.getAttribute("let");
+                    let context = materialize.context(this);
+                    this[letAttribute] = eval(context + this.properties.let.source);
+                }
+
+                inputCallback() {
+                    let child = this.content.firstElementChild;
+
+                    if (child) {
+                        let letAttribute = this.getAttribute("let");
+                        child[letAttribute] = this[letAttribute];
+                        this.insertAdjacentElement("afterend", child);
+                        materialize.inputBinding(child);
+                    }
+                }
+
+            }
+
+            customElements.define("dom-template", DomTemplate, {extends: "template"});
+        })
+    }
+
+    //# sourceURL=/materialize/components/dom-template.html
+
+</script>

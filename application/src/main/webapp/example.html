@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<link href="/materialize/materialize.html" rel="imports">
+<link href="/materialize/extensions/HTMLElement.html" rel="imports">
+<link href="/materialize/components/dom-template.html" rel="imports">
+
+<template viewChildren>
+
+    <div>
+        <template name="test" implicit="value"></template>
+    </div>
+
+</template>
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class DomExample extends MaterializeHTMLElement {
+
+                constructor() {
+                    super(template);
+                }
+
+            }
+
+            customElements.define("dom-example", DomExample);
+        })
+    }
+    //# sourceURL=example.html
+
+
+</script>

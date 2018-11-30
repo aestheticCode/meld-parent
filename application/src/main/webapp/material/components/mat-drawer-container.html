@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLElement.html" rel="imports">
+
+<style>
+
+    mat-drawer-container {
+        display: block;
+    }
+
+</style>
+
+<template viewChildren>
+    <div style="height: 100vh; position: relative">
+        <div select="mat-drawer"></div>
+        <div select="mat-drawer-content"></div>
+    </div>
+</template>
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+            class MatDrawerContainer extends MaterializeHTMLElement {
+
+                constructor() {
+                    super(template);
+                }
+
+            }
+
+            customElements.define("mat-drawer-container", MatDrawerContainer);
+
+        })
+    }
+
+</script>

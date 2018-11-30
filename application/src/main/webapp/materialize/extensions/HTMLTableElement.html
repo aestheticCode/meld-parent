@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<link href="/materialize/materialize.html" rel="imports">
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class MaterializeHTMLTableElement extends HTMLTableElement {
+
+                constructor(template) {
+                    super();
+
+                    this.properties = {};
+
+                    this.listeners = new Map;
+
+                    this.output = new Map;
+
+                    this.addListener = function (name, func) {
+                        this.listeners.set(name, func);
+                        this.addEventListener(name, func);
+                    };
+
+                    this.isExtension = false;
+
+                    this.template = template;
+                }
+
+                connectedCallback() {
+                }
+
+                disconnectedCallback() {
+                    function intern(element) {
+                        if (element.listeners) {
+                            for (let entry of element.listeners.entries()) {
+                                element.removeEventListener(entry[0], entry[1]);
+                            }
+                        }
+                        for (let child of element.children) {
+                            intern(child);
+                        }
+                    }
+
+                    intern(this);
+                }
+
+            }
+
+            window.MaterializeHTMLTableElement = MaterializeHTMLTableElement
+        })
+    }
+
+    //# sourceURL=/materialize/extensions/HTMLTableElement.html
+
+
+</script>

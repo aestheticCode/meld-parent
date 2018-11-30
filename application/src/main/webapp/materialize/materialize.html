@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<link href="/materialize/pipes.html" rel="imports">
+<link href="/materialize/services.html" rel="imports">
+<link href="/materialize/directives.html" rel="imports">
+
+<link href="/materialize/services/router.html" rel="imports">
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            materialize = {};
+
+            Object.assign(materialize, {
+
+                    define(route) {
+                        customServices.get("router").define(route);
+                        customElements.define(route.element, route.component, route.options);
+                    },
+
+                    eventEmitter() {
+                        let listeners = [];
+                        return {
+                            fire($event) {
+                                for (let listener of listeners) {
+                                    listener($event);
+                                }
+                            },
+                            listeners() {
+                                return listeners;
+                            }
+                        }
+                    },
+
+                    debounce(func, wait, immediate) {
+                        let timeout;
+                        return function () {
+                            const context = this, args = arguments;
+                            const later = function () {
+                                timeout = null;
+                                if (!immediate) func.apply(context, args);
+                            };
+                            const callNow = immediate && !timeout;
+                            clearTimeout(timeout);
+                            timeout = setTimeout(later, wait);
+                            if (callNow) func.apply(context, args);
+                        };
+                    },
+
+                    build(element, viewTemplate) {
+
+                        let contentChildren = document.createElement("template");
+                        contentChildren.setAttribute("contentchildren", "");
+
+                        if (element.localName === "template") {
+
+                            // No op
+
+                        } else {
+
+                            for (let child of Array.from(element.children)) {
+                                contentChildren.content.appendChild(child);
+                            }
+                            for (let node of Array.from(element.childNodes)) {
+                                contentChildren.content.appendChild(node);
+                            }
+                            element.appendChild(contentChildren);
+
+                            if (viewTemplate) {
+                                element.appendChild(viewTemplate.cloneNode(true));
+                            } else {
+                                let htmlElement = document.createElement("template");
+                                htmlElement.setAttribute("viewchildren", "");
+                                element.appendChild(htmlElement);
+                            }
+
+                            if (viewTemplate) {
+                                for (let viewChild of Array.from(viewTemplate.content.children)) {
+                                    element.appendChild(viewChild.cloneNode(true));
+                                }
+                            }
+                        }
+
+                        function intern(root, element) {
+
+                            if (element.hasAttribute("name")) {
+                                let name = element.getAttribute("name");
+                                let contentTemplate = root.querySelector("template[contentchildren]");
+                                for (let child of Array.from(contentTemplate.content.childNodes)) {
+                                    if (child instanceof HTMLElement && child.getAttribute("slot") === name) {
+                                        element.insertAdjacentElement("afterend", child);
+                                        if (element.hasAttribute("implicit")) {
+                                            child.properties.let.source = element.getAttribute("implicit");
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (element.hasAttribute("select")) {
+                                let select = element.getAttribute("select");
+                                let contentTemplate = root.querySelector("template[contentchildren]");
+                                for (let child of Array.from(contentTemplate.content.childNodes)) {
+                                    if (child.localName === select) {
+                                        element.appendChild(child);
+                                        if (child instanceof HTMLElement) {
+                                            materialize.inputBinding(child);
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (element.hasAttribute("content")) {
+                                let contentTemplate = root.querySelector("template[contentchildren]");
+                                for (let child of Array.from(contentTemplate.content.childNodes)) {
+                                    element.appendChild(child);
+                                    if (child instanceof HTMLElement) {
+                                        materialize.inputBinding(child);
+                                    }
+                                }
+                            }
+
+
+                            if (element.hasAttribute("link")) {
+                                let link = element.getAttribute("link");
+
+                                element.addEventListener("click", () => {
+                                    customServices.get("router").fire(link);
+                                });
+                            }
+
+                            for (let attribute of element.attributes) {
+
+                                if (Array.from(customDirectives.directives()).indexOf(attribute.name) > -1) {
+                                    let directiveClass = customDirectives.get(attribute.name);
+                                    let directive = new directiveClass(element);
+                                    element.parentElement.directives = element.parentElement.directives || [];
+                                    element.parentElement.directives.push(directive);
+                                }
+
+                                let variableRegex = /\#(\w+)/;
+                                let variableResult = variableRegex.exec(attribute.name);
+                                if (variableResult) {
+                                    materialize.write(element.parentElement, variableResult[1], element);
+                                }
+
+                                let inputRegex = /\[(\w+)\]/;
+                                let inputResult = inputRegex.exec(attribute.name);
+                                if (inputResult) {
+                                    Object.assign(element, {
+                                        inputBinding() {
+                                            let context = materialize.context(this.parentElement, 1);
+                                            let evaluated = context + attribute.value;
+                                            this[inputResult[1]]  = eval(evaluated);
+                                        }
+                                    });
+                                }
+
+                                let twoWayRegex = /\(\[(\w+)\]\)/;
+                                let twoWayResult = twoWayRegex.exec(attribute.name);
+                                if (twoWayResult) {
+                                    Object.assign(element, {
+                                        outputBinding() {
+                                            materialize.write(this.parentElement, attribute.value, this[twoWayResult[1]]);
+                                        }
+                                    });
+                                }
+
+                                let eventRegex = /\(([\w\(\)\.]+)\)/;
+                                let eventResult = eventRegex.exec(attribute.name);
+                                if (eventResult) {
+                                    if (element.output) {
+                                        let eventEmitter = element.output.get(eventResult[1]);
+                                        eventEmitter.listeners().push(($event) => {
+                                            materialize.call(root, attribute.value, $event);
+                                            this.dispatchEvent(new CustomEvent("render", {bubbles : true}));
+                                        })
+                                    } else {
+                                        element.listeners = element.listeners || new Map;
+                                        element.addEventListener(eventResult[1], ($event) => {
+                                            materialize.call(root, attribute.value, $event);
+                                            this.dispatchEvent(new CustomEvent("render", {bubbles : true}));
+                                        });
+                                    }
+                                }
+                            }
+
+                            if (element.children) {
+                                for (let child of element.children) {
+                                    if (!child.isExtension &&
+                                        !child.hasAttribute("viewchildren") &&
+                                        !child.hasAttribute("contentchildren")) {
+                                        intern(root, child);
+                                    }
+                                }
+                            }
+
+                            if (element instanceof HTMLTemplateElement) {
+                                for (const child of element.content.children) {
+                                    intern(root, child)
+                                }
+                            }
+
+                        }
+
+                        intern(element, element);
+
+                    },
+
+                    inputBinding(element) {
+
+                        function intern(root, element) {
+
+                            if (element.directives) {
+                                for (let directive of element.directives) {
+                                    directive.inputCallback();
+                                }
+                            }
+
+                            if (element.inputBinding) {
+                                element.inputBinding.call(element);
+                            }
+
+                            if (element.childNodes) {
+                                for (let node of element.childNodes) {
+                                    if (node.nodeType === 3) {
+                                        if (!node.originalData) {
+                                            node.originalData = node.data;
+                                        }
+                                        let matchEval = node.originalData.match(/\$\{[\w\.\s\|'\(\)]+\}/g);
+
+                                        if (matchEval && matchEval.length > 0) {
+                                            let context = materialize.context(element);
+                                            function internal() {
+                                                node.data = eval(context + "`" + node.originalData + "`");
+                                            }
+                                            internal.call(element);
+                                        }
+
+                                    }
+                                }
+                            }
+
+
+                            if (element.inputCallback) {
+                                element.inputCallback();
+                            }
+
+
+                            if (element.children) {
+                                for (let child of element.children) {
+                                    if (!child.hasAttribute("viewchildren") &&
+                                        !child.hasAttribute("contentchildren")) {
+                                        if (child.isExtension) {
+                                            intern(child, child);
+                                        } else {
+                                            intern(root, child);
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
+                        intern(element, element);
+
+                    },
+
+                    outputBinding(element) {
+                        function intern(root, element) {
+
+                            if (element.outputBinding) {
+                                element.outputBinding.call(element);
+                            }
+
+                            if (element.outputCallback) {
+                                element.outputCallback();
+                            }
+
+                            for (let child of element.children) {
+                                if (!child.hasAttribute("viewchildren") &&
+                                    !child.hasAttribute("contentchildren")) {
+                                    if (child.isExtension) {
+                                        intern(child, child);
+                                    } else {
+                                        intern(root, child);
+                                    }
+                                }
+
+                            }
+
+                        }
+
+                        intern(element, element)
+
+                    },
+
+                    context(element, level) {
+
+                        let recursion = (element, level, propertyNamesGlobal) => {
+
+                            if (element) {
+                                let names = Object.getOwnPropertyNames(element);
+                                let propertyNames = [];
+
+                                for (const name of names) {
+                                    if (propertyNamesGlobal.indexOf(name) === -1) {
+                                        propertyNames.push(name);
+                                    }
+                                }
+
+                                propertyNamesGlobal = propertyNamesGlobal.concat(names);
+
+                                let parentElement = "";
+
+                                for (let i = 0; i < level; i++) {
+                                    parentElement += ".parentElement"
+                                }
+
+                                let result = propertyNames
+                                    .map((propertyName) => `let ${propertyName} = this${parentElement}['${propertyName}'];\n`)
+                                    .join("");
+
+                                return result += recursion(element.parentElement, ++level, propertyNamesGlobal);
+                            }
+
+                            return "";
+
+                        };
+
+                        return recursion(element, level || 0, []);
+                    },
+
+                    call(element, path, $event) {
+
+                        let parentElement = element.parentElement;
+
+                        try {
+                            let exp = ("element." + path);
+                            return eval(exp);
+                        } catch {
+                            return materialize.call(parentElement, path, $event);
+                        }
+
+                    },
+
+
+                    write(element, path, value) {
+                        try {
+                            if (element.isExtension) {
+                                eval("element." + path + " = " + "value");
+                            } else {
+                                materialize.write(element.parentElement, path, value);
+                            }
+                        } catch {
+                            if (element.parentElement) {
+                                materialize.write(element.parentElement, path, value);
+                            }
+                        }
+                    }
+                }
+            )
+
+
+        })
+    };
+
+    //# sourceURL=/materialize/materialize.html
+
+
+</script>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLInputElement.html" rel="imports">
+
+<style>
+
+    input[is=dom-input] {
+        width: 100%;
+        border: 0;
+    }
+
+    input[is=dom-input]:focus {
+        outline: 0;
+    }
+
+</style>
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class InputBinding extends MaterializeHTMLInputElement {
+
+                constructor() {
+                    super();
+
+                    this.addListener("change", () => {
+                        materialize.outputBinding(this);
+                    });
+
+                    this.addListener("keydown", () => {
+                        materialize.outputBinding(this);
+                        this.dispatchEvent(new CustomEvent("render", {bubbles : true}))
+                    });
+
+                    this.addListener("keyup", () => {
+                        materialize.outputBinding(this);
+                    });
+
+                    this.validators = [{
+                        validate(element) {
+                            let executor = (resolve, reject) => {
+                                if (element.hasAttribute("empty")) {
+                                    let result = String(element.value).length > 0;
+
+                                    if (result) {
+                                        let index = element.errors.indexOf("empty");
+                                        element.errors.splice(index, 1);
+                                        resolve();
+                                    } else {
+                                        if (element.errors.indexOf("empty") === -1) {
+                                            element.errors.push("empty");
+                                            reject("empty")
+                                        }
+                                    }
+                                }
+
+                                return resolve();
+                            };
+
+                            return new Promise(executor)
+                        }
+                    }];
+
+                    this.formatter = (value) => {
+                        return value;
+                    };
+
+                    this.errors = [];
+                }
+
+                get value() {
+                    let value = super.value;
+                    return this.formatter(value);
+                }
+
+                set value(value) {
+                    super.value = value;
+
+
+                    let promises = [];
+                    for (let validator of this.validators) {
+                        promises.push(validator.validate(this));
+                    }
+                    Promise.all(promises)
+                        .then(() => {
+                            super.value = value;
+                        })
+                        .catch((reason) => {
+                            super.value = value;
+                        })
+
+                }
+
+                outputCallback() {
+                    this.value = this.formatter(this.value);
+                }
+
+            }
+
+
+            customElements.define("dom-input", InputBinding, {extends: "input"});
+
+
+        })
+    }
+    //# sourceURL=/materialize/components/dom-input.html
+
+</script>

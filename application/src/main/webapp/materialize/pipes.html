@@ -1,0 +1,32 @@
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            customPipes = {};
+
+            let registry = new Map;
+
+            Object.assign(customPipes, {
+                define(name, func) {
+                    registry.set(name, func);
+                },
+
+                get(name) {
+                    return registry.get(name);
+                },
+
+                pipes() {
+                    return registry.keys();
+                }
+            });
+
+        })
+    };
+
+    //# sourceURL=/materialize/pipes.html
+
+
+</script>

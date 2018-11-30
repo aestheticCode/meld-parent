@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLTemplateElement.html" rel="imports">
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class DomIf extends MaterializeHTMLTemplateElement {
+
+                constructor() {
+                    super();
+                }
+
+                inputCallback() {
+                    let predicate = this.getAttribute("predicate");
+
+                    let context = materialize.context(this);
+
+                    let value = eval(context + predicate);
+
+                    let newChild = this.content.firstElementChild;
+
+                    if (newChild) {
+                        if (value) {
+                            this.insertAdjacentElement("afterend", newChild);
+                            materialize.inputBinding(newChild);
+                        }
+                    } else {
+                        if (! value) {
+                            this.content.appendChild(this.nextElementSibling);
+                        }
+                    }
+
+
+
+                }
+
+            }
+
+            customElements.define("dom-if", DomIf, {extends: "template"})
+
+        })
+    }
+
+    //# sourceURL=/materialize/components/dom-if.html
+
+</script>

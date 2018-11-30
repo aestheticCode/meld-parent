@@ -1,0 +1,31 @@
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            customDirectives = {};
+
+            let registry = new Map;
+
+            Object.assign(customDirectives, {
+                define(name, clazz) {
+                    registry.set(name, clazz);
+                },
+
+                get(name) {
+                    return registry.get(name);
+                },
+
+                directives() {
+                    return registry.keys();
+                }
+            });
+
+        })
+    };
+
+    //# sourceURL=/materialize/directives.html
+
+</script>

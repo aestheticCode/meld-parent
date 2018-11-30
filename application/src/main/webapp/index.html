@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+            let allImports = [];
+
+            distinctArray = (items, callback) => {
+
+                this.cache = this.cache || new Map;
+
+                let distinctItems;
+
+                if (this.cache.has(items)) {
+                    distinctItems = this.cache.get(items)
+                } else {
+                    distinctItems = [];
+                    this.cache.set(items, distinctItems);
+                }
+
+                for (let item of items) {
+                    let searchElement = item.toString();
+                    if (distinctItems.indexOf(searchElement) === -1) {
+                        distinctItems.push(searchElement);
+                        callback(item, items);
+                    }
+                }
+            };
+
+            load = function (callbacks, imports, callback) {
+
+                callbacks.push(callback);
+
+                for (let link of imports) {
+
+                    let request = new XMLHttpRequest();
+
+                    request.addEventListener("load", (event) => {
+                        let documentFragment = document.createDocumentFragment();
+                        let htmlElement = document.createElement("html");
+                        htmlElement.innerHTML = event.target.responseText;
+                        documentFragment.appendChild(htmlElement);
+
+                        let script = documentFragment.querySelector("script");
+                        let evaluated = eval(script.innerText);
+                        evaluated(
+                            documentFragment.querySelectorAll("link[rel=imports]"),
+                            documentFragment.querySelector("template[viewChildren]"),
+                            callbacks
+                        );
+
+                        let head = document.querySelector("head");
+                        let style = documentFragment.querySelector("style");
+                        if (style) {
+                            head.appendChild(style);
+                        }
+                    });
+
+                    if (link.hasAttribute("lazy")) {
+                        link.lazyLoad = () => {
+                            request.open("GET", link.href, false);
+                            request.send();
+                        };
+                        allImports.push(link);
+                    } else {
+                        request.open("GET", link.href, false);
+                        request.send();
+                    }
+
+                }
+
+            };
+
+            let bodyImports = document.querySelectorAll("link[rel=imports]");
+            let callbacks = [];
+
+            load(callbacks, bodyImports, () => {
+                let request = new XMLHttpRequest();
+                request.open("GET", "service");
+                request.addEventListener("load", (event) => {
+                    let json = JSON.parse(event.target.responseText);
+                    let element = document.createElement("meld-app");
+                    element.model = json;
+                    document
+                        .querySelector("body")
+                        .appendChild(element);
+                });
+                request.send();
+            });
+
+            distinctArray(callbacks.reverse(), (callback) => {
+                callback();
+            });
+
+            customServices
+                .get("router")
+                .loader(allImports, callbacks);
+
+        });
+
+        //# sourceURL=index.html
+
+    </script>
+    <link href="app.html" rel="imports">
+</head>
+<body></body>
+</html>

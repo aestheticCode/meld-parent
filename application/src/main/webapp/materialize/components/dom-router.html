@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLElement.html" rel="imports">
+<link href="/materialize/services/router.html" rel="imports">
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class DomRouter extends MaterializeHTMLElement {
+
+                constructor() {
+                    super();
+
+                    let name = this.getAttribute("name");
+
+                    addEventListener("hashchange", () => {
+                        let hash = window.location.hash;
+
+                        let path = hash.substring(1, hash.length);
+
+                        let router = customServices.get("router");
+
+                        let routerResult = router.find(path, name);
+
+                        routerResult
+                            .then((activeRoute) => {
+                                while (this.lastElementChild &&
+                                ! (this.lastElementChild.hasAttribute("contentchildren") ||
+                                    this.lastElementChild.hasAttribute("viewchildren"))) {
+                                    this.lastElementChild.remove();
+                                }
+
+                                let htmlElement = document.createElement(activeRoute.element);
+
+                                this.appendChild(htmlElement);
+
+                                materialize.inputBinding(htmlElement);
+
+                                if (htmlElement.routerCallback) {
+                                    htmlElement.routerCallback();
+                                }
+                            })
+                            .catch((reason) => {
+                                console.log(reason);
+                            })
+                    })
+                }
+
+            }
+
+            customElements.define("dom-router", DomRouter)
+        })
+    }
+
+    //# sourceURL=/materialize/components/dom-router.html
+
+</script>

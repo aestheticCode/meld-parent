@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLTableElement.html" rel="imports">
+
+<template>
+    <thead>
+        <template items="headerRows" item="header">
+            <tr>
+                <td>
+                    <template name="headerRow" implicit="header"></template>
+                </td>
+            </tr>
+        </template>
+    </thead>
+    <tbody>
+        <template items="rows" item="row">
+            <tr>
+                <td><template name="bodyRow" implicit="row"></template></td>
+            </tr>
+        </template>
+    </tbody>
+    <tfoot>
+        <template items="footerRows" item="footer">
+            <tr>
+                <template name="footerRow" implicit="footer"></template>
+            </tr>
+        </template>
+    </tfoot>
+</template>
+
+<script>
+    (imports, template, callbacks) => {
+        load(callbacks, imports, () => {
+
+            class MatTable extends MaterializeHTMLTableElement {
+                constructor(template) {
+                    super(template);
+
+                    let tds = this.querySelectorAll("contenttemplate thead td");
+                    let renderedHeadTds = tds.map((td, index) => {
+                        let variable = `${this.getAttribute("item")} = ${this.getAttribute("items")[index]} \n`;
+                        eval(variable + td.innerHTML)
+                    })
+
+
+
+                }
+            }
+
+            customElements.define("mat-table", MatTable, { extends: 'table' });
+        })
+    }
+</script>

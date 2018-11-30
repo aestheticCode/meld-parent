@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLElement.html" rel="imports">
+
+<style>
+    mat-button {
+        display: inline;
+    }
+
+    button[is=mat-button] {
+        background: var(--main-background-color);
+        border: 0;
+        color: var(--main-font-color);
+        width: 88px;
+        line-height: 36px;
+    }
+
+    button[is=mat-button]:hover {
+        background: var(--main-grey-color);
+    }
+</style>
+
+<template viewChildren>
+    <button (click)="click($event)" content></button>
+</template>
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class MatButton extends MaterializeHTMLElement {
+
+                constructor() {
+                    super(template);
+
+                    this.output.set("click", materialize.eventEmitter());
+                }
+
+                click($event) {
+                    this.output.get("click").fire($event);
+                }
+
+            }
+
+            customElements.define("mat-button", MatButton);
+
+        })
+    }
+
+</script>

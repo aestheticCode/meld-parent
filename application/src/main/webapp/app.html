@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<link href="/materialize/services.html" rel="imports">
+<link href="/materialize/pipes/regex.html" rel="imports">
+<link href="/materialize/pipes/json.html" rel="imports">
+
+<link href="/material/components/mat-toolbar.html" rel="imports">
+<link href="/material/components/mat-icon-button.html" rel="imports">
+<link href="/material/components/mat-drawer-container.html" rel="imports">
+<link href="/material/components/mat-drawer-content.html" rel="imports">
+<link href="/material/components/mat-drawer.html" rel="imports">
+<link href="/material/components/mat-input-container.html" rel="imports">
+
+<link href="/materialize/components/dom-router.html" rel="imports">
+<link href="/materialize/components/dom-template.html" rel="imports">
+<link href="/materialize/components/dom-input.html" rel="imports">
+<link href="/materialize/components/dom-repeat.html" rel="imports">
+<link href="/materialize/components/dom-if.html" rel="imports">
+
+<link href="/materialize/directives/dom-style.html" rel="imports">
+<link href="/example.html" rel="imports">
+
+<link href="/app/usercontrol/login.html" rel="imports" lazy>
+<link href="/app/usercontrol/logout.html" rel="imports" lazy>
+<link href="/app/usercontrol/users.html" rel="imports" lazy>
+
+
+<style>
+
+    html {
+        --main-font-color: #393c3e;
+        --main-normal-color: #3f51b5;
+        --main-error-color: #ff463f;
+        --main-grey-color: lightgrey;
+        --main-background-color: white;
+    }
+
+    body {
+        color: var(--main-font-color);
+        font-family: Helvetica, serif;
+        margin: 0;
+    }
+
+</style>
+
+<template viewChildren>
+
+    <mat-toolbar>
+        <span slot="header" style="color: white;">
+            <mat-icon-button style="color: white" (click)="navBar()">menu</mat-icon-button>
+            Meld
+        </span>
+        <div slot="buttons" style="color: white;">
+            <mat-icon-button style="color: white" (click)="navBar()">lock</mat-icon-button>
+        </div>
+    </mat-toolbar>
+
+
+    <mat-drawer-container>
+        <mat-drawer [open]="open">
+            <div>Navigation</div>
+        </mat-drawer>
+        <mat-drawer-content>
+            <div>
+                <dom-example [value]="test">
+                    <template is="dom-template" slot="test" let="item">
+                        <p>test ${json(item.value)}</p>
+                    </template>
+                </dom-example>
+
+                <ul>
+                    <template is="dom-repeat" items="regex(elements,'value:1.*')" item="element">
+                        <li>
+                            <dom-example [value]="element">
+                                <template is="dom-template" slot="test" let="item">
+                                    <p>test ${item.value}</p>
+                                </template>
+                            </dom-example>
+                        </li>
+                    </template>
+                </ul>
+                <template is="dom-if" predicate="active()">
+                    <ul>
+                        <template is="dom-repeat" items="elements" item="element">
+                            <li style="display: inline">
+                                <mat-input-container [placeholder]="'test'">
+                                    <input #input is="dom-input" ([value])="element.value" empty>
+                                    <template slot="error" is="dom-if" predicate="input.errors.length > 0">
+                                        <span>Error 2</span>
+                                    </template>
+                                </mat-input-container>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+
+                <a link="/app/usercontrol/login.html" href="#usercontrol/login">login</a>
+
+                <a link="/app/usercontrol/logout.html" href="#usercontrol/logout">logout</a>
+
+                <a link="/app/usercontrol/users.html" href="#usercontrol/users">users</a>
+
+                <dom-router name="main"></dom-router>
+            </div>
+
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+
+</template>
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class App extends MaterializeHTMLElement {
+                constructor() {
+                    super(template);
+
+                    this.elements = [
+                        {value: 1},
+                        {value: 2},
+                        {value: 3}
+                    ];
+
+                    this.test = {
+                        value: 'test'
+                    };
+
+                    this.active = function () {
+                        return {
+                            add: ["blink"],
+                            delete: []
+                        };
+                    };
+
+                    this.open = false;
+
+
+                    let pipes = customPipes.pipes();
+
+                    for (const pipe of pipes) {
+                        this[pipe] = customPipes.get(pipe);
+                    }
+
+                    document
+                        window.addEventListener("render", () => {
+                            materialize.inputBinding(this);
+                        })
+
+                }
+
+                navBar() {
+                    this.open = !this.open;
+                }
+
+                connectedCallback() {
+                    super.connectedCallback();
+
+                    materialize.inputBinding(this);
+                }
+            }
+
+            customElements.define("meld-app", App);
+
+        });
+
+    };
+
+    //# sourceURL=/app.html
+
+</script>
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLElement.html" rel="imports">
+
+<style>
+    mat-icon-button {
+        display: inline;
+    }
+</style>
+
+<template viewChildren>
+    <button style="background: transparent; border: 0; color: inherit" (click)="click($event)">
+        <i class="material-icons" style="vertical-align: middle;" content></i>
+    </button>
+</template>
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class MatIconButton extends MaterializeHTMLElement {
+
+                constructor() {
+                    super(template);
+
+                    this.output.set("click", materialize.eventEmitter());
+                }
+
+                click($event) {
+                    this.output.get("click").fire($event);
+                }
+
+            }
+
+            customElements.define("mat-icon-button", MatIconButton);
+
+        })
+    }
+
+</script>

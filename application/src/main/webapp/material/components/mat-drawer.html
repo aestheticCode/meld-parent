@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<link href="/materialize/components/dom-if.html" rel="imports">
+<link href="/materialize/extensions/HTMLElement.html" rel="imports">
+
+<style>
+    mat-drawer {
+        display: block;
+    }
+
+    mat-drawer div.drawer {
+        position: absolute;
+        background-color: var(--main-background-color);
+        border : 1px black solid;
+        width: 200px;
+    }
+</style>
+
+<template viewChildren>
+    <template is="dom-if" predicate="open">
+        <div content class="drawer"></div>
+    </template>
+</template>
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class MatDrawer extends MaterializeHTMLElement {
+
+                constructor() {
+                    super(template);
+                }
+
+            }
+
+            customElements.define("mat-drawer", MatDrawer);
+
+        })
+    }
+
+</script>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<link href="/materialize/services.html" rel="imports">
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class Router {
+
+                constructor() {
+                    this.registry = [];
+                    this.activeRoute = {};
+                }
+
+                loader(imports, callbacks) {
+                    this.imports = this.imports || [];
+                    this.imports = this.imports.concat(imports);
+                    this.callbacks = callbacks;
+                }
+
+                define(options) {
+                    this.registry.push(options);
+                }
+
+                fire(currentHref, currentPath, currentName) {
+                    for (let link of this.imports) {
+                        if (link.hasAttribute("lazy")) {
+                            let attribute = link.getAttribute("href");
+
+                            if (attribute === currentHref) {
+                                link.lazyLoad();
+
+                                distinctArray(this.callbacks.reverse(), (callback) => {
+                                    callback();
+                                    link.removeAttribute("lazy")
+                                });
+                            }
+                        }
+                    }
+                }
+
+                find(currentPath, currentName) {
+                    for (let entry of this.registry) {
+
+                        if (entry.name === currentName) {
+
+                            let currentSegments = currentPath.split("/");
+                            let pathSegments = entry.path.split("/");
+
+                            let resultSegmentRegex = [];
+                            let resultSegmentValue = [];
+
+                            for (let i = 0; i < currentSegments.length && i < pathSegments.length; i++) {
+                                let regex = pathSegments[i].replace(/\{\w+\}/, "\\\{(.*)\\\}");
+                                let result = new RegExp(regex).exec(pathSegments[i]);
+
+                                if (result) {
+                                    if (result.length === 1) {
+                                        if (result[0] === currentSegments[i]) {
+                                            resultSegmentRegex.push(result[0]);
+                                            resultSegmentValue.push(currentSegments[i]);
+                                        }
+                                    }
+
+                                    if (result.length === 2) {
+                                        resultSegmentRegex.push(result[1]);
+                                        resultSegmentValue.push(currentSegments[i]);
+                                    }
+                                }
+                            }
+
+                            if (currentSegments.length === resultSegmentRegex.length) {
+                                this.activeRoute = {};
+                                for (let i = 0; i < currentSegments.length && i < pathSegments.length; i++) {
+                                    this.activeRoute[resultSegmentRegex[i]] = resultSegmentValue[i];
+                                }
+                                this.activeRoute.element = entry.element;
+
+                                let executor = (resolve, reject) => {
+                                    entry.guard(this.activeRoute)
+                                        .then((value) => {
+                                            this.activeRoute.data = value;
+                                            resolve(this.activeRoute)
+                                        })
+                                        .catch((reason) => {
+                                            reject(reason);
+                                        })
+                                };
+
+                                return new Promise(executor);
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+            customServices.define("router", Router);
+        })
+    }
+
+    //# sourceURL=/materialize/services/router.html
+
+
+</script>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<link href="/materialize/extensions/HTMLElement.html" rel="import">
+
+<style>
+
+    mat-toolbar {
+        display: block;
+    }
+
+    mat-toolbar div.container {
+        display: flex;
+        background-color: var(--main-normal-color);
+        line-height: 32px;
+        padding: 8px;
+    }
+
+</style>
+
+<template viewChildren>
+    <div class="container">
+        <div style="flex-grow: 1">
+            <template name="header"></template>
+        </div>
+        <div>
+            <template name="buttons"></template>
+        </div>
+    </div>
+</template>
+
+<script>
+
+    (imports, template, callbacks) => {
+
+        load(callbacks, imports, () => {
+
+            class MatToolbar extends MaterializeHTMLElement {
+
+                constructor() {
+                    super(template);
+                }
+
+            }
+
+            customElements.define("mat-toolbar", MatToolbar);
+
+        })
+    }
+
+</script>
